@@ -1,0 +1,19 @@
+The almost completely commented C64 ROM disassembly. V1.01 Lee Davison 2012
+
+Changed by Ruud Baltissen 2014
+- changed names of routines and variables, LAzB_xx and LAzB_xxxx,.
+  into more logical ones
+- length of lines < 81 (if possible)
+- combined low and high bytes to one variable
+- corrected some small errors
+
+This is a bit correct assembly listing for the C64 BASIC and kernal ROMs
+as two 8K ROMs. You should be able to assemble the C64 ROMs from this with
+most 6502 assemblers, as no macros or 'special' features were used. This has
+been tested using Michal Kowalski's 6502 Simulator assemble function.
+See http://exifpro.com/utils.html for this program.
+
+Many references were used to complete this disassembly including, but not
+limited to, "Mapping the Vic 20", "Mapping the C64", "C64 Programmers
+reference", "C64 user guide", "The complete Commodore inner space anthology",
+"VIC Revealed" and various text files, pictures and other documents.
