@@ -10,7 +10,7 @@ kernal.bin: out.bin
 .INTERMEDIATE: out.bin
 
 out.bin: C64-xa.a65
-	xa -M $< -o $@
+	xa -OPETSCII -M $< -o $@
 
 .PHONY: clean
 

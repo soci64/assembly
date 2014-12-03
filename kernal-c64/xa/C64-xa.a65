@@ -4,7 +4,7 @@
 ; The almost completely commented C64 ROM disassembly. V1.01 Lee Davison 2012
 ;
 ; Changed by Ruud Baltissen 2014
-; - changed names of routines and variables, LAzB_xx and LAzB_xxxx, 
+; - changed names of routines and variables, LAzB_xx and LAzB_xxxx,
 ;   into more logical ones
 ; - length of lines < 81 (if possible)
 ; - combined low and high bytes to one variable
@@ -47,9 +47,9 @@ P6510			= $01		; 6510 I/O port data register
 					;  5	cass motor 1 = off, 0 = on
 					;  4	cass sw	   1 = off, 0 = on
 					;  3	cass data
-					;  2	CHAREN     1 = I/O,
+					;  2	CHAREN	   1 = I/O,
 					;		   0 = chraracter ROM
-					;  1	HIRAM 	1 = Kernal,	0 = RAM
+					;  1	HIRAM	1 = Kernal,	0 = RAM
 					;  0	LORAM	1 = BASIC,	0 = RAM
 
 ZP02			= $02		; unused
@@ -703,7 +703,7 @@ CursorCol		= $CA		; input cursor column
 ; $04	9		$14	J		$24	M		$34	O
 ; $05	+		$15	L		$25	.		$35	@
 ; $06	[POUND]		$16	;		$26	not used	$36	[U ARROW]
-; $07	[DEL]		$17	[RIGHT]		$27	[F1]		$37	[F5]	
+; $07	[DEL]		$17	[RIGHT]		$27	[F1]		$37	[F5]
 ; $08	[L ARROW]	$18	[STOP]		$28	not used	$38	2
 ; $09	W		$19	not used	$29	S		$39	4
 ; $0A	R		$1A	X		$2A	F		$3A	6
@@ -992,7 +992,7 @@ KEYLOG			= $028F		; keyboard decode logic pointer
 MODE			= $0291		; shift mode switch, $00 = enabled, $80 = locked
 
 
-; This location is used to determine whether moving the cursor past the ??xx 
+; This location is used to determine whether moving the cursor past the ??xx
 ; column of a logical line will cause another physical line to be added to the
 ; logical line.
 
@@ -1196,8 +1196,8 @@ RomIdentStr		= $8004		; autostart ROM identifier string start
 VIC_chip		= $D000		; vic ii chip base address
 VICCTR1			= $D011		; vertical fine scroll and control
 VICLINE			= $D012		; raster compare register
-VICLPX			= $D013		; lightpen, X position 
-VICLPY			= $D014		; lightpen, Y position 
+VICLPX			= $D013		; lightpen, X position
+VICLPY			= $D014		; lightpen, Y position
 VICSPEN			= $D015		; enable sprites, 1 = on
 VICCTR2			= $D016		; horizontal fine scroll and control
 VICRAM			= $D018		; memory control
@@ -1454,7 +1454,7 @@ BasicNMI:
 .word	BasicWarmStart			; BASIC warm start entry point
 
 ;A_A004
-.byte	"CBMBASIC"			; ROM name, unreferenced
+.asc	"cbmbasic"			; ROM name, unreferenced
 
 
 ;******************************************************************************
@@ -1575,95 +1575,95 @@ HierachyCode:				;				[A080]
 ; first are the primary command keywords, only these can start a statement
 
 TblBasicCodes:				;				[A09E]
-D_A09E:		.byte "EN", 'D'+$80	; END		$80		128
-D_A0A1:		.byte "FO", 'R'+$80	; FOR		$81		129
-D_A0A4:		.byte "NEX", 'T'+$80	; NEXT		$82		130
-D_A0A8:		.byte "DAT", 'A'+$80	; DATA		$83		131
-D_A0AC:		.byte "INPUT", '#'+$80	; INPUT#	$84		132
-D_A0B2:		.byte "INPU", 'T'+$80	; INPUT		$85		133
-D_A0B7:		.byte "DI", 'M'+$80	; DIM		$86		134
-D_A0BA:		.byte "REA", 'D'+$80	; READ		$87		135
-D_A0BE:		.byte "LE", 'T'+$80	; LET		$88		136
-D_A0C1:		.byte "GOT", 'O'+$80	; GOTO		$89		137
-D_A0C5:		.byte "RU", 'N'+$80	; RUN		$8A		138
-D_A0C8:		.byte "I", 'F'+$80	; IF		$8B		139
-D_A0CA:		.byte "RESTOR", 'E'+$80	; RESTORE	$8C		140
-D_A0D1:		.byte "GOSU", 'B'+$80	; GOSUB		$8D		141
-D_A0D6:		.byte "RETUR", 'N'+$80	; RETURN	$8E		142
-D_A0DC:		.byte "RE", 'M'+$80	; REM		$8F		143
-D_A0DF:		.byte "STO", 'P'+$80	; STOP		$90		144
-D_A0E3:		.byte "O", 'N'+$80	; ON		$91		145
-D_A0E5:		.byte "WAI", 'T'+$80	; WAIT		$92		146
-D_A0E9:		.byte "LOA", 'D'+$80	; LOAD		$93		147
-D_A0ED:		.byte "SAV", 'E'+$80	; SAVE		$94		148
-D_A0F1:		.byte "VERIF", 'Y'+$80	; VERIFY	$95		149
-D_A0F7:		.byte "DE", 'F'+$80	; DEF		$96		150
-D_A0FA:		.byte "POK", 'E'+$80	; POKE		$97		151
-D_A0FE:		.byte "PRINT", '#'+$80	; PRINT#	$98		152
-D_A104:		.byte "PRIN", 'T'+$80	; PRINT		$99		153
-D_A109:		.byte "CON", 'T'+$80	; CONT		$9A		154
-D_A10D:		.byte "LIS", 'T'+$80	; LIST		$9B		155
-D_A111:		.byte "CL", 'R'+$80	; CLR		$9C		156
-D_A114:		.byte "CM", 'D'+$80	; CMD		$9D		157
-D_A117:		.byte "SY", 'S'+$80	; SYS		$9E		158
-D_A11A:		.byte "OPE", 'N'+$80	; OPEN		$9F		159
-D_A11E:		.byte "CLOS", 'E'+$80	; CLOSE		$A0		160
-D_A123:		.byte "GE", 'T'+$80	; GET		$A1		161
-D_A126:		.byte "NE", 'W'+$80	; NEW		$A2		162
+D_A09E:		.asc "en", 'd'+$80	; END		$80		128
+D_A0A1:		.asc "fo", 'r'+$80	; FOR		$81		129
+D_A0A4:		.asc "nex", 't'+$80	; NEXT		$82		130
+D_A0A8:		.asc "dat", 'a'+$80	; DATA		$83		131
+D_A0AC:		.asc "input", '#'+$80	; INPUT#	$84		132
+D_A0B2:		.asc "inpu", 't'+$80	; INPUT		$85		133
+D_A0B7:		.asc "di", 'm'+$80	; DIM		$86		134
+D_A0BA:		.asc "rea", 'd'+$80	; READ		$87		135
+D_A0BE:		.asc "le", 't'+$80	; LET		$88		136
+D_A0C1:		.asc "got", 'o'+$80	; GOTO		$89		137
+D_A0C5:		.asc "ru", 'n'+$80	; RUN		$8A		138
+D_A0C8:		.asc "i", 'f'+$80	; IF		$8B		139
+D_A0CA:		.asc "restor", 'e'+$80	; RESTORE	$8C		140
+D_A0D1:		.asc "gosu", 'b'+$80	; GOSUB		$8D		141
+D_A0D6:		.asc "retur", 'n'+$80	; RETURN	$8E		142
+D_A0DC:		.asc "re", 'm'+$80	; REM		$8F		143
+D_A0DF:		.asc "sto", 'p'+$80	; STOP		$90		144
+D_A0E3:		.asc "o", 'n'+$80	; ON		$91		145
+D_A0E5:		.asc "wai", 't'+$80	; WAIT		$92		146
+D_A0E9:		.asc "loa", 'd'+$80	; LOAD		$93		147
+D_A0ED:		.asc "sav", 'e'+$80	; SAVE		$94		148
+D_A0F1:		.asc "verif", 'y'+$80	; VERIFY	$95		149
+D_A0F7:		.asc "de", 'f'+$80	; DEF		$96		150
+D_A0FA:		.asc "pok", 'e'+$80	; POKE		$97		151
+D_A0FE:		.asc "print", '#'+$80	; PRINT#	$98		152
+D_A104:		.asc "prin", 't'+$80	; PRINT		$99		153
+D_A109:		.asc "con", 't'+$80	; CONT		$9A		154
+D_A10D:		.asc "lis", 't'+$80	; LIST		$9B		155
+D_A111:		.asc "cl", 'r'+$80	; CLR		$9C		156
+D_A114:		.asc "cm", 'd'+$80	; CMD		$9D		157
+D_A117:		.asc "sy", 's'+$80	; SYS		$9E		158
+D_A11A:		.asc "ope", 'n'+$80	; OPEN		$9F		159
+D_A11E:		.asc "clos", 'e'+$80	; CLOSE		$A0		160
+D_A123:		.asc "ge", 't'+$80	; GET		$A1		161
+D_A126:		.asc "ne", 'w'+$80	; NEW		$A2		162
 
-; table of functions, each ended with a +$80	
+; table of functions, each ended with a +$80
 ; next are the secondary command keywords, these can not start a statement
 
-D_A129:		.byte "TAB", '('+$80	; TAB(		$A3		163
-D_A12D:		.byte "T", 'O'+$80	; TO		$A4		164
-D_A12F:		.byte "F", 'N'+$80	; FN		$A5		165
-D_A131:		.byte "SPC", '('+$80	; SPC(		$A6		166
-D_A135:		.byte "THE", 'N'+$80	; THEN		$A7		167
-D_A139:		.byte "NO", 'T'+$80	; NOT		$A8		168
-D_A13C:		.byte "STE", 'P'+$80	; STEP		$A9		169
+D_A129:		.asc "tab", '('+$80	; TAB(		$A3		163
+D_A12D:		.asc "t", 'o'+$80	; TO		$A4		164
+D_A12F:		.asc "f", 'n'+$80	; FN		$A5		165
+D_A131:		.asc "spc", '('+$80	; SPC(		$A6		166
+D_A135:		.asc "the", 'n'+$80	; THEN		$A7		167
+D_A139:		.asc "no", 't'+$80	; NOT		$A8		168
+D_A13C:		.asc "ste", 'p'+$80	; STEP		$A9		169
 
 ; next are the operators
 
-D_A140:		.byte '+'+$80		; +		$AA		170
-D_A141:		.byte '-'+$80		; -		$AB		171
-D_A142:		.byte '*'+$80		; *		$AC		172
-D_A143:		.byte '/'+$80		; /		$AD		173
-D_A144:		.byte $DE		; 		$AE		174
-D_A145:		.byte "AN", 'D'+$80	; AND		$AF		175
-D_A148:		.byte 'O', 'R'+$80	; OR		$B0		176
-D_A14A:		.byte '>'+$80		; >		$B1		177
-D_A14B:		.byte '='+$80		; =		$B2		178
-D_A14C:		.byte '<'+$80		; <		$B3		179
+D_A140:		.asc '+'+$80		; +		$AA		170
+D_A141:		.asc '-'+$80		; -		$AB		171
+D_A142:		.asc '*'+$80		; *		$AC		172
+D_A143:		.asc '/'+$80		; /		$AD		173
+D_A144:		.asc $DE		;		$AE		174
+D_A145:		.asc "an", 'd'+$80	; AND		$AF		175
+D_A148:		.asc 'o', 'r'+$80	; OR		$B0		176
+D_A14A:		.asc '>'+$80		; >		$B1		177
+D_A14B:		.asc '='+$80		; =		$B2		178
+D_A14C:		.asc '<'+$80		; <		$B3		179
 
 ; and finally the functions
 
-D_A14D:		.byte "SG", 'N'+$80	; SGN		$B4		180
-D_A150:		.byte "IN", 'T'+$80	; INT		$B5		181
-D_A153:		.byte "AB", 'S'+$80	; ABS		$B6		182
-D_A156:		.byte "US", 'R'+$80	; USR		$B7		183
-D_A159:		.byte "FR", 'E'+$80	; FRE		$B8		184
-D_A15C:		.byte "PO", 'S'+$80	; POS		$B9		185
-D_A15F:		.byte "SQ", 'R'+$80	; SQR		$BA		186
-D_A162:		.byte "RN", 'D'+$80	; RND		$BB		187
-D_A165:		.byte "LO", 'G'+$80	; LOG		$BC		188
-D_A168:		.byte "EX", 'P'+$80	; EXP		$BD		189
-D_A16B:		.byte "CO", 'S'+$80	; COS		$BE		190
-D_A16E:		.byte "SI", 'N'+$80	; SIN		$BF		191
-D_A171:		.byte "TA", 'N'+$80	; TAN		$C0		192
-D_A174:		.byte "AT", 'N'+$80	; ATN		$C1		193
-D_A177:		.byte "PEE", 'K'+$80	; PEEK		$C2		194
-D_A17B:		.byte "LE", 'N'+$80	; LEN		$C3		195
-D_A17E:		.byte "STR", '$'+$80	; STR$		$C4		196
-D_A182:		.byte "VA", 'L'+$80	; VAL		$C5		197
-D_A185:		.byte "AS", 'C'+$80	; ASC		$C6		198
-D_A188:		.byte "CHR", '$'+$80	; CHR$		$C7		199
-D_A18C:		.byte "LEFT", '$'+$80	; LEFT$		$C8		200
-D_A191:		.byte "RIGHT", '$'+$80	; RIGHT$	$C9		201
-D_A197:		.byte "MID", '$'+$80	; MID$		$CA		202
+D_A14D:		.asc "sg", 'n'+$80	; SGN		$B4		180
+D_A150:		.asc "in", 't'+$80	; INT		$B5		181
+D_A153:		.asc "ab", 's'+$80	; ABS		$B6		182
+D_A156:		.asc "us", 'r'+$80	; USR		$B7		183
+D_A159:		.asc "fr", 'e'+$80	; FRE		$B8		184
+D_A15C:		.asc "po", 's'+$80	; POS		$B9		185
+D_A15F:		.asc "sq", 'r'+$80	; SQR		$BA		186
+D_A162:		.asc "rn", 'd'+$80	; RND		$BB		187
+D_A165:		.asc "lo", 'g'+$80	; LOG		$BC		188
+D_A168:		.asc "ex", 'p'+$80	; EXP		$BD		189
+D_A16B:		.asc "co", 's'+$80	; COS		$BE		190
+D_A16E:		.asc "si", 'n'+$80	; SIN		$BF		191
+D_A171:		.asc "ta", 'n'+$80	; TAN		$C0		192
+D_A174:		.asc "at", 'n'+$80	; ATN		$C1		193
+D_A177:		.asc "pee", 'k'+$80	; PEEK		$C2		194
+D_A17B:		.asc "le", 'n'+$80	; LEN		$C3		195
+D_A17E:		.asc "str", '$'+$80	; STR$		$C4		196
+D_A182:		.asc "va", 'l'+$80	; VAL		$C5		197
+D_A185:		.asc "as", 'c'+$80	; ASC		$C6		198
+D_A188:		.asc "chr", '$'+$80	; CHR$		$C7		199
+D_A18C:		.asc "left", '$'+$80	; LEFT$		$C8		200
+D_A191:		.asc "right", '$'+$80	; RIGHT$	$C9		201
+D_A197:		.asc "mid", '$'+$80	; MID$		$CA		202
 
 ; lastly is GO, this is an add on so that GO TO, as well as GOTO, will work
 
-D_A19B:		.byte $47,$CF		; GO		$CB		203
+D_A19B:		.asc "g", 'o'+$80	; GO		$CB		203
 
 .byte	$00				; end marker
 
@@ -1672,35 +1672,35 @@ D_A19B:		.byte $47,$CF		; GO		$CB		203
 ;
 ; BASIC error messages
 
-TxtTooManyFile:		.byte "TOO MANY FILE", 'S'+$80		;	[A19E]
-TxtFileOpen:		.byte "FILE OPE", 'N'+$80		;	[A1AC]
-TxtFileNotOpen:		.byte "FILE NOT OPE", 'N'+$80		;	[A1B5]
-TxtFileNotFound:	.byte "FILE NOT FOUN", 'D'+$80		;	[A1C2]
-TxtDevNotPresent:	.byte "DEVICE NOT PRESEN", 'T'+$80	;	[A1D0]
-TxtNotInputFile:	.byte "NOT INPUT FIL", 'E'+$80		;	[A1E2]
-TxtNotOutputFile:	.byte "NOT OUTPUT FIL", 'E'+$80		;	[A1F0]
-TxtMissingFile:		.byte "MISSING FILE NAM", 'E'+$80	;	[A1FF]
-TxtIllegalDevice:	.byte "ILLEGAL DEVICE NUMBE", 'R'+$80	;	[A210]
-TxtNextWithout:		.byte "NEXT WITHOUT FO", 'R'+$80	;	[A225]
-TxtSyntax:		.byte "SYNTA", 'X'+$80			;	[A235]
-TxtReturnWithout:	.byte "RETURN WITHOUT GOSU", 'B'+$80	;	[A23B]
-TxtOutOfData:		.byte "OUT OF DAT", 'A'+$80		;	[A24F]
-TxtIllegalQuan:		.byte "ILLEGAL QUANTIT", 'Y'+$80	;	[A25A]
-TxtOverflow:		.byte "OVERFLO", 'W'+$80		;	[A26A]
-TxtOutOfMemory:		.byte "OUT OF MEMOR", 'Y'+$80		;	[A272]
-TxtUndefdState:		.byte "UNDEF'D STATEMEN", 'T'+$80	;	[A27F]
-TxtBadSubscript:	.byte "BAD SUBSCRIP", 'T'+$80		;	[A290]
-TxtRedimdArray:		.byte "REDIM'D ARRA", 'Y'+$80		;	[A29D]
-TxtDivisByZero:		.byte "DIVISION BY ZER", 'O'+$80	;	[A2AA]
-TxtIllegalDirect:	.byte "ILLEGAL DIREC", 'T'+$80		;	[A2BA]
-TxtTypeMismatc:		.byte "TYPE MISMATC", 'H'+$80		;	[A2C8]
-TxtStringTooLong:	.byte "STRING TOO LON", 'G'+$80		;	[A2D5]
-TxtFileData:		.byte "FILE DAT", 'A'+$80		;	[A2E4]
-TxtFormulaTooC:		.byte "FORMULA TOO COMPLE", 'X'+$80	;	[A2ED]
-TxtCantContinue:	.byte "CAN'T CONTINU", 'E'+$80		;	[A300]
-TxtUndefdFunct:		.byte "UNDEF'D FUNCTIO", 'N'+$80	;	[A30E]
-TxtVerify:		.byte "VERIF", 'Y'+$80			;	[A31E]
-TxtLoad:		.byte "LOA", 'D'+$80			;	[A324]
+TxtTooManyFile:		.asc "too many file", 's'+$80		;	[A19E]
+TxtFileOpen:		.asc "file ope", 'n'+$80		;	[A1AC]
+TxtFileNotOpen:		.asc "file not ope", 'n'+$80		;	[A1B5]
+TxtFileNotFound:	.asc "file not foun", 'd'+$80		;	[A1C2]
+TxtDevNotPresent:	.asc "device not presen", 't'+$80	;	[A1D0]
+TxtNotInputFile:	.asc "not input fil", 'e'+$80		;	[A1E2]
+TxtNotOutputFile:	.asc "not output fil", 'e'+$80		;	[A1F0]
+TxtMissingFile:		.asc "missing file nam", 'e'+$80	;	[A1FF]
+TxtIllegalDevice:	.asc "illegal device numbe", 'r'+$80	;	[A210]
+TxtNextWithout:		.asc "next without fo", 'r'+$80		;	[A225]
+TxtSyntax:		.asc "synta", 'x'+$80			;	[A235]
+TxtReturnWithout:	.asc "return without gosu", 'b'+$80	;	[A23B]
+TxtOutOfData:		.asc "out of dat", 'a'+$80		;	[A24F]
+TxtIllegalQuan:		.asc "illegal quantit", 'y'+$80		;	[A25A]
+TxtOverflow:		.asc "overflo", 'w'+$80			;	[A26A]
+TxtOutOfMemory:		.asc "out of memor", 'y'+$80		;	[A272]
+TxtUndefdState:		.asc "undef'd statemen", 't'+$80	;	[A27F]
+TxtBadSubscript:	.asc "bad subscrip", 't'+$80		;	[A290]
+TxtRedimdArray:		.asc "redim'd arra", 'y'+$80		;	[A29D]
+TxtDivisByZero:		.asc "division by zer", 'o'+$80		;	[A2AA]
+TxtIllegalDirect:	.asc "illegal direc", 't'+$80		;	[A2BA]
+TxtTypeMismatc:		.asc "type mismatc", 'h'+$80		;	[A2C8]
+TxtStringTooLong:	.asc "string too lon", 'g'+$80		;	[A2D5]
+TxtFileData:		.asc "file dat", 'a'+$80		;	[A2E4]
+TxtFormulaTooC:		.asc "formula too comple", 'x'+$80	;	[A2ED]
+TxtCantContinue:	.asc "can't continu", 'e'+$80		;	[A300]
+TxtUndefdFunct:		.asc "undef'd functio", 'n'+$80		;	[A30E]
+TxtVerify:		.asc "verif", 'y'+$80			;	[A31E]
+TxtLoad:		.asc "loa", 'd'+$80			;	[A324]
 
 
 ; error message pointer table
@@ -1742,12 +1742,12 @@ AddrErrorMsg:				;				[A328]
 ;
 ; BASIC messages
 
-TxtOK:		.byte $0D, "OK", $0D, $00
-TxtError:	.byte "  ERROR", $00
-TxtIn:		.byte " IN ", $00
-TxtReady:	.byte $0D, $0A, "READY.", $0D, $0A, $00
-TxtBreak:	.byte $0D, $0A
-TxtBreak2:	.byte "BREAK", $00
+TxtOK:		.asc $0D, "ok", $0D, $00
+TxtError:	.asc "  error", $00
+TxtIn:		.asc " in ", $00
+TxtReady:	.asc $0D, $0A, "ready.", $0D, $0A, $00
+TxtBreak:	.asc $0D, $0A
+TxtBreak2:	.asc "break", $00
 
 
 ;******************************************************************************
@@ -2910,11 +2910,11 @@ A_A7CE:					;				[A7CE]
 	iny				; increment index
 	lda	(TXTPTR),Y		; get line number LB
 	sta	CURLIN			; save current line number LB
-	
+
 	iny				; increment index
 	lda	(TXTPTR),Y		; get line # HB
 	sta	CURLIN+1		; save current line number HB
-	
+
 	tya				; A now = 4
 	adc	TXTPTR			; add BASIC execute pointer LB, now
 					; points to code
@@ -3606,7 +3606,7 @@ A_AA3D:					;				[AA3D]
 ; else HBs were equal
 	lda	FacMantissa+2		; get descriptor pointer LB
 	cmp	VARTAB			; compare with start of variables LB
-	bcs	A_AA52			; if greater or equal make space and 
+	bcs	A_AA52			; if greater or equal make space and
 					; copy string
 A_AA4B:					;				[AA4B]
 	lda	FacMantissa+2		; get descriptor pointer LB
@@ -3729,7 +3729,7 @@ bcPRINT2:				;				[AAA2]
 
 ;******************************************************************************
 ;
-; set XY to CommandBuf - 1 
+; set XY to CommandBuf - 1
 
 SetXY2CmdBuf:				;				[AACA]
 	lda	#$00			; clear A
@@ -3829,7 +3829,7 @@ OutputString:				;				[AB1E]
 OutputString2:				;				[AB21]
 	jsr	PopStrDescStk		; pop string off descriptor stack, or
 					; from top of string		[B6A6]
-					; space returns with A = length, 
+					; space returns with A = length,
 					; X = pointer LB, Y = pointer HB
 	tax				; copy length
 
@@ -4289,10 +4289,10 @@ A_ACFB:					;				[ACFB]
 ; input error messages
 
 txtEXTRA:				;				[ACFC]
-.byte	"?EXTRA IGNORED",$0D,$00
+.asc	"?extra ignored",$0D,$00
 
 txtREDOFROM:				;				[AD0C]
-.byte	"?REDO FROM START",$0D,$00
+.asc	"?redo from start",$0D,$00
 
 
 ;******************************************************************************
@@ -4918,11 +4918,11 @@ GetVariable:				;				[AF28]
 	jsr	ChkIfVariable		; check address range		[AF14]
 	bcc	A_AF5C			; exit if not in BASIC ROM
 
-	cpx	#'T'			; compare variable name first character
+	cpx	#'t'			; compare variable name first character
 					; with "T"
 	bne	A_AF5C			; exit if not "T"
 
-	cpy	#'I'+$80		; compare variable name second character
+	cpy	#'i'+$80		; compare variable name second character
 					; with "I$"
 	bne	A_AF5C			; exit if not "I$"
 
@@ -4967,11 +4967,11 @@ A_AF6E:					;				[AF6E]
 	jsr	ChkIfVariable		; check address range		[AF14]
 	bcc	A_AFA0			; if not in BASIC ROM get pointer and
 					; unpack into FAC1
-	cpx	#'T'			; compare variable name first character
+	cpx	#'t'			; compare variable name first character
 					; with "T"
 	bne	A_AF92			; branch if not "T"
 
-	cpy	#'I'			; compare variable name second character
+	cpy	#'i'			; compare variable name second character
 					; with "I"
 	bne	A_AFA0			; branch if not "I"
 
@@ -4990,7 +4990,7 @@ A_AF6E:					;				[AF6E]
 
 GetTime:				;				[AF84]
 	jsr	ReadClock		; read real time clock		[FFDE]
-	stx	FacMantissa+2		; save jiffy clock mid byte as  FAC1
+	stx	FacMantissa+2		; save jiffy clock mid byte as	FAC1
 					; mantissa 3
 	sty	FacMantissa+1		; save jiffy clock HB as  FAC1
 					; mantissa 2
@@ -5003,11 +5003,11 @@ GetTime:				;				[AF84]
 
 ; variable name set-up, variable is float and not "Tx"
 A_AF92:					;				[AF92]
-	cpx	#'S'			; compare variable name first character
+	cpx	#'s'			; compare variable name first character
 					; with "S"
 	bne	A_AFA0			; if not "S" go do normal floating
 					; variable
-	cpy	#'T'			; compare variable name second character
+	cpy	#'t'			; compare variable name second character
 					; with "T"
 	bne	A_AFA0			; if not "T" go do normal floating
 					; variable
@@ -5402,11 +5402,11 @@ A_B109:					;				[B109]
 ; check byte, return C = 0 if <"A" or >"Z"
 
 CheckAtoZ:				;				[B113]
-	cmp	#'A'			; compare with "A"
+	cmp	#'a'			; compare with "A"
 	bcc	A_B11C			; exit if less
 
 ; carry is set
-	sbc	#'Z'+1			; subtract "Z"+1
+	sbc	#'z'+1			; subtract "Z"+1
 
 	sec				; set carry
 	sbc	#$A5			; subtract $A5 (restore byte)
@@ -5445,13 +5445,13 @@ A_B128:					;				[B128]
 	lda	VARNAM			; get variable name first character
 
 	ldy	VARNAM+1		; get variable name second character
-	cmp	#'T'			; compare first character with "T"
+	cmp	#'t'			; compare first character with "T"
 	bne	A_B13B			; branch if not "T"
 
-	cpy	#'I'+$80		; compare second character with "I$"
+	cpy	#'i'+$80		; compare second character with "I$"
 	beq	A_B123			; if "I$" return null value
 
-	cpy	#'I'			; compare second character with "I"
+	cpy	#'i'			; compare second character with "I"
 	bne	A_B13B			; branch if not "I"
 
 ; if name is "TI" do syntax error
@@ -5459,10 +5459,10 @@ A_B138:					;				[B138]
 	jmp	SyntaxError		; do syntax error then warm start [AF08]
 
 A_B13B:					;				[B13B]
-	cmp	#'S'			; compare first character with "S"
+	cmp	#'s'			; compare first character with "S"
 	bne	A_B143			; branch if not "S"
 
-	cpy	#'T'			; compare second character with "T"
+	cpy	#'t'			; compare second character with "T"
 	beq	A_B138			; if name is "ST" do syntax error
 
 A_B143:					;				[B143]
@@ -5610,9 +5610,9 @@ A_B1CE:					;				[B1CE]
 ;			; 1st char  2nd char
 ;			;   b7	      b7      type    element size
 ;			; --------  --------  -----   ------------
-;			;   0	      0	      Real       5
-;			;   0         1	      string     3
-;			;   1	      1	      integer    2
+;			;   0	      0	      Real	 5
+;			;   0	      1	      string	 3
+;			;   1	      1	      integer	 2
 ; offset to next array	; word
 ; dimension count	; byte
 ; 1st dimension size	; word, this is the number of elements including 0
@@ -6787,7 +6787,7 @@ ConcatStrings:				;				[B63D]
 	sta	FACOV			; set pointer HB
 
 	ldy	#$00			; clear index
-	lda	(ARISGN),Y		; get length of first string from 
+	lda	(ARISGN),Y		; get length of first string from
 					; descriptor
 	clc				; clear carry for add
 	adc	(FacMantissa+2),Y	; add length of second string
@@ -8637,7 +8637,7 @@ A_BD0F:					;				[BD0F]
 	cmp	#'.'			; else compare with "."
 	beq	A_BD41			; branch if "."
 
-	cmp	#'E'			; else compare with "E"
+	cmp	#'e'			; else compare with "E"
 	bne	A_BD47			; branch if not "E"
 
 ; was "E" so evaluate exponential part
@@ -9076,7 +9076,7 @@ A_BED3:					;				[BED3]
 A_BEE3:					;				[BEE3]
 	sta	STACK+1,Y		; save to output string
 
-	lda	#'E'			; character "E"
+	lda	#'e'			; character "E"
 	sta	STACK,Y			; save exponent sign to output string
 
 	txa				; get exponent count back
@@ -9133,9 +9133,9 @@ D_BF16:					;				[BF16]
 .byte	$00,$01,$86,$A0			;    +100000
 .byte	$FF,$FF,$D8,$F0			;     -10000
 .byte	$00,$00,$03,$E8			;      +1000
-.byte	$FF,$FF,$FF,$9C			;       -100
-.byte	$00,$00,$00,$0A			;        +10
-.byte	$FF,$FF,$FF,$FF			;         -1
+.byte	$FF,$FF,$FF,$9C			;	-100
+.byte	$00,$00,$00,$0A			;	 +10
+.byte	$FF,$FF,$FF,$FF			;	  -1
 
 ; jiffy counts
 
@@ -9294,7 +9294,7 @@ bcEXP2:					;				[E000]
 
 	lda	FACEXP			; get FAC1 exponent
 	cmp	#$88			; less than EXP limit?
-	bcc	A_E00E			; yes, -> 
+	bcc	A_E00E			; yes, ->
 A_E00B:					;				[E00B]
 	jsr	HndlOvUnFlErr		; handle overflow and underflow	[BAD4]
 A_E00E:					;				[E00E]
@@ -9508,7 +9508,7 @@ PackFAC1intoXY0:			;				[E0F6]
 
 HndlBasIoErr:				;				[E0F9]
 	cmp	#$F0			; error = $F0?
-	bne	A_E104			; no, -> 
+	bne	A_E104			; no, ->
 
 	sty	MEMSIZ+1		; set end of memory HB
 	stx	MEMSIZ			; set end of memory LB
@@ -9518,7 +9518,7 @@ HndlBasIoErr:				;				[E0F9]
 ; error was not $F0
 A_E104:					;				[E104]
 	tax				; copy error #, zero?
-	bne	A_E109			; no, -> 
+	bne	A_E109			; no, ->
 
 	ldx	#$1E			; else error $1E, break error
 A_E109:					;				[E109]
@@ -9690,7 +9690,7 @@ A_E194:					;				[E194]
 A_E195:					;				[E195]
 	jsr	ReadIoStatus		; read I/O status word		[FFB7]
 	and	#$BF			; clear read error, error found?
-	beq	A_E1A1			; no, -> 
+	beq	A_E1A1			; no, ->
 S_E19C:
 	ldx	#$1D			; error $1D, load error
 A_E19E:					;				[E19E]
@@ -9699,7 +9699,7 @@ A_E19E:					;				[E19E]
 A_E1A1:					;				[E1A1]
 	lda	TXTPTR+1		; get BASIC execute pointer HB
 	cmp	#$02			; immediate mode?
-	bne	A_E1B5			; no, -> 
+	bne	A_E1B5			; no, ->
 
 	stx	VARTAB			; set start of variables LB
 	sty	VARTAB+1		; set start of variables HB
@@ -9798,7 +9798,7 @@ GetByte:				;				[E200]
 
 ExitIfEotColl:				;				[E206]
 	jsr	CHRGOT			; scan memory, [EOL] or ":"?	[0079]
-	bne	A_E20D			; no, -> 
+	bne	A_E20D			; no, ->
 
 	pla				; dump return address LB
 	pla				; dump return address HB
@@ -9932,7 +9932,7 @@ bcSIN:					;				[E26B]
 	jsr	FAC1plus05		; add 0.5 to FAC1 (round FAC1)	[B849]
 
 	lda	FACSGN			; get FAC1 sign (b7), negative?
-	bmi	A_E2A0			; yes, -> 
+	bmi	A_E2A0			; yes, ->
 
 	lda	TANSGN			; get the comparison evaluation flag
 	eor	#$FF			; toggle flag
@@ -9945,7 +9945,7 @@ A_E2A0:					;				[E2A0]
 	jsr	AddFORvar2FAC1		; add (AY) to FAC1		[B867]
 
 	pla				; restore FAC1 sign, positive
-	bpl	A_E2AD			; yes, -> 
+	bpl	A_E2AD			; yes, ->
 
 ; else correct FAC1
 	jsr	bcGREATER		; do - FAC1			[BFB4]
@@ -10025,14 +10025,14 @@ ConstVCosSin:				;				[E2EF]
 bcATN:					;				[E30E]
 	lda	FACSGN			; get FAC1 sign (b7)
 	pha				; save sign, positive?
-	bpl	A_E316			; yes, -> 
+	bpl	A_E316			; yes, ->
 
 	jsr	bcGREATER		; else do - FAC1		[BFB4]
 A_E316:					;				[E316]
 	lda	FACEXP			; get FAC1 exponent
 	pha				; push exponent
 	cmp	#$81			; smaller than 1 ?
-	bcc	A_E324			; yes, -> 
+	bcc	A_E324			; yes, ->
 
 	lda	#<Constant1		; pointer to 1 LB
 	ldy	#>Constant1		; pointer to 1 HB
@@ -10044,7 +10044,7 @@ A_E324:					;				[E324]
 
 	pla				; restore old FAC1 exponent
 	cmp	#$81			; smaller than 1 ?
-	bcc	A_E337			; yes, -> 
+	bcc	A_E337			; yes, ->
 
 	lda	#<ConstPIdiv2		; pointer to (pi/2) LB
 	ldy	#>ConstPIdiv2		; pointer to (pi/2) LB
@@ -10052,7 +10052,7 @@ A_E324:					;				[E324]
 					;				[B850]
 A_E337:					;				[E337]
 	pla				; restore FAC1 sign, positive
-	bpl	A_E33D			; yes, -> 
+	bpl	A_E33D			; yes, ->
 
 	jmp	bcGREATER		; else do - FAC1 and return	[BFB4]
 
@@ -10139,7 +10139,7 @@ S_E39D:
 DataCHRGET:				;				[E3A2]
 	inc	TXTPTR			; increment BASIC execute pointer low
 					; byte, became zero?
-	bne	A_E3A8			; no, -> 
+	bne	A_E3A8			; no, ->
 
 	inc	TXTPTR+1		; inc. BASIC execute pointer HB
 
@@ -10156,7 +10156,7 @@ A_E3A8:					;				[E3A8]
 ; clear Cb if numeric
 
 	cmp	#' '			; space?
-	beq	DataCHRGET		; yes, -> 
+	beq	DataCHRGET		; yes, ->
 
 	sec				; set carry for SBC
 	sbc	#'0'			; subtract "0"
@@ -10325,14 +10325,11 @@ A_E455:					;				[E455]
 ; BASIC startup messages
 
 BasicBytesFree:				;				[E460]
-.byte	" BASIC BYTES FREE",$0D,$00
+.asc	" basic bytes free",$0D,$00
 
 TxtCommodore64:				;				[E473]
-.byte	$93,$0D
-.byte	"    **** COMMODORE 64 BASIC V2 ****"
-.byte	$0D, $0D
-.byte	" 64K RAM SYSTEM  "
-.byte	$00
+.asc	$93,$0D,"    **** commodore 64 basic v2 ****",$0D, $0D
+.asc	" 64k ram system  ",$00
 
 
 ;******************************************************************************
@@ -10431,16 +10428,16 @@ A_E4EB:					;				[E4EB]
 ; baud rate tables for PAL C64
 
 TblBaudRates:				;				[E4EC]
-.word	$2619				;   50   baud	985300
-.word	$1944				;   75   baud	985200
-.word	$111A				;  110   baud	985160
+.word	$2619				;   50	 baud	985300
+.word	$1944				;   75	 baud	985200
+.word	$111A				;  110	 baud	985160
 .word	$0DE8				;  134.5 baud	984540
-.word	$0C70				;  150   baud	985200
-.word	$0606				;  300   baud	985200
-.word	$02D1				;  600   baud	985200
-.word	$0137				; 1200   baud	986400
-.word	$00AE				; 1800   baud	986400
-.word	$0069				; 2400   baud	984000
+.word	$0C70				;  150	 baud	985200
+.word	$0606				;  300	 baud	985200
+.word	$02D1				;  600	 baud	985200
+.word	$0137				; 1200	 baud	986400
+.word	$00AE				; 1800	 baud	986400
+.word	$0069				; 2400	 baud	984000
 
 
 ;******************************************************************************
@@ -10902,7 +10899,7 @@ RestorRegsQuot:				;				[E6A8]
 	tay				; restore Y
 
 	lda	InsertCount		; get the insert count, inserts to do?
-	beq	A_E6B0			; no, -> 
+	beq	A_E6B0			; no, ->
 
 	lsr	QTSW			; clear cursor quote flag, $xx = quote,
 					; $00 = no quote
@@ -11040,7 +11037,7 @@ OutputChar:				;				[E716]
 	lda	TEMPD7			; restore last character
 	bpl	A_E72A			; branch if unshifted
 
-	jmp	ShiftedChars		; do shifted characters and return 
+	jmp	ShiftedChars		; do shifted characters and return
 					;				[E7D4]
 A_E72A:					;				[E72A]
 	cmp	#$0D			; compare with [CR]
@@ -11441,7 +11438,7 @@ A_E8CA:					;				[E8CA]
 ; contain a colour character this routine exits without changing the colour
 
 SetColourCode:				;				[E8CB]
-	ldx	#D_E8E9-AscColourCodes	; set the colour code count
+	ldx	#D_E8EA-AscColourCodes-1; set the colour code count
 A_E8CD:					;				[E8CD]
 	cmp	AscColourCodes,X	; compare character with a table code
 	beq	A_E8D6			; if a match go save colour and exit
@@ -11477,8 +11474,8 @@ AscColourCodes:				; ------	------
 .byte	$98				;  152		medium grey
 .byte	$99				;  153		light green
 .byte	$9A				;  154		light blue
-D_E8E9:					;				[E8E9]
 .byte	$9B				;  155		light grey
+D_E8EA:					;				[E8EA]
 
 
 ;******************************************************************************
@@ -11919,7 +11916,7 @@ A_EA7B:					;				[EA7B]
 ; 1)	check if key pressed, if not then exit the routine
 ;
 ; 2)	init I/O ports of CIA ?? for keyboard scan and set pointers to decode
-; 	table 1. clear the character counter
+;	table 1. clear the character counter
 ;
 ; 3)	set one line of port B low and test for a closed key on port A by
 ;	shifting the byte read from the port. if the carry is clear then a key
@@ -12178,7 +12175,7 @@ TblStandardKeys:			;				[EB81]
 .byte	$FF
 
 ;	DEL	RETURN	CRSR RI	F7	F1	F3	F5	CRSR DO
-;	3	w	a	4	z	s	e	L SHIFT	
+;	3	w	a	4	z	s	e	L SHIFT
 ;	5	r	d	6	c	f	t	x
 ;	6	y	g	8	b	h	u	v
 ;	9	i	j	0	m	k	o	n
@@ -12394,7 +12391,7 @@ TblValuesVIC:				;				[ECB9]
 ; keyboard buffer for auto load/run
 
 TblAutoLoadRun:				;				[ECE7]
-.byte	"LOAD",$0D,"RUN",$0D
+.asc	"load",$0D,"run",$0D
 
 
 ;******************************************************************************
@@ -12489,7 +12486,7 @@ IecByteOut22:				;				[ED40]
 	jsr	IecDataH		; set the serial data out high	[EE97]
 
 	jsr	IecData2Carry		; get serial data status in Cb	[EEA9]
-	bcs	A_EDAD			; if the serial data is high go do 
+	bcs	A_EDAD			; if the serial data is high go do
 					;'device not present'
 	jsr	IecClockH		; set the serial clock out high	[EE85]
 
@@ -13494,41 +13491,34 @@ A_F0BB:					;				[F0BB]
 ; kernel I/O messages
 
 TxtIO_ERROR:				;				[F0BD]
-.byte	$0D
-.byte "I/O ERROR ", '#'+$80
+.asc	$0D, "i/o error ", '#'+$80
 
 TxtSEARCHING:				;				[F0C9]
-.byte	$0D
-.byte "SEARCHING", ' '+$80
+.asc	$0D, "searching", ' '+$80
 
 TxtFOR:					;				[F0D4]
-.byte "FOR", ' '+$80
+.asc "for", ' '+$80
 
 TxtPRESS_PLAY:				;				[F0D8]
-.byte	$0D
-.byte "PRESS PLAY ON TAP", 'E'+$80
+.asc	$0D, "press play on tap", 'e'+$80
 
 TxtPRESS_RECO:				;				[F0EB]
-.byte "PRESS RECORD & PLAY ON TAP", 'E'+$80
+.asc "press record & play on tap", 'e'+$80
 
 TxtLOADING:				;				[F106]
-.byte	$0D
-.byte "LOADIN", 'G'+$80
+.asc	$0D, "loadin", 'g'+$80
 
 TxtSAVING:				;				[F10E]
-.byte	$0D
-.byte "SAVING", ' '+$80
+.asc	$0D, "saving", ' '+$80
 
 TxtVERIFYING:				;				[F116]
-.byte	$0D
-.byte "VERIFYIN", 'G'+$80
+.asc	$0D, "verifyin", 'g'+$80
 
 TxtFOUND:				;				[F120]
-.byte	$0D
-.byte "FOUND", ' '+$80
+.asc	$0D, "found", ' '+$80
 
 TxtOK2:					;				[F127]
-.byte	$0D, "OK", $8D
+.asc	$0D, "ok", $8D
 
 
 ;******************************************************************************
@@ -13640,7 +13630,7 @@ A_F166:					;				[F166]
 	bne	A_F173			; if not screen continue
 
 ; the input device was the screen
-	sta	CRSW			; input from keyboard or screen, 
+	sta	CRSW			; input from keyboard or screen,
 					;$xx = screen,
 					; $00 = keyboard
 	lda	CurLineLeng		; get current screen line length
@@ -14074,7 +14064,7 @@ A_F2BF:					;				[F2BF]
 	sta	RIBUF+1			; clear RS232 input buffer pointer HB
 	sta	ROBUF+1			; clear RS232 output buffer pointer HB
 
-	jmp	SetTopOfMem		; go set top of memory to F0xx 	[F47D]
+	jmp	SetTopOfMem		; go set top of memory to F0xx	[F47D]
 
 ; is not the RS232 device
 A_F2C8:					;				[F2C8]
@@ -14308,7 +14298,7 @@ S_F379:
 
 OpenLogFile3:				;				[F384]
 	cmp	#$02			; RS-232?
-	bne	A_F38B			; no, -> 
+	bne	A_F38B			; no, ->
 
 	jmp	OpenRS232Dev		; go open RS232 device and return [F409]
 
@@ -14880,7 +14870,7 @@ SaveRamToDev2:				;				[F5DD]
 
 SaveRamToDev22:				;				[F5ED]
 	lda	FA			; get the device number, keyboard?
-	bne	A_F5F4			; no, -> 
+	bne	A_F5F4			; no, ->
 
 ; else ..
 A_F5F1:					;				[F5F1]
@@ -15564,7 +15554,7 @@ ReadTape:				;				[F84A]
 ; initiate a tape write
 
 InitTapeWrite:				;				[F864]
-	jsr	SetTapeBufStart		; set tape buffer start and end 
+	jsr	SetTapeBufStart		; set tape buffer start and end
 					; pointers			[F7D7]
 
 ; do tape write, 20 cycle count
@@ -16249,7 +16239,7 @@ A_FB72:					;				[FB72]
 
 	jsr	IncRdWrPtr		; increment read/write pointer	[FCDB]
 
-	jsr	ChkRdWrPtr		; check read/write pointer, return 
+	jsr	ChkRdWrPtr		; check read/write pointer, return
 					;Cb = 1 if pointer >= end	[FCD1]
 	bcc	A_FB72			; loop if not at end
 
@@ -16398,7 +16388,7 @@ A_FBE3:					;				[FBE3]
 ; with two half cycles of $00B0 system clocks. this is the same as the first
 ; part of a 1 bit
 
-	jsr	SetTimeBitIs1		; set time constant for bit = 1 and 
+	jsr	SetTimeBitIs1		; set time constant for bit = 1 and
 					; toggle tape			[FBAD]
 	bne	A_FC09			; if first half cycle go restore
 					; registers and exit interrupt
@@ -16711,7 +16701,7 @@ RESET_routine:				;				[FCE2]
 	jmp	(RomStart)		; else call ROM start code
 
 A_FCEF:					;				[FCEF]
-	stx	VICCTR2			; read the horizontal fine scroll and 
+	stx	VICCTR2			; read the horizontal fine scroll and
 					;control register
 	jsr	InitSidCIAIrq2		; initialise SID, CIA and IRQ	[FDA3]
 	jsr	TestRAM2		; RAM test and find RAM end	[FD50]
@@ -16825,17 +16815,17 @@ A_FD27:					;				[FD27]
 ; kernal vectors
 
 TblVectors:				;				[FD30]
-.word	IRQ_vector		; CINV    IRQ vector
-.word	BRK_vector		; BINV    BRK vector
-.word	NMI_vector		; NMINV   NMI vector
-.word	OpenLogFile2		; IOPEN   open a logical file
+.word	IRQ_vector		; CINV	  IRQ vector
+.word	BRK_vector		; BINV	  BRK vector
+.word	NMI_vector		; NMINV	  NMI vector
+.word	OpenLogFile2		; IOPEN	  open a logical file
 .word	CloseLogFile2		; ICLOSE  close a specified logical file
 .word	OpenChanInput		; ICHKIN  open channel for input
 .word	OpenChanOutput		; ICKOUT  open channel for output
 .word	CloseIoChans		; ICLRCH  close input and output channels
 .word	ByteFromChan2		; IBASIN  input character from channel
 .word	OutByteChan2		; IBSOUT  output character to channel
-.word	Scan4StopKey		; ISTOP   scan stop key
+.word	Scan4StopKey		; ISTOP	  scan stop key
 .word	GetByteInpDev		; IGETIN  get character from the input device
 .word	ClsAllChnFil		; ICLALL  close all channels and files
 .word	BRK_vector		; UserFn  user function
@@ -17001,7 +16991,7 @@ J_FDF3:					;				[FDF3]
 ; with the pointer to filename, X being the LB. The address can be any
 ; valid memory address in the system where a string of characters for the file
 ; name is stored. If no filename desired the accumulator must be set to 0,
-; representing a zero file length, in that case  XY may be set to any memory
+; representing a zero file length, in that case	 XY may be set to any memory
 ; address.
 
 SetFileName2:				;				[FDF9]
@@ -17314,21 +17304,21 @@ End_RS232_NMI:				;				[FEBC]
 ;		system clock
 ;		------------
 ; PAL		  985248 Hz
-; NTSC	 	 1022727 Hz
+; NTSC		 1022727 Hz
 
 ; baud rate tables for NTSC C64
 
 TblBaudNTSC:				;				[FEC2]
-.word	$27C1				;   50   baud	1027700
-.word	$1A3E				;   75   baud	1022700
-.word	$11C5				;  110   baud	1022780
+.word	$27C1				;   50	 baud	1027700
+.word	$1A3E				;   75	 baud	1022700
+.word	$11C5				;  110	 baud	1022780
 .word	$0E74				;  134.5 baud	1022200
-.word	$0CED				;  150   baud	1022700
-.word	$0645				;  300   baud	1023000
-.word	$02F0				;  600   baud	1022400
-.word	$0146				; 1200   baud	1022400
-.word	$00B8				; 1800   baud	1022400
-.word	$0071				; 2400   baud	1022400
+.word	$0CED				;  150	 baud	1022700
+.word	$0645				;  300	 baud	1023000
+.word	$02F0				;  600	 baud	1022400
+.word	$0146				; 1200	 baud	1022400
+.word	$00B8				; 1800	 baud	1022400
+.word	$0071				; 2400	 baud	1022400
 
 
 ;******************************************************************************
@@ -17806,7 +17796,7 @@ SetAddresses:				;				[FFBA]
 ; with the pointer to filename, X being th LB. The address can be any
 ; valid memory address in the system where a string of characters for the file
 ; name is stored. If no filename desired the accumulator must be set to 0,
-; representing a zero file length, in that case  XY may be set to any memory
+; representing a zero file length, in that case	 XY may be set to any memory
 ; address.
 
 SetFileName:				;				[FFBD]
@@ -18128,7 +18118,7 @@ GetAddrIoDevs:				;				[FFF3]
 ;
 
 ;S_FFF6
-.byte	"RRBY"
+.asc	"rrby"
 
 ; hardware vectors
 

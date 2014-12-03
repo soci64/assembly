@@ -4,7 +4,7 @@
 ; The almost completely commented C64 ROM disassembly. V1.01 Lee Davison 2012
 ;
 ; Changed by Ruud Baltissen 2014
-; - changed names of routines and variables, LAzB_xx and LAzB_xxxx, 
+; - changed names of routines and variables, LAzB_xx and LAzB_xxxx,
 ;   into more logical ones
 ; - length of lines < 81 (if possible)
 ; - combined low and high bytes to one variable
@@ -47,9 +47,9 @@ P6510			= $01		; 6510 I/O port data register
 					;  5	cass motor 1 = off, 0 = on
 					;  4	cass sw	   1 = off, 0 = on
 					;  3	cass data
-					;  2	CHAREN     1 = I/O,
+					;  2	CHAREN	   1 = I/O,
 					;		   0 = chraracter ROM
-					;  1	HIRAM 	1 = Kernal,	0 = RAM
+					;  1	HIRAM	1 = Kernal,	0 = RAM
 					;  0	LORAM	1 = BASIC,	0 = RAM
 
 ZP02			= $02		; unused
@@ -703,7 +703,7 @@ CursorCol		= $CA		; input cursor column
 ; $04	9		$14	J		$24	M		$34	O
 ; $05	+		$15	L		$25	.		$35	@
 ; $06	[POUND]		$16	;		$26	not used	$36	[U ARROW]
-; $07	[DEL]		$17	[RIGHT]		$27	[F1]		$37	[F5]	
+; $07	[DEL]		$17	[RIGHT]		$27	[F1]		$37	[F5]
 ; $08	[L ARROW]	$18	[STOP]		$28	not used	$38	2
 ; $09	W		$19	not used	$29	S		$39	4
 ; $0A	R		$1A	X		$2A	F		$3A	6
@@ -992,7 +992,7 @@ KEYLOG			= $028F		; keyboard decode logic pointer
 MODE			= $0291		; shift mode switch, $00 = enabled, $80 = locked
 
 
-; This location is used to determine whether moving the cursor past the ??xx 
+; This location is used to determine whether moving the cursor past the ??xx
 ; column of a logical line will cause another physical line to be added to the
 ; logical line.
 
@@ -1196,8 +1196,8 @@ RomIdentStr		= $8004		; autostart ROM identifier string start
 VIC_chip		= $D000		; vic ii chip base address
 VICCTR1			= $D011		; vertical fine scroll and control
 VICLINE			= $D012		; raster compare register
-VICLPX			= $D013		; lightpen, X position 
-VICLPY			= $D014		; lightpen, Y position 
+VICLPX			= $D013		; lightpen, X position
+VICLPY			= $D014		; lightpen, Y position
 VICSPEN			= $D015		; enable sprites, 1 = on
 VICCTR2			= $D016		; horizontal fine scroll and control
 VICRAM			= $D018		; memory control
@@ -1442,8 +1442,6 @@ TK_GO		= $CB			; GO token
 TK_PI		= $FF			; PI token
 
 
-.enc screen
-
 
 ;******************************************************************************
 ;
@@ -1451,13 +1449,13 @@ TK_PI		= $FF			; PI token
 
 *= $A000
 
-BasicCold:
+BasicCold
 .word	BasicColdStart			; BASIC cold start entry point
-BasicNMI:
+BasicNMI
 .word	BasicWarmStart			; BASIC warm start entry point
 
 ;A_A004
-.text	"CBMBASIC"			; ROM name, unreferenced
+.text	"cbmbasic"			; ROM name, unreferenced
 
 
 ;******************************************************************************
@@ -1466,53 +1464,53 @@ BasicNMI:
 ; address onto the stack and doing an RTS so the actual address -1 needs to be
 ; pushed
 
-TblBasicInstr:				;				[A00C]
-.word	bcEND-1				; perform END		$80
-.word	bcFOR-1				; perform FOR		$81
-.word	bcNEXT-1			; perform NEXT		$82
-.word	bcDATA-1			; perform DATA		$83
-.word	bcINPUTH-1			; perform INPUT#	$84
-.word	bcINPUT-1			; perform INPUT		$85
-.word	bcDIM-1				; perform DIM		$86
-.word	bcREAD-1			; perform READ		$87
+TblBasicInstr				;				[A00C]
+.rta	bcEND				; perform END		$80
+.rta	bcFOR				; perform FOR		$81
+.rta	bcNEXT				; perform NEXT		$82
+.rta	bcDATA				; perform DATA		$83
+.rta	bcINPUTH			; perform INPUT#	$84
+.rta	bcINPUT				; perform INPUT		$85
+.rta	bcDIM				; perform DIM		$86
+.rta	bcREAD				; perform READ		$87
 
-.word	bcLET-1				; perform LET		$88
-.word	bcGOTO-1			; perform GOTO		$89
-.word	bcRUN-1				; perform RUN		$8A
-.word	bcIF-1				; perform IF		$8B
-.word	bcRESTORE-1			; perform RESTORE	$8C
-.word	bcGOSUB-1			; perform GOSUB		$8D
-.word	bcRETURN-1			; perform RETURN	$8E
-.word	bcREM-1				; perform REM		$8F
+.rta	bcLET				; perform LET		$88
+.rta	bcGOTO				; perform GOTO		$89
+.rta	bcRUN				; perform RUN		$8A
+.rta	bcIF				; perform IF		$8B
+.rta	bcRESTORE			; perform RESTORE	$8C
+.rta	bcGOSUB				; perform GOSUB		$8D
+.rta	bcRETURN			; perform RETURN	$8E
+.rta	bcREM				; perform REM		$8F
 
-.word	bcSTOP-1			; perform STOP		$90
-.word	bcON-1				; perform ON		$91
-.word	bcWAIT-1			; perform WAIT		$92
-.word	bcLOAD-1			; perform LOAD		$93
-.word	bcSAVE-1			; perform SAVE		$94
-.word	bcVERIFY-1			; perform VERIFY	$95
-.word	bcDEF-1				; perform DEF		$96
-.word	bcPOKE-1			; perform POKE		$97
+.rta	bcSTOP				; perform STOP		$90
+.rta	bcON				; perform ON		$91
+.rta	bcWAIT				; perform WAIT		$92
+.rta	bcLOAD				; perform LOAD		$93
+.rta	bcSAVE				; perform SAVE		$94
+.rta	bcVERIFY			; perform VERIFY	$95
+.rta	bcDEF				; perform DEF		$96
+.rta	bcPOKE				; perform POKE		$97
 
-.word	bcPRINTH-1			; perform PRINT#	$98
-.word	bcPRINT-1			; perform PRINT		$99
-.word	bcCONT-1			; perform CONT		$9A
-.word	bcLIST-1			; perform LIST		$9B
-.word	bcCLR-1				; perform CLR		$9C
-.word	bcCMD-1				; perform CMD		$9D
-.word	bcSYS-1				; perform SYS		$9E
-.word	bcOPEN-1			; perform OPEN		$9F
+.rta	bcPRINTH			; perform PRINT#	$98
+.rta	bcPRINT				; perform PRINT		$99
+.rta	bcCONT				; perform CONT		$9A
+.rta	bcLIST				; perform LIST		$9B
+.rta	bcCLR				; perform CLR		$9C
+.rta	bcCMD				; perform CMD		$9D
+.rta	bcSYS				; perform SYS		$9E
+.rta	bcOPEN				; perform OPEN		$9F
 
-.word	bcCLOSE-1			; perform CLOSE		$A0
-.word	bcGET-1				; perform GET		$A1
-.word	bcNEW-1				; perform NEW		$A2
+.rta	bcCLOSE				; perform CLOSE		$A0
+.rta	bcGET				; perform GET		$A1
+.rta	bcNEW				; perform NEW		$A2
 
 
 ;******************************************************************************
 ;
 ; action addresses for functions
 
-TblFunctions:				;				[A052]
+TblFunctions				;				[A052]
 .word	bcSGN				; perform SGN()		$B4
 .word	bcINT				; perform INT()		$B5
 .word	bcABS				; perform ABS()		$B6
@@ -1547,27 +1545,27 @@ TblFunctions:				;				[A052]
 ; commands these are called by pushing the address onto the stack and doing an
 ; RTS, so again the actual address -1 needs to be pushed
 
-HierachyCode:				;				[A080]
+HierachyCode				;				[A080]
 .byte	$79
-.word	bcPLUS-1			; +
+.rta	bcPLUS				; +
 .byte	$79
-.word	bcMINUS-1			; -
+.rta	bcMINUS				; -
 .byte	$7B
-.word	bcMULTIPLY-1			; *
+.rta	bcMULTIPLY			; *
 .byte	$7B
-.word	bcDIVIDE-1			; /
+.rta	bcDIVIDE			; /
 .byte	$7F
-.word	bcPOWER-1			; ^
+.rta	bcPOWER				; ^
 .byte	$50
-.word	bcAND-1				; AND
+.rta	bcAND				; AND
 .byte	$46
-.word	bcOR-1				; OR
+.rta	bcOR				; OR
 .byte	$7D
-.word	bcGREATER-1			; >
+.rta	bcGREATER			; >
 .byte	$5A
-.word	bcEQUAL-1			; =
+.rta	bcEQUAL				; =
 .byte	$64
-.word	bcSMALLER-1			; <
+.rta	bcSMALLER			; <
 
 
 ;******************************************************************************
@@ -1577,163 +1575,96 @@ HierachyCode:				;				[A080]
 
 ; first are the primary command keywords, only these can start a statement
 
-TblBasicCodes:				;				[A09E]
-D_A09E:		.text "EN"
-.byte $C4				; END		$80		128
-D_A0A1:		.text "FO"
-.byte $D2				; FOR		$81		129
-D_A0A4:		.text "NEX"
-.byte $D4				; NEXT		$82		130
-D_A0A8:		.text "DAT"
-.byte $C1				; DATA		$83		131
-D_A0AC:		.text "INPUT"
-.byte $A3				; INPUT#	$84		132
-D_A0B2:		.text "INPU"
-.byte $D4				; INPUT		$85		133
-D_A0B7:		.text "DI"
-.byte $CD				; DIM		$86		134
-D_A0BA:		.text "REA"
-.byte $C4				; READ		$87		135
-D_A0BE:		.text "LE"
-.byte $D4				; LET		$88		136
-D_A0C1:		.text "GOT"
-.byte $CF				; GOTO		$89		137
-D_A0C5:		.text "RU"
-.byte $CE				; RUN		$8A		138
-D_A0C8:		.text "I"
-.byte $C6				; IF		$8B		139
-D_A0CA:		.text "RESTOR"
-.byte $C5				; RESTORE	$8C		140
-D_A0D1:		.text "GOSU"
-.byte $C2				; GOSUB		$8D		141
-D_A0D6:		.text "RETUR"
-.byte $CE				; RETURN	$8E		142
-D_A0DC:		.text "RE"
-.byte $CD				; REM		$8F		143
-D_A0DF:		.text "STO"
-.byte $D0				; STOP		$90		144
-D_A0E3:		.text "O"
-.byte $CE				; ON		$91		145
-D_A0E5:		.text "WAI"
-.byte $D4				; WAIT		$92		146
-D_A0E9:		.text "LOA"
-.byte $C4				; LOAD		$93		147
-D_A0ED:		.text "SAV"
-.byte $C5				; SAVE		$94		148
-D_A0F1:		.text "VERIF"
-.byte $D9				; VERIFY	$95		149
-D_A0F7:		.text "DE"
-.byte $C6				; DEF		$96		150
-D_A0FA:		.text "POK"
-.byte $C5				; POKE		$97		151
-D_A0FE:		.text "PRINT"
-.byte $A3				; PRINT#	$98		152
-D_A104:		.text "PRIN"
-.byte $D4				; PRINT		$99		153
-D_A109:		.text "CON"
-.byte $D4				; CONT		$9A		154
-D_A10D:		.text "LIS"
-.byte $D4				; LIST		$9B		155
-D_A111:		.text "CL"
-.byte $D2				; CLR		$9C		156
-D_A114:		.text "CM"
-.byte $C4				; CMD		$9D		157
-D_A117:		.text "SY"
-.byte $D3				; SYS		$9E		158
-D_A11A:		.text "OPE"
-.byte $CE				; OPEN		$9F		159
-D_A11E:		.text "CLOS"
-.byte $C5				; CLOSE		$A0		160
-D_A123:		.text "GE"
-.byte $D4				; GET		$A1		161
-D_A126:		.text "NE"
-.byte $D7				; NEW		$A2		162
+TblBasicCodes				;				[A09E]
+D_A09E		.shift "end"		; END		$80		128
+D_A0A1		.shift "for"		; FOR		$81		129
+D_A0A4		.shift "next"		; NEXT		$82		130
+D_A0A8		.shift "data"		; DATA		$83		131
+D_A0AC		.shift "input#"		; INPUT#	$84		132
+D_A0B2		.shift "input"		; INPUT		$85		133
+D_A0B7		.shift "dim"		; DIM		$86		134
+D_A0BA		.shift "read"		; READ		$87		135
+D_A0BE		.shift "let"		; LET		$88		136
+D_A0C1		.shift "goto"		; GOTO		$89		137
+D_A0C5		.shift "run"		; RUN		$8A		138
+D_A0C8		.shift "if"		; IF		$8B		139
+D_A0CA		.shift "restore"	; RESTORE	$8C		140
+D_A0D1		.shift "gosub"		; GOSUB		$8D		141
+D_A0D6		.shift "return"		; RETURN	$8E		142
+D_A0DC		.shift "rem"		; REM		$8F		143
+D_A0DF		.shift "stop"		; STOP		$90		144
+D_A0E3		.shift "on"		; ON		$91		145
+D_A0E5		.shift "wait"		; WAIT		$92		146
+D_A0E9		.shift "load"		; LOAD		$93		147
+D_A0ED		.shift "save"		; SAVE		$94		148
+D_A0F1		.shift "verify"		; VERIFY	$95		149
+D_A0F7		.shift "def"		; DEF		$96		150
+D_A0FA		.shift "poke"		; POKE		$97		151
+D_A0FE		.shift "print#"		; PRINT#	$98		152
+D_A104		.shift "print"		; PRINT		$99		153
+D_A109		.shift "cont"		; CONT		$9A		154
+D_A10D		.shift "list"		; LIST		$9B		155
+D_A111		.shift "clr"		; CLR		$9C		156
+D_A114		.shift "cmd"		; CMD		$9D		157
+D_A117		.shift "sys"		; SYS		$9E		158
+D_A11A		.shift "open"		; OPEN		$9F		159
+D_A11E		.shift "close"		; CLOSE		$A0		160
+D_A123		.shift "get"		; GET		$A1		161
+D_A126		.shift "new"		; NEW		$A2		162
 
-; table of functions, each ended with a +$80	
+; table of functions, each ended with a +$80
 ; next are the secondary command keywords, these can not start a statement
 
-D_A129:		.text "TAB"
-.byte $A8				; TAB(		$A3		163
-D_A12D:		.text "T"
-.byte $CF				; TO		$A4		164
-D_A12F:		.text "F"
-.byte $CE				; FN		$A5		165
-D_A131:		.text "SPC"
-.byte $A8				; SPC(		$A6		166
-D_A135:		.text "THE"
-.byte $CE				; THEN		$A7		167
-D_A139:		.text "NO"
-.byte $D4				; NOT		$A8		168
-D_A13C:		.text "STE"
-.byte $D0				; STEP		$A9		169
+D_A129		.shift "tab("		; TAB(		$A3		163
+D_A12D		.shift "to"		; TO		$A4		164
+D_A12F		.shift "fn"		; FN		$A5		165
+D_A131		.shift "spc("		; SPC(		$A6		166
+D_A135		.shift "then"		; THEN		$A7		167
+D_A139		.shift "not"		; NOT		$A8		168
+D_A13C		.shift "step"		; STEP		$A9		169
 
 ; next are the operators
 
-D_A140:		.byte $AB		; +		$AA		170
-D_A141:		.byte $AD		; -		$AB		171
-D_A142:		.byte $AA		; *		$AC		172
-D_A143:		.byte $AF		; /		$AD		173
-D_A144:		.byte $DE		; ^		$AE		174
-D_A145:		.text "AN"
-.byte $C4				; AND		$AF		175
-D_A148:		.text "O"
-.byte $D2				; OR		$B0		176
-D_A14A:		.byte $BE		; >		$B1		177
-D_A14B:		.byte $BD		; =		$B2		178
-D_A14C:		.byte $BC		; <		$B3		179
+D_A140		.shift "+"		; +		$AA		170
+D_A141		.shift "-"		; -		$AB		171
+D_A142		.shift "*"		; *		$AC		172
+D_A143		.shift "/"		; /		$AD		173
+D_A144		.shift "{up arrow}"	; ^		$AE		174
+D_A145		.shift "and"		; AND		$AF		175
+D_A148		.shift "or"		; OR		$B0		176
+D_A14A		.shift ">"		; >		$B1		177
+D_A14B		.shift "="		; =		$B2		178
+D_A14C		.shift "<"		; <		$B3		179
 
 ; and finally the functions
 
-D_A14D:		.text "SG"
-.byte $CE				; SGN		$B4		180
-D_A150:		.text "IN"
-.byte $D4				; INT		$B5		181
-D_A153:		.text "AB"
-.byte $D3				; ABS		$B6		182
-D_A156:		.text "US"
-.byte $D2				; USR		$B7		183
-D_A159:		.text "FR"
-.byte $C5				; FRE		$B8		184
-D_A15C:		.text "PO"
-.byte $D3				; POS		$B9		185
-D_A15F:		.text "SQ"
-.byte $D2				; SQR		$BA		186
-D_A162:		.text "RN"
-.byte $C4				; RND		$BB		187
-D_A165:		.text "LO"
-.byte $C7				; LOG		$BC		188
-D_A168:		.text "EX"
-.byte $D0				; EXP		$BD		189
-D_A16B:		.text "CO"
-.byte $D3				; COS		$BE		190
-D_A16E:		.text "SI"
-.byte $CE				; SIN		$BF		191
-D_A171:		.text "TA"
-.byte $CE				; TAN		$C0		192
-D_A174:		.text "AT"
-.byte $CE				; ATN		$C1		193
-D_A177:		.text "PEE"
-.byte $CB				; PEEK		$C2		194
-D_A17B:		.text "LE"
-.byte $CE				; LEN		$C3		195
-D_A17E:		.text "STR"
-.byte $A4				; STR$		$C4		196
-D_A182:		.text "VA"
-.byte $CC				; VAL		$C5		197
-D_A185:		.text "AS"
-.byte $C3				; ASC		$C6		198
-D_A188:		.text "CHR"
-.byte $A4				; CHR$		$C7		199
-D_A18C:		.text "LEFT"
-.byte $A4				; LEFT$		$C8		200
-D_A191:		.text "RIGHT"
-.byte $A4				; RIGHT$	$C9		201
-D_A197:		.text "MID"
-.byte $A4				; MID$		$CA		202
+D_A14D		.shift "sgn"		; SGN		$B4		180
+D_A150		.shift "int"		; INT		$B5		181
+D_A153		.shift "abs"		; ABS		$B6		182
+D_A156		.shift "usr"		; USR		$B7		183
+D_A159		.shift "fre"		; FRE		$B8		184
+D_A15C		.shift "pos"		; POS		$B9		185
+D_A15F		.shift "sqr"		; SQR		$BA		186
+D_A162		.shift "rnd"		; RND		$BB		187
+D_A165		.shift "log"		; LOG		$BC		188
+D_A168		.shift "exp"		; EXP		$BD		189
+D_A16B		.shift "cos"		; COS		$BE		190
+D_A16E		.shift "sin"		; SIN		$BF		191
+D_A171		.shift "tan"		; TAN		$C0		192
+D_A174		.shift "atn"		; ATN		$C1		193
+D_A177		.shift "peek"		; PEEK		$C2		194
+D_A17B		.shift "len"		; LEN		$C3		195
+D_A17E		.shift "str$"		; STR$		$C4		196
+D_A182		.shift "val"		; VAL		$C5		197
+D_A185		.shift "asc"		; ASC		$C6		198
+D_A188		.shift "chr$"		; CHR$		$C7		199
+D_A18C		.shift "left$"		; LEFT$		$C8		200
+D_A191		.shift "right$"		; RIGHT$	$C9		201
+D_A197		.shift "mid$"		; MID$		$CA		202
 
 ; lastly is GO, this is an add on so that GO TO, as well as GOTO, will work
 
-D_A19B:		.byte $47,$CF		; GO		$CB		203
+D_A19B		.shift "go"		; GO		$CB		203
 
 .byte	$00				; end marker
 
@@ -1742,69 +1673,40 @@ D_A19B:		.byte $47,$CF		; GO		$CB		203
 ;
 ; BASIC error messages
 
-TxtTooManyFile:		.text "TOO MANY FILE"
-.byte $D3		;	[A19E]
-TxtFileOpen:		.text "FILE OPE"
-.byte $CE		;	[A1AC]
-TxtFileNotOpen:		.text "FILE NOT OPE"
-.byte $CE		;	[A1B5]
-TxtFileNotFound:	.text "FILE NOT FOUN"
-.byte $C4		;	[A1C2]
-TxtDevNotPresent:	.text "DEVICE NOT PRESEN"
-.byte $D4	;	[A1D0]
-TxtNotInputFile:	.text "NOT INPUT FIL"
-.byte $C5		;	[A1E2]
-TxtNotOutputFile:	.text "NOT OUTPUT FIL"
-.byte $C5		;	[A1F0]
-TxtMissingFile:		.text "MISSING FILE NAM"
-.byte $C5	;	[A1FF]
-TxtIllegalDevice:	.text "ILLEGAL DEVICE NUMBE"
-.byte $D2	;	[A210]
-TxtNextWithout:		.text "NEXT WITHOUT FO"
-.byte $D2	;	[A225]
-TxtSyntax:		.text "SYNTA"
-.byte $D8			;	[A235]
-TxtReturnWithout:	.text "RETURN WITHOUT GOSU"
-.byte $C2	;	[A23B]
-TxtOutOfData:		.text "OUT OF DAT"
-.byte $C1		;	[A24F]
-TxtIllegalQuan:		.text "ILLEGAL QUANTIT"
-.byte $D9	;	[A25A]
-TxtOverflow:		.text "OVERFLO"
-.byte $D7		;	[A26A]
-TxtOutOfMemory:		.text "OUT OF MEMOR"
-.byte $D9		;	[A272]
-TxtUndefdState:		.text "UNDEF'D STATEMEN"
-.byte $D4	;	[A27F]
-TxtBadSubscript:	.text "BAD SUBSCRIP"
-.byte $D4		;	[A290]
-TxtRedimdArray:		.text "REDIM'D ARRA"
-.byte $D9		;	[A29D]
-TxtDivisByZero:		.text "DIVISION BY ZER"
-.byte $CF	;	[A2AA]
-TxtIllegalDirect:	.text "ILLEGAL DIREC"
-.byte $D4		;	[A2BA]
-TxtTypeMismatc:		.text "TYPE MISMATC"
-.byte $C8		;	[A2C8]
-TxtStringTooLong:	.text "STRING TOO LON"
-.byte $C7		;	[A2D5]
-TxtFileData:		.text "FILE DAT"
-.byte $C1		;	[A2E4]
-TxtFormulaTooC:		.text "FORMULA TOO COMPLE"
-.byte $D8	;	[A2ED]
-TxtCantContinue:	.text "CAN'T CONTINU"
-.byte $C5		;	[A300]
-TxtUndefdFunct:		.text "UNDEF'D FUNCTIO"
-.byte $CE	;	[A30E]
-TxtVerify:		.text "VERIF"
-.byte $D9			;	[A31E]
-TxtLoad:		.text "LOA"
-.byte $C4			;	[A324]
+TxtTooManyFile		.shift "too many files"		  ;	[A19E]
+TxtFileOpen		.shift "file open"		  ;	[A1AC]
+TxtFileNotOpen		.shift "file not open"		  ;	[A1B5]
+TxtFileNotFound		.shift "file not found"		  ;	[A1C2]
+TxtDevNotPresent	.shift "device not present"	  ;	[A1D0]
+TxtNotInputFile		.shift "not input file"		  ;	[A1E2]
+TxtNotOutputFile	.shift "not output file"	  ;	[A1F0]
+TxtMissingFile		.shift "missing file name"	  ;	[A1FF]
+TxtIllegalDevice	.shift "illegal device number"	  ;	[A210]
+TxtNextWithout		.shift "next without for"	  ;	[A225]
+TxtSyntax		.shift "syntax"			  ;	[A235]
+TxtReturnWithout	.shift "return without gosub"	  ;	[A23B]
+TxtOutOfData		.shift "out of data"		  ;	[A24F]
+TxtIllegalQuan		.shift "illegal quantity"	  ;	[A25A]
+TxtOverflow		.shift "overflow"		  ;	[A26A]
+TxtOutOfMemory		.shift "out of memory"		  ;	[A272]
+TxtUndefdState		.shift "undef'd statement"	  ;	[A27F]
+TxtBadSubscript		.shift "bad subscript"		  ;	[A290]
+TxtRedimdArray		.shift "redim'd array"		  ;	[A29D]
+TxtDivisByZero		.shift "division by zero"	  ;	[A2AA]
+TxtIllegalDirect	.shift "illegal direct"		  ;	[A2BA]
+TxtTypeMismatc		.shift "type mismatch"		  ;	[A2C8]
+TxtStringTooLong	.shift "string too long"	  ;	[A2D5]
+TxtFileData		.shift "file data"		  ;	[A2E4]
+TxtFormulaTooC		.shift "formula too complex"	  ;	[A2ED]
+TxtCantContinue		.shift "can't continue"		  ;	[A300]
+TxtUndefdFunct		.shift "undef'd function"	  ;	[A30E]
+TxtVerify		.shift "verify"			  ;	[A31E]
+TxtLoad			.shift "load"			  ;	[A324]
 
 
 ; error message pointer table
 
-AddrErrorMsg:				;				[A328]
+AddrErrorMsg				;				[A328]
 .word	TxtTooManyFile			; $01	TOO MANY FILES
 .word	TxtFileOpen			; $02	FILE OPEN
 .word	TxtFileNotOpen			; $03	FILE NOT OPEN
@@ -1841,26 +1743,19 @@ AddrErrorMsg:				;				[A328]
 ;
 ; BASIC messages
 
-TxtOK:		.byte $0D
-		.text "OK"
-		.byte $0D, $00
-TxtError:	.text "  ERROR"
-		.byte $00
-TxtIn:		.text " IN "
-		.byte $00
-TxtReady:	.byte $0D, $0A
-		.text "READY."
-		.byte $0D, $0A, $00
-TxtBreak:	.byte $0D, $0A
-TxtBreak2:	.text "BREAK"
-		.byte $00
+TxtOK		.null "{cr}ok{cr}"
+TxtError	.null "  error"
+TxtIn		.null " in "
+TxtReady	.null "{cr}{lf}ready.{cr}{lf}"
+TxtBreak	.text "{cr}{lf}"
+TxtBreak2	.null "break"
 
 
 ;******************************************************************************
 ;
 ; spare byte, not referenced
 
-A390:		.byte	$A0		; unused
+A390		.byte	$A0		; unused
 
 
 ;******************************************************************************
@@ -1868,13 +1763,13 @@ A390:		.byte	$A0		; unused
 ; search the stack for FOR or GOSUB activity
 ; return Zb=1 if FOR variable found
 
-SrchForNext:				;				[A38A]
+SrchForNext				;				[A38A]
 	tsx				; copy stack pointer
 	inx				; +1 pass return address
 	inx				; +2 pass return address
 	inx				; +3 pass calling routine return address
 	inx				; +4 pass calling routine return address
-A_A38F:					;				[A38F]
+A_A38F					;				[A38F]
 	lda	STACK+1,X		; get the token byte from the stack
 	cmp	#TK_FOR			; is it the FOR token
 	bne	A_A3B7			; if not FOR token just exit
@@ -1888,7 +1783,7 @@ A_A38F:					;				[A38F]
 	sta	FORPNT			; save FOR/NEXT variable pointer LB
 	lda	STACK+3,X		; get FOR variable pointer HB
 	sta	FORPNT+1		; save FOR/NEXT variable pointer HB
-A_A3A4:					;				[A3A4]
+A_A3A4					;				[A3A4]
 	cmp	STACK+3,X		; compare variable pointer with stacked
 					; variable pointer HB
 	bne	A_A3B0			; branch if no match
@@ -1898,13 +1793,13 @@ A_A3A4:					;				[A3A4]
 					; variable pointer LB
 	beq	A_A3B7			; exit if match found
 
-A_A3B0:					;				[A3B0]
+A_A3B0					;				[A3B0]
 	txa				; copy index
 	clc				; clear carry for add
 	adc	#$12			; add FOR stack use size
 	tax				; copy back to index
 	bne	A_A38F			; loop if not at start of stack
-A_A3B7:					;				[A3B7]
+A_A3B7					;				[A3B7]
 	rts
 
 
@@ -1913,7 +1808,7 @@ A_A3B7:					;				[A3B7]
 ; Move a block of memory
 ; - open up a space in the memory, set the end of arrays
 
-MoveBlock:				;				[A3B8]
+MoveBlock				;				[A3B8]
 	jsr	CheckAvailMem		; check available memory, do out of
 					; memory error if no room	[A408]
 	sta	STREND			; set end of arrays LB
@@ -1921,7 +1816,7 @@ MoveBlock:				;				[A3B8]
 
 ; - open up a space in the memory, don't set the array end
 
-MoveBlock2:				;				[A3BF]
+MoveBlock2				;				[A3BF]
 	sec				; set carry for subtract
 	lda	FacTempStor+3		; get block end LB
 	sbc	FacTempStor+8		; subtract block start LB
@@ -1946,7 +1841,7 @@ MoveBlock2:				;				[A3BF]
 
 	dec	FacTempStor+4		; else decrement block end HB
 	sec				; set carry for subtract
-A_A3DC:					;				[A3DC]
+A_A3DC					;				[A3DC]
 	lda	FacTempStor+1		; get destination end LB
 	sbc	INDEX			; subtract MOD(block length/$100) byte
 	sta	FacTempStor+1		; save modified new block end LB
@@ -1954,17 +1849,17 @@ A_A3DC:					;				[A3DC]
 
 	dec	FacTempStor+2		; else decrement block end HB
 	bcc	A_A3EC			; branch always
-A_A3E8:					;				[A3E8]
+A_A3E8					;				[A3E8]
 	lda	(FacTempStor+3),Y	; get byte from source
 	sta	(FacTempStor+1),Y	; copy byte to destination
-A_A3EC:					;				[A3EC]
+A_A3EC					;				[A3EC]
 	dey				; decrement index
 	bne	A_A3E8			; loop until Y=0
 
 ; now do Y=0 indexed byte
 	lda	(FacTempStor+3),Y	; get byte from source
 	sta	(FacTempStor+1),Y	; save byte to destination
-A_A3F3:					;				[A3F3]
+A_A3F3					;				[A3F3]
 	dec	FacTempStor+4		; decrement source pointer HB
 	dec	FacTempStor+2		; decrement destination pointer HB
 
@@ -1979,7 +1874,7 @@ A_A3F3:					;				[A3F3]
 ; check room on stack for A bytes
 ; if stack too deep do out of memory error
 
-CheckRoomStack:				;				[A3FB]
+CheckRoomStack				;				[A3FB]
 	asl				; *2
 	adc	#$3E			; need at least $3E bytes free
 	bcs	OutOfMemory		; if overflow go do out of memory error
@@ -1997,7 +1892,7 @@ CheckRoomStack:				;				[A3FB]
 ;
 ; check available memory, do out of memory error if no room
 
-CheckAvailMem:
+CheckAvailMem
 	cpy	FRETOP+1		; compare with bottom of string space HB
 	bcc	A_A434			; if less then exit (is ok)
 	bne	A_A412			; skip next test if greater (tested <)
@@ -2007,7 +1902,7 @@ CheckAvailMem:
 	bcc	A_A434			; if less then exit (is ok)
 
 ; address is > string storage ptr (oops!)
-A_A412:					;				[A412]
+A_A412					;				[A412]
 	pha				; push address LB
 
 	ldx	#$09			; set index to save FacTempStor to
@@ -2015,7 +1910,7 @@ A_A412:					;				[A412]
 	tya				; copy address HB (to push on stack)
 
 ; save misc numeric work area
-A_A416:					;				[A416]
+A_A416					;				[A416]
 	pha				; push byte
 
 	lda	FacTempStor,X		; get byte from FacTempStor to
@@ -2027,7 +1922,7 @@ A_A416:					;				[A416]
 
 ; restore misc numeric work area
 	ldx	#$F7			; set index to restore bytes
-A_A421:					;				[A421]
+A_A421					;				[A421]
 	pla				; pop byte
 	sta	FacTempStor+9+1,X	; save byte to FacTempStor to
 					; FacTempStor+9
@@ -2049,7 +1944,7 @@ A_A421:					;				[A421]
 	bcs	OutOfMemory		; if >= do out of memory error then
 					; warm start
 ; ok exit, carry clear
-A_A434:					;				[A434]
+A_A434					;				[A434]
 	rts
 
 
@@ -2057,12 +1952,12 @@ A_A434:					;				[A434]
 ;
 ; do out of memory error then warm start
 
-OutOfMemory:
+OutOfMemory
 	ldx	#$10			; error code $10, out of memory error
 
 ; do error #X then warm start
 
-OutputErrMsg:
+OutputErrMsg
 	jmp	(IERROR)		; do error message
 
 
@@ -2071,7 +1966,7 @@ OutputErrMsg:
 ; do error #X then warm start, the error message vector is initialised to point
 ; here
 
-OutputErrMsg2:				;				[A43A]
+OutputErrMsg2				;				[A43A]
 	txa				; copy error number
 	asl				; *2
 	tax				; copy to index
@@ -2091,7 +1986,7 @@ OutputErrMsg2:				;				[A43A]
 	jsr	PrintQuestMark		; print "?"			[AB45]
 
 	ldy	#$00			; clear index
-A_A456:					;				[A456]
+A_A456					;				[A456]
 	lda	(INDEX),Y		; get byte from message
 	pha				; save status
 	and	#$7F			; mask 0xxx xxxx, clear b7
@@ -2111,7 +2006,7 @@ A_A456:					;				[A456]
 ;
 ; print string and do warm start, break entry
 
-OutputMessage:				;				[A469]
+OutputMessage				;				[A469]
 	jsr	OutputString		; print null terminated string	[AB1E]
 
 	ldy	CURLIN+1		; get current line number HB
@@ -2125,7 +2020,7 @@ OutputMessage:				;				[A469]
 ;
 ; do warm start, print READY on the screen
 
-OutputREADY:				;				[A474]
+OutputREADY				;				[A474]
 	lda	#<TxtReady		; set "READY." pointer LB
 	ldy	#>TxtReady		; set "READY." pointer HB
 	jsr	OutputString		; print null terminated string	[AB1E]
@@ -2138,7 +2033,7 @@ OutputREADY:				;				[A474]
 ;
 ; Main wait loop
 
-MainWaitLoop:
+MainWaitLoop
 	jmp	(IMAIN)			; do BASIC warm start
 
 
@@ -2146,7 +2041,7 @@ MainWaitLoop:
 ;
 ; BASIC warm start, the warm start vector is initialised to point here
 
-MainWaitLoop2:				;				[A483]
+MainWaitLoop2				;				[A483]
 	jsr	InputNewLine		; call for BASIC input		[A560]
 	stx	TXTPTR			; save BASIC execute pointer LB
 	sty	TXTPTR+1		; save BASIC execute pointer HB
@@ -2163,7 +2058,7 @@ MainWaitLoop2:				;				[A483]
 	bcc	A_A49C			; if numeric character go handle new
 					; BASIC line
 ; no line number .. immediate mode
-S_A496:
+S_A496
 	jsr	Text2TokenCode		; crunch keywords into BASIC tokens
 					;				[A579]
 	jmp	InterpretLoop2		; go scan and interpret code	[A7E1]
@@ -2173,7 +2068,7 @@ S_A496:
 ;
 ; handle new BASIC line
 
-A_A49C:					;				[A49C]
+A_A49C					;				[A49C]
 	jsr	LineNum2Addr		; get fixed-point number into temporary
 					; integer			[A96B]
 	jsr	Text2TokenCode		; crunch keywords into BASIC tokens
@@ -2219,7 +2114,7 @@ A_A49C:					;				[A49C]
 	inx				; increment block count, correct for =
 					; 0 loop exit
 	dec	INDEX+3			; decrement destination HB
-A_A4D7:					;				[A4D7]
+A_A4D7					;				[A4D7]
 	clc				; clear carry for add
 	adc	INDEX			; add source pointer LB
 	bcc	A_A4DF			; branch if no overflow
@@ -2228,7 +2123,7 @@ A_A4D7:					;				[A4D7]
 	clc				; clear carry
 
 ; close up memory to delete old line
-A_A4DF:					;				[A4DF]
+A_A4DF					;				[A4DF]
 	lda	(INDEX),Y		; get byte from source
 	sta	(INDEX+2),Y		; copy to destination
 	iny				; increment index
@@ -2241,7 +2136,7 @@ A_A4DF:					;				[A4DF]
 	bne	A_A4DF			; loop until all done
 
 ; got new line in buffer and no existing same #
-A_A4ED:					;				[A4ED]
+A_A4ED					;				[A4ED]
 	jsr	ResetExecPtr		; reset execution to start, clear
 					; variables, flush stack	[A659]
 					; and return
@@ -2264,7 +2159,7 @@ A_A4ED:					;				[A4ED]
 	bcc	A_A508			; branch if no carry to HB
 
 	iny				; else increment HB
-A_A508:					;				[A508]
+A_A508					;				[A508]
 	sty	FacTempStor+2		; save as destination end pointer HB
 
 	jsr	MoveBlock		; open up space in memory	[A3B8]
@@ -2291,7 +2186,7 @@ A_A508:					;				[A508]
 
 	ldy	COUNT			; get index to end of crunched line
 	dey				; -1
-A_A522:					;				[A522]
+A_A522					;				[A522]
 	lda	STACK+$FC,Y		; get byte from crunched line
 	sta	(FacTempStor+8),Y	; save byte to memory
 
@@ -2301,7 +2196,7 @@ A_A522:					;				[A522]
 ; reset execution, clear variables, flush stack, rebuild BASIC chain and do
 ; warm start
 
-J_A52A:					;				[A52A]
+J_A52A					;				[A52A]
 	jsr	ResetExecPtr		; reset execution to start, clear
 					; variables and flush stack	[A659]
 	jsr	BindLine		; rebuild BASIC line chaining	[A533]
@@ -2312,13 +2207,13 @@ J_A52A:					;				[A52A]
 ;
 ; rebuild BASIC line chaining
 
-BindLine:				;				[A533]
+BindLine				;				[A533]
 	lda	TXTTAB			; get start of memory LB
 	ldy	TXTTAB+1		; get start of memory HB
 	sta	INDEX			; set line start pointer LB
 	sty	INDEX+1			; set line start pointer HB
 	clc				; clear carry for add
-A_A53C:					;				[A53C]
+A_A53C					;				[A53C]
 	ldy	#$01			; set index to pointer to next line HB
 	lda	(INDEX),Y		; get pointer to next line HB
 	beq	A_A55F			; exit if null, [EOT]
@@ -2326,7 +2221,7 @@ A_A53C:					;				[A53C]
 	ldy	#$04			; point to first code byte of line
 					; there is always 1 byte + [EOL] as null
 					; entries are deleted
-A_A544:					;				[A544]
+A_A544					;				[A544]
 	iny				; next code byte
 	lda	(INDEX),Y		; get byte
 	bne	A_A544			; loop if not [EOL]
@@ -2350,7 +2245,7 @@ A_A544:					;				[A544]
 	sta	INDEX+1			; set line start pointer HB
 	bcc	A_A53C			; go do next line, branch always
 
-A_A55F:					;				[A55F]
+A_A55F					;				[A55F]
 	rts
 
 
@@ -2358,12 +2253,12 @@ A_A55F:					;				[A55F]
 ;
 ; call for BASIC input
 
-InputNewLine:				;				[A560]
+InputNewLine				;				[A560]
 	ldx	#$00			; set channel $00, keyboard
-A_A562:					;				[A562]
+A_A562					;				[A562]
 	jsr	InpCharErrChan		; input character from channel with
 					; error check			[E112]
-	cmp	#$0D			; compare with [CR]
+	cmp	#'{cr}'			; compare with [CR]
 	beq	A_A576			; if [CR] set XY to Command buffer - 1,
 					; print [CR] and exit
 ; character was not [CR]
@@ -2376,7 +2271,7 @@ A_A562:					;				[A562]
 	ldx	#$17			; error $17, string too long error
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
-A_A576:					;				[A576]
+A_A576					;				[A576]
 	jmp	SetXY2CmdBuf		; set XY to Command buffer - 1 and
 					; print [CR]			[AACA]
 
@@ -2385,7 +2280,7 @@ A_A576:					;				[A576]
 ;
 ; crunch BASIC tokens vector
 
-Text2TokenCode:				;				[A579]
+Text2TokenCode				;				[A579]
 	jmp	(ICRNCH)		; do crunch BASIC tokens
 
 
@@ -2394,11 +2289,11 @@ Text2TokenCode:				;				[A579]
 ; crunch BASIC tokens, the crunch BASIC tokens vector is initialised to point
 ; here
 
-Text2TokenCod2:				;				[A57C]
+Text2TokenCod2				;				[A57C]
 	ldx	TXTPTR			; get BASIC execute pointer LB
 	ldy	#$04			; set save index
 	sty	GARBFL			; clear open quote/DATA flag
-A_A582:					;				[A582]
+A_A582					;				[A582]
 	lda	CommandBuf,X		; get a byte from the input buffer
 	bpl	A_A58E			; if b7 clear go do crunching
 
@@ -2415,7 +2310,7 @@ A_A582:					;				[A582]
 	inx				; increment read index
 	bne	A_A582			; loop if more to do, branch always
 
-A_A58E:					;				[A58E]
+A_A58E					;				[A58E]
 	cmp	#' '			; compare with [SPACE]
 	beq	A_A5C9			; if [SPACE] save byte then continue
 					; crunching
@@ -2435,7 +2330,7 @@ A_A58E:					;				[A58E]
 	lda	#TK_PRINT		; else the keyword token is $99, PRINT
 	bne	A_A5C9			; go save byte then continue crunching,
 					; branch always
-A_A5A4:					;				[A5A4]
+A_A5A4					;				[A5A4]
 	cmp	#'0'			; compare with "0"
 	bcc	A_A5AC			; branch if <, continue crunching
 
@@ -2443,7 +2338,7 @@ A_A5A4:					;				[A5A4]
 	bcc	A_A5C9			; if <, 0123456789:; go save byte then
 					; continue crunching
 ; gets here with next character not numeric, ";" or ":"
-A_A5AC:					;				[A5AC]
+A_A5AC					;				[A5AC]
 	sty	FBUFPT			; copy save index
 
 	ldy	#$00			; clear table pointer
@@ -2454,10 +2349,10 @@ A_A5AC:					;				[A5AC]
 	stx	TXTPTR			; save BASIC execute pointer LB, buffer
 					; index
 	dex				; adjust for pre increment loop
-A_A5B6:					;				[A5B6]
+A_A5B6					;				[A5B6]
 	iny				; next table byte
 	inx				; next buffer byte
-A_A5B8:					;				[A5B8]
+A_A5B8					;				[A5B8]
 	lda	CommandBuf,X		; get byte from input buffer
 	sec				; set carry for subtract
 	sbc	TblBasicCodes,Y		; subtract table byte
@@ -2477,12 +2372,12 @@ A_A5B8:					;				[A5B8]
 ; else found keyword
 	ora	COUNT			; OR with word index, +$80 in A makes
 					; token
-A_A5C7:					;				[A5C7]
+A_A5C7					;				[A5C7]
 	ldy	FBUFPT			; restore save index
 
 ; save byte then continue crunching
 
-A_A5C9:					;				[A5C9]
+A_A5C9					;				[A5C9]
 	inx				; increment buffer read index
 	iny				; increment save index
 	sta	CommandBuf-5,Y		; save byte to output
@@ -2501,24 +2396,24 @@ A_A5C9:					;				[A5C9]
 
 ; token was : or DATA
 
-A_A5DC:					;				[A5DC]
+A_A5DC					;				[A5DC]
 	sta	GARBFL			; save the token-$3A
-A_A5DE:					;				[A5DE]
+A_A5DE					;				[A5DE]
 	sec				; set carry for subtract
 	sbc	#TK_REM-':'		; subtract the token for REM-':'
 	bne	A_A582			; if wasn't REM crunch next bit of line
-S_A5E3:
+S_A5E3
 	sta	ENDCHR			; else was REM so set search for [EOL]
 
 ; loop for "..." etc.
-A_A5E5:					;				[A5E5]
+A_A5E5					;				[A5E5]
 	lda	CommandBuf,X		; get byte from input buffer
 	beq	A_A5C9			; if null [EOL] save byte then continue
 					; crunching
 	cmp	ENDCHR			; compare with stored character
 	beq	A_A5C9			; if match save byte then continue
 					; crunching
-A_A5EE:					;				[A5EE]
+A_A5EE					;				[A5EE]
 	iny				; increment save index
 	sta	CommandBuf-5,Y		; save byte to output
 
@@ -2526,12 +2421,12 @@ A_A5EE:					;				[A5EE]
 	bne	A_A5E5			; loop while <> 0, should never reach 0
 
 ; not found keyword this go
-A_A5F5:					;				[A5F5]
+A_A5F5					;				[A5F5]
 	ldx	TXTPTR			; restore BASIC execute pointer LB
 	inc	COUNT			; increment word index (next word)
 
 ; now find end of this word in the table
-A_A5F9:					;				[A5F9]
+A_A5F9					;				[A5F9]
 	iny				; increment table index
 	lda	TblBasicCodes-1,Y	; get table byte
 	bpl	A_A5F9			; loop if not end of word yet
@@ -2545,7 +2440,7 @@ A_A5F9:					;				[A5F9]
 					; the buffer are $00 to $7F, go save
 					; byte in output and continue crunching
 ; reached [EOL]
-A_A609:					;				[A609]
+A_A609					;				[A609]
 	sta	STACK+$FD,Y		; save [EOL]
 
 	dec	TXTPTR+1		; decrement BASIC execute pointer HB
@@ -2560,7 +2455,7 @@ A_A609:					;				[A609]
 ;
 ; search BASIC for temporary integer line number
 
-CalcStartAddr:				;				[A613]
+CalcStartAddr				;				[A613]
 	lda	TXTTAB			; get start of memory LB
 	ldx	TXTTAB+1		; get start of memory HB
 
@@ -2570,7 +2465,7 @@ CalcStartAddr:				;				[A613]
 ; search Basic for temp integer line number from AX
 ; returns carry set if found
 
-CalcStartAddr2:				;				[A617]
+CalcStartAddr2				;				[A617]
 	ldy	#$01			; set index to next line pointer HB
 	sta	FacTempStor+8		; save LB as current
 	stx	FacTempStor+9		; save HB as current
@@ -2589,7 +2484,7 @@ CalcStartAddr2:				;				[A617]
 	dey				; else decrement index
 	bne	A_A637			; branch always
 
-A_A62E:					;				[A62E]
+A_A62E					;				[A62E]
 	lda	LINNUM			; get temporary integer LB
 	dey				; decrement index to line # LB
 	cmp	(FacTempStor+8),Y	; compare with line # LB
@@ -2598,7 +2493,7 @@ A_A62E:					;				[A62E]
 	beq	A_A641			; exit if temp = (found line#)
 
 ; not quite there yet
-A_A637:					;				[A637]
+A_A637					;				[A637]
 	dey				; decrement index to next line pointer
 					; HB
 	lda	(FacTempStor+8),Y	; get next line pointer HB
@@ -2609,9 +2504,9 @@ A_A637:					;				[A637]
 	lda	(FacTempStor+8),Y	; get next line pointer LB
 	bcs	CalcStartAddr2		; go search for line # in temporary
 					; integer from AX, carry always set
-A_A640:					;				[A640]
+A_A640					;				[A640]
 	clc				; clear found flag
-A_A641:					;				[A641]
+A_A641					;				[A641]
 	rts
 
 
@@ -2619,10 +2514,10 @@ A_A641:					;				[A641]
 ;
 ; perform NEW
 
-bcNEW:					;				[A642]
+bcNEW					;				[A642]
 	bne	A_A641			; exit if following byte to allow syntax
 					; error
-bcNEW2:					;				[A644]
+bcNEW2					;				[A644]
 	lda	#$00			; clear A
 	tay				; clear index
 	sta	(TXTTAB),Y		; clear pointer to next line LB
@@ -2644,7 +2539,7 @@ bcNEW2:					;				[A644]
 ;
 ; reset execute pointer and do CLR
 
-ResetExecPtr:				;				[A659]
+ResetExecPtr				;				[A659]
 	jsr	SetBasExecPtr		; set BASIC execute pointer to start of
 					; memory - 1			[A68E]
 	lda	#$00			; set Zb for CLR entry
@@ -2654,12 +2549,12 @@ ResetExecPtr:				;				[A659]
 ;
 ; perform CLR
 
-bcCLR:					;				[A65E]
+bcCLR					;				[A65E]
 	bne	A_A68D			; exit if following byte to allow syntax
 					; error
-bcCLR2:					;				[A660]
+bcCLR2					;				[A660]
 	jsr	CloseAllChan		; close all channels and files	[FFE7]
-bcCLR3:					;				[A663]
+bcCLR3					;				[A663]
 	lda	MEMSIZ			; get end of memory LB
 	ldy	MEMSIZ+1		; get end of memory HB
 	sta	FRETOP			; set bottom of string space LB, clear
@@ -2679,7 +2574,7 @@ bcCLR3:					;				[A663]
 ;
 ; do RESTORE and clear stack
 
-bcCLR4:					;				[A677]
+bcCLR4					;				[A677]
 	jsr	bcRESTORE		; perform RESTORE		[A81D]
 
 
@@ -2687,7 +2582,7 @@ bcCLR4:					;				[A677]
 ;
 ; flush BASIC stack and clear the continue pointer
 
-ClrBasicStack:				;				[A67A]
+ClrBasicStack				;				[A67A]
 	ldx	#LASTPT+2		; get the descriptor stack start
 	stx	TEMPPT			; set the descriptor stack pointer
 
@@ -2707,7 +2602,7 @@ ClrBasicStack:				;				[A67A]
 	lda	#$00			; clear A
 	sta	OLDTXT+1		; clear the continue pointer HB
 	sta	SUBFLG			; clear the subscript/FNX flag
-A_A68D:					;				[A68D]
+A_A68D					;				[A68D]
 	rts
 
 
@@ -2715,7 +2610,7 @@ A_A68D:					;				[A68D]
 ;
 ; set BASIC execute pointer to start of memory - 1
 
-SetBasExecPtr:				;				[A68E]
+SetBasExecPtr				;				[A68E]
 	clc				; clear carry for add
 	lda	TXTTAB			; get start of memory LB
 	adc	#$FF			; add -1 LB
@@ -2732,7 +2627,7 @@ SetBasExecPtr:				;				[A68E]
 ;
 ; perform LIST
 
-bcLIST:					;				[A69C]
+bcLIST					;				[A69C]
 	bcc	A_A6A4			; branch if next character not token
 					; (LIST n...)
 	beq	A_A6A4			; branch if next character [NULL] (LIST)
@@ -2742,7 +2637,7 @@ bcLIST:					;				[A69C]
 
 ; LIST [[n][-m]]
 ; this bit sets the n , if present, as the start and end
-A_A6A4:					;				[A6A4]
+A_A6A4					;				[A6A4]
 	jsr	LineNum2Addr		; get fixed-point number into temporary
 					; integer			[A96B]
 	jsr	CalcStartAddr		; search BASIC for temporary integer
@@ -2761,18 +2656,18 @@ A_A6A4:					;				[A6A4]
 	jsr	LineNum2Addr		; get fixed-point number into temporary
 					; integer			[A96B]
 	bne	A_A641			; exit if not ok
-A_A6BB:					;				[A6BB]
+A_A6BB					;				[A6BB]
 	pla				; dump return address LB
 	pla				; dump return address HB
 
 	lda	LINNUM			; get temporary integer LB
 	ora	LINNUM+1		; OR temporary integer HB
 	bne	A_A6C9			; branch if start set
-bcLIST2:				;				[A6C3]
+bcLIST2					;				[A6C3]
 	lda	#$FF			; set for -1
 	sta	LINNUM			; set temporary integer LB
 	sta	LINNUM+1		; set temporary integer HB
-A_A6C9:					;				[A6C9]
+A_A6C9					;				[A6C9]
 	ldy	#$01			; set index for line
 	sty	GARBFL			; clear open quote flag
 
@@ -2780,7 +2675,7 @@ A_A6C9:					;				[A6C9]
 	beq	A_A714			; if null all done so exit
 
 	jsr	BasChkStopKey		; do CRTL-C check vector	[A82C]
-bcLIST3:				;				[A6D4]
+bcLIST3					;				[A6D4]
 	jsr	OutCRLF			; print CR/LF			[AAD7]
 
 	iny				; increment index for line
@@ -2795,18 +2690,18 @@ bcLIST3:				;				[A6D4]
 	cpx	LINNUM			; compare with temporary integer LB
 	beq	A_A6E8			; branch if = last line to do, < will
 					; pass next branch
-A_A6E6:					; else ...:
+A_A6E6					; else ...:
 	bcs	A_A714			; if greater all done so exit
-A_A6E8:					;				[A6E8]
+A_A6E8					;				[A6E8]
 	sty	FORPNT			; save index for line
 
 	jsr	PrintXAasInt		; print XA as unsigned integer	[BDCD]
 
 	lda	#' '			; space is the next character
-A_A6EF:					;				[A6EF]
+A_A6EF					;				[A6EF]
 	ldy	FORPNT			; get index for line
 	and	#$7F			; mask top out bit of character
-A_A6F3:					;				[A6F3]
+A_A6F3					;				[A6F3]
 	jsr	PrintChar		; go print the character	[AB47]
 	cmp	#'"'			; was it " character
 	bne	A_A700			; if not skip the quote handle
@@ -2815,7 +2710,7 @@ A_A6F3:					;				[A6F3]
 	lda	GARBFL			; get open quote flag
 	eor	#$FF			; toggle it
 	sta	GARBFL			; save it back
-A_A700:					;				[A700]
+A_A700					;				[A700]
 	iny				; increment index
 	beq	A_A714			; line too long so just bail out and do
 					; a warm start
@@ -2833,7 +2728,7 @@ A_A700:					;				[A700]
 	sta	FacTempStor+9		; set pointer to line HB
 	bne	A_A6C9			; go do next line if not [EOT]
 					; else ...
-A_A714:					;				[A714]
+A_A714					;				[A714]
 	jmp	BasWarmStart2		; do warm start			[E386]
 
 
@@ -2841,7 +2736,7 @@ A_A714:					;				[A714]
 ;
 ; uncrunch BASIC tokens
 
-TokCode2Text:				;				[A717]
+TokCode2Text				;				[A717]
 	jmp	(IQPLOP)		; do uncrunch BASIC tokens
 
 
@@ -2850,7 +2745,7 @@ TokCode2Text:				;				[A717]
 ; uncrunch BASIC tokens, the uncrunch BASIC tokens vector is initialised to
 ; point here
 
-TokCode2Text2:				;				[A71A]
+TokCode2Text2				;				[A71A]
 	bpl	A_A6F3			; just go print it if not token byte
 					; else was token byte so uncrunch it
 
@@ -2870,10 +2765,10 @@ TokCode2Text2:				;				[A71A]
 
 	ldy	#$FF			; start from -1, adjust for pre-
 					; increment
-A_A72C:					;				[A72C]
+A_A72C					;				[A72C]
 	dex				; decrement token #
 	beq	A_A737			; if now found go do printing
-A_A72F:					;				[A72F]
+A_A72F					;				[A72F]
 	iny				; else increment index
 	lda	TblBasicCodes,Y		; get byte from keyword table
 	bpl	A_A72F			; loop until keyword end marker
@@ -2881,7 +2776,7 @@ A_A72F:					;				[A72F]
 	bmi	A_A72C			; go test if this is required keyword,
 					; branch always
 ; found keyword, it's the next one
-A_A737:					;				[A737]
+A_A737					;				[A737]
 	iny				; increment keyword table index
 	lda	TblBasicCodes,Y		; get byte from table
 	bmi	A_A6EF			; go restore index, mask byte and print
@@ -2894,7 +2789,7 @@ A_A737:					;				[A737]
 ;
 ; perform FOR
 
-bcFOR:					;				[A742]
+bcFOR					;				[A742]
 	lda	#$80			; set FNX
 	sta	SUBFLG			; set subscript/FNX flag
 
@@ -2909,7 +2804,7 @@ bcFOR:					;				[A742]
 	adc	#$0F			; add FOR structure size-2
 	tax				; copy to index
 	txs				; set stack (dump FOR structure)
-A_A753:					;				[A753]
+A_A753					;				[A753]
 	pla				; pull return address
 	pla				; pull return address
 
@@ -2954,7 +2849,7 @@ A_A753:					;				[A753]
 	jmp	FAC1ToStack		; round FAC1 and put on stack, returns
 					; to next instruction		[AE43]
 
-bcFOR2:					;				[A78B]
+bcFOR2					;				[A78B]
 	lda	#<Constant1		; set 1 pointer low address, default
 					; step size
 	ldy	#>Constant1		; set 1 pointer high address
@@ -2969,7 +2864,7 @@ bcFOR2:					;				[A78B]
 	jsr	CHRGET			; increment and scan memory	[0073]
 	jsr	EvalExpression		; evaluate expression and check is
 					; numeric, else do type mismatch [AD8A]
-A_A79F:					;				[A79F]
+A_A79F					;				[A79F]
 	jsr	GetFacSign		; get FAC1 sign, return A = $FF -ve,
 					; A = $01 +ve	[BC2B]
 	jsr	SgnFac1ToStack		; push sign, round FAC1 and put on stack
@@ -2989,7 +2884,7 @@ A_A79F:					;				[A79F]
 ;
 ; interpreter inner loop
 
-InterpretLoop:				;				[A7AE]
+InterpretLoop				;				[A7AE]
 	jsr	BasChkStopKey		; do CRTL-C check vector	[A82C]
 
 	lda	TXTPTR			; get the BASIC execute pointer LB
@@ -3000,7 +2895,7 @@ InterpretLoop:				;				[A7AE]
 					; pointer save
 	sta	OLDTXT			; save the continue pointer LB
 	sty	OLDTXT+1		; save the continue pointer HB
-A_A7BE:					;				[A7BE]
+A_A7BE					;				[A7BE]
 	ldy	#$00			; clear the index
 	lda	(TXTPTR),Y		; get a BASIC byte
 	bne	A_A807			; if not [EOL] go test for ":"
@@ -3012,15 +2907,15 @@ A_A7BE:					;				[A7BE]
 
 	jmp	bcEND2			; else go to immediate mode, was
 					; immediate or [EOT] marker	[A84B]
-A_A7CE:					;				[A7CE]
+A_A7CE					;				[A7CE]
 	iny				; increment index
 	lda	(TXTPTR),Y		; get line number LB
 	sta	CURLIN			; save current line number LB
-	
+
 	iny				; increment index
 	lda	(TXTPTR),Y		; get line # HB
 	sta	CURLIN+1		; save current line number HB
-	
+
 	tya				; A now = 4
 	adc	TXTPTR			; add BASIC execute pointer LB, now
 					; points to code
@@ -3029,7 +2924,7 @@ A_A7CE:					;				[A7CE]
 
 	inc	TXTPTR+1		; else increment BASIC execute pointer
 					; HB
-InterpretLoop2:				;				[A7E1]
+InterpretLoop2				;				[A7E1]
 	jmp	(IGONE)			; do start new BASIC code
 
 
@@ -3038,7 +2933,7 @@ InterpretLoop2:				;				[A7E1]
 ; start new BASIC code, the start new BASIC code vector is initialised to point
 ; here
 
-InterpretLoop3:				;				[A7E4]
+InterpretLoop3				;				[A7E4]
 	jsr	CHRGET			; increment and scan memory	[0073]
 	jsr	DecodeBASIC		; go interpret BASIC code from BASIC
 					; execute pointer		[A7ED]
@@ -3049,10 +2944,10 @@ InterpretLoop3:				;				[A7E4]
 ;
 ; go interpret BASIC code from BASIC execute pointer
 
-DecodeBASIC:				;				[A7ED]
+DecodeBASIC				;				[A7ED]
 	beq	A_A82B			; if the first byte is null just exit
 
-DecodeBASIC2:				;				[A7EF]
+DecodeBASIC2				;				[A7EF]
 	sbc	#$80			; normalise the token
 	bcc	A_A804			; if wasn't token go do LET
 
@@ -3073,20 +2968,20 @@ DecodeBASIC2:				;				[A7EF]
 					; the command code, the return from
 					; that will eventually return to the
 					; interpreter inner loop above
-A_A804:					;				[A804]
+A_A804					;				[A804]
 	jmp	bcLET			; perform LET			[A9A5]
 
 ; was not [EOL]
-A_A807:					;				[A807]
+A_A807					;				[A807]
 	cmp	#':'			; comapre with ":"
 	beq	InterpretLoop2		; if ":" go execute new code
 
 ; else ...
-A_A80B:					;				[A80B]
+A_A80B					;				[A80B]
 	jmp	SyntaxError		; do syntax error then warm start [AF08]
 
 ; token was >= TAB(
-A_A80E:					;				[A80E]
+A_A80E					;				[A80E]
 	cmp	#TK_GO-$80		; compare with the token for GO
 	bne	A_A80B			; if not "GO" do syntax error then warm
 					; start
@@ -3105,7 +3000,7 @@ A_A80E:					;				[A80E]
 ;
 ; perform RESTORE
 
-bcRESTORE:
+bcRESTORE
 	sec				; set carry for subtract
 	lda	TXTTAB			; get start of memory LB
 	sbc	#$01			; -1
@@ -3113,10 +3008,10 @@ bcRESTORE:
 	bcs	bcRESTORE2		; branch if no rollunder
 
 	dey				; else decrement HB
-bcRESTORE2:				;				[A827]
+bcRESTORE2				;				[A827]
 	sta	DATPTR			; set DATA pointer LB
 	sty	DATPTR+1		; set DATA pointer HB
-A_A82B:					;				[A82B]
+A_A82B					;				[A82B]
 	rts
 
 
@@ -3124,7 +3019,7 @@ A_A82B:					;				[A82B]
 ;
 ; do CRTL-C check vector
 
-BasChkStopKey:				;				[A82C]
+BasChkStopKey				;				[A82C]
 	jsr	ScanStopKey		; scan stop key			[FFE1]
 
 
@@ -3132,7 +3027,7 @@ BasChkStopKey:				;				[A82C]
 ;
 ; perform STOP
 
-bcSTOP:
+bcSTOP
 	bcs	A_A832			; if carry set do BREAK instead of just
 					; END
 
@@ -3140,9 +3035,9 @@ bcSTOP:
 ;
 ; perform END
 
-bcEND:
+bcEND
 	clc				; clear carry
-A_A832:					;				[A832]
+A_A832					;				[A832]
 	bne	A_A870			; return if wasn't CTRL-C
 
 	lda	TXTPTR			; get BASIC execute pointer LB
@@ -3159,17 +3054,17 @@ A_A832:					;				[A832]
 	ldy	CURLIN+1		; get current line number HB
 	sta	OLDLIN			; save break line number LB
 	sty	OLDLIN+1		; save break line number HB
-A_A849:					;				[A849]
+A_A849					;				[A849]
 	pla				; dump return address LB
 	pla				; dump return address HB
-bcEND2:					;				[A84B]
+bcEND2					;				[A84B]
 	lda	#<TxtBreak		; set [CR][LF]"BREAK" pointer LB
 	ldy	#>TxtBreak		; set [CR][LF]"BREAK" pointer HB
 	bcc	A_A854			; if was program end skip the print
 					; string
 	jmp	OutputMessage		; print string and do warm start [A469]
 
-A_A854:					;				[A854]
+A_A854					;				[A854]
 	jmp	BasWarmStart2		; do warm start			[E386]
 
 
@@ -3177,7 +3072,7 @@ A_A854:					;				[A854]
 ;
 ; perform CONT
 
-bcCONT:
+bcCONT
 	bne	A_A870			; exit if following byte to allow
 					; syntax error
 	ldx	#$1A			; error code $1A, can't continue error
@@ -3187,7 +3082,7 @@ bcCONT:
 	jmp	OutputErrMsg		; else do error #X then warm start
 					; [A437]
 ; we can continue so ...
-A_A862:					;				[A862]
+A_A862					;				[A862]
 	lda	OLDTXT			; get continue pointer LB
 	sta	TXTPTR			; save BASIC execute pointer LB
 
@@ -3197,7 +3092,7 @@ A_A862:					;				[A862]
 	ldy	OLDLIN+1		; get break line HB
 	sta	CURLIN			; set current line number LB
 	sty	CURLIN+1		; set current line number HB
-A_A870:					;				[A870]
+A_A870					;				[A870]
 	rts
 
 
@@ -3205,7 +3100,7 @@ A_A870:					;				[A870]
 ;
 ; perform RUN
 
-bcRUN:
+bcRUN
 	php				; save status
 
 	lda	#$00			; no control or kernal messages
@@ -3217,7 +3112,7 @@ bcRUN:
 	jmp	ResetExecPtr		; reset execution to start, clear
 					; variables, flush stack	[A659]
 					; and return
-A_A87D:					;				[A87D]
+A_A87D					;				[A87D]
 	jsr	bcCLR2			; go do "CLEAR"			[A660]
 	jmp	bcGOSUB2		; get n and do GOTO n		[A897]
 
@@ -3226,7 +3121,7 @@ A_A87D:					;				[A87D]
 ;
 ; perform GOSUB
 
-bcGOSUB:
+bcGOSUB
 	lda	#$03			; need 6 bytes for GOSUB
 	jsr	CheckRoomStack		; check room on stack for 2*A bytes
 					;				[A3FB]
@@ -3244,7 +3139,7 @@ bcGOSUB:
 
 	lda	#TK_GOSUB		; token for GOSUB
 	pha				; save it
-bcGOSUB2:				;				[A897]
+bcGOSUB2				;				[A897]
 	jsr	CHRGOT			; scan memory			[0079]
 	jsr	bcGOTO			; perform GOTO			[A8A0]
 	jmp	InterpretLoop		; go do interpreter inner loop	[A7AE]
@@ -3254,7 +3149,7 @@ bcGOSUB2:				;				[A897]
 ;
 ; perform GOTO
 
-bcGOTO:
+bcGOTO
 	jsr	LineNum2Addr		; get fixed-point number into temporary
 					; integer			[A96B]
 	jsr	FindEndOfLine		; scan for next BASIC line	[A909]
@@ -3282,7 +3177,7 @@ bcGOTO:
 ;
 ; search for line number in temporary integer from start of memory pointer
 
-A_A8BC:					;				[A8BC]
+A_A8BC					;				[A8BC]
 	lda	TXTTAB			; get start of memory LB
 	ldx	TXTTAB+1		; get start of memory HB
 
@@ -3291,7 +3186,7 @@ A_A8BC:					;				[A8BC]
 ;
 ; search for line # in temporary integer from (AX)
 
-A_A8C0:					;				[A8C0]
+A_A8C0					;				[A8C0]
 	jsr	CalcStartAddr2		; search Basic for temp integer line
 					; number from AX		[A617]
 	bcc	A_A8E3			; if carry clear go do unsdefined
@@ -3304,7 +3199,7 @@ A_A8C0:					;				[A8C0]
 	lda	FacTempStor+9		; get pointer HB
 	sbc	#$00			; subtract carry
 	sta	TXTPTR+1		; save BASIC execute pointer HB
-A_A8D1:					;				[A8D1]
+A_A8D1					;				[A8D1]
 	rts
 
 
@@ -3312,7 +3207,7 @@ A_A8D1:					;				[A8D1]
 ;
 ; perform RETURN
 
-bcRETURN:
+bcRETURN
 	bne	A_A8D1			; exit if following token to allow
 					; syntax error
 	lda	#$FF			; set byte so no match possible
@@ -3326,16 +3221,16 @@ bcRETURN:
 	ldx	#$0C			; else error code $04, return without
 					; gosub error
 .byte	$2C				; makes next line BIT $11A2
-A_A8E3:					;				[A8E3]
+A_A8E3					;				[A8E3]
 	ldx	#$11			; error code $11, undefined statement
 					; error
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
-A_A8E8:					;				[A8E8]
+A_A8E8					;				[A8E8]
 	jmp	SyntaxError		; do syntax error then warm start [AF08]
 
 ; was matching GOSUB token
-A_A8EB:					;				[A8EB]
+A_A8EB					;				[A8EB]
 	pla				; dump token byte
 	pla				; pull return line LB
 	sta	CURLIN			; save current line number LB
@@ -3351,7 +3246,7 @@ A_A8EB:					;				[A8EB]
 ;
 ; perform DATA
 
-bcDATA:
+bcDATA
 	jsr	FindNextColon		; scan for next BASIC statement ([:] or
 					; [EOL])			[A906]
 
@@ -3359,9 +3254,9 @@ bcDATA:
 ;
 ; add Y to the BASIC execute pointer
 
-bcDATA2:				;				[A8FB]
+bcDATA2					;				[A8FB]
 	tya				; copy index to A
-S_A8FC:
+S_A8FC
 	clc				; clear carry for add
 	adc	TXTPTR			; add BASIC execute pointer LB
 	sta	TXTPTR			; save BASIC execute pointer LB
@@ -3369,7 +3264,7 @@ S_A8FC:
 
 	inc	TXTPTR+1		; else increment BASIC execute pointer
 					; HB
-A_A905:					;				[A905]
+A_A905					;				[A905]
 	rts
 
 
@@ -3378,7 +3273,7 @@ A_A905:					;				[A905]
 ; scan for next BASIC statement ([:] or [EOL])
 ; returns Y as index to [:] or [EOL]
 
-FindNextColon:				;				[A906]
+FindNextColon				;				[A906]
 	ldx	#':'			; set look for character = ":"
 .byte	$2C				; makes next line BIT $00A2
 
@@ -3388,21 +3283,21 @@ FindNextColon:				;				[A906]
 ; scan for next BASIC line
 ; returns Y as index to [EOL]
 
-FindEndOfLine:				;				[A909]
+FindEndOfLine				;				[A909]
 	ldx	#$00			; set alternate search character = [EOL]
 	stx	CHARAC			; store alternate search character
 
 	ldy	#$00			; set search character = [EOL]
 	sty	ENDCHR			; save the search character
-A_A911:					;				[A911]
+A_A911					;				[A911]
 	lda	ENDCHR			; get search character
 	ldx	CHARAC			; get alternate search character
 	sta	CHARAC			; make search character = alternate
 					; search character
-FindOtherChar:				;				[A917]
+FindOtherChar				;				[A917]
 	stx	ENDCHR			; make alternate search character =
 					; search character
-A_A919:					;				[A919]
+A_A919					;				[A919]
 	lda	(TXTPTR),Y		; get BASIC byte
 	beq	A_A905			; exit if null [EOL]
 
@@ -3422,7 +3317,7 @@ A_A919:					;				[A919]
 ;
 ; perform IF
 
-bcIF:
+bcIF
 	jsr	EvaluateValue		; evaluate expression		[AD9E]
 
 	jsr	CHRGOT			; scan memory			[0079]
@@ -3433,7 +3328,7 @@ bcIF:
 	lda	#TK_THEN		; set "THEN" token
 	jsr	Chk4CharInA		; scan for CHR$(A), else do syntax error
 					; then warm start		[AEFF]
-A_A937:					;				[A937]
+A_A937					;				[A937]
 	lda	FACEXP			; get FAC1 exponent
 	bne	A_A940			; if result was non zero continue
 					; execution
@@ -3444,20 +3339,20 @@ A_A937:					;				[A937]
 ;
 ; perform REM
 
-bcREM:
+bcREM
 	jsr	FindEndOfLine		; scan for next BASIC line	[A909]
 	beq	bcDATA2			; add Y to the BASIC execute pointer and
 					; return, branch always
 
 ; result was non zero so do rest of line
-A_A940:					;				[A940]
+A_A940					;				[A940]
 	jsr	CHRGOT			; scan memory			[0079]
 	bcs	A_A948			; branch if not numeric character, is
 					; variable or keyword
 	jmp	bcGOTO			; else perform GOTO n		[A8A0]
 
 ; is variable or keyword
-A_A948:					;				[A948]
+A_A948					;				[A948]
 	jmp	DecodeBASIC		; interpret BASIC code from BASIC
 					; execute pointer		[A7ED]
 
@@ -3465,26 +3360,26 @@ A_A948:					;				[A948]
 ;
 ; perform ON
 
-bcON:
+bcON
 	jsr	GetByteParm2		; get byte parameter		[B79E]
 	pha				; push next character
 	cmp	#TK_GOSUB		; compare with GOSUB token
 	beq	A_A957			; if GOSUB go see if it should be
 					; executed
-A_A953:					;				[A953]
+A_A953					;				[A953]
 	cmp	#TK_GOTO		; compare with GOTO token
 	bne	A_A8E8			; if not GOTO do syntax error then warm
 					; start
 ; next character was GOTO or GOSUB, see if it should be executed
 
-A_A957:					;				[A957]
+A_A957					;				[A957]
 	dec	FacMantissa+3		; decrement the byte value
 	bne	A_A95F			; if not zero go see if another line
 					; number exists
 	pla				; pull keyword token
 	jmp	DecodeBASIC2		; go execute it			[A7EF]
 
-A_A95F:					;				[A95F]
+A_A95F					;				[A95F]
 	jsr	CHRGET			; increment and scan memory	[0073]
 	jsr	LineNum2Addr		; get fixed-point number into temporary
 					; integer			[A96B]
@@ -3493,7 +3388,7 @@ A_A95F:					;				[A95F]
 
 	pla				; else pull keyword token, ran out of
 					; options
-A_A96A:					;				[A96A]
+A_A96A					;				[A96A]
 	rts
 
 
@@ -3501,11 +3396,11 @@ A_A96A:					;				[A96A]
 ;
 ; get fixed-point number into temporary integer
 
-LineNum2Addr:				;				[A96B]
+LineNum2Addr				;				[A96B]
 	ldx	#$00			; clear X
 	stx	LINNUM			; clear temporary integer LB
 	stx	LINNUM+1		; clear temporary integer HB
-LineNum2Addr2:				;				[A971]
+LineNum2Addr2				;				[A971]
 	bcs	A_A96A			; return if carry set, end of scan,
 					; character was not 0-9
 	sbc	#'0'-1			; subtract $30, $2F+carry, from byte
@@ -3545,7 +3440,7 @@ LineNum2Addr2:				;				[A971]
 	bcc	A_A99F			; branch if no overflow to HB
 
 	inc	LINNUM+1		; else increment HB
-A_A99F:					;				[A99F]
+A_A99F					;				[A99F]
 	jsr	CHRGET			; increment and scan memory	[0073]
 	jmp	LineNum2Addr2		; loop for next character	[A971]
 
@@ -3554,7 +3449,7 @@ A_A99F:					;				[A99F]
 ;
 ; perform LET
 
-bcLET:
+bcLET
 	jsr	GetAddrVar		; get variable address		[B08B]
 	sta	FORPNT			; save variable address LB
 	sty	FORPNT+1		; save variable address HB
@@ -3581,7 +3476,7 @@ bcLET:
 
 ; assign value to numeric variable
 
-SetIntegerVar:				;				[A9C2]
+SetIntegerVar				;				[A9C2]
 	bpl	A_A9D6			; branch if float
 
 ; expression is numeric integer
@@ -3599,15 +3494,15 @@ SetIntegerVar:				;				[A9C2]
 	rts
 
 ; Set the value of a real variable
-A_A9D6:					;				[A9D6]
+A_A9D6					;				[A9D6]
 	jmp	Fac1ToVarPtr		; pack FAC1 into variable pointer and
 					; return			[BBD0]
 
 ; assign value to numeric variable
 
-A_A9D9:					;				[A9D9]
+A_A9D9					;				[A9D9]
 	pla				; dump integer/float data type flag
-SetValueString:				;				[A9DA]
+SetValueString				;				[A9DA]
 	ldy	FORPNT+1		; get variable pointer HB
 	cpy	#>L_BF13		; was it TI$ pointer
 	bne	A_AA2C			; branch if not
@@ -3623,7 +3518,7 @@ SetValueString:				;				[A9DA]
 	ldy	#$00			; clear index
 	sty	FACEXP			; clear FAC1 exponent
 	sty	FACSGN			; clear FAC1 sign (b7)
-A_A9ED:					;				[A9ED]
+A_A9ED					;				[A9ED]
 	sty	FBUFPT			; save index
 
 	jsr	ChkCharIsNum		; check and evaluate numeric digit
@@ -3644,7 +3539,7 @@ A_A9ED:					;				[A9ED]
 
 	jsr	FAC1plFAC2x2		; FAC1 = (FAC1 + (FAC2 * 2)) * 2 =
 					; FAC1 * 6			[BAED]
-A_AA07:					;				[AA07]
+A_AA07					;				[AA07]
 	ldy	FBUFPT			; get index
 	iny				; increment index
 	cpy	#$06			; compare index with 6
@@ -3664,7 +3559,7 @@ A_AA07:					;				[AA07]
 ;
 ; check and evaluate numeric digit
 
-ChkCharIsNum:				;				[AA1D]
+ChkCharIsNum				;				[AA1D]
 	lda	(INDEX),Y		; get byte from string
 	jsr	NumericTest		; clear Cb if numeric. this call should
 					; be to $84 as the code from NumericTest
@@ -3672,10 +3567,10 @@ ChkCharIsNum:				;				[AA1D]
 					; and does a BASIC increment and get if
 					; it is				[0080]
 	bcc	A_AA27			; branch if numeric
-A_AA24:					;				[AA24]
+A_AA24					;				[AA24]
 	jmp	IllegalQuant		; do illegal quantity error then warm
 					; start				[B248]
-A_AA27:					;				[AA27]
+A_AA27					;				[AA27]
 	sbc	#'0'-1			; subtract $2F + carry to convert ASCII
 					; to binary
 	jmp	EvalNewDigit		; evaluate new ASCII digit and return
@@ -3685,7 +3580,7 @@ A_AA27:					;				[AA27]
 ;
 ; assign value to numeric variable, but not TI$
 
-A_AA2C:					;				[AA2C]
+A_AA2C					;				[AA2C]
 	ldy	#$02			; index to string pointer HB
 	lda	(FacMantissa+2),Y	; get string pointer HB
 	cmp	FRETOP+1		; compare with bottom of string space HB
@@ -3702,7 +3597,7 @@ A_AA2C:					;				[AA2C]
 	bcc	A_AA4B			; branch if string pointer LB is less
 					; than bottom of string space LB
 
-A_AA3D:					;				[AA3D]
+A_AA3D					;				[AA3D]
 	ldy	FacMantissa+3		; get descriptor pointer HB
 	cpy	VARTAB+1		; compare with start of variables HB
 	bcc	A_AA4B			; branch if less, is on string stack
@@ -3712,14 +3607,14 @@ A_AA3D:					;				[AA3D]
 ; else HBs were equal
 	lda	FacMantissa+2		; get descriptor pointer LB
 	cmp	VARTAB			; compare with start of variables LB
-	bcs	A_AA52			; if greater or equal make space and 
+	bcs	A_AA52			; if greater or equal make space and
 					; copy string
-A_AA4B:					;				[AA4B]
+A_AA4B					;				[AA4B]
 	lda	FacMantissa+2		; get descriptor pointer LB
 	ldy	FacMantissa+3		; get descriptor pointer HB
 	jmp	A_AA68			; go copy descriptor to variable [AA68]
 
-A_AA52:					;				[AA52]
+A_AA52					;				[AA52]
 	ldy	#$00			; clear index
 	lda	(FacMantissa+2),Y	; get string length
 	jsr	StringVector		; copy descriptor pointer and make
@@ -3734,7 +3629,7 @@ A_AA52:					;				[AA52]
 
 	lda	#<FACEXP		; get descriptor pointer LB
 	ldy	#>FACEXP		; get descriptor pointer HB
-A_AA68:					;				[AA68]
+A_AA68					;				[AA68]
 	sta	TempPtr			; save descriptor pointer LB
 	sty	TempPtr+1		; save descriptor pointer HB
 
@@ -3761,7 +3656,7 @@ A_AA68:					;				[AA68]
 ;
 ; perform PRINT#
 
-bcPRINTH:
+bcPRINTH
 	jsr	bcCMD			; perform CMD			[AA86]
 	jmp	bcINPUTH2		; close input and output channels and
 					; return			[ABB5]
@@ -3770,14 +3665,14 @@ bcPRINTH:
 ;
 ; perform CMD
 
-bcCMD:
+bcCMD
 	jsr	GetByteParm2		; get byte parameter		[B79E]
 	beq	A_AA90			; branch if following byte is ":" or
 					; [EOT]
 	lda	#','			; set ","
 	jsr	Chk4CharInA		; scan for CHR$(A), else do syntax error
 					; then warm start		[AEFF]
-A_AA90:					;				[AA90]
+A_AA90					;				[AA90]
 	php				; save status
 
 	stx	CurIoChan		; set current I/O channel
@@ -3787,10 +3682,10 @@ A_AA90:					;				[AA90]
 	plp				; restore status
 	jmp	bcPRINT			; perform PRINT			[AAA0]
 
-A_AA9A:					;				[AA9A]
+A_AA9A					;				[AA9A]
 	jsr	OutputString2		; print string from utility pointer
 					;				[AB21]
-A_AA9D:					;				[AA9D]
+A_AA9D					;				[AA9D]
 	jsr	CHRGOT			; scan memory			[0079]
 
 
@@ -3798,10 +3693,10 @@ A_AA9D:					;				[AA9D]
 ;
 ; perform PRINT
 
-bcPRINT:
+bcPRINT
 	beq	OutCRLF			; if nothing following just print CR/LF
 
-bcPRINT2:				;				[AAA2]
+bcPRINT2				;				[AAA2]
 	beq	A_AAE7			; exit if nothing following, end of
 					; PRINT branch
 	cmp	#TK_TAB			; compare with token for TAB(
@@ -3835,9 +3730,9 @@ bcPRINT2:				;				[AAA2]
 
 ;******************************************************************************
 ;
-; set XY to CommandBuf - 1 
+; set XY to CommandBuf - 1
 
-SetXY2CmdBuf:				;				[AACA]
+SetXY2CmdBuf				;				[AACA]
 	lda	#$00			; clear A
 	sta	CommandBuf,X		; clear first byte of input buffer
 
@@ -3852,30 +3747,30 @@ SetXY2CmdBuf:				;				[AACA]
 ;
 ; print CR/LF
 
-OutCRLF:				;				[AAD7]
-	lda	#$0D			; set [CR]
+OutCRLF					;				[AAD7]
+	lda	#'{cr}'			; set [CR]
 	jsr	PrintChar		; print the character		[AB47]
 	bit	CurIoChan		; test current I/O channel
 	bpl	EOR_FF			; if ?? toggle A, EOR #$FF and return
 
-	lda	#$0A			; set [LF]
+	lda	#'{lf}'			; set [LF]
 	jsr	PrintChar		; print the character		[AB47]
 
 ; toggle A
 
-EOR_FF:					;				[AAE5]
+EOR_FF					;				[AAE5]
 	eor	#$FF			; invert A
-A_AAE7:					;				[AAE7]
+A_AAE7					;				[AAE7]
 	rts
 
 ; was ","
-A_AAE8:					;				[AAE8]
+A_AAE8					;				[AAE8]
 	sec				; set C flag for read cursor position
 	jsr	CursorPosXY		; read/set X,Y cursor position	[FFF0]
 	tya				; copy cursor Y
 
 	sec				; set carry for subtract
-A_AAEE:					;				[AAEE]
+A_AAEE					;				[AAEE]
 	sbc	#$0A			; subtract one TAB length
 	bcs	A_AAEE			; loop if result was +ve
 
@@ -3883,7 +3778,7 @@ A_AAEE:					;				[AAEE]
 	adc	#$01			; +1, twos complement
 	bne	A_AB0E			; always print A spaces, result is
 					; never $00
-A_AAF8:					;				[AAF8]
+A_AAF8					;				[AAF8]
 	php				; save TAB( or SPC( status
 
 	sec				; set Cb for read cursor position
@@ -3902,20 +3797,20 @@ A_AAF8:					;				[AAF8]
 	sbc	TRMPOS			; subtract current cursor position
 	bcc	A_AB13			; go loop for next if already past
 					; requited position
-A_AB0E:					;				[AB0E]
+A_AB0E					;				[AB0E]
 	tax				; copy [SPACE] count to X
-A_AB0F:					;				[AB0F]
+A_AB0F					;				[AB0F]
 	inx				; increment count
-A_AB10:					;				[AB10]
+A_AB10					;				[AB10]
 	dex				; decrement count
 	bne	A_AB19			; branch if count was not zero
 
 ; was ";" or [SPACES] printed
-A_AB13:					;				[AB13]
+A_AB13					;				[AB13]
 	jsr	CHRGET			; increment and scan memory	[0073]
 	jmp	bcPRINT2		; continue print loop		[AAA2]
 
-A_AB19:					;				[AB19]
+A_AB19					;				[AB19]
 	jsr	PrintSpace		; print [SPACE] or [CURSOR RIGHT] [AB3B]
 	bne	A_AB10			; loop, branch always
 
@@ -3924,7 +3819,7 @@ A_AB19:					;				[AB19]
 ;
 ; print null terminated string
 
-OutputString:				;				[AB1E]
+OutputString				;				[AB1E]
 	jsr	QuoteStr2UtPtr		; print " terminated string to utility
 					; pointer			[B487]
 
@@ -3932,17 +3827,17 @@ OutputString:				;				[AB1E]
 ;
 ; print string from utility pointer
 
-OutputString2:				;				[AB21]
+OutputString2				;				[AB21]
 	jsr	PopStrDescStk		; pop string off descriptor stack, or
 					; from top of string		[B6A6]
-					; space returns with A = length, 
+					; space returns with A = length,
 					; X = pointer LB, Y = pointer HB
 	tax				; copy length
 
 	ldy	#$00			; clear index
 	inx				; increment length, for pre decrement
 					; loop
-OutputString3:				;				[AB28]
+OutputString3				;				[AB28]
 	dex				; decrement length
 	beq	A_AAE7			; exit if done
 
@@ -3951,7 +3846,7 @@ OutputString3:				;				[AB28]
 
 	iny				; increment index
 
-	cmp	#$0D			; compare byte with [CR]
+	cmp	#'{cr}'			; compare byte with [CR]
 	bne	OutputString3		; loop if not [CR]
 
 	jsr	EOR_FF			; toggle A, EOR #$FF. what is the point
@@ -3963,13 +3858,13 @@ OutputString3:				;				[AB28]
 ;
 ; print [SPACE] or [CURSOR RIGHT]
 
-PrintSpace:				;				[AB3B]
+PrintSpace				;				[AB3B]
 	lda	CurIoChan		; get current I/O channel
 	beq	A_AB42			; if default channel go output
 					; [CURSOR RIGHT]
 	lda	#' '			; else output [SPACE]
 .byte	$2C				; makes next line BIT $1DA9
-A_AB42:					;				[AB42]
+A_AB42					;				[AB42]
 	lda	#$1D			; set [CURSOR RIGHT]
 .byte	$2C				; makes next line BIT $3FA9
 
@@ -3978,7 +3873,7 @@ A_AB42:					;				[AB42]
 ;
 ; print "?"
 
-PrintQuestMark:				;				[AB45]
+PrintQuestMark				;				[AB45]
 	lda	#'?'			; set "?"
 
 
@@ -3986,7 +3881,7 @@ PrintQuestMark:				;				[AB45]
 ;
 ; print character
 
-PrintChar:				;				[AB47]
+PrintChar				;				[AB47]
 	jsr	OutCharErrChan		; output character to channel with
 					; error check			[E10C]
 	and	#$FF			; set the flags on A
@@ -3998,7 +3893,7 @@ PrintChar:				;				[AB47]
 ; bad input routine
 ; Check the variable INPFLG where the error lays
 
-CheckINPFLG:				;				[AB4D]
+CheckINPFLG				;				[AB4D]
 	lda	INPFLG			; get INPUT mode flag, $00 = INPUT,
 					; $40 = GET, $98 = READ
 	beq	A_AB62			; branch if INPUT
@@ -4011,27 +3906,27 @@ CheckINPFLG:				;				[AB4D]
 	bne	A_AB5B			; branch always
 
 ; error with READ
-A_AB57:					;				[AB57]
+A_AB57					;				[AB57]
 	lda	DATLIN			; get current DATA line number LB
 	ldy	DATLIN+1		; get current DATA line number HB
 
 ; error with GET
-A_AB5B:					;				[AB5B]
+A_AB5B					;				[AB5B]
 	sta	CURLIN			; set current line number LB
 	sty	CURLIN+1		; set current line number HB
-A_AB5F:					;				[AB5F]
+A_AB5F					;				[AB5F]
 	jmp	SyntaxError		; do syntax error then warm start [AF08]
 
 ; was INPUT
 ; error with INPUT
-A_AB62:					;				[AB62]
+A_AB62					;				[AB62]
 	lda	CurIoChan		; get current I/O channel
 	beq	A_AB6B			; branch if default channel
 
 	ldx	#$18			; else error $18, file data error
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
-A_AB6B:					;				[AB6B]
+A_AB6B					;				[AB6B]
 	lda	#<txtREDOFROM		; set "?REDO FROM START" pointer LB
 	ldy	#>txtREDOFROM		; set "?REDO FROM START" pointer HB
 	jsr	OutputString		; print null terminated string	[AB1E]
@@ -4048,7 +3943,7 @@ A_AB6B:					;				[AB6B]
 ;
 ; perform GET
 
-bcGET:
+bcGET
 	jsr	ChkDirectMode		; check not Direct, back here if ok
 					;				[B3A6]
 	cmp	#'#'			; compare with "#"
@@ -4064,7 +3959,7 @@ bcGET:
 
 	jsr	OpenChan4Inp0		; open channel for input with error
 					; check				[E11E]
-A_AB92:					;				[AB92]
+A_AB92					;				[AB92]
 	ldx	#<CommandBuf+1		; set pointer LB
 	ldy	#>CommandBuf+1		; set pointer HB
 
@@ -4084,7 +3979,7 @@ A_AB92:					;				[AB92]
 ;
 ; perform INPUT#
 
-bcINPUTH:
+bcINPUTH
 	jsr	GetByteParm2		; get byte parameter		[B79E]
 
 	lda	#','			; set ","
@@ -4102,9 +3997,9 @@ bcINPUTH:
 ;
 ; close input and output channels
 
-bcINPUTH2:				;				[ABB5]
+bcINPUTH2				;				[ABB5]
 	lda	CurIoChan		; get current I/O channel
-A_ABB7:					;				[ABB7]
+A_ABB7					;				[ABB7]
 	jsr	CloseIoChannls		; close input and output channels [FFCC]
 
 	ldx	#$00			; clear X
@@ -4117,7 +4012,7 @@ A_ABB7:					;				[ABB7]
 ;
 ; perform INPUT
 
-bcINPUT:
+bcINPUT
 	cmp	#'"'			; compare next byte with open quote
 	bne	bcINPUT2		; if no prompt string just do INPUT
 
@@ -4129,12 +4024,12 @@ bcINPUT:
 	jsr	OutputString2		; print string from utility pointer
 					;				[AB21]
 ; done with prompt, now get data
-bcINPUT2:				;				[ABCE]
+bcINPUT2				;				[ABCE]
 	jsr	ChkDirectMode		; check not Direct, back here if ok
 					;				[B3A6]
 	lda	#','			; set ","
 	sta	CommandBuf-1		; save to start of buffer - 1
-A_ABD6:					;				[ABD6]
+A_ABD6					;				[ABD6]
 	jsr	OutQuestMark		; print "? " and get BASIC input [ABF9]
 
 	lda	CurIoChan		; get current I/O channel
@@ -4147,7 +4042,7 @@ A_ABD6:					;				[ABD6]
 	jsr	bcINPUTH2		; close input and output channels [ABB5]
 	jmp	bcDATA			; perform DATA			[A8F8]
 
-A_ABEA:					;				[ABEA]
+A_ABEA					;				[ABEA]
 	lda	CommandBuf		; get first byte in input buffer
 	bne	A_AC0D			; branch if not null
 
@@ -4164,13 +4059,13 @@ A_ABEA:					;				[ABEA]
 ;
 ; print "? " and get BASIC input
 
-OutQuestMark:				;				[ABF9]
+OutQuestMark				;				[ABF9]
 	lda	CurIoChan		; get current I/O channel
 	bne	A_AC03			; skip "?" prompt if not default channel
 
 	jsr	PrintQuestMark		; print "?"			[AB45]
 	jsr	PrintSpace		; print [SPACE] or [CURSOR RIGHT] [AB3B]
-A_AC03:					;				[AC03]
+A_AC03					;				[AC03]
 	jmp	InputNewLine		; call for BASIC input and return [A560]
 
 
@@ -4178,12 +4073,12 @@ A_AC03:					;				[AC03]
 ;
 ; perform READ
 
-bcREAD:
+bcREAD
 	ldx	DATPTR			; get DATA pointer LB
 	ldy	DATPTR+1		; get DATA pointer HB
 	lda	#$98			; set input mode = READ
 .byte	$2C				; makes next line BIT $00A9
-A_AC0D:					;				[AC0D]
+A_AC0D					;				[AC0D]
 	lda	#$00			; set input mode = INPUT
 
 
@@ -4191,14 +4086,14 @@ A_AC0D:					;				[AC0D]
 ;
 ; perform GET
 
-bcREAD2:				;				[AC0F]
+bcREAD2					;				[AC0F]
 	sta	INPFLG			; set input mode flag, $00 = INPUT,
 					; $40 = GET, $98 = READ
 	stx	INPPTR			; save READ pointer LB
 	sty	INPPTR+1		; save READ pointer HB
 
 ; READ, GET or INPUT next variable from list
-bcREAD3:				;				[AC15]
+bcREAD3					;				[AC15]
 	jsr	GetAddrVar		; get variable address		[B08B]
 	sta	FORPNT			; save address LB
 	sty	FORPNT+1		; save address HB
@@ -4230,7 +4125,7 @@ bcREAD3:				;				[AC15]
 	ldy	#>(CommandBuf-1)	; set pointer HB
 	bne	A_AC4D			; go interpret single character
 
-A_AC41:					;				[AC41]
+A_AC41					;				[AC41]
 	bmi	A_ACB8			; branch if READ
 
 ; else was INPUT
@@ -4238,12 +4133,12 @@ A_AC41:					;				[AC41]
 	bne	A_AC4A			; skip "?" prompt if not default channel
 
 	jsr	PrintQuestMark		; print "?"			[AB45]
-A_AC4A:					;				[AC4A]
+A_AC4A					;				[AC4A]
 	jsr	OutQuestMark		; print "? " and get BASIC input [ABF9]
-A_AC4D:					;				[AC4D]
+A_AC4D					;				[AC4D]
 	stx	TXTPTR			; save BASIC execute pointer LB
 	sty	TXTPTR+1		; save BASIC execute pointer HB
-bcREAD4:				;				[AC51]
+bcREAD4					;				[AC51]
 	jsr	CHRGET			; increment and scan memory, execute
 					; pointer now points to		[0073]
 					; start of next data or null terminator
@@ -4265,7 +4160,7 @@ bcREAD4:				;				[AC51]
 	beq	A_AC71			; branch always
 
 ; is string INPUT or string READ
-A_AC65:					;				[AC65]
+A_AC65					;				[AC65]
 	sta	CHARAC			; save search character
 
 	cmp	#'"'			; compare with "
@@ -4276,9 +4171,9 @@ A_AC65:					;				[AC65]
 	sta	CHARAC			; set search character
 
 	lda	#','			; set ","
-A_AC71:					;				[AC71]
+A_AC71					;				[AC71]
 	clc				; clear carry for add
-A_AC72:					;				[AC72]
+A_AC72					;				[AC72]
 	sta	ENDCHR			; set scan quotes flag
 
 
@@ -4290,7 +4185,7 @@ A_AC72:					;				[AC72]
 	bcc	A_AC7D			; branch if no rollover
 
 	iny				; else increment pointer HB
-A_AC7D:					;				[AC7D]
+A_AC7D					;				[AC7D]
 	jsr	PrtStr2UtiPtr		; print string to utility pointer [B48D]
 	jsr	RestBasExecPtr		; restore BASIC execute pointer from
 					; temp				[B7E2]
@@ -4298,14 +4193,14 @@ A_AC7D:					;				[AC7D]
 	jmp	bcREAD5			; continue processing command	[AC91]
 
 ; GET, INPUT or READ is numeric
-A_AC89:					;				[AC89]
+A_AC89					;				[AC89]
 	jsr	String2FAC1		; get FAC1 from string		[BCF3]
 
 	lda	INTFLG			; get data type flag, $80 = integer,
 					; $00 = float
 	jsr	SetIntegerVar		; assign value to numeric variable
 					;				[A9C2]
-bcREAD5:				;				[AC91]
+bcREAD5					;				[AC91]
 	jsr	CHRGOT			; scan memory			[0079]
 	beq	A_AC9D			; branch if ":" or [EOL]
 
@@ -4315,7 +4210,7 @@ bcREAD5:				;				[AC91]
 	jmp	CheckINPFLG		; else go do bad input routine	[AB4D]
 
 ; string terminated with ":", "," or $00
-A_AC9D:					;				[AC9D]
+A_AC9D					;				[AC9D]
 	lda	TXTPTR			; get BASIC execute pointer LB
 	ldy	TXTPTR+1		; get BASIC execute pointer HB
 	sta	INPPTR			; save READ pointer LB
@@ -4334,7 +4229,7 @@ A_AC9D:					;				[AC9D]
 	jmp	bcREAD3			; go READ or INPUT next variable from
 					; list				[AC15]
 ; was READ
-A_ACB8:					;				[ACB8]
+A_ACB8					;				[ACB8]
 	jsr	FindNextColon		; scan for next BASIC statement ([:] or
 					; [EOL])			[A906]
 	iny				; increment index to next byte
@@ -4354,7 +4249,7 @@ A_ACB8:					;				[ACB8]
 	lda	(TXTPTR),Y		; get next line # HB
 	iny				; increment index
 	sta	DATLIN+1		; save current DATA line HB
-A_ACD1:					;				[ACD1]
+A_ACD1					;				[ACD1]
 	jsr	bcDATA2			; add Y to the BASIC execute pointer
 					;				[A8FB]
 	jsr	CHRGOT			; scan memory			[0079]
@@ -4364,7 +4259,7 @@ A_ACD1:					;				[ACD1]
 
 	jmp	bcREAD4			; continue evaluating READ	[AC51]
 
-A_ACDF:					;				[ACDF]
+A_ACDF					;				[ACDF]
 	lda	INPPTR			; get READ pointer LB
 	ldy	INPPTR+1		; get READ pointer HB
 
@@ -4374,7 +4269,7 @@ A_ACDF:					;				[ACDF]
 
 	jmp	bcRESTORE2		; else set data pointer and exit [A827]
 
-A_ACEA:					;				[ACEA]
+A_ACEA					;				[ACEA]
 	ldy	#$00			; clear index
 	lda	(INPPTR),Y		; get READ byte
 	beq	A_ACFB			; exit if [EOL]
@@ -4386,7 +4281,7 @@ A_ACEA:					;				[ACEA]
 	ldy	#>txtEXTRA		; set "?EXTRA IGNORED" pointer HB
 	jmp	OutputString		; print null terminated string	[AB1E]
 
-A_ACFB:					;				[ACFB]
+A_ACFB					;				[ACFB]
 	rts
 
 
@@ -4394,18 +4289,18 @@ A_ACFB:					;				[ACFB]
 ;
 ; input error messages
 
-txtEXTRA:				;				[ACFC]
-.text	"?EXTRA IGNORED",$0D,$00
+txtEXTRA				;				[ACFC]
+.null	"?extra ignored{cr}"
 
-txtREDOFROM:				;				[AD0C]
-.text	"?REDO FROM START",$0D,$00
+txtREDOFROM				;				[AD0C]
+.null	"?redo from start{cr}"
 
 
 ;******************************************************************************
 ;
 ; perform NEXT
 
-bcNEXT:
+bcNEXT
 	bne	bcNEXT2			; branch if NEXT variable
 
 	ldy	#$00			; else clear Y
@@ -4413,9 +4308,9 @@ bcNEXT:
 
 ; NEXT variable
 
-bcNEXT2:				;				[AD24]
+bcNEXT2					;				[AD24]
 	jsr	GetAddrVar		; get variable address		[B08B]
-A_AD27:					;				[AD27]
+A_AD27					;				[AD27]
 	sta	FORPNT			; save FOR/NEXT variable pointer LB
 	sty	FORPNT+1		; save FOR/NEXT variable pointer HB
 					; (HB cleared if no variable defined)
@@ -4425,11 +4320,11 @@ A_AD27:					;				[AD27]
 
 	ldx	#$0A			; else set error $0A, next without for
 					; error
-A_AD32:					;				[AD32]
+A_AD32					;				[AD32]
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
 ; found this FOR variable
-A_AD35:					;				[AD35]
+A_AD35					;				[AD35]
 	txs				; update stack pointer
 
 	txa				; copy stack pointer
@@ -4475,12 +4370,12 @@ A_AD35:					;				[AD35]
 
 	lda	STACK+$11,X		; get BASIC execute pointer HB
 	sta	TXTPTR+1		; save BASIC execute pointer HB
-A_AD75:					;				[AD75]
+A_AD75					;				[AD75]
 	jmp	InterpretLoop		; go do interpreter inner loop	[A7AE]
 
 ; NEXT loop comlete
 
-A_AD78:					;				[AD78]
+A_AD78					;				[AD78]
 	txa				; stack copy to A
 	adc	#$11			; add $12, $11 + carry, to dump FOR
 					; structure
@@ -4501,38 +4396,38 @@ A_AD78:					;				[AD78]
 ;
 ; evaluate expression and check type mismatch
 
-EvalExpression:				;				[AD8A]
+EvalExpression				;				[AD8A]
 	jsr	EvaluateValue		; evaluate expression		[AD9E]
 
 ; check if source and destination are numeric
 
-CheckIfNumeric:				;				[AD8D]
+CheckIfNumeric				;				[AD8D]
 	clc
 .byte	$24				; makes next line BIT MEMSIZ+1
 
 ; check if source and destination are string
 
-CheckIfString:				;				[AD8F]
+CheckIfString				;				[AD8F]
 	sec				; destination is string
 
 ; type match check, set C for string, clear C for numeric
 
-ChkIfNumStr:				;				[AD90]
+ChkIfNumStr				;				[AD90]
 	bit	VALTYP			; test data type flag, $FF = string,
 					; $00 = numeric
 	bmi	A_AD97			; branch if string
 
 	bcs	A_AD99			; if destiantion is numeric do type
 					; missmatch error
-A_AD96:					;				[AD96]
+A_AD96					;				[AD96]
 	rts
 
-A_AD97:					;				[AD97]
+A_AD97					;				[AD97]
 	bcs	A_AD96			; exit if destination is string
 
 ; do type missmatch error
 
-A_AD99:					;				[AD99]
+A_AD99					;				[AD99]
 	ldx	#$16			; error code $16, type missmatch error
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
@@ -4541,17 +4436,17 @@ A_AD99:					;				[AD99]
 ;
 ; evaluate expression
 
-EvaluateValue:				;				[AD9E]
+EvaluateValue				;				[AD9E]
 	ldx	TXTPTR			; get BASIC execute pointer LB
 	bne	A_ADA4			; skip next if not zero
 
 	dec	TXTPTR+1		; else decr. BASIC execute pointer HB
-A_ADA4:					;				[ADA4]
+A_ADA4					;				[ADA4]
 	dec	TXTPTR			; decrement BASIC execute pointer LB
 
 	ldx	#$00			; set null precedence, flag done
 .byte	$24				; makes next line BIT VARPNT+1
-EvaluateValue2:				;				[ADA9]
+EvaluateValue2				;				[ADA9]
 	pha				; push compare evaluation byte if branch
 					; to here
 	txa				; copy precedence byte
@@ -4564,9 +4459,9 @@ EvaluateValue2:				;				[ADA9]
 
 	lda	#$00			; clear A
 	sta	CompEvalFlg		; clear comparrison evaluation flag
-EvaluateValue3:				;				[ADB8]
+EvaluateValue3				;				[ADB8]
 	jsr	CHRGOT			; scan memory			[0079]
-EvaluateValue4:				;				[ADBB]
+EvaluateValue4				;				[ADBB]
 	sec				; set carry for subtract
 	sbc	#TK_GT			; subtract the token for ">"
 	bcc	A_ADD7			; branch if < ">"
@@ -4588,7 +4483,7 @@ EvaluateValue4:				;				[ADBB]
 	jmp	EvaluateValue4		; go do next character		[ADBB]
 
 
-A_ADD7:					;				[ADD7]
+A_ADD7					;				[ADD7]
 	ldx	CompEvalFlg		; get comparrison evaluation flag
 	bne	A_AE07			; branch if compare function
 
@@ -4609,23 +4504,23 @@ A_ADD7:					;				[ADD7]
 					; descriptor, string 2	[B63D]
 					; is in line, and return
 
-A_ADE8:					;				[ADE8]
+A_ADE8					;				[ADE8]
 	adc	#$FF			; -1 (corrects for carry add)
 	sta	INDEX			; save it
 
 	asl				; *2
 	adc	INDEX			; *3
 	tay				; copy to index
-A_ADF0:					;				[ADF0]
+A_ADF0					;				[ADF0]
 	pla				; pull previous precedence
 	cmp	HierachyCode,Y		; compare with precedence byte
 	bcs	A_AE5D			; branch if A >=
 
 	jsr	CheckIfNumeric		; check if source is numeric, else do
 					; type mismatch			[AD8D]
-A_ADF9:					;				[ADF9]
+A_ADF9					;				[ADF9]
 	pha				; save precedence
-EvaluateValue5:				;				[ADFA]
+EvaluateValue5				;				[ADFA]
 	jsr	EvaluateValue6		; get vector, execute function then
 					; continue evaluation		[AE20]
 
@@ -4639,7 +4534,7 @@ EvaluateValue5:				;				[ADFA]
 
 	bne	A_AE66			; branch always
 
-A_AE07:					;				[AE07]
+A_AE07					;				[AE07]
 	lsr	VALTYP			; clear data type flag, $FF = string,
 					; $00 = numeric
 	txa				; copy compare function flag
@@ -4650,7 +4545,7 @@ A_AE07:					;				[AE07]
 	bne	A_AE11			; branch if no underflow
 
 	dec	TXTPTR+1		; else decr. BASIC execute pointer HB
-A_AE11:					;				[AE11]
+A_AE11					;				[AE11]
 	dec	TXTPTR			; decrement BASIC execute pointer LB
 
 	ldy	#$1B			; set offset to = operator precedence
@@ -4658,7 +4553,7 @@ A_AE11:					;				[AE11]
 	sta	CompEvalFlg		; save new comparrison evaluation flag
 	bne	A_ADF0			; branch always
 
-A_AE19:					;				[AE19]
+A_AE19					;				[AE19]
 	cmp	HierachyCode,Y		; compare with stacked function
 					; precedence
 	bcs	A_AE66			; if A >=, pop FAC2 and return
@@ -4670,7 +4565,7 @@ A_AE19:					;				[AE19]
 ;
 ; get vector, execute function then continue evaluation
 
-EvaluateValue6:				;				[AE20]
+EvaluateValue6				;				[AE20]
 	lda	HierachyCode+2,Y	; get function vector HB
 	pha				; onto stack
 
@@ -4683,10 +4578,10 @@ EvaluateValue6:				;				[AE20]
 	lda	CompEvalFlg		; get comparrison evaluation flag
 	jmp	EvaluateValue2		; continue evaluating expression [ADA9]
 
-A_AE30:					;				[AE30]
+A_AE30					;				[AE30]
 	jmp	SyntaxError		; do syntax error then warm start [AF08]
 
-EvaluateValue7:				;				[AE33]
+EvaluateValue7				;				[AE33]
 	lda	FACSGN			; get FAC1 sign (b7)
 	ldx	HierachyCode,Y		; get precedence byte
 
@@ -4695,7 +4590,7 @@ EvaluateValue7:				;				[AE33]
 ;
 ; push sign, round FAC1 and put on stack
 
-SgnFac1ToStack:				;				[AE38]
+SgnFac1ToStack				;				[AE38]
 	tay				; copy sign
 
 	pla				; get return address LB
@@ -4716,7 +4611,7 @@ SgnFac1ToStack:				;				[AE38]
 ;
 ; round FAC1 and put on stack
 
-FAC1ToStack:				;				[AE43]
+FAC1ToStack				;				[AE43]
 	jsr	RoundFAC1		; round FAC1			[BC1B]
 
 	lda	FacMantissa+3		; get FAC1 mantissa 4
@@ -4741,23 +4636,23 @@ FAC1ToStack:				;				[AE43]
 ;
 ; do functions
 
-A_AE58:					;				[AE58]
+A_AE58					;				[AE58]
 	ldy	#$FF			; flag function
 	pla				; pull precedence byte
-A_AE5B:					;				[AE5B]
+A_AE5B					;				[AE5B]
 	beq	A_AE80			; exit if done
 
-A_AE5D:					;				[AE5D]
+A_AE5D					;				[AE5D]
 	cmp	#$64			; compare previous precedence with $64
 	beq	A_AE64			; branch if was $64 (< function)
 
 	jsr	CheckIfNumeric		; check if source is numeric, else do
 					; type mismatch	[AD8D]
-A_AE64:					;				[AE64]
+A_AE64					;				[AE64]
 	sty	TEMPSTR			; save precedence stacked flag
 
 ; pop FAC2 and return
-A_AE66:					;				[AE66]
+A_AE66					;				[AE66]
 	pla				; pop byte
 	lsr				; shift out comparison evaluation
 					; lowest bit
@@ -4783,7 +4678,7 @@ A_AE66:					;				[AE66]
 
 	eor	FACSGN			; EOR FAC1 sign (b7)
 	sta	ARISGN			; save sign compare (FAC1 EOR FAC2)
-A_AE80:					;				[AE80]
+A_AE80					;				[AE80]
 	lda	FACEXP			; get FAC1 exponent
 	rts
 
@@ -4792,7 +4687,7 @@ A_AE80:					;				[AE80]
 ;
 ; get value from line
 
-GetNextParm:				;				[AE83]
+GetNextParm				;				[AE83]
 	jmp	(IEVAL)			; get arithmetic element
 
 
@@ -4801,29 +4696,29 @@ GetNextParm:				;				[AE83]
 ; get arithmetic element, the get arithmetic element vector is initialised to
 ; point here
 
-GetNextParm2:				;				[AE86]
+GetNextParm2				;				[AE86]
 	lda	#$00			; clear byte
 	sta	VALTYP			; clear data type flag, $FF = string,
 					; $00 = numeric
-A_AE8A:					;				[AE8A]
+A_AE8A					;				[AE8A]
 	jsr	CHRGET			; increment and scan memory	[0073]
 	bcs	A_AE92			; branch if not numeric character
 
 ; else numeric string found (e.g. 123)
-A_AE8F:					;				[AE8F]
+A_AE8F					;				[AE8F]
 	jmp	String2FAC1		; get FAC1 from string and return [BCF3]
 
 ; get value from line .. continued
 
 ; wasn't a number so ...
-A_AE92:					;				[AE92]
+A_AE92					;				[AE92]
 	jsr	CheckAtoZ		; check byte, return Cb = 0 if < "A" or
 					; > "Z"				[B113]
 	bcc	A_AE9A			; branch if not variable name
 
 	jmp	GetVariable		; variable name set-up and return [AF28]
 
-A_AE9A:					;				[AE9A]
+A_AE9A					;				[AE9A]
 	cmp	#TK_PI			; compare with token for PI
 	bne	A_AEAD			; branch if not PI
 
@@ -4838,7 +4733,7 @@ A_AE9A:					;				[AE9A]
 ;
 ; PI as floating number
 
-Tbl_PI_Value:				;				[AEA8]
+Tbl_PI_Value				;				[AEA8]
 .byte	$82,$49,$0F,$DA,$A1		; 3.141592653
 
 
@@ -4847,7 +4742,7 @@ Tbl_PI_Value:				;				[AEA8]
 ; get value from line .. continued
 
 ; wasn't variable name so ...
-A_AEAD:					;				[AEAD]
+A_AEAD					;				[AEAD]
 	cmp	#'.'			; compare with "."
 	beq	A_AE8F			; if so get FAC1 from string and return,
 					; e.g. was .123
@@ -4870,14 +4765,14 @@ A_AEAD:					;				[AEAD]
 ;
 ; print "..." string to string utility area
 
-GetNextParm3:				;				[AEBD]
+GetNextParm3				;				[AEBD]
 	lda	TXTPTR			; get BASIC execute pointer LB
 	ldy	TXTPTR+1		; get BASIC execute pointer HB
 	adc	#$00			; add carry to LB
 	bcc	A_AEC6			; branch if no overflow
 
 	iny				; increment HB
-A_AEC6:					;				[AEC6]
+A_AEC6					;				[AEC6]
 	jsr	QuoteStr2UtPtr		; print " terminated string to utility
 					; pointer			[B487]
 	jmp	RestBasExecPtr		; restore BASIC execute pointer from
@@ -4885,7 +4780,7 @@ A_AEC6:					;				[AEC6]
 ; get value from line .. continued
 
 ; wasn't a string so ...
-A_AECC:					;				[AECC]
+A_AECC					;				[AECC]
 	cmp	#TK_NOT			; compare with token for NOT
 	bne	A_AEE3			; branch if not token for NOT
 
@@ -4895,7 +4790,7 @@ A_AECC:					;				[AECC]
 					; branch always
 ; do = compare
 
-bcEQUAL:
+bcEQUAL
 	jsr	EvalInteger3		; evaluate integer expression, no sign
 					; check				[B1BF]
 	lda	FacMantissa+3		; get FAC1 mantissa 4
@@ -4909,7 +4804,7 @@ bcEQUAL:
 ; get value from line .. continued
 
 ; wasn't a string or NOT so ...
-A_AEE3:					;				[AEE3]
+A_AEE3					;				[AEE3]
 	cmp	#TK_FN			; compare with token for FN
 	bne	A_AEEA			; branch if not token for FN
 
@@ -4918,7 +4813,7 @@ A_AEE3:					;				[AEE3]
 ; get value from line .. continued
 
 ; wasn't a string, NOT or FN so ...
-A_AEEA:					;				[AEEA]
+A_AEEA					;				[AEEA]
 	cmp	#TK_SGN			; compare with token for SGN
 	bcc	Chk4Parens		; if less than SGN token evaluate
 					; expression in parentheses
@@ -4930,7 +4825,7 @@ A_AEEA:					;				[AEEA]
 
 ; evaluate expression within parentheses
 
-Chk4Parens:				;				[AEF1]
+Chk4Parens				;				[AEF1]
 	jsr	Chk4OpenParen		; scan for "(", else do syntax error
 					; then warm start		[AEFA]
 	jsr	EvaluateValue		; evaluate expression		[AD9E]
@@ -4939,24 +4834,24 @@ Chk4Parens:				;				[AEF1]
 
 ; scan for ")", else do syntax error then warm start
 
-Chk4CloseParen:				;				[AEF7]
+Chk4CloseParen				;				[AEF7]
 	lda	#')'			; load A with ")"
 .byte	$2C				; makes next line BIT RESHO+2A9
 
 ; scan for "(", else do syntax error then warm start
 
-Chk4OpenParen:				;				[AEFA]
+Chk4OpenParen				;				[AEFA]
 	lda	#'('			; load A with "("
 .byte	$2C				; makes next line BIT TXTTAB+1A9
 
 ; scan for ",", else do syntax error then warm start
 
-Chk4Comma:				;				[AEFD]
+Chk4Comma				;				[AEFD]
 	lda	#','			; load A with ","
 
 ; scan for CHR$(A), else do syntax error then warm start
 
-Chk4CharInA:				;				[AEFF]
+Chk4CharInA				;				[AEFF]
 	ldy	#$00			; clear index
 	cmp	(TXTPTR),Y		; compare with BASIC byte
 	bne	SyntaxError		; if not expected byte do syntax error
@@ -4965,14 +4860,14 @@ Chk4CharInA:				;				[AEFF]
 					; return			[0073]
 ; syntax error then warm start
 
-SyntaxError:				;				[AF08]
+SyntaxError				;				[AF08]
 	ldx	#$0B			; error code $0B, syntax error
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
 
-A_AF0D:					;				[AF0D]
+A_AF0D					;				[AF0D]
 	ldy	#$15			; set offset from base to > operator
-A_AF0F:					;				[AF0F]
+A_AF0F					;				[AF0F]
 	pla				; dump return address LB
 	pla				; dump return address HB
 
@@ -4983,7 +4878,7 @@ A_AF0F:					;				[AF0F]
 ;
 ; check address range, return C = 1 if address in BASIC ROM
 
-ChkIfVariable:				;				[AF14]
+ChkIfVariable				;				[AF14]
 	sec				; set carry for subtract
 	lda	FacMantissa+2		; get variable address LB
 	sbc	#<BasicCold		; subtract BasicCold LB
@@ -4997,7 +4892,7 @@ ChkIfVariable:				;				[AF14]
 
 	lda	#>DataCHRGET		; get end of BASIC marker HB
 	sbc	FacMantissa+3		; subtract variable address HB
-A_AF27:					;				[AF27]
+A_AF27					;				[AF27]
 	rts
 
 
@@ -5005,7 +4900,7 @@ A_AF27:					;				[AF27]
 ;
 ; variable name set-up
 
-GetVariable:				;				[AF28]
+GetVariable				;				[AF28]
 	jsr	GetAddrVar		; get variable address		[B08B]
 	sta	FacMantissa+2		; save variable pointer LB
 	sty	FacMantissa+3		; save variable pointer HB
@@ -5024,7 +4919,7 @@ GetVariable:				;				[AF28]
 	jsr	ChkIfVariable		; check address range		[AF14]
 	bcc	A_AF5C			; exit if not in BASIC ROM
 
-	cpx	#'T'			; compare variable name first character
+	cpx	#'t'			; compare variable name first character
 					; with "T"
 	bne	A_AF5C			; exit if not "T"
 
@@ -5048,11 +4943,11 @@ GetVariable:				;				[AF28]
 
 	jmp	bcSTR2			; exit via STR$() code tail	[B46F]
 
-A_AF5C:					;				[AF5C]
+A_AF5C					;				[AF5C]
 	rts
 
 ; variable name set-up, variable is numeric
-A_AF5D:					;				[AF5D]
+A_AF5D					;				[AF5D]
 	bit	INTFLG			; test data type flag, $80 = integer,
 					; $00 = float
 	bpl	A_AF6E			; branch if float
@@ -5069,15 +4964,15 @@ A_AF5D:					;				[AF5D]
 	jmp	ConvertAY2FAC1		; convert fixed integer AY to float FAC1
 					; and return			[B391]
 ; variable name set-up, variable is float
-A_AF6E:					;				[AF6E]
+A_AF6E					;				[AF6E]
 	jsr	ChkIfVariable		; check address range		[AF14]
 	bcc	A_AFA0			; if not in BASIC ROM get pointer and
 					; unpack into FAC1
-	cpx	#'T'			; compare variable name first character
+	cpx	#'t'			; compare variable name first character
 					; with "T"
 	bne	A_AF92			; branch if not "T"
 
-	cpy	#'I'			; compare variable name second character
+	cpy	#'i'			; compare variable name second character
 					; with "I"
 	bne	A_AFA0			; branch if not "I"
 
@@ -5094,9 +4989,9 @@ A_AF6E:					;				[AF6E]
 ;
 ; read real time clock into FAC1 mantissa, 0HML
 
-GetTime:				;				[AF84]
+GetTime					;				[AF84]
 	jsr	ReadClock		; read real time clock		[FFDE]
-	stx	FacMantissa+2		; save jiffy clock mid byte as  FAC1
+	stx	FacMantissa+2		; save jiffy clock mid byte as	FAC1
 					; mantissa 3
 	sty	FacMantissa+1		; save jiffy clock HB as  FAC1
 					; mantissa 2
@@ -5108,12 +5003,12 @@ GetTime:				;				[AF84]
 	rts
 
 ; variable name set-up, variable is float and not "Tx"
-A_AF92:					;				[AF92]
-	cpx	#'S'			; compare variable name first character
+A_AF92					;				[AF92]
+	cpx	#'s'			; compare variable name first character
 					; with "S"
 	bne	A_AFA0			; if not "S" go do normal floating
 					; variable
-	cpy	#'T'			; compare variable name second character
+	cpy	#'t'			; compare variable name second character
 					; with "T"
 	bne	A_AFA0			; if not "T" go do normal floating
 					; variable
@@ -5122,7 +5017,7 @@ A_AF92:					;				[AF92]
 	jmp	AtoInteger		; save A as integer byte and return
 					;				[BC3C]
 ; variable is float
-A_AFA0:					;				[AFA0]
+A_AFA0					;				[AFA0]
 	lda	FacMantissa+2		; get variable pointer LB
 	ldy	FacMantissa+3		; get variable pointer HB
 	jmp	UnpackAY2FAC1		; unpack memory (AY) into FAC1	[BBA2]
@@ -5135,7 +5030,7 @@ A_AFA0:					;				[AFA0]
 
 ; set up function references
 
-GetReal:				;				[AFA7]
+GetReal					;				[AFA7]
 	asl				; *2 (2 bytes per function address)
 	pha				; save function offset
 	tax				; copy function offset
@@ -5182,12 +5077,12 @@ GetReal:				;				[AFA7]
 ; get value from line .. continued
 ; was SGN() to CHR$() so..
 
-A_AFD1:					;				[AFD1]
+A_AFD1					;				[AFD1]
 	jsr	Chk4Parens		; evaluate expression within parentheses
 					;				[AEF1]
 	pla				; restore function offset
 	tay				; copy to index
-J_AFD6:					;				[AFD6]
+J_AFD6					;				[AFD6]
 	lda	TblFunctions-$68,Y	; get function jump vector LB
 	sta	Jump0054+1		; save functions jump vector LB
 
@@ -5206,7 +5101,7 @@ J_AFD6:					;				[AFD6]
 ; perform OR
 ; this works because NOT(NOT(x) AND NOT(y)) = x OR y
 
-bcOR:					;				[AFE6]
+bcOR					;				[AFE6]
 	ldy	#$FF			; set Y for OR
 .byte	$2C				; makes next line BIT $00A0
 
@@ -5215,7 +5110,7 @@ bcOR:					;				[AFE6]
 ;
 ; perform AND
 
-bcAND:					;				[AFE9]
+bcAND					;				[AFE9]
 	ldy	#$00			; clear Y for AND
 	sty	COUNT			; set AND/OR invert value
 
@@ -5254,7 +5149,7 @@ bcAND:					;				[AFE9]
 
 ; do < compare
 
-bcSMALLER:				;				[D016]
+bcSMALLER				;				[D016]
 	jsr	ChkIfNumStr		; type match check, set C for string
 					;				[AD90]
 	bcs	A_B02E			; branch if string
@@ -5273,7 +5168,7 @@ bcSMALLER:				;				[D016]
 	jmp	J_B061			; go evaluate result		[B061]
 
 ; do string < compare
-A_B02E:					;				[B02E]
+A_B02E					;				[B02E]
 	lda	#$00			; clear byte
 	sta	VALTYP			; clear data type flag, $FF = string,
 					; $00 = numeric
@@ -5307,25 +5202,25 @@ A_B02E:					;				[B02E]
 
 	ldx	FACEXP			; get string 1 length
 	lda	#$FF			; set str 1 length < string 2 length
-A_B056:					;				[B056]
+A_B056					;				[B056]
 	sta	FACSGN			; save length compare
 
 	ldy	#$FF			; set index
 	inx				; adjust for loop
-A_B05B:					;				[B05B]
+A_B05B					;				[B05B]
 	iny				; increment index
 
 	dex				; decrement count
 	bne	A_B066			; branch if still bytes to do
 
 	ldx	FACSGN			; get length compare back
-J_B061:					;				[B061]
+J_B061					;				[B061]
 	bmi	A_B072			; branch if str 1 < str 2
 
 	clc				; flag str 1 <= str 2
 	bcc	A_B072			; go evaluate result
 
-A_B066:					;				[B066]
+A_B066					;				[B066]
 	lda	(ArgMantissa+2),Y	; get string 2 byte
 	cmp	(FacMantissa),Y		; compare with string 1 byte
 	beq	A_B05B			; loop if bytes =
@@ -5334,7 +5229,7 @@ A_B066:					;				[B066]
 	bcs	A_B072			; branch if so
 
 	ldx	#$01			; set str 1 > string 2
-A_B072:					;				[B072]
+A_B072					;				[B072]
 	inx				; x = 0, 1 or 2
 
 	txa				; copy to A
@@ -5344,11 +5239,11 @@ A_B072:					;				[B072]
 	beq	A_B07B			; branch if 0 (compare is false)
 
 	lda	#$FF			; else set result true
-A_B07B:					;				[B07B]
+A_B07B					;				[B07B]
 	jmp	AtoInteger		; save A as integer byte and return
 					;				[BC3C]
 
-A_B07E:					;				[B07E]
+A_B07E					;				[B07E]
 	jsr	Chk4Comma		; scan for ",", else do syntax error
 					; then warm start		[AEFD]
 
@@ -5356,7 +5251,7 @@ A_B07E:					;				[B07E]
 ;
 ; perform DIM
 
-bcDIM:					;				[D081]
+bcDIM					;				[D081]
 	tax				; copy "DIM" flag to X
 	jsr	GetAddrVar2		; search for variable		[B090]
 
@@ -5370,12 +5265,12 @@ bcDIM:					;				[D081]
 ;
 ; search for variable
 
-GetAddrVar:				;				[B08B]
+GetAddrVar				;				[B08B]
 	ldx	#$00			; set DIM flag = $00
 	jsr	CHRGOT			; scan memory, 1st character	[0079]
-GetAddrVar2:				;				[B090]
+GetAddrVar2				;				[B090]
 	stx	DIMFLG			; save DIM flag
-GetAddrVar3:				;				[B092]
+GetAddrVar3				;				[B092]
 	sta	VARNAM			; save 1st character
 
 	jsr	CHRGOT			; scan memory			[0079]
@@ -5384,12 +5279,12 @@ GetAddrVar3:				;				[B092]
 					; or > "Z"			[B113]
 	bcs	A_B09F			; branch if ok
 
-A_B09C:					;				[B09C]
+A_B09C					;				[B09C]
 	jmp	SyntaxError		; else syntax error then warm start
 					;				[AF08]
 
 ; was variable name so ...
-A_B09F:					;				[B09F]
+A_B09F					;				[B09F]
 	ldx	#$00			; clear 2nd character temp
 	stx	VALTYP			; clear data type flag, $FF = string,
 					; $00 = numeric
@@ -5405,11 +5300,11 @@ A_B09F:					;				[B09F]
 					; > "Z"				[B113]
 	bcc	A_B0BA			; branch if <"A" or >"Z" (go check if
 					; string)
-A_B0AF:					;				[B0AF]
+A_B0AF					;				[B0AF]
 	tax				; copy 2nd character
 
 ; ignore further (valid) characters in the variable name
-A_B0B0:					;				[B0B0]
+A_B0B0					;				[B0B0]
 	jsr	CHRGET			; increment and scan memory, 3rd
 					; character			[0073]
 	bcc	A_B0B0			; loop if character = "0"-"9" (ignore)
@@ -5419,7 +5314,7 @@ A_B0B0:					;				[B0B0]
 	bcs	A_B0B0			; loop if character = "A"-"Z" (ignore)
 
 ; check if string variable
-A_B0BA:					;				[B0BA]
+A_B0BA					;				[B0BA]
 	cmp	#'$'			; compare with "$"
 	bne	A_B0C4			; branch if not string
 
@@ -5429,7 +5324,7 @@ A_B0BA:					;				[B0BA]
 					; $00 = numeric
 	bne	A_B0D4			; branch always
 
-A_B0C4:					;				[B0C4]
+A_B0C4					;				[B0C4]
 	cmp	#'%'			; compare with "%"
 	bne	A_B0DB			; branch if not integer
 
@@ -5441,14 +5336,14 @@ A_B0C4:					;				[B0C4]
 
 	ora	VARNAM			; OR current variable name first byte
 	sta	VARNAM			; save current variable name first byte
-A_B0D4:					;				[B0D4]
+A_B0D4					;				[B0D4]
 	txa				; get 2nd character back
 	ora	#$80			; set top bit, indicate string or
 					; integer variable
 	tax				; copy back to 2nd character temp
 
 	jsr	CHRGET			; increment and scan memory	[0073]
-A_B0DB:					;				[B0DB]
+A_B0DB					;				[B0DB]
 	stx	VARNAM+1		; save 2nd character
 
 	sec				; set carry for subtract
@@ -5462,15 +5357,15 @@ A_B0DB:					;				[B0DB]
 ; either find or create variable
 
 ; variable name wasn't xx(.... so look for plain variable
-A_B0E7:					;				[B0E7]
+A_B0E7					;				[B0E7]
 	ldy	#$00			; clear A
 	sty	SUBFLG			; clear subscript/FNX flag
 
 	lda	VARTAB			; get start of variables LB
 	ldx	VARTAB+1		; get start of variables HB
-A_B0EF:					;				[B0EF]
+A_B0EF					;				[B0EF]
 	stx	FacTempStor+9		; save search address HB
-A_B0F1:					;				[B0F1]
+A_B0F1					;				[B0F1]
 	sta	FacTempStor+8		; save search address LB
 
 	cpx	ARYTAB+1		; compare with end of variables HB
@@ -5481,7 +5376,7 @@ A_B0F1:					;				[B0F1]
 					; variables LB
 	beq	A_B11D			; if not found go make new variable
 
-A_B0FB:					;				[B0FB]
+A_B0FB					;				[B0FB]
 	lda	VARNAM			; get 1st character of variable to find
 	cmp	(FacTempStor+8),Y	; compare with variable name 1st
 					; character
@@ -5496,7 +5391,7 @@ A_B0FB:					;				[B0FB]
 	beq	A_B185			; branch if match (found variable)
 
 	dey				; else decrement index (now = $00)
-A_B109:					;				[B109]
+A_B109					;				[B109]
 	clc				; clear carry for add
 	lda	FacTempStor+8		; get search address LB
 	adc	#$07			; +7, offset to next variable name
@@ -5507,22 +5402,22 @@ A_B109:					;				[B109]
 					; $FFFF
 ; check byte, return C = 0 if <"A" or >"Z"
 
-CheckAtoZ:				;				[B113]
-	cmp	#'A'			; compare with "A"
+CheckAtoZ				;				[B113]
+	cmp	#'a'			; compare with "A"
 	bcc	A_B11C			; exit if less
 
 ; carry is set
-	sbc	#'Z'+1			; subtract "Z"+1
+	sbc	#'z'+1			; subtract "Z"+1
 
 	sec				; set carry
 	sbc	#$A5			; subtract $A5 (restore byte)
 					; carry clear if byte > $5A
-A_B11C:					;				[B11C]
+A_B11C					;				[B11C]
 	rts
 
 ; reached end of variable memory without match
 ; ... so create new variable
-A_B11D:					;				[B11D]
+A_B11D					;				[B11D]
 	pla				; pop return address LB
 	pha				; push return address LB
 
@@ -5541,37 +5436,37 @@ A_B11D:					;				[B11D]
 ; would have done.
 
 ; else return dummy null value
-A_B123:					;				[B123]
+A_B123					;				[B123]
 	lda	#<L_BF13		; set result pointer LB
 	ldy	#>L_BF13		; set result pointer HB
 	rts
 
 ; create new numeric variable
-A_B128:					;				[B128]
+A_B128					;				[B128]
 	lda	VARNAM			; get variable name first character
 
 	ldy	VARNAM+1		; get variable name second character
-	cmp	#'T'			; compare first character with "T"
+	cmp	#'t'			; compare first character with "T"
 	bne	A_B13B			; branch if not "T"
 
 	cpy	#$C9		; compare second character with "I$"
 	beq	A_B123			; if "I$" return null value
 
-	cpy	#'I'			; compare second character with "I"
+	cpy	#'i'			; compare second character with "I"
 	bne	A_B13B			; branch if not "I"
 
 ; if name is "TI" do syntax error
-A_B138:					;				[B138]
+A_B138					;				[B138]
 	jmp	SyntaxError		; do syntax error then warm start [AF08]
 
-A_B13B:					;				[B13B]
-	cmp	#'S'			; compare first character with "S"
+A_B13B					;				[B13B]
+	cmp	#'s'			; compare first character with "S"
 	bne	A_B143			; branch if not "S"
 
-	cpy	#'T'			; compare second character with "T"
+	cpy	#'t'			; compare second character with "T"
 	beq	A_B138			; if name is "ST" do syntax error
 
-A_B143:					;				[B143]
+A_B143					;				[B143]
 	lda	ARYTAB			; get end of variables LB
 	ldy	ARYTAB+1		; get end of variables HB
 	sta	FacTempStor+8		; save old block start LB
@@ -5587,7 +5482,7 @@ A_B143:					;				[B143]
 	bcc	A_B159			; branch if no overflow to HB
 
 	iny				; else increment HB
-A_B159:					;				[B159]
+A_B159					;				[B159]
 	sta	FacTempStor+1		; set new block end LB
 	sty	FacTempStor+2		; set new block end HB
 
@@ -5624,7 +5519,7 @@ A_B159:					;				[B159]
 	sta	(FacTempStor+8),Y	; initialise variable byte
 
 ; found a match for variable
-A_B185:					;				[B185]
+A_B185					;				[B185]
 	lda	FacTempStor+8		; get variable address LB
 	clc				; clear carry for add
 	adc	#$02			; +2, offset past variable name bytes
@@ -5632,14 +5527,14 @@ A_B185:					;				[B185]
 	bcc	A_B18F			; branch if no overflow from add
 
 	iny				; else increment HB
-A_B18F:					;				[B18F]
+A_B18F					;				[B18F]
 	sta	VARPNT			; save current variable pointer LB
 	sty	VARPNT+1		; save current variable pointer HB
 	rts
 
 ; set-up array pointer to first element in array
 
-SetupPointer:				;				[B194]
+SetupPointer				;				[B194]
 	lda	COUNT			; get # of dimensions (1, 2 or 3)
 	asl				; *2 (also clears the carry !)
 	adc	#$05			; +5 (result is 7, 9 or 11 here)
@@ -5648,7 +5543,7 @@ SetupPointer:				;				[B194]
 	bcc	A_B1A0			; branch if no overflow
 
 	iny				; else increment HB
-A_B1A0:					;				[B1A0]
+A_B1A0					;				[B1A0]
 	sta	FacTempStor+1		; save array data pointer LB
 	sty	FacTempStor+2		; save array data pointer HB
 	rts
@@ -5658,7 +5553,7 @@ A_B1A0:					;				[B1A0]
 ;
 ; -32768 as floating value
 
-M32768:					;				[B1A5]
+M32768					;				[B1A5]
 .byte	$90,$80,$00,$00,$00		; -32768
 
 
@@ -5666,7 +5561,7 @@ M32768:					;				[B1A5]
 ;
 ; convert float to fixed
 
-Float2Fixed:				;				[B1AA]
+Float2Fixed				;				[B1AA]
 	jsr	EvalInteger3		; evaluate integer expression, no sign
 					; check	[B1BF]
 
@@ -5679,13 +5574,13 @@ Float2Fixed:				;				[B1AA]
 ;
 ; evaluate integer expression
 
-EvalInteger:				;				[B1B2]
+EvalInteger				;				[B1B2]
 	jsr	CHRGET			; increment and scan memory	[0073]
 	jsr	EvaluateValue		; evaluate expression		[AD9E]
 
 ; evaluate integer expression, sign check
 
-EvalInteger2:				;				[B1B8]
+EvalInteger2				;				[B1B8]
 	jsr	CheckIfNumeric		; check if source is numeric, else do
 					; type mismatch			[AD8D]
 	lda	FACSGN			; get FAC1 sign (b7)
@@ -5693,7 +5588,7 @@ EvalInteger2:				;				[B1B8]
 
 ; evaluate integer expression, no sign check
 
-EvalInteger3:				;				[B1BF]
+EvalInteger3				;				[B1BF]
 	lda	FACEXP			; get FAC1 exponent
 	cmp	#$90			; compare with exponent = 2^16 (n>2^15)
 	bcc	A_B1CE			; if n<2^16 go convert FAC1 floating to
@@ -5701,10 +5596,10 @@ EvalInteger3:				;				[B1BF]
 	lda	#<M32768		; set pointer LB to -32768
 	ldy	#>M32768		; set pointer HB to -32768
 	jsr	CmpFAC1withAY		; compare FAC1 with (AY)	[BC5B]
-A_B1CC:					;				[B1CC]
+A_B1CC					;				[B1CC]
 	bne	IllegalQuant		; if <> do illegal quantity error then
 					; warm start
-A_B1CE:					;				[B1CE]
+A_B1CE					;				[B1CE]
 	jmp	FAC1Float2Fix		; convert FAC1 floating to fixed and
 					; return			[BC9B]
 
@@ -5716,9 +5611,9 @@ A_B1CE:					;				[B1CE]
 ;			; 1st char  2nd char
 ;			;   b7	      b7      type    element size
 ;			; --------  --------  -----   ------------
-;			;   0	      0	      Real       5
-;			;   0         1	      string     3
-;			;   1	      1	      integer    2
+;			;   0	      0	      Real	 5
+;			;   0	      1	      string	 3
+;			;   1	      1	      integer	 2
 ; offset to next array	; word
 ; dimension count	; byte
 ; 1st dimension size	; word, this is the number of elements including 0
@@ -5731,7 +5626,7 @@ A_B1CE:					;				[B1CE]
 
 ; find or make array
 
-FindMakeArray:				;				[B1D1]
+FindMakeArray				;				[B1D1]
 	lda	DIMFLG			; get DIM flag
 	ora	INTFLG			; OR with data type flag
 	pha				; push it
@@ -5745,7 +5640,7 @@ FindMakeArray:				;				[B1D1]
 ; now get the array dimension(s) and stack it (them) before the data type and
 ; DIM flag
 
-A_B1DB:					;				[B1DB]
+A_B1DB					;				[B1DB]
 	tya				; copy dimensions count
 	pha				; save it
 
@@ -5806,7 +5701,7 @@ A_B1DB:					;				[B1DB]
 ; now check to see if we are at the end of array memory, we would be if there
 ; were no arrays.
 
-A_B21C:					;				[B21C]
+A_B21C					;				[B21C]
 	stx	FacTempStor+8		; save as array start pointer LB
 	sta	FacTempStor+9		; save as array start pointer HB
 
@@ -5817,7 +5712,7 @@ A_B21C:					;				[B21C]
 	beq	A_B261			; go build array if not found
 
 ; search for array
-A_B228:					;				[B228]
+A_B228					;				[B228]
 	ldy	#$00			; clear index
 	lda	(FacTempStor+8),Y	; get array name first byte
 	iny				; increment index to second name byte
@@ -5830,7 +5725,7 @@ A_B228:					;				[B228]
 	beq	A_B24D			; array found so branch
 
 ; no match
-A_B237:					;				[B237]
+A_B237					;				[B237]
 	iny				; increment index
 	lda	(FacTempStor+8),Y	; get array size LB
 	clc				; clear carry for add
@@ -5847,7 +5742,7 @@ A_B237:					;				[B237]
 ;
 ; do bad subscript error
 
-BadSubscript:				;				[B245]
+BadSubscript				;				[B245]
 	ldx	#$12			; error $12, bad subscript error
 .byte	$2C				; makes next line BIT $0EA2
 
@@ -5856,9 +5751,9 @@ BadSubscript:				;				[B245]
 ;
 ; do illegal quantity error
 
-IllegalQuant:				;				[B248]
+IllegalQuant				;				[B248]
 	ldx	#$0E			; error $0E, illegal quantity error
-A_B24A:					;				[B24A]
+A_B24A					;				[B24A]
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
 
@@ -5866,7 +5761,7 @@ A_B24A:					;				[B24A]
 ;
 ; found the array
 
-A_B24D:					;				[B24D]
+A_B24D					;				[B24D]
 	ldx	#$13			; set error $13, double dimension error
 
 	lda	DIMFLG			; get DIM flag
@@ -5886,7 +5781,7 @@ A_B24D:					;				[B24D]
 	jmp	GetArrElement		; found array so go get element	[B2EA]
 
 ; array not found, so build it
-A_B261:					;				[B261]
+A_B261					;				[B261]
 	jsr	SetupPointer		; set-up array pointer to first element
 					; in array			[B194]
 	jsr	CheckAvailMem		; check available memory, do out of
@@ -5900,7 +5795,7 @@ A_B261:					;				[B261]
 	bpl	A_B274			; branch if not string or floating
 					; point array
 	dex				; decrement element size, $04
-A_B274:					;				[B274]
+A_B274					;				[B274]
 	iny				; increment index
 	lda	VARNAM+1		; get variable name 2nd byte
 	sta	(FacTempStor+8),Y	; save array name 2nd byte
@@ -5908,7 +5803,7 @@ A_B274:					;				[B274]
 
 	dex				; decrement element size, $03
 	dex				; decrement element size, $02
-A_B27D:					;				[B27D]
+A_B27D					;				[B27D]
 	stx	FBUFPT			; save element size
 
 	lda	COUNT			; get dimensions count
@@ -5916,7 +5811,7 @@ A_B27D:					;				[B27D]
 	iny				; .. to array  ..
 	iny				; .. dimension count
 	sta	(FacTempStor+8),Y	; save array dimension count
-A_B286:					;				[B286]
+A_B286					;				[B286]
 	ldx	#$0B			; set default dimension size LB
 	lda	#$00			; set default dimension size HB
 	bit	DIMFLG			; test DIM flag
@@ -5929,7 +5824,7 @@ A_B286:					;				[B286]
 
 	pla				; pull dimension size HB
 	adc	#$00			; add carry to HB
-A_B296:					;				[B296]
+A_B296					;				[B296]
 	iny				; incement index to dimension size HB
 	sta	(FacTempStor+8),Y	; save dimension size HB
 
@@ -5959,7 +5854,7 @@ A_B296:					;				[B296]
 	iny				; else increment next array pointer HB
 	beq	A_B30B			; if rolled over do out of memory error
 					; then warm start
-A_B2B9:					;				[B2B9]
+A_B2B9					;				[B2B9]
 	jsr	CheckAvailMem		; check available memory, do out of
 					; memory error if no room	[A408]
 	sta	STREND			; set end of arrays LB
@@ -5973,12 +5868,12 @@ A_B2B9:					;				[B2B9]
 					; count
 	ldy	FBUFPT			; get array size LB, now index to block
 	beq	A_B2CD			; branch if $00
-A_B2C8:					;				[B2C8]
+A_B2C8					;				[B2C8]
 	dey				; decrement index, do 0 to n-1
 	sta	(FacTempStor+1),Y	; clear array element byte
 	bne	A_B2C8			; loop until this block done
 
-A_B2CD:					;				[B2CD]
+A_B2CD					;				[B2CD]
 	dec	FacTempStor+2		; decrement array pointer HB
 
 	dec	FBUFPT+1		; decrement block count HB
@@ -6006,13 +5901,13 @@ A_B2CD:					;				[B2CD]
 					; and will be removed as the position
 					; of the array element is calculated
 
-GetArrElement:				;				[B2EA]
+GetArrElement				;				[B2EA]
 	lda	(FacTempStor+8),Y	; get array's dimension count
 	sta	COUNT			; save it
 
 	lda	#$00			; clear byte
 	sta	FBUFPT			; clear array data pointer LB
-A_B2F2:					;				[B2F2]
+A_B2F2					;				[B2F2]
 	sta	FBUFPT+1		; save array data pointer HB
 
 	iny				; increment index, point to array bound
@@ -6035,16 +5930,16 @@ A_B2F2:					;				[B2F2]
 	cmp	(FacTempStor+8),Y	; compare with array bound LB
 	bcc	A_B30F			; branch if within bounds
 
-A_B308:					;				[B308]
+A_B308					;				[B308]
 	jmp	BadSubscript		; do bad subscript error	[B245]
 
-A_B30B:					;				[B30B]
+A_B30B					;				[B30B]
 	jmp	OutOfMemory		; do out of memory error then warm start
 					;				[A435]
 
-A_B30E:					;				[B30E]
+A_B30E					;				[B30E]
 	iny				; index to array bound LB
-A_B30F:					;				[B30F]
+A_B30F					;				[B30F]
 	lda	FBUFPT+1		; get array data pointer HB
 	ora	FBUFPT			; OR with array data pointer LB
 	clc
@@ -6058,7 +5953,7 @@ A_B30F:					;				[B30F]
 
 	tya				; get result HB
 	ldy	INDEX			; restore index
-A_B320:					;				[B320]
+A_B320					;				[B320]
 	adc	FacMantissa+3		; add index HB from FAC1 mantissa 4
 
 	stx	FBUFPT			; save array data pointer LB
@@ -6074,13 +5969,13 @@ A_B320:					;				[B320]
 	bpl	A_B331			; branch if not string or floating
 					; point array
 	dex				; decrement element size, $04
-A_B331:					;				[B331]
+A_B331					;				[B331]
 	lda	VARNAM+1		; get variable name 2nd byte
 	bpl	A_B337			; branch if not integer or string
 
 	dex				; decrement element size, $03
 	dex				; decrement element size, $02
-A_B337:					;				[B337]
+A_B337					;				[B337]
 	stx	RESHO+2			; save dimension size LB
 
 	lda	#$00			; clear dimension size HB
@@ -6097,20 +5992,20 @@ A_B337:					;				[B337]
 	tay				; copy HB to Y
 	lda	VARPNT			; get current variable pointer LB
 					; pointer to element is now in AY
-A_B34B:					;				[B34B]
+A_B34B					;				[B34B]
 	rts
 
 
 ; compute array size, result in XY
 
-CalcArraySize:				;				[B34C]
+CalcArraySize				;				[B34C]
 	sty	INDEX			; save index
 	lda	(FacTempStor+8),Y	; get dimension size LB
 	sta	RESHO+2			; save dimension size LB
 
 	dey				; decrement index
 	lda	(FacTempStor+8),Y	; get dimension size HB
-CalcArraySize2:				;				[B355]
+CalcArraySize2				;				[B355]
 	sta	RESHO+3			; save dimension size HB
 
 	lda	#$10			; count = $10 (16 bit multiply)
@@ -6118,7 +6013,7 @@ CalcArraySize2:				;				[B355]
 
 	ldx	#$00			; clear result LB
 	ldy	#$00			; clear result HB
-A_B35F:					;				[B35F]
+A_B35F					;				[B35F]
 	txa				; get result LB
 	asl				; *2
 	tax				; save result LB
@@ -6142,7 +6037,7 @@ A_B35F:					;				[B35F]
 	tay				; save result HB
 	bcs	A_B30B			; if overflow go do "Out of memory"
 					; error
-A_B378:					;				[B378]
+A_B378					;				[B378]
 	dec	FacTempStor+6		; decrement bit count
 	bne	A_B35F			; loop until all done
 
@@ -6150,7 +6045,7 @@ A_B378:					;				[B378]
 
 ; perform FRE()
 
-bcFRE:					;				[B37D]
+bcFRE					;				[B37D]
 	lda	VALTYP			; get data type flag, $FF = string,
 					; $00 = numeric
 	beq	A_B384			; branch if numeric
@@ -6160,7 +6055,7 @@ bcFRE:					;				[B37D]
 					; A = length, X=$71=pointer LB,
 					; Y=$72=pointer HB		[B6A6]
 ; FRE(n) was numeric so do this
-A_B384:					;				[B384]
+A_B384					;				[B384]
 	jsr	CollectGarbage		; go do garbage collection	[B526]
 
 	sec				; set carry for subtract
@@ -6176,7 +6071,7 @@ A_B384:					;				[B384]
 ;
 ; convert fixed integer AY to float FAC1
 
-ConvertAY2FAC1:				;				[B391]
+ConvertAY2FAC1				;				[B391]
 	ldx	#$00			; set type = numeric
 	stx	VALTYP			; clear data type flag, $FF = string,
 					; $00 = numeric
@@ -6191,16 +6086,16 @@ ConvertAY2FAC1:				;				[B391]
 ;
 ; perform POS()
 
-bcPOS:					;				[B39E]
+bcPOS					;				[B39E]
 	sec				; set Cb for read cursor position
 	jsr	CursorPosXY		; read/set X,Y cursor position	[FFF0]
-bcPOS2:					;				[B3A2]
+bcPOS2					;				[B3A2]
 	lda	#$00			; clear HB
 	beq	ConvertAY2FAC1		; convert fixed integer AY to float
 					; FAC1, branch always
 ; check not Direct, used by DEF and INPUT
 
-ChkDirectMode:				;				[B3A6]
+ChkDirectMode				;				[B3A6]
 	ldx	CURLIN+1		; get current line number HB
 	inx				; increment it
 	bne	A_B34B			; return if not direct mode
@@ -6208,7 +6103,7 @@ ChkDirectMode:				;				[B3A6]
 ; else do illegal direct error
 	ldx	#$15			; error $15, illegal direct error
 .byte	$2C				; makes next line BIT $1BA2
-A_B3AE:					;				[B3AE]
+A_B3AE					;				[B3AE]
 	ldx	#$1B			; error $1B, undefined function error
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
@@ -6217,7 +6112,7 @@ A_B3AE:					;				[B3AE]
 ;
 ; perform DEF
 
-bcDEF:					;				[B3B3]
+bcDEF					;				[B3B3]
 	jsr	ChkFNxSyntax		; check FNx syntax		[B3E1]
 	jsr	ChkDirectMode		; check not direct, back here if ok
 					;				[B3A6]
@@ -6259,7 +6154,7 @@ bcDEF:					;				[B3B3]
 ;
 ; check FNx syntax
 
-ChkFNxSyntax:				;				[B3E1]
+ChkFNxSyntax				;				[B3E1]
 	lda	#TK_FN			; set FN token
 	jsr	Chk4CharInA		; scan for CHR$(A), else do syntax error
 					; then warm start		[AEFF]
@@ -6278,7 +6173,7 @@ ChkFNxSyntax:				;				[B3E1]
 ;
 ; Evaluate FNx
 
-EvaluateFNx:				;				[B3F4]
+EvaluateFNx				;				[B3F4]
 	jsr	ChkFNxSyntax		; check FNx syntax		[B3E1]
 
 	lda	GarbagePtr+1		; get function pointer HB
@@ -6312,7 +6207,7 @@ EvaluateFNx:				;				[B3F4]
 	iny				; index to mantissa 3
 
 ; now stack the function variable value before use
-A_B418:					;				[B418]
+A_B418					;				[B418]
 	lda	(VARPNT),Y		; get byte from variable
 	pha				; stack it
 
@@ -6357,7 +6252,7 @@ A_B418:					;				[B418]
 
 ; restore BASIC execute pointer and function variable from stack
 
-A_B449:					;				[B449]
+A_B449					;				[B449]
 	pla				; pull BASIC execute pointer LB
 	sta	TXTPTR			; save BASIC execute pointer LB
 
@@ -6368,7 +6263,7 @@ A_B449:					;				[B449]
 ;
 ; put execute pointer and variable pointer into function
 
-Ptrs2Function:				;				[B44F]
+Ptrs2Function				;				[B44F]
 	ldy	#$00			; clear index
 	pla				; pull BASIC execute pointer LB
 	sta	(GarbagePtr),Y		; save to function
@@ -6396,7 +6291,7 @@ Ptrs2Function:				;				[B44F]
 ;
 ; perform STR$()
 
-bcSTR:					;				[B465]
+bcSTR					;				[B465]
 	jsr	CheckIfNumeric		; check if source is numeric, else do
 					; type mismatch			[AD8D]
 	ldy	#$00			; set string index
@@ -6404,7 +6299,7 @@ bcSTR:					;				[B465]
 
 	pla				; dump return address (skip type check)
 	pla				; dump return address (skip type check)
-bcSTR2:					;				[B46F]
+bcSTR2					;				[B46F]
 	lda	#<StrConvAddr		; set result string low pointer
 
 	ldy	#>StrConvAddr		; set result string high pointer
@@ -6416,7 +6311,7 @@ bcSTR2:					;				[B46F]
 ; do string vector
 ; copy descriptor pointer and make string space A bytes long
 
-StringVector:				;				[B475]
+StringVector				;				[B475]
 	ldx	FacMantissa+2		; get descriptor pointer LB
 	ldy	FacMantissa+3		; get descriptor pointer HB
 	stx	TempPtr			; save descriptor pointer LB
@@ -6427,7 +6322,7 @@ StringVector:				;				[B475]
 ;
 ; make string space A bytes long
 
-StringLengthA:				;				[B47D]
+StringLengthA				;				[B47D]
 	jsr	CreStrAlong		; make space in string memory for string
 					; A long			[B4F4]
 	stx	FacMantissa		; save string pointer LB
@@ -6442,7 +6337,7 @@ StringLengthA:				;				[B47D]
 ; scan, set up string
 ; print " terminated string to utility pointer
 
-QuoteStr2UtPtr:				;				[B487]
+QuoteStr2UtPtr				;				[B487]
 	ldx	#'"'			; set terminator to "
 	stx	CHARAC			; set search character, terminator 1
 	stx	ENDCHR			; set terminator 2
@@ -6450,14 +6345,14 @@ QuoteStr2UtPtr:				;				[B487]
 ; print search or alternate terminated string to utility pointer
 ; source is AY
 
-PrtStr2UtiPtr:				;				[B48D]
+PrtStr2UtiPtr				;				[B48D]
 	sta	ARISGN			; store string start LB
 	sty	FACOV			; store string start HB
 	sta	FacMantissa		; save string pointer LB
 	sty	FacMantissa+1		; save string pointer HB
 
 	ldy	#$FF			; set length to -1
-A_B497:					;				[B497]
+A_B497					;				[B497]
 	iny				; increment length
 	lda	(ARISGN),Y		; get byte from string
 	beq	A_B4A8			; exit loop if null byte [EOS]
@@ -6469,14 +6364,14 @@ A_B497:					;				[B497]
 	cmp	ENDCHR			; compare with terminator 2
 	bne	A_B497			; loop if not terminator 2
 
-A_B4A4:					;				[B4A4]
+A_B4A4					;				[B4A4]
 	cmp	#'"'			; compare with "
 	beq	A_B4A9			; branch if " (carry set if = !)
 
-A_B4A8:					;				[B4A8]
+A_B4A8					;				[B4A8]
 	clc				; clear carry for add (only if [EOL]
 					; terminated string)
-A_B4A9:					;				[B4A9]
+A_B4A9					;				[B4A9]
 	sty	FACEXP			; save length in FAC1 exponent
 
 	tya				; copy length to A
@@ -6487,7 +6382,7 @@ A_B4A9:					;				[B4A9]
 	bcc	A_B4B5			; branch if no LB overflow
 
 	inx				; else increment HB
-A_B4B5:					;				[B4B5]
+A_B4B5					;				[B4B5]
 	stx	FBUFPT+1		; save string end HB
 
 	lda	FACOV			; get string start HB
@@ -6497,32 +6392,32 @@ A_B4B5:					;				[B4B5]
 	bne	ChkRoomDescStk		; branch if not in input buffer memory
 
 ; string in input buffer or utility area, move to string memory
-A_B4BF:					;				[B4BF]
+A_B4BF					;				[B4BF]
 	tya				; copy length to A
 	jsr	StringVector		; copy descriptor pointer and make
 					; string space A bytes long	[B475]
 	ldx	ARISGN			; get string start LB
 	ldy	FACOV			; get string start HB
-S_B4C7:
+S_B4C7
 	jsr	Str2UtilPtr2		; store string A bytes long from XY to
 					; utility pointer		[B688]
 
 ; check for space on descriptor stack then ...
 ; put string address and length on descriptor stack and update stack pointers
 
-ChkRoomDescStk:				;				[B4CA]
+ChkRoomDescStk				;				[B4CA]
 	ldx	TEMPPT			; get the descriptor stack pointer
 	cpx	#LASTPT+2+9		; compare it with the maximum + 1
 	bne	A_B4D5			; if there is space on the string stack
 					; continue
 ; else do string too complex error
 	ldx	#$19			; error $19, string too complex error
-A_B4D2:					;				[B4D2]
+A_B4D2					;				[B4D2]
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
 ; put string address and length on descriptor stack and update stack pointers
 
-A_B4D5:					;				[B4D5]
+A_B4D5					;				[B4D5]
 	lda	FACEXP			; get the string length
 	sta	D6510,X			; put it on the string stack
 
@@ -6555,11 +6450,11 @@ A_B4D5:					;				[B4D5]
 ; make space in string memory for string A long
 ; return X = pointer LB, Y = pointer HB
 
-CreStrAlong:				;				[B4F4]
+CreStrAlong				;				[B4F4]
 	lsr	GARBFL			; clear garbage collected flag (b7)
 
 ; make space for string A long
-A_B4F6:					;				[B4F6]
+A_B4F6					;				[B4F6]
 	pha				; save string length
 
 	eor	#$FF			; complement it
@@ -6571,7 +6466,7 @@ A_B4F6:					;				[B4F6]
 	bcs	A_B501			; skip decrement if no underflow
 
 	dey				; decrement bottom of string space HB
-A_B501:					;				[B501]
+A_B501					;				[B501]
 	cpy	STREND+1		; compare with end of arrays HB
 	bcc	A_B516			; do out of memory error if less
 
@@ -6580,7 +6475,7 @@ A_B501:					;				[B501]
 	cmp	STREND			; compare with end of arrays LB
 	bcc	A_B516			; do out of memory error if less
 
-A_B50B:					;				[B50B]
+A_B50B					;				[B50B]
 	sta	FRETOP			; save bottom of string space LB
 	sty	FRETOP+1		; save bottom of string space HB
 	sta	FRESPC			; save string utility ptr LB
@@ -6591,7 +6486,7 @@ A_B50B:					;				[B50B]
 	pla				; get string length back
 	rts
 
-A_B516:					;				[B516]
+A_B516					;				[B516]
 	ldx	#$10			; error code $10, out of memory error
 
 	lda	GARBFL			; get garbage collected flag
@@ -6610,13 +6505,13 @@ A_B516:					;				[B516]
 ;
 ; garbage collection routine
 
-CollectGarbage:				;				[B526]
+CollectGarbage				;				[B526]
 	ldx	MEMSIZ			; get end of memory LB
 	lda	MEMSIZ+1		; get end of memory HB
 
 ; re-run routine from last ending
 
-CollectGarbag2:				;				[B52A]
+CollectGarbag2				;				[B52A]
 	stx	FRETOP			; set bottom of string space LB
 	sta	FRETOP+1		; set bottom of string space HB
 
@@ -6634,7 +6529,7 @@ CollectGarbag2:				;				[B52A]
 	ldx	#$00			; clear X
 	sta	INDEX			; save descriptor stack pointer LB
 	stx	INDEX+1			; save descriptor stack pointer HB ($00)
-A_B544:					;				[B544]
+A_B544					;				[B544]
 	cmp	TEMPPT			; compare with descriptor stack pointer
 	beq	A_B54D			; branch if =
 
@@ -6642,7 +6537,7 @@ A_B544:					;				[B544]
 	beq	A_B544			; loop always
 
 ; done stacked strings, now do string variables
-A_B54D:					;				[B54D]
+A_B54D					;				[B54D]
 	lda	#$07			; set step size = $07, collecting
 					; variables
 	sta	GarbColStep		; save garbage collection step size
@@ -6651,7 +6546,7 @@ A_B54D:					;				[B54D]
 	ldx	VARTAB+1		; get start of variables HB
 	sta	INDEX			; save as pointer LB
 	stx	INDEX+1			; save as pointer HB
-A_B559:					;				[B559]
+A_B559					;				[B559]
 	cpx	ARYTAB+1		; compare end of variables HB,
 					; start of arrays HB
 	bne	A_B561			; branch if no HB match
@@ -6660,12 +6555,12 @@ A_B559:					;				[B559]
 					; start of arrays LB
 	beq	A_B566			; branch if = variable memory end
 
-A_B561:					;				[B561]
+A_B561					;				[B561]
 	jsr	ChkVarSalvage		; check variable salvageability	[B5BD]
 	beq	A_B559			; loop always
 
 ; done string variables, now do string arrays
-A_B566:					;				[B566]
+A_B566					;				[B566]
 	sta	FacTempStor+1		; save start of arrays LB as working
 					; pointer
 	stx	FacTempStor+2		; save start of arrays HB as working
@@ -6673,10 +6568,10 @@ A_B566:					;				[B566]
 
 	lda	#$03			; set step size, collecting descriptors
 	sta	GarbColStep		; save step size
-A_B56E:					;				[B56E]
+A_B56E					;				[B56E]
 	lda	FacTempStor+1		; get pointer LB
 	ldx	FacTempStor+2		; get pointer HB
-A_B572:					;				[B572]
+A_B572					;				[B572]
 	cpx	STREND+1		; compare with end of arrays HB
 	bne	A_B57D			; branch if not at end
 
@@ -6686,7 +6581,7 @@ A_B572:					;				[B572]
 	jmp	CollectString		; collect string, tidy up and exit if
 					; at end ??			[B606]
 
-A_B57D:					;				[B57D]
+A_B57D					;				[B57D]
 	sta	INDEX			; save pointer LB
 	stx	INDEX+1			; save pointer HB
 
@@ -6727,9 +6622,9 @@ A_B57D:					;				[B57D]
 	bcc	A_B5AE			; branch if no rollover
 
 	inc	INDEX+1			; else increment pointer hgih byte
-A_B5AE:					;				[B5AE]
+A_B5AE					;				[B5AE]
 	ldx	INDEX+1			; get pointer HB
-A_B5B0:					;				[B5B0]
+A_B5B0					;				[B5B0]
 	cpx	FacTempStor+2		; compare pointer HB with end of this
 					; array HB
 	bne	A_B5B8			; branch if not there yet
@@ -6738,13 +6633,13 @@ A_B5B0:					;				[B5B0]
 					; array LB
 	beq	A_B572			; if at end of this array go check next
 					; array
-A_B5B8:					;				[B5B8]
+A_B5B8					;				[B5B8]
 	jsr	ChkStrSalvage		; check string salvageability	[B5C7]
 	beq	A_B5B0			; loop
 
 ; check variable salvageability
 
-ChkVarSalvage:				;				[B5BD]
+ChkVarSalvage				;				[B5BD]
 	lda	(INDEX),Y		; get variable name first byte
 	bmi	A_B5F6			; add step and exit if not string
 
@@ -6756,7 +6651,7 @@ ChkVarSalvage:				;				[B5BD]
 
 ; check string salvageability
 
-ChkStrSalvage:				;				[B5C7]
+ChkStrSalvage				;				[B5C7]
 	lda	(INDEX),Y		; get string length
 	beq	A_B5F6			; add step and exit if null string
 
@@ -6781,7 +6676,7 @@ ChkStrSalvage:				;				[B5C7]
 					; has been collected so go update
 					; pointers, step to next and return
 ; else test string against highest uncollected string so far
-A_B5DC:					;				[B5DC]
+A_B5DC					;				[B5DC]
 	cmp	FacTempStor+9		; compare string pointer HB with highest
 					; uncollected string HB
 	bcc	A_B5F6			; if highest uncollected string is
@@ -6797,7 +6692,7 @@ A_B5DC:					;				[B5DC]
 					; greater then go update pointers, step
 					; to next and return
 ; else set current string as highest uncollected string
-A_B5E6:					;				[B5E6]
+A_B5E6					;				[B5E6]
 	stx	FacTempStor+8		; save string pointer LB as highest
 					; uncollected string LB
 	sta	FacTempStor+9		; save string pointer HB as highest
@@ -6809,7 +6704,7 @@ A_B5E6:					;				[B5E6]
 
 	lda	GarbColStep		; get step size
 	sta	Jump0054+1		; copy step size
-A_B5F6:					;				[B5F6]
+A_B5F6					;				[B5F6]
 	lda	GarbColStep		; get step size
 	clc				; clear carry for add
 	adc	INDEX			; add pointer LB
@@ -6817,14 +6712,14 @@ A_B5F6:					;				[B5F6]
 	bcc	A_B601			; branch if no rollover
 
 	inc	INDEX+1			; else increment pointer HB
-A_B601:					;				[B601]
+A_B601					;				[B601]
 	ldx	INDEX+1			; get pointer HB
 	ldy	#$00			; flag not moved
 	rts
 
 ; collect string
 
-CollectString:				;				[B606]
+CollectString				;				[B606]
 	lda	GarbagePtr+1		; get working pointer LB
 	ora	GarbagePtr		; OR working pointer HB
 	beq	A_B601			; exit if nothing to collect
@@ -6876,7 +6771,7 @@ CollectString:				;				[B606]
 ; add strings, the first string is in the descriptor, the second string is in
 ; line
 
-ConcatStrings:				;				[B63D]
+ConcatStrings				;				[B63D]
 	lda	FacMantissa+3		; get descriptor pointer HB
 	pha				; put on stack
 
@@ -6893,7 +6788,7 @@ ConcatStrings:				;				[B63D]
 	sta	FACOV			; set pointer HB
 
 	ldy	#$00			; clear index
-	lda	(ARISGN),Y		; get length of first string from 
+	lda	(ARISGN),Y		; get length of first string from
 					; descriptor
 	clc				; clear carry for add
 	adc	(FacMantissa+2),Y	; add length of second string
@@ -6902,7 +6797,7 @@ ConcatStrings:				;				[B63D]
 	ldx	#$17			; else error $17, string too long error
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
-A_B65D:					;				[B65D]
+A_B65D					;				[B65D]
 	jsr	StringVector		; copy descriptor pointer and make
 					; string space A bytes long	[B475]
 	jsr	Str2UtilPtr		; copy string from descriptor to utility
@@ -6933,7 +6828,7 @@ A_B65D:					;				[B65D]
 ;
 ; copy string from descriptor to utility pointer
 
-Str2UtilPtr:				;				[B67A]
+Str2UtilPtr				;				[B67A]
 	ldy	#$00			; clear index
 	lda	(ARISGN),Y		; get string length
 	pha				; save it
@@ -6947,18 +6842,18 @@ Str2UtilPtr:				;				[B67A]
 	tay				; copy to Y
 
 	pla				; get length back
-Str2UtilPtr2:				;				[B688]
+Str2UtilPtr2				;				[B688]
 	stx	INDEX			; save string pointer LB
 	sty	INDEX+1			; save string pointer HB
 
 ; store string from pointer to utility pointer
 
-Str2UtilPtr3:				;				[B68C]
+Str2UtilPtr3				;				[B68C]
 	tay				; copy length as index
 	beq	A_B699			; branch if null string
 
 	pha				; save length
-A_B690:					;				[B690]
+A_B690					;				[B690]
 	dey				; decrement length/index
 	lda	(INDEX),Y		; get byte from string
 	sta	(FRESPC),Y		; save byte to destination
@@ -6967,14 +6862,14 @@ A_B690:					;				[B690]
 	bne	A_B690			; loop if not all done yet
 
 	pla				; restore length
-A_B699:					;				[B699]
+A_B699					;				[B699]
 	clc				; clear carry for add
 	adc	FRESPC			; add string utility ptr LB
 	sta	FRESPC			; save string utility ptr LB
 	bcc	A_B6A2			; branch if no rollover
 
 	inc	FRESPC+1		; increment string utility ptr HB
-A_B6A2:					;				[B6A2]
+A_B6A2					;				[B6A2]
 	rts
 
 
@@ -6982,21 +6877,21 @@ A_B6A2:					;				[B6A2]
 ;
 ; evaluate string
 
-EvalString:				;				[B6A3]
+EvalString				;				[B6A3]
 	jsr	CheckIfString		; check if source is string, else do
 					; type mismatch			[AD8F]
 
 ; pop string off descriptor stack, or from top of string space
 ; returns with A = length, X = pointer LB, Y = pointer HB
 
-PopStrDescStk:				;				[B6A6]
+PopStrDescStk				;				[B6A6]
 	lda	FacMantissa+2		; get descriptor pointer LB
 	ldy	FacMantissa+3		; get descriptor pointer HB
 
 ; pop (YA) descriptor off stack or from top of string space
 ; returns with A = length, X = pointer LB, Y = pointer HB
 
-PopStrDescStk2:				;				[B6AA]
+PopStrDescStk2				;				[B6AA]
 	sta	INDEX			; save string pointer LB
 	sty	INDEX+1			; save string pointer HB
 
@@ -7036,9 +6931,9 @@ PopStrDescStk2:				;				[B6AA]
 	bcc	A_B6D5			; skip increment if no overflow
 
 	inc	FRETOP+1		; increment bottom of string space HB
-A_B6D5:					;				[B6D5]
+A_B6D5					;				[B6D5]
 	pla				; restore string length
-A_B6D6:					;				[B6D6]
+A_B6D6					;				[B6D6]
 	stx	INDEX			; save string pointer LB
 	sty	INDEX+1			; save string pointer HB
 
@@ -7047,7 +6942,7 @@ A_B6D6:					;				[B6D6]
 ; clean descriptor stack, YA = pointer
 ; checks if AY is on the descriptor stack, if so does a stack discard
 
-ClrDescrStack:				;				[B6DB]
+ClrDescrStack				;				[B6DB]
 	cpy	LASTPT+1		; compare HB with current descriptor
 					; stack item pointer HB
 	bne	A_B6EB			; exit if <>
@@ -7061,7 +6956,7 @@ ClrDescrStack:				;				[B6DB]
 	sta	LASTPT			; save current descriptor stack item
 					; pointer LB
 	ldy	#$00			; clear HB
-A_B6EB:					;				[B6EB]
+A_B6EB					;				[B6EB]
 	rts
 
 
@@ -7069,7 +6964,7 @@ A_B6EB:					;				[B6EB]
 ;
 ; perform CHR$()
 
-bcCHR:					;				[B6EC]
+bcCHR					;				[B6EC]
 	jsr	EvalByteExpr		; evaluate byte expression, result in X
 					;				[B7A1]
 	txa				; copy to A
@@ -7094,7 +6989,7 @@ bcCHR:					;				[B6EC]
 ;
 ; perform LEFT$()
 
-bcLEFT:					;				[B700]
+bcLEFT					;				[B700]
 	jsr	PullStrFromStk		; pull string data and byte parameter
 					; from stack return pointer in
 					; descriptor, byte in A (and X), Y=0
@@ -7102,19 +6997,19 @@ bcLEFT:					;				[B700]
 	cmp	(TempPtr),Y		; compare byte parameter with string
 					; length
 	tya				; clear A
-bcLEFT2:				;				[B706]
+bcLEFT2					;				[B706]
 	bcc	A_B70C			; branch if string length > byte param
 
 	lda	(TempPtr),Y		; else make parameter = length
 	tax				; copy to byte parameter copy
 
 	tya				; clear string start offset
-A_B70C:					;				[B70C]
+A_B70C					;				[B70C]
 	pha				; save string start offset
-A_B70D:					;				[B70D]
+A_B70D					;				[B70D]
 	txa				; copy byte parameter (or string length
 					; if <)
-A_B70E:					;				[B70E]
+A_B70E					;				[B70E]
 	pha				; save string length
 
 	jsr	StringLengthA		; make string space A bytes long [B47D]
@@ -7136,7 +7031,7 @@ A_B70E:					;				[B70E]
 	bcc	A_B725			; branch if no overflow
 
 	inc	INDEX+1			; else increment string start pointer HB
-A_B725:					;				[B725]
+A_B725					;				[B725]
 	tya				; copy length to A
 	jsr	Str2UtilPtr3		; store string from pointer to utility
 					; pointer			[B68C]
@@ -7150,7 +7045,7 @@ A_B725:					;				[B725]
 ;
 ; perform RIGHT$()
 
-bcRIGHT:				;				[B72C]
+bcRIGHT					;				[B72C]
 	jsr	PullStrFromStk		; pull string data and byte parameter
 					; from stack return pointer in
 					; descriptor, byte in A (and X), Y=0
@@ -7165,7 +7060,7 @@ bcRIGHT:				;				[B72C]
 ;
 ; perform MID$()
 
-bcMID:					;				[B737]
+bcMID					;				[B737]
 	lda	#$FF			; set default length = 255
 	sta	FacMantissa+3		; save default length
 
@@ -7176,7 +7071,7 @@ bcMID:					;				[B737]
 	jsr	Chk4Comma		; scan for ",", else do syntax error
 					; then warm start		[AEFD]
 	jsr	GetByteParm2		; get byte parameter		[B79E]
-A_B748:					;				[B748]
+A_B748					;				[B748]
 	jsr	PullStrFromStk		; pull string data and byte parameter
 					; from stack return pointer in
 					; descriptor, byte in A (and X), Y=0
@@ -7205,7 +7100,7 @@ A_B748:					;				[B748]
 ; pull string data and byte parameter from stack
 ; return pointer in descriptor, byte in A (and X), Y=0
 
-PullStrFromStk:				;				[B761]
+PullStrFromStk				;				[B761]
 	jsr	Chk4CloseParen		; scan for ")", else do syntax error
 					; then warm start		[AEF7]
 	pla				; pull return address LB
@@ -7242,7 +7137,7 @@ PullStrFromStk:				;				[B761]
 ;
 ; perform LEN()
 
-bcLEN:					;				[B77C]
+bcLEN					;				[B77C]
 	jsr	GetLengthStr		; evaluate string, get length in A
 					; (and Y)			[B782]
 	jmp	bcPOS2			; convert Y to byte in FAC1 and return
@@ -7252,7 +7147,7 @@ bcLEN:					;				[B77C]
 ;
 ; evaluate string, get length in Y
 
-GetLengthStr:				;				[B782]
+GetLengthStr				;				[B782]
 	jsr	EvalString		; evaluate string		[B6A3]
 
 	ldx	#$00			; set data type = numeric
@@ -7267,7 +7162,7 @@ GetLengthStr:				;				[B782]
 ;
 ; perform ASC()
 
-bcASC:					;				[B78B]
+bcASC					;				[B78B]
 	jsr	GetLengthStr		; evaluate string, get length in A
 					; (and Y)			[B782]
 	beq	A_B798			; if null do illegal quantity error then
@@ -7283,7 +7178,7 @@ bcASC:					;				[B78B]
 ;
 ; do illegal quantity error then warm start
 
-A_B798:					;				[B798]
+A_B798					;				[B798]
 	jmp	IllegalQuant		; do illegal quantity error then warm
 					; start				[B248]
 
@@ -7291,7 +7186,7 @@ A_B798:					;				[B798]
 ;
 ; scan and get byte parameter
 
-GetByteParm:				;				[B79B]
+GetByteParm				;				[B79B]
 	jsr	CHRGET			; increment and scan memory	[0073]
 
 
@@ -7299,7 +7194,7 @@ GetByteParm:				;				[B79B]
 ;
 ; get byte parameter
 
-GetByteParm2:				;				[B79E]
+GetByteParm2				;				[B79E]
 	jsr	EvalExpression		; evaluate expression and check is
 					; numeric, else do type mismatch [AD8A]
 
@@ -7307,7 +7202,7 @@ GetByteParm2:				;				[B79E]
 ;
 ; evaluate byte expression, result in X
 
-EvalByteExpr:				;				[B7A1]
+EvalByteExpr				;				[B7A1]
 	jsr	EvalInteger2		; evaluate integer expression, sign
 					; check				[B1B8]
 	ldx	FacMantissa+2		; get FAC1 mantissa 3
@@ -7321,7 +7216,7 @@ EvalByteExpr:				;				[B7A1]
 ;
 ; perform VAL()
 
-bcVAL:					;				[B7AD]
+bcVAL					;				[B7AD]
 	jsr	GetLengthStr		; evaluate string, get length in A
 					; (and Y)			[B782]
 	bne	A_B7B5			; branch if not null string
@@ -7329,7 +7224,7 @@ bcVAL:					;				[B7AD]
 ; string was null so set result = $00
 	jmp	ClrFAC1ExpSgn		; clear FAC1 exponent and sign and
 					; return			[B8F7]
-A_B7B5:					;				[B7B5]
+A_B7B5					;				[B7B5]
 	ldx	TXTPTR			; get BASIC execute pointer LB
 	ldy	TXTPTR+1		; get BASIC execute pointer HB
 	stx	FBUFPT			; save BASIC execute pointer LB
@@ -7347,7 +7242,7 @@ A_B7B5:					;				[B7B5]
 	bcc	A_B7CD			; branch if no HB increment
 
 	inx				; increment string end HB
-A_B7CD:					;				[B7CD]
+A_B7CD					;				[B7CD]
 	stx	INDEX+3			; save string end HB
 
 	ldy	#$00			; set index to $00
@@ -7369,7 +7264,7 @@ A_B7CD:					;				[B7CD]
 ;
 ; restore BASIC execute pointer from temp
 
-RestBasExecPtr:				;				[B7E2]
+RestBasExecPtr				;				[B7E2]
 	ldx	FBUFPT			; get BASIC execute pointer LB back
 	ldy	FBUFPT+1		; get BASIC execute pointer HB back
 	stx	TXTPTR			; save BASIC execute pointer LB
@@ -7382,12 +7277,12 @@ RestBasExecPtr:				;				[B7E2]
 ;
 ; get parameters for POKE/WAIT
 
-GetParms:				;				[B7EB]
+GetParms				;				[B7EB]
 	jsr	EvalExpression		; evaluate expression and check is
 					; numeric, else do type mismatch [AD8A]
 	jsr	FAC1toTmpInt		; convert FAC_1 to integer in temporary
 					; integer			[B7F7]
-GetParms2:				;				[B7F1]
+GetParms2				;				[B7F1]
 	jsr	Chk4Comma		; scan for ",", else do syntax error
 					; then warm start		[AEFD]
 	jmp	GetByteParm2		; get byte parameter and return	[B79E]
@@ -7397,7 +7292,7 @@ GetParms2:				;				[B7F1]
 ;
 ; convert FAC_1 to integer in temporary integer
 
-FAC1toTmpInt:				;				[B7F7]
+FAC1toTmpInt				;				[B7F7]
 	lda	FACSGN			; get FAC1 sign
 	bmi	A_B798			; if -ve do illegal quantity error then
 					; warm start
@@ -7419,7 +7314,7 @@ FAC1toTmpInt:				;				[B7F7]
 ;
 ; perform PEEK()
 
-bcPEEK:					;				[B80D]
+bcPEEK					;				[B80D]
 	lda	LINNUM+1		; get line number HB
 	pha				; save line number HB
 
@@ -7445,7 +7340,7 @@ bcPEEK:					;				[B80D]
 ;
 ; perform POKE
 
-bcPOKE:					;				[B824]
+bcPOKE					;				[B824]
 	jsr	GetParms		; get parameters for POKE/WAIT	[B7EB]
 	txa				; copy byte to A
 	ldy	#$00			; clear index
@@ -7457,7 +7352,7 @@ bcPOKE:					;				[B824]
 ;
 ; perform WAIT
 
-bcWAIT:					;				[B82D]
+bcWAIT					;				[B82D]
 	jsr	GetParms		; get parameters for POKE/WAIT	[B7EB]
 	stx	FORPNT			; save byte
 
@@ -7467,17 +7362,17 @@ bcWAIT:					;				[B82D]
 
 	jsr	GetParms2		; scan for "," and get byte, else syntax
 					; error then warm start	[B7F1]
-A_B83C:					;				[B83C]
+A_B83C					;				[B83C]
 	stx	FORPNT+1		; save EOR argument
 
 	ldy	#$00			; clear index
-A_B840:					;				[B840]
+A_B840					;				[B840]
 	lda	(LINNUM),Y		; get byte via temporary integer
 	eor	FORPNT+1		; EOR with second argument (mask)
 	and	FORPNT			; AND with first argument (byte)
 	beq	A_B840			; loop if result is zero
 
-A_B848:					;				[B848]
+A_B848					;				[B848]
 	rts
 
 
@@ -7485,7 +7380,7 @@ A_B848:					;				[B848]
 ;
 ; add 0.5 to FAC1 (round FAC1)
 
-FAC1plus05:				;				[B849]
+FAC1plus05				;				[B849]
 	lda	#<L_BF11		; set 0.5 pointer LB
 	ldy	#>L_BF11		; set 0.5 pointer HB
 	jmp	AddFORvar2FAC1		; add (AY) to FAC1		[B867]
@@ -7495,7 +7390,7 @@ FAC1plus05:				;				[B849]
 ;
 ; perform subtraction, FAC1 from (AY)
 
-AYminusFAC1:				;				[B850]
+AYminusFAC1				;				[B850]
 	jsr	UnpackAY2FAC2		; unpack memory (AY) into FAC2	[BA8C]
 
 
@@ -7503,7 +7398,7 @@ AYminusFAC1:				;				[B850]
 ;
 ; perform subtraction, FAC1 from FAC2
 
-bcMINUS:
+bcMINUS
 	lda	FACSGN			; get FAC1 sign (b7)
 	eor	#$FF			; complement it
 	sta	FACSGN			; save FAC1 sign (b7)
@@ -7512,7 +7407,7 @@ bcMINUS:
 	lda	FACEXP			; get FAC1 exponent
 	jmp	bcPLUS			; add FAC2 to FAC1 and return	[B86A]
 
-A_B862:					;				[B862]
+A_B862					;				[B862]
 	jsr	shftFACxAright		; shift FACX A times right (>8 shifts)
 					;				[B999]
 	bcc	A_B8A3			;.go subtract mantissas
@@ -7522,7 +7417,7 @@ A_B862:					;				[B862]
 ;
 ; add (AY) to FAC1
 
-AddFORvar2FAC1:				;				[B867]
+AddFORvar2FAC1				;				[B867]
 	jsr	UnpackAY2FAC2		; unpack memory (AY) into FAC2	[BA8C]
 
 
@@ -7530,20 +7425,20 @@ AddFORvar2FAC1:				;				[B867]
 ;
 ; add FAC2 to FAC1
 
-bcPLUS:					;				[B86A]
+bcPLUS					;				[B86A]
 	bne	A_B86F			; branch if FAC1 is not zero
 
 	jmp	CopyFAC2toFAC1		; FAC1 was zero so copy FAC2 to FAC1
 					; and return			[BBFC]
 
 ; FAC1 is non zero
-A_B86F:					;				[B86F]
+A_B86F					;				[B86F]
 	ldx	FACOV			; get FAC1 rounding byte
 	stx	Jump0054+2		; save as FAC2 rounding byte
 
 	ldx	#ARGEXP			; set index to FAC2 exponent address
 	lda	ARGEXP			; get FAC2 exponent
-bcPLUS2:				;				[B877]
+bcPLUS2					;				[B877]
 	tay				; copy exponent
 	beq	A_B848			; exit if zero
 
@@ -7569,10 +7464,10 @@ bcPLUS2:				;				[B877]
 	bne	A_B897			; branch always
 
 ; FAC2 < FAC1
-A_B893:					;				[B893]
+A_B893					;				[B893]
 	ldy	#$00			; clear Y
 	sty	FACOV			; clear FAC1 rounding byte
-A_B897:					;				[B897]
+A_B897					;				[B897]
 	cmp	#$F9			; compare exponent diff with $F9
 	bmi	A_B862			; branch if range $79-$F8
 
@@ -7585,7 +7480,7 @@ A_B897:					;				[B897]
 	jsr	shftFACxYright		; shift FACX Y times right	[B9B0]
 
 ; exponents are equal now do mantissa subtract
-A_B8A3:					;				[B8A3]
+A_B8A3					;				[B8A3]
 	bit	ARISGN			; test sign compare (FAC1 EOR FAC2)
 	bpl	A_B8FE			; if = add FAC2 mantissa to FAC1
 					; mantissa and return
@@ -7598,7 +7493,7 @@ A_B8A3:					;				[B8A3]
 					; address
 ; subtract the smaller from the bigger (take the sign of
 ; the bigger)
-A_B8AF:					;				[B8AF]
+A_B8AF					;				[B8AF]
 	sec				; set carry for subtract
 	eor	#$FF			; ones complement A
 	adc	Jump0054+2		; add FAC2 rounding byte
@@ -7625,7 +7520,7 @@ A_B8AF:					;				[B8AF]
 ;
 ; do ABS and normalise FAC1
 
-AbsNormalFAC1:				;				[B8D2]
+AbsNormalFAC1				;				[B8D2]
 	bcs	NormaliseFAC1		; branch if number is positive
 
 	jsr	NegateFAC1		; negate FAC1			[B947]
@@ -7635,11 +7530,11 @@ AbsNormalFAC1:				;				[B8D2]
 ;
 ; normalise FAC1
 
-NormaliseFAC1:				;				[B8D7]
+NormaliseFAC1				;				[B8D7]
 	ldy	#$00			; clear Y
 	tya				; clear A
 	clc				; clear carry for add
-A_B8DB:					;				[B8DB]
+A_B8DB					;				[B8DB]
 	ldx	FacMantissa		; get FAC1 mantissa 1
 	bne	A_B929			; if not zero normalise FAC1
 
@@ -7667,9 +7562,9 @@ A_B8DB:					;				[B8DB]
 ;
 ; clear FAC1 exponent and sign
 
-ClrFAC1ExpSgn:				;				[B8F7]
+ClrFAC1ExpSgn				;				[B8F7]
 	lda	#$00			; clear A
-ClrFAC1Exp:				;				[B8F9]
+ClrFAC1Exp				;				[B8F9]
 	sta	FACEXP			; set FAC1 exponent
 
 
@@ -7677,7 +7572,7 @@ ClrFAC1Exp:				;				[B8F9]
 ;
 ; save FAC1 sign
 
-SaveFAC1Sign:				;				[B8FB]
+SaveFAC1Sign				;				[B8FB]
 	sta	FACSGN			; save FAC1 sign (b7)
 	rts
 
@@ -7686,7 +7581,7 @@ SaveFAC1Sign:				;				[B8FB]
 ;
 ; add FAC2 mantissa to FAC1 mantissa
 
-A_B8FE:					;				[B8FE]
+A_B8FE					;				[B8FE]
 	adc	Jump0054+2		; add FAC2 rounding byte
 	sta	FACOV			; save FAC1 rounding byte
 
@@ -7709,7 +7604,7 @@ A_B8FE:					;				[B8FE]
 	jmp	NormaliseFAC12		; test and normalise FAC1 for C=0/1
 					;				[B936]
 
-A_B91D:					;				[B91D]
+A_B91D					;				[B91D]
 	adc	#$01			; add 1 to exponent offset
 	asl	FACOV			; shift FAC1 rounding byte
 	rol	FacMantissa+3		; shift FAC1 mantissa 4
@@ -7719,7 +7614,7 @@ A_B91D:					;				[B91D]
 
 ; normalise FAC1
 
-A_B929:					;				[B929]
+A_B929					;				[B929]
 	bpl	A_B91D			; loop if not normalised
 
 	sec				; set carry for subtract
@@ -7732,12 +7627,12 @@ A_B929:					;				[B929]
 
 ; test and normalise FAC1 for C=0/1
 
-NormaliseFAC12:				;				[B936]
+NormaliseFAC12				;				[B936]
 	bcc	A_B946			; exit if no overflow
 
 ; normalise FAC1 for C=1
 
-NormaliseFAC13:				;				[B938]
+NormaliseFAC13				;				[B938]
 	inc	FACEXP			; increment FAC1 exponent
 	beq	OverflowError		; if zero do overflow error then warm
 					; start
@@ -7746,7 +7641,7 @@ NormaliseFAC13:				;				[B938]
 	ror	FacMantissa+2		; shift FAC1 mantissa 3
 	ror	FacMantissa+3		; shift FAC1 mantissa 4
 	ror	FACOV			; shift FAC1 rounding byte
-A_B946:					;				[B946]
+A_B946					;				[B946]
 	rts
 
 
@@ -7754,14 +7649,14 @@ A_B946:					;				[B946]
 ;
 ; negate FAC1
 
-NegateFAC1:				;				[B947]
+NegateFAC1				;				[B947]
 	lda	FACSGN			; get FAC1 sign (b7)
 	eor	#$FF			; complement it
 	sta	FACSGN			; save FAC1 sign (b7)
 
 ; twos complement FAC1 mantissa
 
-TwoComplFAC1:				;				[B94D]
+TwoComplFAC1				;				[B94D]
 	lda	FacMantissa		; get FAC1 mantissa 1
 	eor	#$FF			; complement it
 	sta	FacMantissa		; save FAC1 mantissa 1
@@ -7787,7 +7682,7 @@ TwoComplFAC1:				;				[B94D]
 
 ; increment FAC1 mantissa
 
-IncFAC1Mant:				;				[B96F]
+IncFAC1Mant				;				[B96F]
 	inc	FacMantissa+3		; increment FAC1 mantissa 4
 	bne	A_B97D			; finished if no rollover
 
@@ -7798,7 +7693,7 @@ IncFAC1Mant:				;				[B96F]
 	bne	A_B97D			; finished if no rollover
 
 	inc	FacMantissa		; increment FAC1 mantissa 1
-A_B97D:					;				[B97D]
+A_B97D					;				[B97D]
 	rts
 
 
@@ -7806,7 +7701,7 @@ A_B97D:					;				[B97D]
 ;
 ; do overflow error then warm start
 
-OverflowError:				;				[B97E]
+OverflowError				;				[B97E]
 	ldx	#$0F			; error $0F, overflow error
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
@@ -7815,9 +7710,9 @@ OverflowError:				;				[B97E]
 ;
 ; shift register to the right
 
-ShiftRegRight:				;				[B983]
+ShiftRegRight				;				[B983]
 	ldx	#RESHO-1		; set the offset to FACtemp
-A_B985:					;				[B985]
+A_B985					;				[B985]
 	ldy	RESHO-$22,X		; get FACX mantissa 4
 	sty	FACOV			; save as FAC1 rounding byte
 
@@ -7835,7 +7730,7 @@ A_B985:					;				[B985]
 
 ; shift FACX -A times right (> 8 shifts)
 
-shftFACxAright:				;				[B999]
+shftFACxAright				;				[B999]
 	adc	#$08			; add 8 to shift count
 	bmi	A_B985			; go do 8 shift if still -ve
 
@@ -7847,18 +7742,18 @@ shftFACxAright:				;				[B999]
 	lda	FACOV			; get FAC1 rounding byte
 	bcs	A_B9BA			;.
 
-A_B9A6:					;				[B9A6]
+A_B9A6					;				[B9A6]
 	asl	D6510+1,X		; shift FACX mantissa 1
 	bcc	A_B9AC			; branch if +ve
 
 	inc	D6510+1,X		; this sets b7 eventually
-A_B9AC:					;				[B9AC]
+A_B9AC					;				[B9AC]
 	ror	D6510+1,X		; shift FACX mantissa 1, correct for ASL
 	ror	D6510+1,X		; shift FACX mantissa 1, put carry in b7
 
 ; shift FACX Y times right
 
-shftFACxYright:				;				[B9B0]
+shftFACxYright				;				[B9B0]
 	ror	D6510+2,X		; shift FACX mantissa 2
 	ror	D6510+3,X		; shift FACX mantissa 3
 	ror	D6510+4,X		; shift FACX mantissa 4
@@ -7867,7 +7762,7 @@ shftFACxYright:				;				[B9B0]
 	iny				; increment exponent diff
 	bne	A_B9A6			; branch if range adjust not complete
 
-A_B9BA:					;				[B9BA]
+A_B9BA					;				[B9BA]
 	clc				; just clear it
 	rts
 
@@ -7876,23 +7771,23 @@ A_B9BA:					;				[B9BA]
 ;
 ; constants and series for LOG(n)
 
-Constant1:				;				[B9BC]
+Constant1				;				[B9BC]
 .byte	$81,$00,$00,$00,$00		; 1
 
-ConstLogCoef:				;				[B9C1]
+ConstLogCoef				;				[B9C1]
 .byte	$03				; series counter
 .byte	$7F,$5E,$56,$CB,$79
 .byte	$80,$13,$9B,$0B,$64
 .byte	$80,$76,$38,$93,$16
 .byte	$82,$38,$AA,$3B,$20
 
-Const1divSQR2:				;				[B9D6]
+Const1divSQR2				;				[B9D6]
 .byte	$80,$35,$04,$F3,$34		; 0.70711	1/root 2
-ConstSQR2:				;				[B9DB]
+ConstSQR2				;				[B9DB]
 .byte	$81,$35,$04,$F3,$34		; 1.41421	root 2
-Const05:				;				[B9E0]
+Const05					;				[B9E0]
 .byte	$80,$80,$00,$00,$00		; -0.5	1/2
-ConstLOG2:				;				[B9E5]
+ConstLOG2				;				[B9E5]
 .byte	$80,$31,$72,$17,$F8		; 0.69315	LOG(2)
 
 
@@ -7900,16 +7795,16 @@ ConstLOG2:				;				[B9E5]
 ;
 ; perform LOG()
 
-bcLOG:					;				[B9EA]
+bcLOG					;				[B9EA]
 	jsr	GetFacSign		; test sign and zero		[BC2B]
 	beq	A_B9F1			; if zero do illegal quantity error then
 					; warm start
 	bpl	A_B9F4			; skip error if +ve
 
-A_B9F1:					;				[B9F1]
+A_B9F1					;				[B9F1]
 	jmp	IllegalQuant		; do illegal quantity error then warm
 					; start				[B248]
-A_B9F4:					;				[B9F4]
+A_B9F4					;				[B9F4]
 	lda	FACEXP			; get FAC1 exponent
 	sbc	#$7F			; normalise it
 	pha				; save it
@@ -7949,14 +7844,14 @@ A_B9F4:					;				[B9F4]
 ;
 ; do convert AY, FCA1*(AY)
 
-FAC1xAY:				;				[BA28]
+FAC1xAY					;				[BA28]
 	jsr	UnpackAY2FAC2		; unpack memory (AY) into FAC2	[BA8C]
-bcMULTIPLY:				;				[BA2B]
+bcMULTIPLY				;				[BA2B]
 	bne	A_BA30			; multiply FAC1 by FAC2 ??
 
 	jmp	JmpRTS			; exit if zero			[BA8B]
 
-A_BA30:					;				[BA30]
+A_BA30					;				[BA30]
 	jsr	TestAdjFACs		; test and adjust accumulators	[BAB7]
 
 	lda	#$00			; clear A
@@ -7982,16 +7877,16 @@ A_BA30:					;				[BA30]
 
 	jmp	TempToFAC1		; copy temp to FAC1, normalise and
 					; return			[BB8F]
-ShftAddFAC2:				;				[BA59]
+ShftAddFAC2				;				[BA59]
 	bne	ShftAddFAC22		; branch if byte <> zero
 
 	jmp	ShiftRegRight		; shift FCAtemp << A+8 times	[B983]
 
 ; else do shift and add
-ShftAddFAC22:				;				[BA5E]
+ShftAddFAC22				;				[BA5E]
 	lsr				; shift byte
 	ora	#$80			; set top bit (mark for 8 times)
-A_BA61:					;				[BA61]
+A_BA61					;				[BA61]
 	tay				; copy result
 	bcc	A_BA7D			; skip next if bit was zero
 
@@ -8011,7 +7906,7 @@ A_BA61:					;				[BA61]
 	lda	RESHO			; get temp mantissa 1
 	adc	ArgMantissa		; add FAC2 mantissa 1
 	sta	RESHO			; save temp mantissa 1
-A_BA7D:					;				[BA7D]
+A_BA7D					;				[BA7D]
 	ror	RESHO			; shift temp mantissa 1
 	ror	RESHO+1			; shift temp mantissa 2
 	ror	RESHO+2			; shift temp mantissa 3
@@ -8022,7 +7917,7 @@ A_BA7D:					;				[BA7D]
 	lsr				; shift byte
 	bne	A_BA61			; loop if all bits not done
 
-JmpRTS:					;				[BA8B]
+JmpRTS					;				[BA8B]
 	rts
 
 
@@ -8030,7 +7925,7 @@ JmpRTS:					;				[BA8B]
 ;
 ; unpack memory (AY) into FAC2
 
-UnpackAY2FAC2:				;				[BA8C]
+UnpackAY2FAC2				;				[BA8C]
 	sta	INDEX			; save pointer LB
 	sty	INDEX+1			; save pointer HB
 
@@ -8069,10 +7964,10 @@ UnpackAY2FAC2:				;				[BA8C]
 ;
 ; test and adjust accumulators
 
-TestAdjFACs:				;				[BAB7]
+TestAdjFACs				;				[BAB7]
 	lda	ARGEXP			; get FAC2 exponent
 
-TestAdjFACs2:				;				[BAB9]
+TestAdjFACs2				;				[BAB9]
 	beq	A_BADA			; branch if FAC2 = $00, handle underflow
 
 	clc				; clear carry for add
@@ -8083,7 +7978,7 @@ TestAdjFACs2:				;				[BAB9]
 
 	clc				; clear carry for the add
 .byte	$2C				; makes next line BIT $1410
-A_BAC4:					;				[BAC4]
+A_BAC4					;				[BAC4]
 	bpl	A_BADA			; if +ve go handle underflow
 
 	adc	#$80			; adjust exponent
@@ -8093,7 +7988,7 @@ A_BAC4:					;				[BAC4]
 	jmp	SaveFAC1Sign		; save FAC1 sign and return	[B8FB]
 
 
-A_BACF:					;				[BACF]
+A_BACF					;				[BACF]
 	lda	ARISGN			; get sign compare (FAC1 EOR FAC2)
 	sta	FACSGN			; save FAC1 sign (b7)
 
@@ -8101,19 +7996,19 @@ A_BACF:					;				[BACF]
 
 ; handle overflow and underflow
 
-HndlOvUnFlErr:				;				[BAD4]
+HndlOvUnFlErr				;				[BAD4]
 	lda	FACSGN			; get FAC1 sign (b7)
 	eor	#$FF			; complement it
 	bmi	A_BADF			; do overflow error
 
 ; handle underflow
-A_BADA:					;				[BADA]
+A_BADA					;				[BADA]
 	pla				; pop return address LB
 	pla				; pop return address HB
 	jmp	ClrFAC1ExpSgn		; clear FAC1 exponent and sign and
 					; return			[B8F7]
 
-A_BADF:					;				[BADF]
+A_BADF					;				[BADF]
 	jmp	OverflowError		; do overflow error then warm start
 					;				[B97E]
 
@@ -8121,7 +8016,7 @@ A_BADF:					;				[BADF]
 ;
 ; multiply FAC1 by 10
 
-Fac1x10:				;				[BAE2]
+Fac1x10					;				[BAE2]
 	jsr	CopyFAC1toFAC2		; round and copy FAC1 to FAC2	[BC0C]
 	tax				; copy exponent (set the flags)
 	beq	A_BAF8			; exit if zero
@@ -8132,14 +8027,14 @@ Fac1x10:				;				[BAE2]
 
 ; FAC1 = (FAC1 + FAC2) * 2
 
-FAC1plFAC2x2:				;				[BAED]
+FAC1plFAC2x2				;				[BAED]
 	ldx	#$00			; clear byte
 	stx	ARISGN			; clear sign compare (FAC1 EOR FAC2)
 	jsr	bcPLUS2			; add FAC2 to FAC1 (*5)		[B877]
 	inc	FACEXP			; increment FAC1 exponent (*10)
 	beq	A_BADF			; if exponent now zero go do overflow
 					; error
-A_BAF8:					;				[BAF8]
+A_BAF8					;				[BAF8]
 	rts
 
 
@@ -8147,7 +8042,7 @@ A_BAF8:					;				[BAF8]
 ;
 ; 10 as a floating value
 
-Constant10:				;				[BAF9]
+Constant10				;				[BAF9]
 .byte	$84,$20,$00,$00,$00		; 10
 
 
@@ -8155,7 +8050,7 @@ Constant10:				;				[BAF9]
 ;
 ; divide FAC1 by 10
 
-FAC1div10:				;				[BAFE]
+FAC1div10				;				[BAFE]
 	jsr	CopyFAC1toFAC2		; round and copy FAC1 to FAC2	[BC0C]
 
 	lda	#<Constant10		; set 10 pointer LB
@@ -8167,7 +8062,7 @@ FAC1div10:				;				[BAFE]
 ;
 ; divide by (AY) (X=sign)
 
-FAC1divAY:				;				[BB07]
+FAC1divAY				;				[BB07]
 	stx	ARISGN			; save sign compare (FAC1 EOR FAC2)
 	jsr	UnpackAY2FAC1		; unpack memory (AY) into FAC1	[BBA2]
 	jmp	bcDIVIDE		; do FAC2/FAC1			[BB12]
@@ -8177,9 +8072,9 @@ FAC1divAY:				;				[BB07]
 ;
 ; convert AY and do (AY)/FAC1
 
-AYdivFAC1:				;				[BB0F]
+AYdivFAC1				;				[BB0F]
 	jsr	UnpackAY2FAC2		; unpack memory (AY) into FAC2	[BA8C]
-bcDIVIDE:
+bcDIVIDE
 	beq	A_BB8A			; if zero go do /0 error
 
 	jsr	RoundFAC1		; round FAC1			[BC1B]
@@ -8196,7 +8091,7 @@ bcDIVIDE:
 
 	ldx	#$FC			; set index to FAC temp
 	lda	#$01			;.set byte
-A_BB29:					;				[BB29]
+A_BB29					;				[BB29]
 	ldy	ArgMantissa		; get FAC2 mantissa 1
 	cpy	FacMantissa		; compare FAC1 mantissa 1
 	bne	A_BB3F			; branch if <>
@@ -8211,7 +8106,7 @@ A_BB29:					;				[BB29]
 
 	ldy	ArgMantissa+3		; get FAC2 mantissa 4
 	cpy	FacMantissa+3		; compare FAC1 mantissa 4
-A_BB3F:					;				[BB3F]
+A_BB3F					;				[BB3F]
 	php				; save FAC2-FAC1 compare status
 
 	rol				;.shift byte
@@ -8224,12 +8119,12 @@ A_BB3F:					;				[BB3F]
 	bpl	A_BB7E			;.
 
 	lda	#$01			;.
-A_BB4C:					;				[BB4C]
+A_BB4C					;				[BB4C]
 	plp				; restore FAC2-FAC1 compare status
 	bcs	A_BB5D			; if FAC2 >= FAC1 then do subtract
 
 ; FAC2 = FAC2*2
-FAC2x2:					;				[BB4F]
+FAC2x2					;				[BB4F]
 	asl	ArgMantissa+3		; shift FAC2 mantissa 4
 	rol	ArgMantissa+2		; shift FAC2 mantissa 3
 	rol	ArgMantissa+1		; shift FAC2 mantissa 2
@@ -8241,7 +8136,7 @@ FAC2x2:					;				[BB4F]
 	bpl	A_BB3F			; Always -> loop with no compare
 
 
-A_BB5D:					;				[BB5D]
+A_BB5D					;				[BB5D]
 	tay				; save FAC2-FAC1 compare status
 
 	lda	ArgMantissa+3		; get FAC2 mantissa 4
@@ -8264,14 +8159,14 @@ A_BB5D:					;				[BB5D]
 	jmp	FAC2x2			;.				[BB4F]
 
 
-A_BB7A:					;				[BB7A]
+A_BB7A					;				[BB7A]
 	lda	#$40			;.
 	bne	A_BB4C			; branch always
 
 
 ; do A<<6, save as FAC1 rounding byte, normalise and return
 
-A_BB7E:					;				[BB7E]
+A_BB7E					;				[BB7E]
 	asl				;.
 	asl				;.
 	asl				;.
@@ -8284,11 +8179,11 @@ A_BB7E:					;				[BB7E]
 					; return			[BB8F]
 ; do "Divide by zero" error
 
-A_BB8A:					;				[BB8A]
+A_BB8A					;				[BB8A]
 	ldx	#$14			; error $14, divide by zero error
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
-TempToFAC1:				;				[BB8F]
+TempToFAC1				;				[BB8F]
 	lda	RESHO			; get temp mantissa 1
 	sta	FacMantissa		; save FAC1 mantissa 1
 
@@ -8308,7 +8203,7 @@ TempToFAC1:				;				[BB8F]
 ;
 ; unpack memory (AY) into FAC1
 
-UnpackAY2FAC1:				;				[BBA2]
+UnpackAY2FAC1				;				[BBA2]
 	sta	INDEX			; save pointer LB
 	sty	INDEX+1			; save pointer HB
 
@@ -8343,7 +8238,7 @@ UnpackAY2FAC1:				;				[BBA2]
 ;
 ; pack FAC1 into FacTempStor+5
 
-FAC1toTemp5:				;				[BBC7]
+FAC1toTemp5				;				[BBC7]
 	ldx	#<(FacTempStor+5)		; set pointer LB
 .byte	$2C				; makes next line BIT FacTempStorA2
 
@@ -8352,7 +8247,7 @@ FAC1toTemp5:				;				[BBC7]
 ;
 ; pack FAC1 into FacTempStor
 
-FAC1toTemp:				;				[BBCA]
+FAC1toTemp				;				[BBCA]
 	ldx	#<FacTempStor		; set pointer LB
 	ldy	#>FacTempStor		; set pointer HB
 	beq	PackFAC1intoXY		; pack FAC1 into (XY) and return,
@@ -8362,7 +8257,7 @@ FAC1toTemp:				;				[BBCA]
 ;
 ; pack FAC1 into variable pointer
 
-Fac1ToVarPtr:				;				[BBD0]
+Fac1ToVarPtr				;				[BBD0]
 	ldx	FORPNT			; get destination pointer LB
 	ldy	FORPNT+1		; get destination pointer HB
 
@@ -8371,7 +8266,7 @@ Fac1ToVarPtr:				;				[BBD0]
 ;
 ; pack FAC1 into (XY)
 
-PackFAC1intoXY:				;				[BBD4]
+PackFAC1intoXY				;				[BBD4]
 	jsr	RoundFAC1		; round FAC1			[BC1B]
 	stx	INDEX			; save pointer LB
 	sty	INDEX+1			; save pointer HB
@@ -8406,15 +8301,15 @@ PackFAC1intoXY:				;				[BBD4]
 ;
 ; copy FAC2 to FAC1
 
-CopyFAC2toFAC1:				;				[BBFC]
+CopyFAC2toFAC1				;				[BBFC]
 	lda	ARGSGN			; get FAC2 sign (b7)
 
 ; save FAC1 sign and copy ABS(FAC2) to FAC1
 
-CpFAC2toFAC12:				;				[BBFE]
+CpFAC2toFAC12				;				[BBFE]
 	sta	FACSGN			; save FAC1 sign (b7)
 	ldx	#$05			; 5 bytes to copy
-A_BC02:					;				[BC02]
+A_BC02					;				[BC02]
 	lda	BITS,X			; get byte from FAC2,X
 	sta	FacTempStor+9,X		; save byte at FAC1,X
 
@@ -8429,21 +8324,21 @@ A_BC02:					;				[BC02]
 ;
 ; round and copy FAC1 to FAC2
 
-CopyFAC1toFAC2:				;				[BC0C]
+CopyFAC1toFAC2				;				[BC0C]
 	jsr	RoundFAC1		; round FAC1			[BC1B]
 
 ; copy FAC1 to FAC2
 
-CpFAC1toFAC22:				;				[BC0F]
+CpFAC1toFAC22				;				[BC0F]
 	ldx	#$06			; 6 bytes to copy
-A_BC11:					;				[BC11]
+A_BC11					;				[BC11]
 	lda	FacTempStor+9,X		; get byte from FAC1,X
 	sta	BITS,X			; save byte at FAC2,X
 	dex				; decrement count
 	bne	A_BC11			; loop if not all done
 
 	stx	FACOV			; clear FAC1 rounding byte
-A_BC1A:					;				[BC1A]
+A_BC1A					;				[BC1A]
 	rts
 
 
@@ -8451,7 +8346,7 @@ A_BC1A:					;				[BC1A]
 ;
 ; round FAC1
 
-RoundFAC1:				;				[BC1B]
+RoundFAC1				;				[BC1B]
 	lda	FACEXP			; get FAC1 exponent
 	beq	A_BC1A			; exit if zero
 
@@ -8460,7 +8355,7 @@ RoundFAC1:				;				[BC1B]
 
 ; round FAC1 (no check)
 
-RoundFAC12:				;				[BC23]
+RoundFAC12				;				[BC23]
 	jsr	IncFAC1Mant		; increment FAC1 mantissa	[B96F]
 	bne	A_BC1A			; branch if no overflow
 
@@ -8472,7 +8367,7 @@ RoundFAC12:				;				[BC23]
 ; get FAC1 sign
 ; return A = $FF, Cb = 1/-ve A = $01, Cb = 0/+ve, A = $00, Cb = ?/0
 
-GetFacSign:				;				[BC2B]
+GetFacSign				;				[BC2B]
 	lda	FACEXP			; get FAC1 exponent
 	beq	A_BC38			; exit if zero (allready correct
 					; SGN(0)=0)
@@ -8482,7 +8377,7 @@ GetFacSign:				;				[BC2B]
 ; return A = $FF, Cb = 1/-ve A = $01, Cb = 0/+ve
 ; no = 0 check
 
-A_BC2F:					;				[BC2F]
+A_BC2F					;				[BC2F]
 	lda	FACSGN			; else get FAC1 sign (b7)
 
 
@@ -8491,13 +8386,13 @@ A_BC2F:					;				[BC2F]
 ; return A = $FF, Cb = 1/-ve A = $01, Cb = 0/+ve
 ; no = 0 check, sign in A
 
-J_BC31:					;				[BC31]
+J_BC31					;				[BC31]
 	rol				; move sign bit to carry
 	lda	#$FF			; set byte for -ve result
 	bcs	A_BC38			; return if sign was set (-ve)
 
 	lda	#$01			; else set byte for +ve result
-A_BC38:					;				[BC38]
+A_BC38					;				[BC38]
 	rts
 
 
@@ -8505,7 +8400,7 @@ A_BC38:					;				[BC38]
 ;
 ; perform SGN()
 
-bcSGN:					;				[BC39]
+bcSGN					;				[BC39]
 	jsr	GetFacSign		; get FAC1 sign, return A = $FF -ve,
 					; A = $01 +ve			[BC2B]
 
@@ -8513,7 +8408,7 @@ bcSGN:					;				[BC39]
 ;
 ; save A as integer byte
 
-AtoInteger:				;				[BC3C]
+AtoInteger				;				[BC3C]
 	sta	FacMantissa		; save FAC1 mantissa 1
 
 	lda	#$00			; clear A
@@ -8523,21 +8418,21 @@ AtoInteger:				;				[BC3C]
 
 ; set exponent = X, clear FAC1 3 and 4 and normalise
 
-J_BC44:					;				[BC44]
+J_BC44					;				[BC44]
 	lda	FacMantissa		; get FAC1 mantissa 1
 	eor	#$FF			; complement it
 	rol				; sign bit into carry
 
 ; set exponent = X, clear mantissa 4 and 3 and normalise FAC1
 
-SetExpontIsX:				;				[BC49]
+SetExpontIsX				;				[BC49]
 	lda	#$00			; clear A
 	sta	FacMantissa+3		; clear FAC1 mantissa 4
 	sta	FacMantissa+2		; clear FAC1 mantissa 3
 
 ; set exponent = X and normalise FAC1
 
-J_BC4F:					;				[BC4F]
+J_BC4F					;				[BC4F]
 	stx	FACEXP			; set FAC1 exponent
 	sta	FACOV			; clear FAC1 rounding byte
 	sta	FACSGN			; clear FAC1 sign (b7)
@@ -8549,7 +8444,7 @@ J_BC4F:					;				[BC4F]
 ;
 ; perform ABS()
 
-bcABS:					;				[BC58]
+bcABS					;				[BC58]
 	lsr	FACSGN			; clear FAC1 sign, put zero in b7
 	rts
 
@@ -8561,9 +8456,9 @@ bcABS:					;				[BC58]
 ; returns A=$01 if FAC1 > (AY)
 ; returns A=$FF if FAC1 < (AY)
 
-CmpFAC1withAY:				;				[BC5B]
+CmpFAC1withAY				;				[BC5B]
 	sta	INDEX+2			; save pointer LB
-CmpFAC1withAY2:				;				[BC5D]
+CmpFAC1withAY2				;				[BC5D]
 	sty	INDEX+3			; save pointer HB
 
 	ldy	#$00			; clear index
@@ -8607,12 +8502,12 @@ CmpFAC1withAY2:				;				[BC5D]
 
 ; gets here if number <> FAC1
 
-A_BC92:					;				[BC92]
+A_BC92					;				[BC92]
 	lda	FACSGN			; get FAC1 sign (b7)
 	bcc	A_BC98			; branch if FAC1 > (AY)
 
 	eor	#$FF			; else toggle FAC1 sign
-A_BC98:					;				[BC98]
+A_BC98					;				[BC98]
 	jmp	J_BC31			; return A = $FF, Cb = 1/-ve A = $01,
 					; Cb = 0/+ve			[BC31]
 
@@ -8620,7 +8515,7 @@ A_BC98:					;				[BC98]
 ;
 ; convert FAC1 floating to fixed
 
-FAC1Float2Fix:				;				[BC9B]
+FAC1Float2Fix				;				[BC9B]
 	lda	FACEXP			; get FAC1 exponent
 	beq	A_BCE9			; if zero go clear FAC1 and return
 
@@ -8637,7 +8532,7 @@ FAC1Float2Fix:				;				[BC9B]
 
 	jsr	TwoComplFAC1		; twos complement FAC1 mantissa	[B94D]
 	txa				; restore subtracted exponent
-A_BCAF:					;				[BCAF]
+A_BCAF					;				[BCAF]
 	ldx	#$61			; set index to FAC1
 	cmp	#$F9			; compare exponent result
 	bpl	A_BCBB			; if < 8 shifts shift FAC1 A times right
@@ -8645,7 +8540,7 @@ A_BCAF:					;				[BCAF]
 	jsr	shftFACxAright		; shift FAC1 A times right (> 8 shifts)
 					;				[B999]
 	sty	BITS			; clear FAC1 overfLB
-A_BCBA:					;				[BCBA]
+A_BCBA					;				[BCBA]
 	rts
 
 
@@ -8653,7 +8548,7 @@ A_BCBA:					;				[BCBA]
 ;
 ; shift FAC1 A times right
 
-A_BCBB:					;				[BCBB]
+A_BCBB					;				[BCBB]
 	tay				; copy shift count
 
 	lda	FACSGN			; get FAC1 sign (b7)
@@ -8672,7 +8567,7 @@ A_BCBB:					;				[BCBB]
 ;
 ; perform INT()
 
-bcINT:					;				[BCCC]
+bcINT					;				[BCCC]
 	lda	FACEXP			; get FAC1 exponent
 	cmp	#$A0			; compare with max int
 	bcs	A_BCF2			; exit if >= (allready int, too big for
@@ -8698,14 +8593,14 @@ bcINT:					;				[BCCC]
 ;
 ; clear FAC1 and return
 
-A_BCE9:					;				[BCE9]
+A_BCE9					;				[BCE9]
 	sta	FacMantissa		; clear FAC1 mantissa 1
 	sta	FacMantissa+1		; clear FAC1 mantissa 2
 	sta	FacMantissa+2		; clear FAC1 mantissa 3
 	sta	FacMantissa+3		; clear FAC1 mantissa 4
 
 	tay				; clear Y
-A_BCF2:					;				[BCF2]
+A_BCF2					;				[BCF2]
 	rts
 
 
@@ -8713,10 +8608,10 @@ A_BCF2:					;				[BCF2]
 ;
 ; get FAC1 from string
 
-String2FAC1:				;				[BCF3]
+String2FAC1				;				[BCF3]
 	ldy	#$00			; clear Y
 	ldx	#$0A			; set index
-A_BCF7:					;				[BCF7]
+A_BCF7					;				[BCF7]
 	sty	FacTempStor+6,X		; clear byte
 
 	dex				; decrement index
@@ -8730,20 +8625,20 @@ A_BCF7:					;				[BCF7]
 	stx	SGNFLG			; set flag for -ve n (negnum = $FF)
 	beq	J_BD0A			; branch always
 
-A_BD06:					;				[BD06]
+A_BD06					;				[BD06]
 	cmp	#'+'			; else compare with "+"
 	bne	A_BD0F			; branch if not "+"
 
-J_BD0A:					;				[BD0A]
+J_BD0A					;				[BD0A]
 	jsr	CHRGET			; increment and scan memory	[0073]
-A_BD0D:					;				[BD0D]
+A_BD0D					;				[BD0D]
 	bcc	A_BD6A			; branch if numeric character
 
-A_BD0F:					;				[BD0F]
+A_BD0F					;				[BD0F]
 	cmp	#'.'			; else compare with "."
 	beq	A_BD41			; branch if "."
 
-	cmp	#'E'			; else compare with "E"
+	cmp	#'e'			; else compare with "E"
 	bne	A_BD47			; branch if not "E"
 
 ; was "E" so evaluate exponential part
@@ -8764,15 +8659,15 @@ A_BD0F:					;				[BD0F]
 
 	bne	A_BD35			; branch always
 
-A_BD2E:					;				[BD2E]
+A_BD2E					;				[BD2E]
 	ror	FacTempStor+9		; set exponent -ve flag (C, which=1,
 					; into b7)
-J_BD30:					;				[BD30]
+J_BD30					;				[BD30]
 	jsr	CHRGET			; increment and scan memory	[0073]
-A_BD33:					;				[BD33]
+A_BD33					;				[BD33]
 	bcc	A_BD91			; branch if numeric character
 
-A_BD35:					;				[BD35]
+A_BD35					;				[BD35]
 	bit	FacTempStor+9		; test exponent -ve flag
 	bpl	A_BD47			; if +ve go evaluate exponent
 
@@ -8783,15 +8678,15 @@ A_BD35:					;				[BD35]
 
 	jmp	J_BD49			; go evaluate exponent		[BD49]
 
-A_BD41:					;				[BD41]
+A_BD41					;				[BD41]
 	ror	FacTempStor+8		; set decimal point flag
 	bit	FacTempStor+8		; test decimal point flag
 	bvc	J_BD0A			; branch if only one decimal point so
 					; far
 ; evaluate exponent
-A_BD47:					;				[BD47]
+A_BD47					;				[BD47]
 	lda	FacTempStor+7		; get exponent count byte
-J_BD49:					;				[BD49]
+J_BD49					;				[BD49]
 	sec				; set carry for subtract
 	sbc	FacTempStor+6		; subtract numerator exponent
 	sta	FacTempStor+7		; save exponent count byte
@@ -8800,7 +8695,7 @@ J_BD49:					;				[BD49]
 	bpl	A_BD5B			; else if +ve go do FAC1*10^expcnt
 
 ; else go do FAC1/10^(0-expcnt)
-A_BD52:					;				[BD52]
+A_BD52					;				[BD52]
 	jsr	FAC1div10		; divide FAC1 by 10		[BAFE]
 
 	inc	FacTempStor+7		; increment exponent count byte
@@ -8809,13 +8704,13 @@ A_BD52:					;				[BD52]
 	beq	A_BD62			; branch always
 
 
-A_BD5B:					;				[BD5B]
+A_BD5B					;				[BD5B]
 	jsr	Fac1x10			; multiply FAC1 by 10		[BAE2]
 
 	dec	FacTempStor+7		; decrement exponent count byte
 	bne	A_BD5B			; loop until all done
 
-A_BD62:					;				[BD62]
+A_BD62					;				[BD62]
 	lda	SGNFLG			; get -ve flag
 	bmi	A_BD67			; if -ve do - FAC1 and return
 
@@ -8826,19 +8721,19 @@ A_BD62:					;				[BD62]
 ;
 ; do - FAC1 and return
 
-A_BD67:					;				[BD67]
+A_BD67					;				[BD67]
 	jmp	bcGREATER		; do - FAC1			[BFB4]
 
 ; do unsigned FAC1*10+number
 
-A_BD6A:					;				[BD6A]
+A_BD6A					;				[BD6A]
 	pha				; save character
 
 	bit	FacTempStor+8		; test decimal point flag
 	bpl	A_BD71			; skip exponent increment if not set
 
 	inc	FacTempStor+6		; else increment number exponent
-A_BD71:					;				[BD71]
+A_BD71					;				[BD71]
 	jsr	Fac1x10			; multiply FAC1 by 10		[BAE2]
 
 	pla				; restore character
@@ -8851,7 +8746,7 @@ A_BD71:					;				[BD71]
 ; evaluate new ASCII digit
 ; multiply FAC1 by 10 then (ABS) add in new digit
 
-EvalNewDigit:				;				[BD7E]
+EvalNewDigit				;				[BD7E]
 	pha				; save digit
 
 	jsr	CopyFAC1toFAC2		; round and copy FAC1 to FAC2	[BC0C]
@@ -8868,7 +8763,7 @@ EvalNewDigit:				;				[BD7E]
 
 ; evaluate next character of exponential part of number
 
-A_BD91:					;				[BD91]
+A_BD91					;				[BD91]
 	lda	FacTempStor+7		; get exponent count byte
 	cmp	#$0A			; compare with 10 decimal
 	bcc	A_BDA0			; branch if less
@@ -8880,7 +8775,7 @@ A_BD91:					;				[BD91]
 
 	jmp	OverflowError		; else do overflow error then warm start
 					;				[B97E]
-A_BDA0:					;				[BDA0]
+A_BDA0					;				[BDA0]
 	asl				; *2
 	asl				; *4
 	clc				; clear carry for add
@@ -8891,7 +8786,7 @@ A_BDA0:					;				[BDA0]
 	adc	(TXTPTR),Y		; add character (will be $30 too much!)
 	sec				; set carry for subtract
 	sbc	#'0'			; convert character to binary
-A_BDAE:					;				[BDAE]
+A_BDAE					;				[BDAE]
 	sta	FacTempStor+7		; save exponent count byte
 
 	jmp	J_BD30			; go get next character		[BD30]
@@ -8901,13 +8796,13 @@ A_BDAE:					;				[BDAE]
 ;
 ; limits for scientific mode
 
-C99999999:				;				[BDB3]
+C99999999				;				[BDB3]
 .byte	$9B,$3E,$BC,$1F,$FD		; 99999999.90625, maximum value with at
 					; least one decimal
-C999999999:				;				[BDB8]
+C999999999				;				[BDB8]
 .byte	$9E,$6E,$6B,$27,$FD		; 999999999.25, maximum value before
 					; scientific notation
-C1000000000:				;				[BDBD]
+C1000000000				;				[BDBD]
 .byte	$9E,$6E,$6B,$28,$00		; 1000000000
 
 
@@ -8915,7 +8810,7 @@ C1000000000:				;				[BDBD]
 ;
 ; do " IN " line number message
 
-Print_IN:				;				[BDC2]
+Print_IN				;				[BDC2]
 	lda	#<TxtIn			; set " IN " pointer LB
 	ldy	#>TxtIn			; set " IN " pointer HB
 	jsr	OutputString0		; print null terminated string	[BDDA]
@@ -8928,16 +8823,16 @@ Print_IN:				;				[BDC2]
 ;
 ; print XA as unsigned integer
 
-PrintXAasInt:				;				[BDCD]
+PrintXAasInt				;				[BDCD]
 	sta	FacMantissa		; save HB as FAC1 mantissa1
 	stx	FacMantissa+1		; save LB as FAC1 mantissa2
-S_BDD1:
+S_BDD1
 	ldx	#$90			; set exponent to 16d bits
 	sec				; set integer is +ve flag
 	jsr	SetExpontIsX		; set exponent = X, clear mantissa 4
 					; and 3 and normalise FAC1	[BC49]
 	jsr	FAC12String		; convert FAC1 to string	[BDDF]
-OutputString0:				;				[BDDA]
+OutputString0				;				[BDDA]
 	jmp	OutputString		; print null terminated string	[AB1E]
 
 
@@ -8945,15 +8840,15 @@ OutputString0:				;				[BDDA]
 ;
 ; convert FAC1 to ASCII string result in (AY)
 
-FAC1toASCII:				;				[BDDD]
+FAC1toASCII				;				[BDDD]
 	ldy	#$01			; set index = 1
-FAC12String:				;				[BDDF]
+FAC12String				;				[BDDF]
 	lda	#' '			; character = " " (assume +ve)
 	bit	FACSGN			; test FAC1 sign (b7)
 	bpl	A_BDE7			; branch if +ve
 
 	lda	#'-'			; else character = "-"
-A_BDE7:					;				[BDE7]
+A_BDE7					;				[BDE7]
 	sta	StrConvAddr,Y		; save leading character (" " or "-")
 	sta	FACSGN			; save FAC1 sign (b7)
 	sty	FBUFPT			; save index
@@ -8970,7 +8865,7 @@ A_BDE7:					;				[BDE7]
 					;				[BF04]
 
 ; FAC1 is some non zero value
-A_BDF8:					;				[BDF8]
+A_BDF8					;				[BDF8]
 	lda	#$00			; clear (number exponent count)
 	cpx	#$80			; compare FAC1 exponent with $80
 					; (<1.00000)
@@ -8978,15 +8873,15 @@ A_BDF8:					;				[BDF8]
 
 	bcs	A_BE09			; branch if FAC1=>1
 
-A_BE00:					;				[BE00]
+A_BE00					;				[BE00]
 	lda	#<C1000000000		; set 1000000000 pointer LB
 	ldy	#>C1000000000		; set 1000000000 pointer HB
 	jsr	FAC1xAY			; do convert AY, FCA1*(AY)	[BA28]
 
 	lda	#$F7			; set number exponent count
-A_BE09:					;				[BE09]
+A_BE09					;				[BE09]
 	sta	FacTempStor+6		; save number exponent count
-A_BE0B:					;				[BE0B]
+A_BE0B					;				[BE0B]
 	lda	#<C999999999		; set 999999999.25 pointer LB (max
 					; before sci note)
 	ldy	#>C999999999		; set 999999999.25 pointer HB
@@ -8996,7 +8891,7 @@ A_BE0B:					;				[BE0B]
 	bpl	A_BE28			; go do /10 if FAC1 > (AY)
 
 ; FAC1 < (AY)
-A_BE16:					;				[BE16]
+A_BE16					;				[BE16]
 	lda	#<C99999999		; set 99999999.90625 pointer LB
 	ldy	#>C99999999		; set 99999999.90625 pointer HB
 	jsr	CmpFAC1withAY		; compare FAC1 with (AY)	[BC5B]
@@ -9005,13 +8900,13 @@ A_BE16:					;				[BE16]
 	bpl	A_BE2F			; branch if FAC1 > (AY) (no decimal
 					; places)
 ; FAC1 <= (AY)
-A_BE21:					;				[BE21]
+A_BE21					;				[BE21]
 	jsr	Fac1x10			; multiply FAC1 by 10		[BAE2]
 
 	dec	FacTempStor+6		; decrement number exponent count
 	bne	A_BE16			; go test again, branch always
 
-A_BE28:					;				[BE28]
+A_BE28					;				[BE28]
 	jsr	FAC1div10		; divide FAC1 by 10		[BAFE]
 
 	inc	FacTempStor+6		; increment number exponent count
@@ -9019,9 +8914,9 @@ A_BE28:					;				[BE28]
 
 ; now we have just the digits to do
 
-A_BE2F:					;				[BE2F]
+A_BE2F					;				[BE2F]
 	jsr	FAC1plus05		; add 0.5 to FAC1 (round FAC1)	[B849]
-A_BE32:					;				[BE32]
+A_BE32					;				[BE32]
 	jsr	FAC1Float2Fix		; convert FAC1 floating to fixed [BC9B]
 
 	ldx	#$01			; set default digits before dp = 1
@@ -9039,9 +8934,9 @@ A_BE32:					;				[BE32]
 	tax				; copy to X
 
 	lda	#$02			;.set exponent adjust
-A_BE47:					;				[BE47]
+A_BE47					;				[BE47]
 	sec				; set carry for subtract
-A_BE48:					;				[BE48]
+A_BE48					;				[BE48]
 	sbc	#$02			; -2
 	sta	FacTempStor+7		;.save exponent adjust
 	stx	FacTempStor+6		; save digits before dp count
@@ -9051,7 +8946,7 @@ A_BE48:					;				[BE48]
 
 	bpl	A_BE66			; branch if digits before dp
 
-A_BE53:					;				[BE53]
+A_BE53					;				[BE53]
 	ldy	FBUFPT			; get output string index
 	lda	#'.'			; character "."
 	iny				; increment index
@@ -9063,13 +8958,13 @@ A_BE53:					;				[BE53]
 	lda	#'0'			; character "0"
 	iny				; increment index
 	sta	StrConvAddr,Y		; save to output string
-A_BE64:					;				[BE64]
+A_BE64					;				[BE64]
 	sty	FBUFPT			; save output string index
-A_BE66:					;				[BE66]
+A_BE66					;				[BE66]
 	ldy	#$00			; clear index (point to 100,000)
-JiffyCnt2Str:				;				[BE68]
+JiffyCnt2Str				;				[BE68]
 	ldx	#$80			;.
-A_BE6A:					;				[BE6A]
+A_BE6A					;				[BE6A]
 	lda	FacMantissa+3		; get FAC1 mantissa 4
 	clc				; clear carry for add
 	adc	D_BF16+3,Y		; add byte 4, least significant
@@ -9095,18 +8990,18 @@ A_BE6A:					;				[BE6A]
 	bpl	A_BE6A			; not -ve so try again
 
 	bmi	A_BE90			; else done so return the digit
-A_BE8E:					;				[BE8E]
+A_BE8E					;				[BE8E]
 	bmi	A_BE6A			; not +ve so try again
 
 ; else done so return the digit
 
-A_BE90:					;				[BE90]
+A_BE90					;				[BE90]
 	txa				; copy the digit
 	bcc	A_BE97			; if Cb=0 just use it
 
 	eor	#$FF			; else make the 2's complement ..
 	adc	#$0A			; .. and subtract it from 10
-A_BE97:					;				[BE97]
+A_BE97					;				[BE97]
 	adc	#'0'-1			; add "0"-1 to result
 
 	iny				; increment ..
@@ -9130,7 +9025,7 @@ A_BE97:					;				[BE97]
 	lda	#'.'			; character "."
 	iny				; increment output string index
 	sta	STACK-1,Y		; save to output string
-A_BEB2:					;				[BEB2]
+A_BEB2					;				[BEB2]
 	sty	FBUFPT			; save output string index
 
 	ldy	VARPNT			; get current variable pointer LB
@@ -9150,9 +9045,9 @@ A_BEB2:					;				[BEB2]
 
 ; now remove trailing zeroes
 
-A_BEC4:					;				[BEC4]
+A_BEC4					;				[BEC4]
 	ldy	FBUFPT			; restore the output string index
-A_BEC6:					;				[BEC6]
+A_BEC6					;				[BEC6]
 	lda	STACK-1,Y		; get character from output string
 	dey				; decrement output string index
 	cmp	#'0'			; compare with "0"
@@ -9163,7 +9058,7 @@ A_BEC6:					;				[BEC6]
 
 ; restore last character
 	iny				; increment output string index
-A_BED3:					;				[BED3]
+A_BED3					;				[BED3]
 	lda	#'+'			; character "+"
 
 	ldx	FacTempStor+7		; get exponent count
@@ -9179,17 +9074,17 @@ A_BED3:					;				[BED3]
 	tax				; copy exponent count to X
 
 	lda	#'-'			; character "-"
-A_BEE3:					;				[BEE3]
+A_BEE3					;				[BEE3]
 	sta	STACK+1,Y		; save to output string
 
-	lda	#'E'			; character "E"
+	lda	#'e'			; character "E"
 	sta	STACK,Y			; save exponent sign to output string
 
 	txa				; get exponent count back
 
 	ldx	#'0'-1			; one less than "0" character
 	sec				; set carry for subtract
-A_BEEF:					;				[BEEF]
+A_BEEF					;				[BEEF]
 	inx				; increment 10's character
 
 	sbc	#$0A			;.subtract 10 from exponent count
@@ -9208,16 +9103,16 @@ A_BEEF:					;				[BEEF]
 					; branch always
 ; save last character, [EOT] and exit
 
-J_BF04:					;				[BF04]
+J_BF04					;				[BF04]
 	sta	STACK-1,Y		; save last character to output string
 
 ; set null terminator and exit
-A_BF07:					;				[BF07]
+A_BF07					;				[BF07]
 	lda	#$00			; set null terminator
 	sta	STACK,Y			; save after last character
 
 ; set string pointer (AY) and exit
-A_BF0C:					;				[BF0C]
+A_BF0C					;				[BF0C]
 	lda	#<STACK			; set result string pointer LB
 	ldy	#>STACK			; set result string pointer HB
 	rts
@@ -9227,32 +9122,32 @@ A_BF0C:					;				[BF0C]
 ;
 ; constants
 
-L_BF11:					;				[BF11]
+L_BF11					;				[BF11]
 .byte	$80,$00				; 0.5, first two bytes
-L_BF13:					;				[BF13]
+L_BF13					;				[BF13]
 .byte	$00,$00,$00			; null return for undefined variables
 
-D_BF16:					;				[BF16]
+D_BF16					;				[BF16]
 .byte	$FA,$0A,$1F,$00			; -100000000
 .byte	$00,$98,$96,$80			;  +10000000
 .byte	$FF,$F0,$BD,$C0			;   -1000000
 .byte	$00,$01,$86,$A0			;    +100000
 .byte	$FF,$FF,$D8,$F0			;     -10000
 .byte	$00,$00,$03,$E8			;      +1000
-.byte	$FF,$FF,$FF,$9C			;       -100
-.byte	$00,$00,$00,$0A			;        +10
-.byte	$FF,$FF,$FF,$FF			;         -1
+.byte	$FF,$FF,$FF,$9C			;	-100
+.byte	$00,$00,$00,$0A			;	 +10
+.byte	$FF,$FF,$FF,$FF			;	  -1
 
 ; jiffy counts
 
-D_BF3A:					;				[BF3A]
+D_BF3A					;				[BF3A]
 .byte	$FF,$DF,$0A,$80			; -2160000	10s hours
 .byte	$00,$03,$4B,$C0			;  +216000	    hours
 .byte	$FF,$FF,$73,$60			;   -36000	10s mins
 .byte	$00,$00,$0E,$10			;    +3600	    mins
 .byte	$FF,$FF,$FD,$A8			;     -600	10s secs
 .byte	$00,$00,$00,$3C			;      +60	    secs
-D_BF52:					;				[BF52]
+D_BF52					;				[BF52]
 
 
 ;******************************************************************************
@@ -9274,7 +9169,7 @@ D_BF52:					;				[BF52]
 ;
 ; perform SQR()
 
-bcSQR:					;				[BF71]
+bcSQR					;				[BF71]
 	jsr	CopyFAC1toFAC2		; round and copy FAC1 to FAC2	[BC0C]
 
 	lda	#<L_BF11		; set 0.5 pointer low address
@@ -9286,7 +9181,7 @@ bcSQR:					;				[BF71]
 ;
 ; perform power function
 
-bcPOWER:				;				[BF7B]
+bcPOWER					;				[BF7B]
 	beq	bcEXP			; perform EXP()
 
 	lda	ARGEXP			; get FAC2 exponent
@@ -9294,7 +9189,7 @@ bcPOWER:				;				[BF7B]
 
 	jmp	ClrFAC1Exp		; clear FAC1 exponent and sign and
 					; return			[B8F9]
-A_BF84:					;				[BF84]
+A_BF84					;				[BF84]
 	ldx	#<GarbagePtr		; set destination pointer LB
 	ldy	#>GarbagePtr		; set destination pointer HB
 	jsr	PackFAC1intoXY		; pack FAC1 into (XY)		[BBD4]
@@ -9317,7 +9212,7 @@ A_BF84:					;				[BF84]
 	ldy	CHARAC			; get FAC1 mantissa 4 from INT()
 					; function as sign in Y for possible
 					; later negation, b0 only needed
-A_BF9E:					;				[BF9E]
+A_BF9E					;				[BF9E]
 	jsr	CpFAC2toFAC12		; save FAC1 sign and copy ABS(FAC2) to
 					; FAC1				[BBFE]
 	tya				; copy sign back ..
@@ -9337,14 +9232,14 @@ A_BF9E:					;				[BF9E]
 
 ; do - FAC1
 
-bcGREATER:				;				[BFB4]
+bcGREATER				;				[BFB4]
 	lda	FACEXP			; get FAC1 exponent
 	beq	A_BFBE			; exit if FAC1_e = $00
 
 	lda	FACSGN			; get FAC1 sign (b7)
 	eor	#$FF			; complement it
 	sta	FACSGN			; save FAC1 sign (b7)
-A_BFBE:					;				[BFBE]
+A_BFBE					;				[BFBE]
 	rts
 
 
@@ -9352,10 +9247,10 @@ A_BFBE:					;				[BFBE]
 ;
 ; exp(n) constant and series
 
-ConstantEXP:				;				[BFBF]
+ConstantEXP				;				[BFBF]
 .byte	$81,$38,$AA,$3B,$29		; 1.443
 
-TblEXPseries:				;				[BFC4]
+TblEXPseries				;				[BFC4]
 .byte	$07				; series count
 .byte	$71,$34,$58,$3E,$56		; 2.14987637E-5
 .byte	$74,$16,$7E,$B3,$1B		; 1.43523140E-4
@@ -9371,7 +9266,7 @@ TblEXPseries:				;				[BFC4]
 ;
 ; perform EXP()
 
-bcEXP:					;				[BFED]
+bcEXP					;				[BFED]
 	lda	#<ConstantEXP		; set 1.443 pointer LB
 	ldy	#>ConstantEXP		; set 1.443 pointer HB
 	jsr	FAC1xAY			; do convert AY, FCA1*(AY)	[BA28]
@@ -9381,7 +9276,7 @@ bcEXP:					;				[BFED]
 	bcc	A_BFFD			; skip rounding if no carry
 
 	jsr	RoundFAC12		; round FAC1 (no check)		[BC23]
-A_BFFD:					;				[BFFD]
+A_BFFD					;				[BFFD]
 	jmp	bcEXP2			; continue EXP()		[E000]
 
 
@@ -9393,17 +9288,17 @@ A_BFFD:					;				[BFFD]
 
 ; EXP() continued
 
-bcEXP2:					;				[E000]
+bcEXP2					;				[E000]
 	sta	Jump0054+2		; save FAC2 rounding byte
 
 	jsr	CpFAC1toFAC22		; copy FAC1 to FAC2		[BC0F]
 
 	lda	FACEXP			; get FAC1 exponent
 	cmp	#$88			; less than EXP limit?
-	bcc	A_E00E			; yes, -> 
-A_E00B:					;				[E00B]
+	bcc	A_E00E			; yes, ->
+A_E00B					;				[E00B]
 	jsr	HndlOvUnFlErr		; handle overflow and underflow	[BAD4]
-A_E00E:					;				[E00E]
+A_E00E					;				[E00E]
 	jsr	bcINT			; perform INT()			[BCCC]
 	lda	CHARAC			; get mantissa 4 from INT()
 	clc				; clear carry for add
@@ -9415,7 +9310,7 @@ A_E00E:					;				[E00E]
 	pha				; save FAC2 exponent
 					; swap FAC1 and FAC2
 	ldx	#$05			; 4 bytes to do
-A_E01E:					;				[E01E]
+A_E01E					;				[E01E]
 	lda	ARGEXP,X		; get FAC2,X
 	ldy	FACEXP,X		; get FAC1,X
 	sta	FACEXP,X		; save FAC1,X
@@ -9447,7 +9342,7 @@ A_E01E:					;				[E01E]
 ;
 ; ^2 then series evaluation
 
-Power2:					;				[E043]
+Power2					;				[E043]
 	sta	FBUFPT			; save count pointer LB
 	sty	FBUFPT+1		; save count pointer HB
 
@@ -9467,13 +9362,13 @@ Power2:					;				[E043]
 ;
 ; do series evaluation
 
-CalcPolynome:				;				[E059]
+CalcPolynome				;				[E059]
 	sta	FBUFPT			; save count pointer LB
 	sty	FBUFPT+1		; save count pointer HB
 
 ; do series evaluation
 
-CalcPolynome2:				;				[E05D]
+CalcPolynome2				;				[E05D]
 	jsr	FAC1toTemp5		; pack FAC1 into FacTempStor+5	[BBC7]
 
 	lda	(FBUFPT),Y		; get constants count
@@ -9485,11 +9380,11 @@ CalcPolynome2:				;				[E05D]
 	bne	A_E06C			; no, -> skip next INC
 
 	inc	FBUFPT+1		; else increment HB
-A_E06C:					;				[E06C]
+A_E06C					;				[E06C]
 	sta	FBUFPT			; save LB
 
 	ldy	FBUFPT+1		; get HB
-A_E070:					;				[E070]
+A_E070					;				[E070]
 	jsr	FAC1xAY			; do convert AY, FCA1*(AY)	[BA28]
 
 	lda	FBUFPT			; get constants pointer LB
@@ -9500,7 +9395,7 @@ A_E070:					;				[E070]
 	bcc	A_E07D			; skip next if no overflow
 
 	iny				; increment HB
-A_E07D:					;				[E07D]
+A_E07D					;				[E07D]
 	sta	FBUFPT			; save pointer LB
 	sty	FBUFPT+1		; save pointer HB
 
@@ -9519,10 +9414,10 @@ A_E07D:					;				[E07D]
 ;
 ; RND values
 
-ConstRNDmult:				;				[E08D]
+ConstRNDmult				;				[E08D]
 .byte	$98,$35,$44,$7A,$00		; 11879546		multiplier
 
-ConstRNDoffs:				;				[E092]
+ConstRNDoffs				;				[E092]
 .byte	$68,$28,$B1,$46,$00		; 3.927677739E-8	offset
 
 
@@ -9530,7 +9425,7 @@ ConstRNDoffs:				;				[E092]
 ;
 ; perform RND()
 
-bcRND:					;				[E097]
+bcRND					;				[E097]
 	jsr	GetFacSign		; get FAC1 sign			[BC2B]
 					; return A = $FF -ve, A = $01 +ve
 	bmi	A_E0D3			; if (n < 0) copy byte swapped FAC1 into
@@ -9562,7 +9457,7 @@ bcRND:					;				[E097]
 	jmp	J_E0E3			; set exponent and exit		[E0E3]
 
 
-A_E0BE:					;				[E0BE]
+A_E0BE					;				[E0BE]
 	lda	#<RND_seed		; set seed pointer low address
 	ldy	#>RND_seed		; set seed pointer high address
 	jsr	UnpackAY2FAC1		; unpack memory (AY) into FAC1	[BBA2]
@@ -9574,7 +9469,7 @@ A_E0BE:					;				[E0BE]
 	lda	#<ConstRNDoffs		; set 3.927677739E-8 pointer LB
 	ldy	#>ConstRNDoffs		; set 3.927677739E-8 pointer HB
 	jsr	AddFORvar2FAC1		; add (AY) to FAC1		[B867]
-A_E0D3:					;				[E0D3]
+A_E0D3					;				[E0D3]
 	ldx	FacMantissa+3		; get FAC1 mantissa 4
 	lda	FacMantissa		; get FAC1 mantissa 1
 	sta	FacMantissa+3		; save FAC1 mantissa 4
@@ -9584,7 +9479,7 @@ A_E0D3:					;				[E0D3]
 	lda	FacMantissa+2		; get FAC1 mantissa 3
 	sta	FacMantissa+1		; save FAC1 mantissa 2
 	stx	FacMantissa+2		; save FAC1 mantissa 3
-J_E0E3:					;				[E0E3]
+J_E0E3					;				[E0E3]
 	lda	#$00			; clear byte
 	sta	FACSGN			; clear FAC1 sign (always +ve)
 
@@ -9604,7 +9499,7 @@ J_E0E3:					;				[E0E3]
 ;
 ; pack FAC1 into (XY)
 
-PackFAC1intoXY0:			;				[E0F6]
+PackFAC1intoXY0				;				[E0F6]
 	jmp	PackFAC1intoXY		; pack FAC1 into (XY)		[BBD4]
 
 
@@ -9612,9 +9507,9 @@ PackFAC1intoXY0:			;				[E0F6]
 ;
 ; handle BASIC I/O error
 
-HndlBasIoErr:				;				[E0F9]
+HndlBasIoErr				;				[E0F9]
 	cmp	#$F0			; error = $F0?
-	bne	A_E104			; no, -> 
+	bne	A_E104			; no, ->
 
 	sty	MEMSIZ+1		; set end of memory HB
 	stx	MEMSIZ			; set end of memory LB
@@ -9622,12 +9517,12 @@ HndlBasIoErr:				;				[E0F9]
 	jmp	bcCLR3			; clear from start to end and return
 					;				[A663]
 ; error was not $F0
-A_E104:					;				[E104]
+A_E104					;				[E104]
 	tax				; copy error #, zero?
-	bne	A_E109			; no, -> 
+	bne	A_E109			; no, ->
 
 	ldx	#$1E			; else error $1E, break error
-A_E109:					;				[E109]
+A_E109					;				[E109]
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
 
@@ -9635,7 +9530,7 @@ A_E109:					;				[E109]
 ;
 ; output character to channel with error check
 
-OutCharErrChan:				;				[E10C]
+OutCharErrChan				;				[E10C]
 	jsr	OutByteChan		; output character to channel	[FFD2]
 	bcs	HndlBasIoErr		; if error go handle BASIC I/O error
 
@@ -9646,7 +9541,7 @@ OutCharErrChan:				;				[E10C]
 ;
 ; input character from channel with error check
 
-InpCharErrChan:				;				[E112]
+InpCharErrChan				;				[E112]
 	jsr	ByteFromChan		; input character from channel	[FFCF]
 	bcs	HndlBasIoErr		; if error go handle BASIC I/O error
 
@@ -9657,7 +9552,7 @@ InpCharErrChan:				;				[E112]
 ;
 ; open channel for output with error check
 
-OpenChan4OutpA:				;				[E118]
+OpenChan4OutpA				;				[E118]
 	jsr	OpenChan4OutpB		; open channel for output	[E4AD]
 	bcs	HndlBasIoErr		; if error go handle BASIC I/O error
 
@@ -9668,7 +9563,7 @@ OpenChan4OutpA:				;				[E118]
 ;
 ; open channel for input with error check
 
-OpenChan4Inp0:				;				[E11E]
+OpenChan4Inp0				;				[E11E]
 	jsr	OpenChan4Inp		; open channel for input	[FFC6]
 	bcs	HndlBasIoErr		; if error go handle BASIC I/O error
 
@@ -9679,7 +9574,7 @@ OpenChan4Inp0:				;				[E11E]
 ;
 ; get character from input device with error check
 
-GetCharFromIO:				;				[E124]
+GetCharFromIO				;				[E124]
 	jsr	GetCharInpDev		; get character from input device [FFE4]
 	bcs	HndlBasIoErr		; if error go handle BASIC I/O error
 
@@ -9690,7 +9585,7 @@ GetCharFromIO:				;				[E124]
 ;
 ; perform SYS
 
-bcSYS:					;				[E12A]
+bcSYS					;				[E12A]
 	jsr	EvalExpression		; evaluate expression and check is
 					; numeric, else do type mismatch [AD8A]
 	jsr	FAC1toTmpInt		; convert FAC_1 to integer in temporary
@@ -9713,7 +9608,7 @@ bcSYS:					;				[E12A]
 	jmp	(LINNUM)		; call SYS address
 
 ; tail end of SYS code
-bcSYS2:					;				[E147]
+bcSYS2					;				[E147]
 	php				; save status
 
 	sta	SAREG			; save returned A
@@ -9730,9 +9625,9 @@ bcSYS2:					;				[E147]
 ;
 ; perform SAVE
 
-bcSAVE:					;				[E156]
+bcSAVE					;				[E156]
 	jsr	GetParmLoadSav		; get parameters for LOAD/SAVE	[E1D4]
-S_E159:
+S_E159
 	ldx	VARTAB			; get start of variables LB
 	ldy	VARTAB+1		; get start of variables HB
 	lda	#TXTTAB			; index to start of program memory
@@ -9748,7 +9643,7 @@ S_E159:
 ;
 ; perform VERIFY
 
-bcVERIFY:				;				[E165]
+bcVERIFY				;				[E165]
 	lda	#$01			; flag verify
 .byte	$2C				; makes next line BIT $00A9
 
@@ -9757,12 +9652,12 @@ bcVERIFY:				;				[E165]
 ;
 ; perform LOAD
 
-bcLOAD:					;				[E168]
+bcLOAD					;				[E168]
 	lda	#$00			; flag load
 	sta	LoadVerify		; set load/verify flag
 
 	jsr	GetParmLoadSav		; get parameters for LOAD/SAVE	[E1D4]
-S_E16F:
+S_E16F
 	lda	LoadVerify		; get load/verify flag
 	ldx	TXTTAB			; get start of memory LB
 	ldy	TXTTAB+1		; get start of memory HB
@@ -9785,7 +9680,7 @@ S_E16F:
 	ldy	#>TxtOK			; set "OK" pointer HB
 	jmp	OutputString		; print null terminated string	[AB1E]
 
-A_E194:					;				[E194]
+A_E194					;				[E194]
 	rts
 
 
@@ -9793,19 +9688,19 @@ A_E194:					;				[E194]
 ;
 ; do READY return to BASIC
 
-A_E195:					;				[E195]
+A_E195					;				[E195]
 	jsr	ReadIoStatus		; read I/O status word		[FFB7]
 	and	#$BF			; clear read error, error found?
-	beq	A_E1A1			; no, -> 
-S_E19C:
+	beq	A_E1A1			; no, ->
+S_E19C
 	ldx	#$1D			; error $1D, load error
-A_E19E:					;				[E19E]
+A_E19E					;				[E19E]
 	jmp	OutputErrMsg		; do error #X then warm start	[A437]
 
-A_E1A1:					;				[E1A1]
+A_E1A1					;				[E1A1]
 	lda	TXTPTR+1		; get BASIC execute pointer HB
 	cmp	#$02			; immediate mode?
-	bne	A_E1B5			; no, -> 
+	bne	A_E1B5			; no, ->
 
 	stx	VARTAB			; set start of variables LB
 	sty	VARTAB+1		; set start of variables HB
@@ -9817,7 +9712,7 @@ A_E1A1:					;				[E1A1]
 	jmp	J_A52A			; reset execution, clear variables,
 					; flush stack, rebuild BASIC chain and
 					; do warm start			[A52A]
-A_E1B5:					;				[E1B5]
+A_E1B5					;				[E1B5]
 	jsr	SetBasExecPtr		; set BASIC execute pointer to start of
 					; memory-1			[A68E]
 	jsr	BindLine		; rebuild BASIC line chaining	[A533]
@@ -9829,7 +9724,7 @@ A_E1B5:					;				[E1B5]
 ;
 ; perform OPEN
 
-bcOPEN:					;				[E1BE]
+bcOPEN					;				[E1BE]
 	jsr	GetParmOpenClo		; get parameters for OPEN/CLOSE	[E219]
 
 	jsr	OpenLogFile		; open a logical file		[FFC0]
@@ -9842,14 +9737,14 @@ bcOPEN:					;				[E1BE]
 ;
 ; perform CLOSE
 
-bcCLOSE:				;				[E1C7]
+bcCLOSE					;				[E1C7]
 	jsr	GetParmOpenClo		; get parameters for OPEN/CLOSE	[E219]
 
 	lda	FORPNT			; get logical file number
 	jsr	CloseLogFile		; close a specified logical file [FFC3]
 	bcc	A_E194			; exit if no error
 
-A_E1D1:					;				[E1D1]
+A_E1D1					;				[E1D1]
 	jmp	HndlBasIoErr		; go handle BASIC I/O error	[E0F9]
 
 
@@ -9857,7 +9752,7 @@ A_E1D1:					;				[E1D1]
 ;
 ; get parameters for LOAD/SAVE
 
-GetParmLoadSav:				;				[E1D4]
+GetParmLoadSav				;				[E1D4]
 	lda	#$00			; clear filename length
 	jsr	SetFileName		; clear the filename		[FFBD]
 
@@ -9892,7 +9787,7 @@ GetParmLoadSav:				;				[E1D4]
 ;
 ; scan and get byte, else do syntax error then warm start
 
-GetByte:				;				[E200]
+GetByte					;				[E200]
 	jsr	Chk4ValidByte		; scan for ",byte", else do syntax error
 					; then warm start		[E20E]
 	jmp	GetByteParm2		; get byte parameter and return	[B79E]
@@ -9902,13 +9797,13 @@ GetByte:				;				[E200]
 ;
 ; exit function if [EOT] or ":"
 
-ExitIfEotColl:				;				[E206]
+ExitIfEotColl				;				[E206]
 	jsr	CHRGOT			; scan memory, [EOL] or ":"?	[0079]
-	bne	A_E20D			; no, -> 
+	bne	A_E20D			; no, ->
 
 	pla				; dump return address LB
 	pla				; dump return address HB
-A_E20D:					;				[E20D]
+A_E20D					;				[E20D]
 	rts
 
 
@@ -9916,7 +9811,7 @@ A_E20D:					;				[E20D]
 ;
 ; scan for ",valid byte", else do syntax error then warm start
 
-Chk4ValidByte:				;				[E20E]
+Chk4ValidByte				;				[E20E]
 	jsr	Chk4Comma		; scan for ",", else do syntax error
 					; then warm start		[AEFD]
 
@@ -9925,7 +9820,7 @@ Chk4ValidByte:				;				[E20E]
 ;
 ; scan for valid byte, not [EOL] or ":", else do syntax error then warm start
 
-Chk4ValidByte2:				;				[E211]
+Chk4ValidByte2				;				[E211]
 	jsr	CHRGOT			; scan memory, another char?	[0079]
 	bne	A_E20D			; yes, -> OK
 
@@ -9936,7 +9831,7 @@ Chk4ValidByte2:				;				[E211]
 ;
 ; get parameters for OPEN/CLOSE
 
-GetParmOpenClo:				;				[E219]
+GetParmOpenClo				;				[E219]
 	lda	#$00			; clear the filename length
 	jsr	SetFileName		; clear the filename		[FFBD]
 	jsr	Chk4ValidByte2		; scan for valid byte, else do syntax
@@ -9964,7 +9859,7 @@ GetParmOpenClo:				;				[E219]
 	bcc	A_E23F			; branch if less than screen
 
 	dey				; else decrement command
-A_E23F:					;				[E23F]
+A_E23F					;				[E23F]
 	jsr	SetAddresses		; set logical, first and second
 					; addresses			[FFBA]
 	jsr	ExitIfEotColl		; exit function if [EOT] or ":"	[E206]
@@ -9987,7 +9882,7 @@ A_E23F:					;				[E23F]
 ;
 ; set filename
 
-GetFileName:				;				[E257]
+GetFileName				;				[E257]
 	jsr	EvaluateValue		; evaluate expression		[AD9E]
 	jsr	EvalString		; evaluate string		[B6A3]
 
@@ -10000,7 +9895,7 @@ GetFileName:				;				[E257]
 ;
 ; perform COS()
 
-bcCOS:					;				[E264]
+bcCOS					;				[E264]
 	lda	#<ConstPIdiv2		; set pi/2 pointer LB
 	ldy	#>ConstPIdiv2		; set pi/2 pointer HB
 	jsr	AddFORvar2FAC1		; add (AY) to FAC1		[B867]
@@ -10010,7 +9905,7 @@ bcCOS:					;				[E264]
 ;
 ; perform SIN()
 
-bcSIN:					;				[E26B]
+bcSIN					;				[E26B]
 	jsr	CopyFAC1toFAC2		; round and copy FAC1 to FAC2	[BC0C]
 
 	lda	#<ConstPIx2		; set 2*pi pointer LB
@@ -10038,24 +9933,24 @@ bcSIN:					;				[E26B]
 	jsr	FAC1plus05		; add 0.5 to FAC1 (round FAC1)	[B849]
 
 	lda	FACSGN			; get FAC1 sign (b7), negative?
-	bmi	A_E2A0			; yes, -> 
+	bmi	A_E2A0			; yes, ->
 
 	lda	TANSGN			; get the comparison evaluation flag
 	eor	#$FF			; toggle flag
 	sta	TANSGN			; save the comparison evaluation flag
-bcSIN2:					;				[E29D]
+bcSIN2					;				[E29D]
 	jsr	bcGREATER		; do - FAC1			[BFB4]
-A_E2A0:					;				[E2A0]
+A_E2A0					;				[E2A0]
 	lda	#<Const025		; set 0.25 pointer LB
 	ldy	#>Const025		; set 0.25 pointer HB
 	jsr	AddFORvar2FAC1		; add (AY) to FAC1		[B867]
 
 	pla				; restore FAC1 sign, positive
-	bpl	A_E2AD			; yes, -> 
+	bpl	A_E2AD			; yes, ->
 
 ; else correct FAC1
 	jsr	bcGREATER		; do - FAC1			[BFB4]
-A_E2AD:					;				[E2AD]
+A_E2AD					;				[E2AD]
 	lda	#<ConstVCosSin		; set pointer LB to counter
 	ldy	#>ConstVCosSin		; set pointer HB to counter
 	jmp	Power2			; ^2 then series evaluation and return
@@ -10066,7 +9961,7 @@ A_E2AD:					;				[E2AD]
 ;
 ; perform TAN()
 
-bcTAN:					;				[E2B4]
+bcTAN					;				[E2B4]
 	jsr	FAC1toTemp		; pack FAC1 into FacTempStor	[BBCA]
 
 	lda	#$00			; clear A
@@ -10097,7 +9992,7 @@ bcTAN:					;				[E2B4]
 ;
 ; save comparison flag and do series evaluation
 
-bcTAN2:					;				[E2DC]
+bcTAN2					;				[E2DC]
 	pha				; save comparison flag
 	jmp	bcSIN2			; add 0.25, ^2 then series evaluation
 					;				[E29D]
@@ -10107,14 +10002,14 @@ bcTAN2:					;				[E2DC]
 ;
 ; constants and series for SIN/COS(n)
 
-ConstPIdiv2:				;				[E2E0]
+ConstPIdiv2				;				[E2E0]
 .byte	$81,$49,$0F,$DA,$A2		; 1.570796371, pi/2, as floating number
-ConstPIx2:				;				[E2E5]
+ConstPIx2				;				[E2E5]
 .byte	$83,$49,$0F,$DA,$A2		; 6.28319, 2*pi, as floating number
-Const025:				;				[E2EA]
+Const025				;				[E2EA]
 .byte	$7F,$00,$00,$00,$00		; 0.25
 
-ConstVCosSin:				;				[E2EF]
+ConstVCosSin				;				[E2EF]
 .byte	$05				; series counter
 .byte	$84,$E6,$1A,$2D,$1B		; -14.3813907
 .byte	$86,$28,$07,$FB,$F8		;  42.0077971
@@ -10128,41 +10023,41 @@ ConstVCosSin:				;				[E2EF]
 ;
 ; perform ATN()
 
-bcATN:					;				[E30E]
+bcATN					;				[E30E]
 	lda	FACSGN			; get FAC1 sign (b7)
 	pha				; save sign, positive?
-	bpl	A_E316			; yes, -> 
+	bpl	A_E316			; yes, ->
 
 	jsr	bcGREATER		; else do - FAC1		[BFB4]
-A_E316:					;				[E316]
+A_E316					;				[E316]
 	lda	FACEXP			; get FAC1 exponent
 	pha				; push exponent
 	cmp	#$81			; smaller than 1 ?
-	bcc	A_E324			; yes, -> 
+	bcc	A_E324			; yes, ->
 
 	lda	#<Constant1		; pointer to 1 LB
 	ldy	#>Constant1		; pointer to 1 HB
 	jsr	AYdivFAC1		; convert AY and do (AY)/FAC1	[BB0F]
-A_E324:					;				[E324]
+A_E324					;				[E324]
 	lda	#<ConstATN		; pointer to series LB
 	ldy	#>ConstATN		; pointer to series HB
 	jsr	Power2			; ^2 then series evaluation	[E043]
 
 	pla				; restore old FAC1 exponent
 	cmp	#$81			; smaller than 1 ?
-	bcc	A_E337			; yes, -> 
+	bcc	A_E337			; yes, ->
 
 	lda	#<ConstPIdiv2		; pointer to (pi/2) LB
 	ldy	#>ConstPIdiv2		; pointer to (pi/2) LB
 	jsr	AYminusFAC1		; perform subtraction, FAC1 from (AY)
 					;				[B850]
-A_E337:					;				[E337]
+A_E337					;				[E337]
 	pla				; restore FAC1 sign, positive
-	bpl	A_E33D			; yes, -> 
+	bpl	A_E33D			; yes, ->
 
 	jmp	bcGREATER		; else do - FAC1 and return	[BFB4]
 
-A_E33D:					;				[E33D]
+A_E33D					;				[E33D]
 	rts
 
 
@@ -10170,7 +10065,7 @@ A_E33D:					;				[E33D]
 ;
 ; series for ATN(n)
 
-ConstATN:				;				[E33E]
+ConstATN				;				[E33E]
 .byte	$0B				; series counter
 .byte	$76,$B3,$83,$BD,$D3		;-6.84793912e-04
 .byte	$79,$1E,$F4,$A6,$F5		; 4.85094216e-03
@@ -10190,7 +10085,7 @@ ConstATN:				;				[E33E]
 ;
 ; BASIC warm start entry point
 
-BasicWarmStart:				;				[E37B]
+BasicWarmStart				;				[E37B]
 	jsr	CloseIoChannls		; close input and output channels [FFCC]
 
 	lda	#$00			; clear A
@@ -10199,18 +10094,18 @@ BasicWarmStart:				;				[E37B]
 	jsr	ClrBasicStack		; flush BASIC stack and clear continue
 					; pointer			[A67A]
 	cli				; enable the interrupts
-BasWarmStart2:				;				[E386]
+BasWarmStart2				;				[E386]
 	ldx	#$80			; set -ve error, just do warm start
 	jmp	(IERROR)		; go handle error message, normally
 					; BasWarmStart3 = $E38b, here below
-BasWarmStart3:				;				[E38B]
+BasWarmStart3				;				[E38B]
 	txa				; copy the error number, negative?
 	bmi	A_E391			; yes, -> do warm start
 
 	jmp	OutputErrMsg2		; else do error #X then warm start
 					;				[A43A]
 
-A_E391:					;				[E391]
+A_E391					;				[E391]
 	jmp	OutputREADY		; do warm start			[A474]
 
 
@@ -10218,14 +10113,14 @@ A_E391:					;				[E391]
 ;
 ; BASIC cold start entry point
 
-BasicColdStart:				;				[E394]
+BasicColdStart				;				[E394]
 	jsr	InitBasicVec		; initialise the BASIC vector table
 					;				[E453]
 	jsr	InitBasicRAM		; initialise the BASIC RAM locations
 					;				[E3BF]
 	jsr	InitMemory		; print the start up message and
 					; initialise the memory pointers [E422]
-S_E39D:
+S_E39D
 	ldx	#$FB			; value for start stack
 	txs				; set stack pointer
 	bne	BasWarmStart2		; do "READY." warm start, branch always
@@ -10242,17 +10137,17 @@ S_E39D:
 ; page 0 initialisation table from CHRGET
 ; increment and scan memory
 
-DataCHRGET:				;				[E3A2]
+DataCHRGET				;				[E3A2]
 	inc	TXTPTR			; increment BASIC execute pointer low
 					; byte, became zero?
-	bne	A_E3A8			; no, -> 
+	bne	A_E3A8			; no, ->
 
 	inc	TXTPTR+1		; inc. BASIC execute pointer HB
 
 ; page 0 initialisation table from CHRGOT
 ; scan memory
 
-A_E3A8:					;				[E3A8]
+A_E3A8					;				[E3A8]
 	lda	$EA60			; get byte to scan, address set by call
 					; routine
 	cmp	#':'			; above ":"?
@@ -10262,7 +10157,7 @@ A_E3A8:					;				[E3A8]
 ; clear Cb if numeric
 
 	cmp	#' '			; space?
-	beq	DataCHRGET		; yes, -> 
+	beq	DataCHRGET		; yes, ->
 
 	sec				; set carry for SBC
 	sbc	#'0'			; subtract "0"
@@ -10271,7 +10166,7 @@ A_E3A8:					;				[E3A8]
 	sbc	#$D0			; subtract -"0"
 ; If the character was between "0" and "9", then the Xarry is cleared now.
 
-A_E3B9:					;				[E3B9]
+A_E3B9					;				[E3B9]
 	rts
 
 
@@ -10287,7 +10182,7 @@ A_E3B9:					;				[E3B9]
 ;
 ; initialise BASIC RAM locations
 
-InitBasicRAM:				;				[E3BF]
+InitBasicRAM				;				[E3BF]
 	lda	#$4C			; opcode for JMP
 	sta	Jump0054		; save for functions vector jump
 	sta	UserJump		; save for USR() vector jump, set USR()
@@ -10310,7 +10205,7 @@ InitBasicRAM:				;				[E3BF]
 ; copy the character get subroutine from DataCHRGET to CHRGET (= $0073)
 
 	ldx	#$1C			; set the byte count
-A_E3E2:					;				[E3E2]
+A_E3E2					;				[E3E2]
 	lda	DataCHRGET,X		; get a byte from the table
 	sta	CHRGET,X		; save the byte in page zero
 
@@ -10355,7 +10250,7 @@ A_E3E2:					;				[E3E2]
 	bne	A_E421			; if no rollover, skip next INC
 
 	inc	TXTTAB+1		; increment start of memory HB
-A_E421:					;				[E421]
+A_E421					;				[E421]
 	rts
 
 
@@ -10363,7 +10258,7 @@ A_E421:					;				[E421]
 ;
 ; print the start up message and initialise the memory pointers
 
-InitMemory:				;				[E422]
+InitMemory				;				[E422]
 	lda	TXTTAB			; get the start of memory LB
 	ldy	TXTTAB+1		; get the start of memory HB
 	jsr	CheckAvailMem		; check available memory, do out of
@@ -10371,7 +10266,7 @@ InitMemory:				;				[E422]
 
 	lda	#<TxtCommodore64	; set text pointer LB
 	ldy	#>TxtCommodore64	; set text pointer HB
-S_E42D:
+S_E42D
 	jsr	OutputString		; print a null terminated string [AB1E]
 
 	lda	MEMSIZ			; get the end of memory LB
@@ -10395,7 +10290,7 @@ S_E42D:
 ;
 ; BASIC vectors, these are copied to RAM from IERROR onwards
 
-TblBasVectors:				;				[E447]
+TblBasVectors				;				[E447]
 .word	BasWarmStart3			; error message			IERROR
 .word	MainWaitLoop2			; BASIC warm start		IMAIN
 .word	Text2TokenCod2			; crunch BASIC tokens		ICRNCH
@@ -10408,9 +10303,9 @@ TblBasVectors:				;				[E447]
 ;
 ; initialise the BASIC vectors
 
-InitBasicVec:				;				[E453]
+InitBasicVec				;				[E453]
 	ldx	#$0B			; set byte count
-A_E455:					;				[E455]
+A_E455					;				[E455]
 	lda	TblBasVectors,X		; get byte from table
 	sta	IERROR,X		; save byte to RAM
 
@@ -10430,29 +10325,25 @@ A_E455:					;				[E455]
 ;
 ; BASIC startup messages
 
-BasicBytesFree:				;				[E460]
-.text	" BASIC BYTES FREE",$0D,$00
+BasicBytesFree				;				[E460]
+.null	" basic bytes free{cr}"
 
-TxtCommodore64:				;				[E473]
-.byte	$93,$0D
-.text	"    **** COMMODORE 64 BASIC V2 ****"
-.byte	$0D, $0D
-.text	" 64K RAM SYSTEM  "
-.byte	$00
+TxtCommodore64				;				[E473]
+.null	"{clr}{cr}    **** commodore 64 basic v2 ****{cr}{cr} 64k ram system  "
 
 
 ;******************************************************************************
 ;
 ; unused
 
-E4AC:	.byte	$81			; unused byte ??
+E4AC	.byte	$81			; unused byte ??
 
 
 ;******************************************************************************
 ;
 ; open channel for output
 
-OpenChan4OutpB:				;				[E4AD]
+OpenChan4OutpB				;				[E4AD]
 	pha				; save the flag byte
 
 	jsr	OpenChan4Outp		; open channel for output	[FFC9]
@@ -10462,7 +10353,7 @@ OpenChan4OutpB:				;				[E4AD]
 	bcc	A_E4B6			; if no error, skip copying error flag
 
 	txa				; else copy the error flag
-A_E4B6:					;				[E4B6]
+A_E4B6					;				[E4B6]
 	rts
 
 
@@ -10484,7 +10375,7 @@ A_E4B6:					;				[E4B6]
 ;
 ; flag the RS232 start bit and set the parity
 
-RS232_SaveSet:				;				[E4D3]
+RS232_SaveSet				;				[E4D3]
 	sta	RINONE			; save the start bit check flag, set
 					; start bit received
 	lda	#$01			; set the initial parity state
@@ -10497,7 +10388,7 @@ RS232_SaveSet:				;				[E4D3]
 ;
 ; save the current colour to the colour RAM
 
-SaveCurColour:				;				[E4DA]
+SaveCurColour				;				[E4DA]
 	lda	COLOR			; get the current colour code
 	sta	(ColorRamPtr),Y		; save it to the colour RAM
 
@@ -10508,9 +10399,9 @@ SaveCurColour:				;				[E4DA]
 ;
 ; wait ~8.5 seconds for any key from the STOP key column
 
-Wait8Seconds:				;				[E4E0]
+Wait8Seconds				;				[E4E0]
 	adc	#$02			; set the number of jiffies to wait
-A_E4E2:					;				[E4E2]
+A_E4E2					;				[E4E2]
 	ldy	StopKey			; read the stop key column
 	iny				; test for $FF, no keys pressed
 	bne	A_E4EB			; if any keys were pressed just exit
@@ -10519,7 +10410,7 @@ A_E4E2:					;				[E4E2]
 					; clock mid byte
 	bne	A_E4E2			; if not there yet go wait some more
 
-A_E4EB:					;				[E4EB]
+A_E4EB					;				[E4EB]
 	rts
 
 
@@ -10536,24 +10427,24 @@ A_E4EB:					;				[E4EB]
 
 ; baud rate tables for PAL C64
 
-TblBaudRates:				;				[E4EC]
-.word	$2619				;   50   baud	985300
-.word	$1944				;   75   baud	985200
-.word	$111A				;  110   baud	985160
+TblBaudRates				;				[E4EC]
+.word	$2619				;   50	 baud	985300
+.word	$1944				;   75	 baud	985200
+.word	$111A				;  110	 baud	985160
 .word	$0DE8				;  134.5 baud	984540
-.word	$0C70				;  150   baud	985200
-.word	$0606				;  300   baud	985200
-.word	$02D1				;  600   baud	985200
-.word	$0137				; 1200   baud	986400
-.word	$00AE				; 1800   baud	986400
-.word	$0069				; 2400   baud	984000
+.word	$0C70				;  150	 baud	985200
+.word	$0606				;  300	 baud	985200
+.word	$02D1				;  600	 baud	985200
+.word	$0137				; 1200	 baud	986400
+.word	$00AE				; 1800	 baud	986400
+.word	$0069				; 2400	 baud	984000
 
 
 ;******************************************************************************
 ;
 ; return the base address of the I/O devices
 
-GetAddrIoDevs2:				;				[E500]
+GetAddrIoDevs2				;				[E500]
 	ldx	#<CIA1DRA		; get the I/O base address LB
 	ldy	#>CIA1DRA		; get the I/O base address HB
 	rts
@@ -10563,7 +10454,7 @@ GetAddrIoDevs2:				;				[E500]
 ;
 ; return the x,y organization of the screen
 
-GetSizeScreen2:				;				[E505]
+GetSizeScreen2				;				[E505]
 	ldx	#$28			; get the x size
 	ldy	#$19			; get the y size
 	rts
@@ -10573,7 +10464,7 @@ GetSizeScreen2:				;				[E505]
 ;
 ; read/set the x,y cursor position
 
-CursorPosXY2:				;				[E50A]
+CursorPosXY2				;				[E50A]
 	bcs	A_E513			; if Carry set -> do read
 
 ; Set the cursor position
@@ -10581,7 +10472,7 @@ CursorPosXY2:				;				[E50A]
 	sty	LineCurCol		; save the cursor column
 	jsr	CalcCursorPos		; set the screen pointers for the
 					; cursor row, column		[E56C]
-A_E513:					;				[E513]
+A_E513					;				[E513]
 	ldx	PhysCurRow		; get the cursor row
 	ldy	LineCurCol		; get the cursor column
 	rts
@@ -10591,7 +10482,7 @@ A_E513:					;				[E513]
 ;
 ; initialise the screen and keyboard
 
-InitScreenKeyb:				;				[E518]
+InitScreenKeyb				;				[E518]
 	jsr	InitVideoIC		; initialise the vic chip	[E5A0]
 
 	lda	#$00			; clear A
@@ -10626,7 +10517,7 @@ InitScreenKeyb:				;				[E518]
 ;
 ; clear the screen
 
-ClearScreen:				;				[E544]
+ClearScreen				;				[E544]
 	lda	HIBASE			; get the screen memory page
 	ora	#$80			; set the high bit, flag every line is
 					; a logical line start
@@ -10634,7 +10525,7 @@ ClearScreen:				;				[E544]
 
 	lda	#$00			; clear the line start LB
 	tax				; clear the index
-A_E54D:					;				[E54D]
+A_E54D					;				[E54D]
 	sty	LDTB1,X			; save start of line X pointer HB
 
 	clc				; clear carry for add
@@ -10642,7 +10533,7 @@ A_E54D:					;				[E54D]
 	bcc	A_E555			; if no rollover skip the HB
 					; increment
 	iny				; else increment the HB
-A_E555:					;				[E555]
+A_E555					;				[E555]
 	inx				; increment the line index
 	cpx	#$1A			; compare it with number of lines + 1
 	bne	A_E54D			; loop if not all done
@@ -10652,7 +10543,7 @@ A_E555:					;				[E555]
 
 	ldx	#$18			; set the line count, 25 lines to do,
 					; 0 to 24
-A_E560:					;				[E560]
+A_E560					;				[E560]
 	jsr	ClearLineX		; clear screen line X		[E9FF]
 
 	dex				; decrement the count
@@ -10663,7 +10554,7 @@ A_E560:					;				[E560]
 ;
 ; home the cursor
 
-CursorHome:				;				[E566]
+CursorHome				;				[E566]
 	ldy	#$00			; clear Y
 	sty	LineCurCol		; clear the cursor column
 	sty	PhysCurRow		; clear the cursor row
@@ -10673,10 +10564,10 @@ CursorHome:				;				[E566]
 ;
 ; set screen pointers for cursor row, column
 
-CalcCursorPos:				;				[E56C]
+CalcCursorPos				;				[E56C]
 	ldx	PhysCurRow		; get the cursor row
 	lda	LineCurCol		; get the cursor column
-A_E570:					;				[E570]
+A_E570					;				[E570]
 	ldy	LDTB1,X			; get start of line X pointer HB
 	bmi	A_E57C			; if it is logical line start, continue
 
@@ -10687,13 +10578,13 @@ A_E570:					;				[E570]
 	dex				; decrement the cursor row
 	bpl	A_E570			; loop, branch always
 
-A_E57C:					;				[E57C]
+A_E57C					;				[E57C]
 	jsr	FetchScreenAddr		; fetch a screen address	[E9F0]
 
 	lda	#$27			; set the line length
 
 	inx				; increment the cursor row
-A_E582:					;				[E582]
+A_E582					;				[E582]
 	ldy	LDTB1,X			; get the start of line X pointer HB
 	bmi	A_E58C			; if logical line start exit
 
@@ -10703,19 +10594,19 @@ A_E582:					;				[E582]
 	inx				; increment the cursor row
 	bpl	A_E582			; loop, branch always
 
-A_E58C:					;				[E58C]
+A_E58C					;				[E58C]
 	sta	CurLineLeng		; save current screen line length
 
 	jmp	PtrCurLineColRAM	; calculate the pointer to colour RAM
 					; and return			[EA24]
 
-SetPtrLogLine:				;				[E591]
+SetPtrLogLine				;				[E591]
 	cpx	CursorRow		; compare it with the input cursor row
 	beq	A_E598			; if there just exit
 
 	jmp	J_E6ED			; else go ??			[E6ED]
 
-A_E598:					;				[E598]
+A_E598					;				[E598]
 	rts
 
 
@@ -10732,7 +10623,7 @@ A_E598:					;				[E598]
 ;
 ; initialise the vic chip
 
-InitVideoIC:				;				[E5A0]
+InitVideoIC				;				[E5A0]
 	lda	#$03			; set the screen as the output device
 	sta	DFLTO			; save the output device number
 
@@ -10740,7 +10631,7 @@ InitVideoIC:				;				[E5A0]
 	sta	DFLTN			; save the input device number
 
 	ldx	#$2F			; set the count/index
-A_E5AA:					;				[E5AA]
+A_E5AA					;				[E5AA]
 	lda	TblValuesVIC-1,X	; get a vic ii chip initialisation value
 	sta	VIC_chip-1,X		; save it to the vic ii chip
 
@@ -10754,10 +10645,10 @@ A_E5AA:					;				[E5AA]
 ;
 ; input from the keyboard buffer
 
-GetCharKeybBuf:				;				[E5B4]
+GetCharKeybBuf				;				[E5B4]
 	ldy	KeyboardBuf		; get the current character from buffer
 	ldx	#$00			; clear the index
-A_E5B9:					;				[E5B9]
+A_E5B9					;				[E5B9]
 	lda	KeyboardBuf+1,X		; get next character from the buffer
 	sta	KeyboardBuf,X		; save it as current character in buffer
 
@@ -10779,7 +10670,7 @@ A_E5B9:					;				[E5B9]
 ;
 ; write character and wait for key
 
-OutCharWaitKey:				;				[E5CA]
+OutCharWaitKey				;				[E5CA]
 	jsr	OutputChar		; output character		[E716]
 
 
@@ -10787,7 +10678,7 @@ OutCharWaitKey:				;				[E5CA]
 ;
 ; wait for a key from the keyboard
 
-WaitForKey:				;				[E5CD]
+WaitForKey				;				[E5CD]
 	lda	NDX			; get the keyboard buffer index
 	sta	BLNSW			; cursor enable, $00 = flash cursor,
 					; $xx = no flash
@@ -10811,9 +10702,9 @@ WaitForKey:				;				[E5CD]
 	sty	BLNON			; clear the cursor blink phase
 
 	jsr	PrntCharA_ColX		; print character A and colour X [EA13]
-A_E5E7:					;				[E5E7]
+A_E5E7					;				[E5E7]
 	jsr	GetCharKeybBuf		; input from the keyboard buffer [E5B4]
-	cmp	#$83			; compare with [SHIFT][RUN]
+	cmp	#'{run}'		; compare with [SHIFT][RUN]
 	bne	A_E5FE			; if not [SHIFT][RUN] skip buffer fill
 
 ; keys are [SHIFT][RUN] so put "LOAD",$0D,"RUN",$0D into
@@ -10821,7 +10712,7 @@ A_E5E7:					;				[E5E7]
 	ldx	#$09			; set the byte count
 	sei				; disable the interrupts
 	stx	NDX			; set the keyboard buffer index
-A_E5F3:					;				[E5F3]
+A_E5F3					;				[E5F3]
 	lda	TblAutoLoadRun-1,X	; get byte from the auto load/run table
 	sta	KeyboardBuf-1,X		; save it to the keyboard buffer
 
@@ -10831,15 +10722,15 @@ A_E5F3:					;				[E5F3]
 	beq	WaitForKey		; always -> loop for the next key
 
 ; was not [SHIFT][RUN]
-A_E5FE:					;				[E5FE]
-	cmp	#$0D			; compare the key with [CR]
+A_E5FE					;				[E5FE]
+	cmp	#'{cr}'			; compare the key with [CR]
 	bne	OutCharWaitKey		; if not [CR] print the character and
 					; get the next key
 ; else it was [CR]
 	ldy	CurLineLeng		; get the current screen line length
 	sty	CRSW			; input from keyboard or screen,
 					; $xx = screen, $00 = keyboard
-A_E606:					;				[E606]
+A_E606					;				[E606]
 	lda	(CurScrLine),Y		; get the character from the current
 					; screen line
 	cmp	#' '			; compare it with [SPACE]
@@ -10849,7 +10740,7 @@ A_E606:					;				[E606]
 					; end of input line
 	bne	A_E606			; loop, branch always
 
-A_E60F:					;				[E60F]
+A_E60F					;				[E60F]
 	iny				; increment past the last non space
 					; character on line
 	sty	INDX			; save the input [EOL] pointer
@@ -10882,7 +10773,7 @@ A_E60F:					;				[E60F]
 ;
 ; input from screen or keyboard
 
-InputScrKeyb:				;				[E632]
+InputScrKeyb				;				[E632]
 	tya				; copy Y
 	pha				; save Y
 
@@ -10892,7 +10783,7 @@ InputScrKeyb:				;				[E632]
 	lda	CRSW			; input from keyboard or screen,
 					; $xx = screen, $00 = keyboard
 	beq	WaitForKey		; if keyboard go wait for key
-A_E63A:					;				[E63A]
+A_E63A					;				[E63A]
 	ldy	LineCurCol		; get the cursor column
 	lda	(CurScrLine),Y		; get character from current screen line
 	sta	TEMPD7			; save temporary last character
@@ -10903,18 +10794,18 @@ A_E63A:					;				[E63A]
 	bpl	A_E64A			; branch if not [NO KEY]
 
 	ora	#$80			;.
-A_E64A:					;				[E64A]
+A_E64A					;				[E64A]
 	bcc	A_E650			;.
 
 	ldx	QTSW			; get the cursor quote flag,
 					; $xx = quote, $00 = no quote
 	bne	A_E654			; if in quote mode go ??
 
-A_E650:					;				[E650]
+A_E650					;				[E650]
 	bvs	A_E654			;.
 
 	ora	#$40			;.
-A_E654:					;				[E654]
+A_E654					;				[E654]
 	inc	LineCurCol		; increment the cursor column
 
 	jsr	ToggleCursorFlg		; if open quote toggle cursor quote
@@ -10922,11 +10813,11 @@ A_E654:					;				[E654]
 	cpy	INDX			; compare ?? with input [EOL] pointer
 	bne	A_E674			; if not at line end go ??
 
-A_E65D:					;				[E65D]
+A_E65D					;				[E65D]
 	lda	#$00			; clear A
 	sta	CRSW			; clear input from keyboard or screen,
 					; $xx = screen, $00 = keyboard
-	lda	#$0D			; set character [CR]
+	lda	#'{cr}'			; set character [CR]
 
 	ldx	DFLTN			; get the input device number
 	cpx	#$03			; compare the input device with screen
@@ -10936,11 +10827,11 @@ A_E65D:					;				[E65D]
 	cpx	#$03			; compare the output device with screen
 	beq	A_E672			; if screen go ??
 
-A_E66F:					;				[E66F]
+A_E66F					;				[E66F]
 	jsr	OutputChar		; output the character		[E716]
-A_E672:					;				[E672]
-	lda	#$0D			; set character [CR]
-A_E674:					;				[E674]
+A_E672					;				[E672]
+	lda	#'{cr}'			; set character [CR]
+A_E674					;				[E674]
 	sta	TEMPD7			; save character
 
 	pla				; pull X
@@ -10954,7 +10845,7 @@ A_E674:					;				[E674]
 	bne	A_E682			;.
 
 	lda	#$FF			;.
-A_E682:					;				[E682]
+A_E682					;				[E682]
 	clc				; flag ok
 	rts
 
@@ -10963,7 +10854,7 @@ A_E682:					;				[E682]
 ;
 ; if open quote toggle cursor quote flag
 
-ToggleCursorFlg:			;				[E684]
+ToggleCursorFlg				;				[E684]
 	cmp	#'"'			; compare byte with "
 	bne	A_E690			; exit if not "
 
@@ -10973,7 +10864,7 @@ ToggleCursorFlg:			;				[E684]
 	sta	QTSW			; save cursor quote flag
 
 	lda	#'"'			; restore the "
-A_E690:					;				[E690]
+A_E690					;				[E690]
 	rts
 
 
@@ -10981,38 +10872,38 @@ A_E690:					;				[E690]
 ;
 ; insert uppercase/graphic character
 
-UpcChar2Screen:				;				[E691]
+UpcChar2Screen				;				[E691]
 	ora	#$40			; change to uppercase/graphic
-Char2Screen:				;				[E693]
+Char2Screen				;				[E693]
 	ldx	RVS			; get the reverse flag
 	beq	A_E699			; branch if not reverse
 
 ; else ..
 ; insert reversed character
 
-ReverseChar:				;				[E697]
+ReverseChar				;				[E697]
 	ora	#$80			; reverse character
-A_E699:					;				[E699]
+A_E699					;				[E699]
 	ldx	InsertCount		; get the insert count
 	beq	A_E69F			; branch if none
 
 	dec	InsertCount		; else decrement the insert count
-A_E69F:					;				[E69F]
+A_E69F					;				[E69F]
 	ldx	COLOR			; get the current colour code
 	jsr	PrntCharA_ColX		; print character A and colour X [EA13]
 	jsr	AdvanceCursor		; advance the cursor		[E6B6]
 
 ; restore the registers, set the quote flag and exit
-RestorRegsQuot:				;				[E6A8]
+RestorRegsQuot				;				[E6A8]
 	pla				; pull Y
 	tay				; restore Y
 
 	lda	InsertCount		; get the insert count, inserts to do?
-	beq	A_E6B0			; no, -> 
+	beq	A_E6B0			; no, ->
 
 	lsr	QTSW			; clear cursor quote flag, $xx = quote,
 					; $00 = no quote
-A_E6B0:					;				[E6B0]
+A_E6B0					;				[E6B0]
 	pla				; pull X
 	tax				; restore X
 
@@ -11028,7 +10919,7 @@ A_E6B0:					;				[E6B0]
 ;
 ; advance the cursor
 
-AdvanceCursor:				;				[E6B6]
+AdvanceCursor				;				[E6B6]
 	jsr	Test4LineIncr		; test for line increment	[E8B3]
 
 	inc	LineCurCol		; increment the cursor column
@@ -11045,7 +10936,7 @@ AdvanceCursor:				;				[E6B6]
 
 	jmp	InsertLine2		;.else open space on screen	[E967]
 
-A_E6CD:					;				[E6CD]
+A_E6CD					;				[E6CD]
 	ldx	PhysCurRow		; get the cursor row
 	cpx	#$19			; compare with max + 1
 	bcc	AddRow2CurLine		; if less than max + 1 go add this row
@@ -11058,7 +10949,7 @@ A_E6CD:					;				[E6CD]
 
 ; add this row to the current logical line
 
-AddRow2CurLine:				;				[E6DA]
+AddRow2CurLine				;				[E6DA]
 	asl	LDTB1,X			; clear bit 7 of start of line X ...
 	lsr	LDTB1,X			;    ... HB back
 
@@ -11079,21 +10970,21 @@ AddRow2CurLine:				;				[E6DA]
 	clc				; clear carry for add
 	adc	#$28			; add one line length
 	sta	CurLineLeng		; save current screen line length
-J_E6ED:					;				[E6ED]
+J_E6ED					;				[E6ED]
 	lda	LDTB1,X			; get start of line X pointer HB
 	bmi	A_E6F4			; exit loop if start of logical line
 
 	dex				; else back up one line
 	bne	J_E6ED			; loop if not on first line
-A_E6F4:					;				[E6F4]
+A_E6F4					;				[E6F4]
 	jmp	FetchScreenAddr		; fetch a screen address	[E9F0]
 
-A_E6F7:					;				[E6F7]
+A_E6F7					;				[E6F7]
 	dec	PhysCurRow		; decrement the cursor row
 	jsr	NewScreenLine		; do newline			[E87C]
 	lda	#$00			; clear A
 	sta	LineCurCol		; clear the cursor column
-A_E700:					;				[E700]
+A_E700					;				[E700]
 	rts
 
 
@@ -11101,7 +10992,7 @@ A_E700:					;				[E700]
 ;
 ; back onto the previous line if possible
 
-BackToPrevLine:				;				[E701]
+BackToPrevLine				;				[E701]
 	ldx	PhysCurRow		; get the cursor row
 	bne	A_E70B			; branch if not top row
 
@@ -11112,7 +11003,7 @@ BackToPrevLine:				;				[E701]
 	pla				; dump return address HB
 	bne	RestorRegsQuot		; restore registers, set quote flag
 					; and exit, branch always
-A_E70B:					;				[E70B]
+A_E70B					;				[E70B]
 	dex				; decrement the cursor row
 	stx	PhysCurRow		; save the cursor row
 
@@ -11128,7 +11019,7 @@ A_E70B:					;				[E70B]
 ;
 ; output a character to the screen
 
-OutputChar:				;				[E716]
+OutputChar				;				[E716]
 	pha				; save character
 	sta	TEMPD7			; save temporary last character
 
@@ -11146,15 +11037,15 @@ OutputChar:				;				[E716]
 	lda	TEMPD7			; restore last character
 	bpl	A_E72A			; branch if unshifted
 
-	jmp	ShiftedChars		; do shifted characters and return 
+	jmp	ShiftedChars		; do shifted characters and return
 					;				[E7D4]
-A_E72A:					;				[E72A]
-	cmp	#$0D			; compare with [CR]
+A_E72A					;				[E72A]
+	cmp	#'{cr}'			; compare with [CR]
 	bne	A_E731			; branch if not [CR]
 
 	jmp	OutputCR		; else output [CR] and return	[E891]
 
-A_E731:					;				[E731]
+A_E731					;				[E731]
 	cmp	#' '			; compare with [SPACE]
 	bcc	A_E745			; branch if < [SPACE]
 
@@ -11165,22 +11056,22 @@ A_E731:					;				[E731]
 	and	#$DF			;.
 	bne	A_E73F			;.
 
-A_E73D:					;				[E73D]
+A_E73D					;				[E73D]
 	and	#$3F			;.
-A_E73F:					;				[E73F]
+A_E73F					;				[E73F]
 	jsr	ToggleCursorFlg		; if open quote toggle cursor
 					; direct/programmed flag	[E684]
 	jmp	Char2Screen		;.				[E693]
 
 ; character was < [SPACE] so is a control character of some sort
-A_E745:					;				[E745]
+A_E745					;				[E745]
 	ldx	InsertCount		; get the insert count
 	beq	A_E74C			; if no characters to insert continue
 
 	jmp	ReverseChar		; insert reversed character	[E697]
 
-A_E74C:					;				[E74C]
-	cmp	#$14			; compare char with [INSERT]/[DELETE]
+A_E74C					;				[E74C]
+	cmp	#'{del}'		; compare char with [INSERT]/[DELETE]
 	bne	A_E77E			; if not [INSERT]/[DELETE] go ??
 
 	tya				;.
@@ -11190,7 +11081,7 @@ A_E74C:					;				[E74C]
 					;				[E701]
 	jmp	J_E773			;.				[E773]
 
-A_E759:					;				[E759]
+A_E759					;				[E759]
 	jsr	Test4LineDecr		; test for line decrement	[E8A1]
 
 ; now close up the line
@@ -11198,7 +11089,7 @@ A_E759:					;				[E759]
 	sty	LineCurCol		; save the cursor column
 
 	jsr	PtrCurLineColRAM	; calculate pointer to colour RAM [EA24]
-A_E762:					;				[E762]
+A_E762					;				[E762]
 	iny				; increment index to next character
 	lda	(CurScrLine),Y		; get character from current screen line
 	dey				; decrement index to previous character
@@ -11213,7 +11104,7 @@ A_E762:					;				[E762]
 	cpy	CurLineLeng		; comp with current screen line length
 	bne	A_E762			; loop if not there yet
 
-J_E773:					;				[E773]
+J_E773					;				[E773]
 	lda	#' '			; set [SPACE]
 	sta	(CurScrLine),Y		; clear last char on current screen line
 
@@ -11221,25 +11112,25 @@ J_E773:					;				[E773]
 	sta	(ColorRamPtr),Y		; save to colour RAM
 	bpl	A_E7CB			; branch always
 
-A_E77E:					;				[E77E]
+A_E77E					;				[E77E]
 	ldx	QTSW			; get cursor quote flag, $xx = quote,
 					; $00 = no quote
 	beq	A_E785			; branch if not quote mode
 
 	jmp	ReverseChar		; insert reversed character	[E697]
 
-A_E785:					;				[E785]
-	cmp	#$12			; compare with [RVS ON]
+A_E785					;				[E785]
+	cmp	#'{rvs on}'		; compare with [RVS ON]
 	bne	A_E78B			; if not [RVS ON] skip setting the
 					; reverse flag
 	sta	RVS			; else set the reverse flag
-A_E78B:					;				[E78B]
-	cmp	#$13			; compare with [CLR HOME]
+A_E78B					;				[E78B]
+	cmp	#'{home}'		; compare with [CLR HOME]
 	bne	A_E792			; if not [CLR HOME] continue
 
 	jsr	CursorHome		; home the cursor		[E566]
-A_E792:					;				[E792]
-	cmp	#$1D			; compare with [CURSOR RIGHT]
+A_E792					;				[E792]
+	cmp	#'{right}'		; compare with [CURSOR RIGHT]
 	bne	A_E7AD			; if not [CURSOR RIGHT] go ??
 
 	iny				; increment the cursor column
@@ -11259,13 +11150,13 @@ A_E792:					;				[E792]
 	jsr	NewScreenLine		; do newline			[E87C]
 
 	ldy	#$00			; clear cursor column
-A_E7A8:					;				[E7A8]
+A_E7A8					;				[E7A8]
 	sty	LineCurCol		; save the cursor column
-A_E7AA:					;				[E7AA]
+A_E7AA					;				[E7AA]
 	jmp	RestorRegsQuot		; restore the registers, set the quote
 					; flag and exit			[E6A8]
-A_E7AD:					;				[E7AD]
-	cmp	#$11			; compare with [CURSOR DOWN]
+A_E7AD					;				[E7AD]
+	cmp	#'{down}'		; compare with [CURSOR DOWN]
 	bne	A_E7CE			; if not [CURSOR DOWN] go ??
 
 	clc				; clear carry for add
@@ -11284,29 +11175,29 @@ A_E7AD:					;				[E7AD]
 ; else the cursor has moved beyond the end of this line so back it up until
 ; it's on the start of the logical line
 	dec	PhysCurRow		; decrement the cursor row
-A_E7C0:					;				[E7C0]
+A_E7C0					;				[E7C0]
 	sbc	#$28			; subtract one line
 	bcc	A_E7C8			; if on previous line exit the loop
 
 	sta	LineCurCol		; else save the cursor column
 	bne	A_E7C0			; loop if not at the start of the line
 
-A_E7C8:					;				[E7C8]
+A_E7C8					;				[E7C8]
 	jsr	NewScreenLine		; do newline			[E87C]
-A_E7CB:					;				[E7CB]
+A_E7CB					;				[E7CB]
 	jmp	RestorRegsQuot		; restore the registers, set the quote
 					; flag and exit			[E6A8]
-A_E7CE:					;				[E7CE]
+A_E7CE					;				[E7CE]
 	jsr	SetColourCode		; set the colour code		[E8CB]
 	jmp	ChkSpecCodes		; go check for special character codes
 					;				[EC44]
-ShiftedChars:				;				[E7D4]
+ShiftedChars				;				[E7D4]
 	and	#$7F			; mask 0xxx, clear b7
 	cmp	#$7F			; was it $FF before the mask
 	bne	A_E7DC			; branch if not
 
 	lda	#$5E			; else make it $5E
-A_E7DC:					;				[E7DC]
+A_E7DC					;				[E7DC]
 	cmp	#' '			; compare the character with [SPACE]
 	bcc	A_E7E3			; if < [SPACE] go ??
 
@@ -11314,19 +11205,19 @@ A_E7DC:					;				[E7DC]
 					; and return			[E691]
 
 ; character was $80 to $9F and is now $00 to $1F
-A_E7E3:					;				[E7E3]
-	cmp	#$0D			; compare with [CR]
+A_E7E3					;				[E7E3]
+	cmp	#'{cr}'			; compare with [CR]
 	bne	A_E7EA			; if not [CR] continue
 
 	jmp	OutputCR		; else output [CR] and return	[E891]
 
 ; was not [CR]
-A_E7EA:					;				[E7EA]
+A_E7EA					;				[E7EA]
 	ldx	QTSW			; get the cursor quote flag,
 					; $xx = quote, $00 = no quote
 	bne	A_E82D			; branch if quote mode
 
-	cmp	#$14			; compare with [INSERT DELETE]
+	cmp	#'{del}'		; compare with [INSERT DELETE]
 	bne	A_E829			; if not [INSERT DELETE] go ??
 
 	ldy	CurLineLeng		; get current screen line length
@@ -11338,7 +11229,7 @@ A_E7EA:					;				[E7EA]
 					; cursor column
 	bne	A_E805			; if not cursor column go open up space
 					; on line
-A_E7FE:					;				[E7FE]
+A_E7FE					;				[E7FE]
 	cpy	#$4F			; compare current column with max line
 					; length
 	beq	A_E826			; if at line end just exit
@@ -11346,10 +11237,10 @@ A_E7FE:					;				[E7FE]
 	jsr	InsertLine		; else open up a space on the screen
 					; now open up space on the line to
 					; insert a character		[E965]
-A_E805:					;				[E805]
+A_E805					;				[E805]
 	ldy	CurLineLeng		; get current screen line length
 	jsr	PtrCurLineColRAM	; calc the pointer to colour RAM [EA24]
-A_E80A:					;				[E80A]
+A_E80A					;				[E80A]
 	dey				; decrement index to previous character
 	lda	(CurScrLine),Y		; get the character from the current
 					; screen line
@@ -11373,19 +11264,19 @@ A_E80A:					;				[E80A]
 	sta	(ColorRamPtr),Y		; save to cursor position on current
 					; screen line colour RAM
 	inc	InsertCount		; increment insert count
-A_E826:					;				[E826]
+A_E826					;				[E826]
 	jmp	RestorRegsQuot		; restore the registers, set the quote
 					; flag and exit			[E6A8]
-A_E829:					;				[E829]
+A_E829					;				[E829]
 	ldx	InsertCount		; get the insert count
 	beq	A_E832			; branch if no insert space
 
-A_E82D:					;				[E82D]
+A_E82D					;				[E82D]
 	ora	#$40			; change to uppercase/graphic
 	jmp	ReverseChar		; insert reversed character	[E697]
 
-A_E832:					;				[E832]
-	cmp	#$11			; compare with [CURSOR UP]
+A_E832					;				[E832]
+	cmp	#'{up}' & $7f		; compare with [CURSOR UP]
 	bne	A_E84C			; branch if not [CURSOR UP]
 
 	ldx	PhysCurRow		; get the cursor row
@@ -11401,19 +11292,19 @@ A_E832:					;				[E832]
 	sta	LineCurCol		; else save the cursor column ..
 	bpl	A_E871			; .. and exit, branch always
 
-A_E847:					;				[E847]
+A_E847					;				[E847]
 	jsr	CalcCursorPos		; set the screen pointers for cursor
 					; row, column ..		[E56C]
 	bne	A_E871			; .. and exit, branch always
 
-A_E84C:					;				[E84C]
-	cmp	#$12			; compare with [RVS OFF]
+A_E84C					;				[E84C]
+	cmp	#'{rvs off}' & $7f	; compare with [RVS OFF]
 	bne	A_E854			; if not [RVS OFF] continue
 
 	lda	#$00			; else clear A
 	sta	RVS			; clear the reverse flag
-A_E854:					;				[E854]
-	cmp	#$1D			; compare with [CURSOR LEFT]
+A_E854					;				[E854]
+	cmp	#'{left}' & $7f		; compare with [CURSOR LEFT]
 	bne	A_E86A			; if not [CURSOR LEFT] go ??
 
 	tya				; copy the cursor column
@@ -11426,20 +11317,20 @@ A_E854:					;				[E854]
 
 	jmp	RestorRegsQuot		; restore the registers, set the quote
 					; flag and exit			[E6A8]
-A_E864:					;				[E864]
+A_E864					;				[E864]
 	jsr	BackToPrevLine		; back to the previous line if possible
 					;				[E701]
 	jmp	RestorRegsQuot		; restore the registers, set the quote
 					; flag and exit			[E6A8]
-A_E86A:					;				[E86A]
-	cmp	#$13			; compare with [CLR]
+A_E86A					;				[E86A]
+	cmp	#'{clr}' & $7f		; compare with [CLR]
 	bne	A_E874			; if not [CLR] continue
 
 	jsr	ClearScreen		; clear the screen		[E544]
-A_E871:					;				[E871]
+A_E871					;				[E871]
 	jmp	RestorRegsQuot		; restore the registers, set the quote
 					; flag and exit			[E6A8]
-A_E874:					;				[E874]
+A_E874					;				[E874]
 	ora	#$80			; restore b7, colour can only be black,
 					; cyan, magenta or yellow
 	jsr	SetColourCode		; set the colour code		[E8CB]
@@ -11450,16 +11341,16 @@ A_E874:					;				[E874]
 ;
 ; do newline
 
-NewScreenLine:				;				[E87C]
+NewScreenLine				;				[E87C]
 	lsr	CursorRow		; shift >> input cursor row
 	ldx	PhysCurRow		; get the cursor row
-A_E880:					;				[E880]
+A_E880					;				[E880]
 	inx				; increment the row
 	cpx	#$19			; compare it with last row + 1
 	bne	A_E888			; if not last row+1 skip screen scroll
 
 	jsr	ScrollScreen		; else scroll the screen	[E8EA]
-A_E888:					;				[E888]
+A_E888					;				[E888]
 	lda	LDTB1,X			; get start of line X pointer HB
 	bpl	A_E880			; loop if not start of logical line
 
@@ -11473,7 +11364,7 @@ A_E888:					;				[E888]
 ;
 ; output [CR]
 
-OutputCR:				;				[E891]
+OutputCR				;				[E891]
 	ldx	#$00			; clear X
 	stx	InsertCount		; clear the insert count
 	stx	RVS			; clear the reverse flag
@@ -11490,10 +11381,10 @@ OutputCR:				;				[E891]
 ;
 ; test for line decrement
 
-Test4LineDecr:				;				[E8A1]
+Test4LineDecr				;				[E8A1]
 	ldx	#$02			; set the count
 	lda	#$00			; set the column
-A_E8A5:					;				[E8A5]
+A_E8A5					;				[E8A5]
 	cmp	LineCurCol		; compare column with the cursor column
 	beq	A_E8B0			; if at the start of the line, go
 					; decrement the cursor row and exit
@@ -11505,7 +11396,7 @@ A_E8A5:					;				[E8A5]
 
 	rts
 
-A_E8B0:					;				[E8B0]
+A_E8B0					;				[E8B0]
 	dec	PhysCurRow		; else decrement the cursor row
 
 	rts
@@ -11516,10 +11407,10 @@ A_E8B0:					;				[E8B0]
 ; test for line increment. if at end of the line, but not at end of the last
 ; line, increment the cursor row
 
-Test4LineIncr:				;				[E8B3]
+Test4LineIncr				;				[E8B3]
 	ldx	#$02			; set the count
 	lda	#$27			; set the column
-A_E8B7:					;				[E8B7]
+A_E8B7					;				[E8B7]
 	cmp	LineCurCol		; compare column with the cursor column
 	beq	A_E8C2			; if at end of line test and possibly
 					; increment cursor row
@@ -11531,13 +11422,13 @@ A_E8B7:					;				[E8B7]
 	rts
 
 ; cursor is at end of line
-A_E8C2:					;				[E8C2]
+A_E8C2					;				[E8C2]
 	ldx	PhysCurRow		; get the cursor row
 	cpx	#$19			; compare it with the end of the screen
 	beq	A_E8CA			; if at the end of screen just exit
 
 	inc	PhysCurRow		; else increment the cursor row
-A_E8CA:					;				[E8CA]
+A_E8CA					;				[E8CA]
 	rts
 
 
@@ -11546,9 +11437,9 @@ A_E8CA:					;				[E8CA]
 ; set the colour code. enter with the colour character in A. if A does not
 ; contain a colour character this routine exits without changing the colour
 
-SetColourCode:				;				[E8CB]
-	ldx	#D_E8E9-AscColourCodes	; set the colour code count
-A_E8CD:					;				[E8CD]
+SetColourCode				;				[E8CB]
+	ldx	#D_E8EA-AscColourCodes-1; set the colour code count
+A_E8CD					;				[E8CD]
 	cmp	AscColourCodes,X	; compare character with a table code
 	beq	A_E8D6			; if a match go save colour and exit
 
@@ -11557,7 +11448,7 @@ A_E8CD:					;				[E8CD]
 
 	rts
 
-A_E8D6:					;				[E8D6]
+A_E8D6					;				[E8D6]
 	stx	COLOR			; save the current colour code
 
 	rts
@@ -11567,31 +11458,31 @@ A_E8D6:					;				[E8D6]
 ;
 ; ASCII colour code table
 					; CHR$()	colour
-AscColourCodes:				; ------	------
-.byte	$90				;  144		black
-.byte	$05				;    5		white
-.byte	$1C				;   28		red
-.byte	$9F				;  159		cyan
-.byte	$9C				;  156		purple
-.byte	$1E				;   30		green
-.byte	$1F				;   31		Blue
-.byte	$9E				;  158		yellow
-.byte	$81				;  129		orange
-.byte	$95				;  149		brown
-.byte	$96				;  150		light red
-.byte	$97				;  151		dark grey
-.byte	$98				;  152		medium grey
-.byte	$99				;  153		light green
-.byte	$9A				;  154		light blue
-D_E8E9:					;				[E8E9]
-.byte	$9B				;  155		light grey
+AscColourCodes				; ------	------
+.text	"{blk}"				;  144		black
+.text	"{wht}"				;    5		white
+.text	"{red}"				;   28		red
+.text	"{cyn}"				;  159		cyan
+.text	"{pur}"				;  156		purple
+.text	"{grn}"				;   30		green
+.text	"{blu}"				;   31		Blue
+.text	"{yel}"				;  158		yellow
+.text	"{orng}"			;  129		orange
+.text	"{brn}"				;  149		brown
+.text	"{lred}"			;  150		light red
+.text	"{gry1}"			;  151		dark grey
+.text	"{gry2}"			;  152		medium grey
+.text	"{lgrn}"			;  153		light green
+.text	"{lblu}"			;  154		light blue
+.text	"{gry3}"			;  155		light grey
+D_E8EA					;				[E8EA]
 
 
 ;******************************************************************************
 ;
 ; scroll the screen
 
-ScrollScreen:				;				[E8EA]
+ScrollScreen				;				[E8EA]
 	lda	SAL			; copy the tape buffer start pointer
 	pha				; save it
 
@@ -11603,13 +11494,13 @@ ScrollScreen:				;				[E8EA]
 
 	lda	EAL+1			; copy the tape buffer end pointer
 	pha				; save it
-A_E8F6:					;				[E8F6]
+A_E8F6					;				[E8F6]
 	ldx	#$FF			; set to -1 for pre increment loop
 
 	dec	PhysCurRow		; decrement the cursor row
 	dec	CursorRow		; decrement the input cursor row
 	dec	TmpLineScrl		; decrement the screen row marker
-A_E8FF:					;				[E8FF]
+A_E8FF					;				[E8FF]
 	inx				; increment the line number
 
 	jsr	FetchScreenAddr		; fetch a screen address, set the start
@@ -11626,12 +11517,12 @@ A_E8FF:					;				[E8FF]
 	jsr	ShiftLineUpDwn		; shift the screen line up	[E9C8]
 	bmi	A_E8FF			; loop, branch always
 
-A_E913:					;				[E913]
+A_E913					;				[E913]
 	jsr	ClearLineX		; clear screen line X		[E9FF]
 
 ; now shift up the start of logical line bits
 	ldx	#$00			; clear index
-A_E918:					;				[E918]
+A_E918					;				[E918]
 	lda	LDTB1,X			; get start of line X pointer HB
 	and	#$7F			; clear line X start of logical line bit
 
@@ -11640,7 +11531,7 @@ A_E918:					;				[E918]
 	bpl	A_E922			; if next line is not a start of line
 					; skip the start set
 	ora	#$80			; set line X start of logical line bit
-A_E922:					;				[E922]
+A_E922					;				[E922]
 	sta	LDTB1,X			; set start of line X pointer HB
 
 	inx				; increment line number
@@ -11675,7 +11566,7 @@ A_E922:					;				[E922]
 ; first time round the inner loop X will be $16
 	ldy	#$00			; clear delay outer loop count, do this
 					; 256 times
-A_E94D:					;				[E94D]
+A_E94D					;				[E94D]
 	nop				; waste cycles
 
 	dex				; decrement inner loop count
@@ -11685,12 +11576,12 @@ A_E94D:					;				[E94D]
 	bne	A_E94D			; loop if not all done
 
 	sty	NDX			; clear the keyboard buffer index
-A_E956:					;				[E956]
+A_E956					;				[E956]
 	ldx	PhysCurRow		; get the cursor row
 
 ; restore the tape buffer pointers and exit
 
-RestrTapBufPtr:				;				[E958]
+RestrTapBufPtr				;				[E958]
 	pla				; pull tape buffer end pointer
 	sta	EAL+1			; restore it
 
@@ -11710,9 +11601,9 @@ RestrTapBufPtr:				;				[E958]
 ;
 ; open up a space on the screen
 
-InsertLine:				;				[E965]
+InsertLine				;				[E965]
 	ldx	PhysCurRow		; get the cursor row
-InsertLine2:				;				[E967]
+InsertLine2				;				[E967]
 	inx				; increment the row
 	lda	LDTB1,X			; get start of line X pointer HB
 	bpl	InsertLine2		; loop if not start of logical line
@@ -11734,7 +11625,7 @@ InsertLine2:				;				[E967]
 
 	jmp	AddRow2CurLine		; add this row to the current logical
 					; line and return		[E6DA]
-A_E981:					;				[E981]
+A_E981					;				[E981]
 	lda	SAL			; copy tape buffer pointer
 	pha				; save it
 
@@ -11749,7 +11640,7 @@ A_E981:					;				[E981]
 
 	ldx	#$19			; set to end line + 1 for predecrement
 					; loop
-A_E98F:					;				[E98F]
+A_E98F					;				[E98F]
 	dex				; decrement the line number
 
 	jsr	FetchScreenAddr		; fetch a screen address	[E9F0]
@@ -11767,11 +11658,11 @@ A_E98F:					;				[E98F]
 	jsr	ShiftLineUpDwn		; shift the screen line down	[E9C8]
 	bmi	A_E98F			; loop, branch always
 
-A_E9A6:					;				[E9A6]
+A_E9A6					;				[E9A6]
 	jsr	ClearLineX		; clear screen line X		[E9FF]
 
 	ldx	#$17			;.
-A_E9AB:					;				[E9AB]
+A_E9AB					;				[E9AB]
 	cpx	TmpLineScrl		; compare it with the screen row marker
 	bcc	A_E9BF			;.
 
@@ -11782,13 +11673,13 @@ A_E9AB:					;				[E9AB]
 	bpl	A_E9BA			;.
 
 	ora	#$80			;.
-A_E9BA:					;				[E9BA]
+A_E9BA					;				[E9BA]
 	sta	LDTB1+1,X		;.
 
 	dex				;.
 	bne	A_E9AB			;.
 
-A_E9BF:					;				[E9BF]
+A_E9BF					;				[E9BF]
 	ldx	TmpLineScrl		; get the screen row marker
 	jsr	AddRow2CurLine		; add this row to current logical line
 					;				[E6DA]
@@ -11799,7 +11690,7 @@ A_E9BF:					;				[E9BF]
 ;
 ; shift screen line up/down
 
-ShiftLineUpDwn:				;				[E9C8]
+ShiftLineUpDwn				;				[E9C8]
 	and	#$03			; mask 0000 00xx, line memory page
 	ora	HIBASE			; OR with screen memory page
 	sta	SAL+1			; save next/previous line pointer HB
@@ -11807,7 +11698,7 @@ ShiftLineUpDwn:				;				[E9C8]
 	jsr	PtrLineColRAM		; calculate pointers to screen lines
 					; colour RAM			[E9E0]
 	ldy	#$27			; set the column count
-A_E9D4:					;				[E9D4]
+A_E9D4					;				[E9D4]
 	lda	(SAL),Y			; get character from next/previous
 					; screen line
 	sta	(CurScrLine),Y		; save character to current screen line
@@ -11826,7 +11717,7 @@ A_E9D4:					;				[E9D4]
 ;
 ; calculate pointers to screen lines colour RAM
 
-PtrLineColRAM:				;				[E9E0]
+PtrLineColRAM				;				[E9E0]
 	jsr	PtrCurLineColRAM	; calculate the pointer to the current
 					; screen line colour RAM	[EA24]
 	lda	SAL			; get the next screen line pointer LB
@@ -11844,7 +11735,7 @@ PtrLineColRAM:				;				[E9E0]
 ;
 ; fetch a screen address
 
-FetchScreenAddr:			;				[E9F0]
+FetchScreenAddr				;				[E9F0]
 	lda	TblScrLinesLB,X		; get the start of line LB from
 					; the ROM table
 	sta	CurScrLine		; set current screen line pointer LB
@@ -11862,12 +11753,12 @@ FetchScreenAddr:			;				[E9F0]
 ;
 ; clear screen line X
 
-ClearLineX:				;				[E9FF]
+ClearLineX				;				[E9FF]
 	ldy	#$27			; set number of columns to clear
 	jsr	FetchScreenAddr		; fetch a screen address	[E9F0]
 
 	jsr	PtrCurLineColRAM	; calculate pointer to colour RAM [EA24]
-A_EA07:					;				[EA07]
+A_EA07					;				[EA07]
 	jsr	SaveCurColour		; save current colour to colour RAM
 					;				[E4DA]
 	lda	#' '			; set [SPACE]
@@ -11891,7 +11782,7 @@ A_EA07:					;				[EA07]
 ;
 ; print character A and colour X
 
-PrntCharA_ColX:				;				[EA13]
+PrntCharA_ColX				;				[EA13]
 	tay				; copy the character
 
 	lda	#$02			; set the count to $02, usually $14 ??
@@ -11905,7 +11796,7 @@ PrntCharA_ColX:				;				[EA13]
 ;
 ; save the character and colour to the screen @ the cursor
 
-OutCharCol2Scr:				;				[EA1C]
+OutCharCol2Scr				;				[EA1C]
 	ldy	LineCurCol		; get the cursor column
 	sta	(CurScrLine),Y		; save char from current screen line
 
@@ -11919,7 +11810,7 @@ OutCharCol2Scr:				;				[EA1C]
 ;
 ; calculate the pointer to colour RAM
 
-PtrCurLineColRAM:			;				[EA24]
+PtrCurLineColRAM			;				[EA24]
 	lda	CurScrLine		; get current screen line pointer LB
 	sta	ColorRamPtr		; save pointer to colour RAM LB
 
@@ -11938,7 +11829,7 @@ PtrCurLineColRAM:			;				[EA24]
 
 ; IRQ vector
 
-IRQ_vector:				;				[EA31]
+IRQ_vector				;				[EA31]
 	jsr	IncrClock		; increment the real time clock	[FFEA]
 
 	lda	BLNSW			; get cursor enable, $00 = flash cursor
@@ -11971,11 +11862,11 @@ IRQ_vector:				;				[EA31]
 
 	ldx	COLOR			; get the current colour code
 	lda	GDBLN			; get the character under the cursor
-A_EA5C:					;				[EA5C]
+A_EA5C					;				[EA5C]
 	eor	#$80			; toggle b7 of character under cursor
 	jsr	OutCharCol2Scr		; save the character and colour to the
 					; screen @ the cursor		[EA1C]
-A_EA61:					;				[EA61]
+A_EA61					;				[EA61]
 	lda	P6510			; read the 6510 I/O port
 	and	#$10			; mask 000x 0000, cassette switch sense
 	beq	A_EA71			; if the cassette sense is low skip the
@@ -11991,7 +11882,7 @@ A_EA61:					;				[EA61]
 	bne	A_EA79			; go save the port value, branch always
 
 ; the cassette sense was low so turn the motor on, perhaps
-A_EA71:					;				[EA71]
+A_EA71					;				[EA71]
 	lda	CAS1			; get the tape motor interlock
 	bne	A_EA7B			; if the cassette interlock <> 0 don't
 					; turn on motor
@@ -11999,9 +11890,9 @@ A_EA71:					;				[EA71]
 	lda	P6510			; read the 6510 I/O port
 	and	#$1F			; mask xx0x, turn on
 					; the motor
-A_EA79:					;				[EA79]
+A_EA79					;				[EA79]
 	sta	P6510			; save the 6510 I/O port
-A_EA7B:					;				[EA7B]
+A_EA7B					;				[EA7B]
 	jsr	ScanKeyboard2		; scan the keyboard		[EA87]
 
 	lda	CIA1IRQ			; read CIA 1 ICR, clear the timer
@@ -12025,7 +11916,7 @@ A_EA7B:					;				[EA7B]
 ; 1)	check if key pressed, if not then exit the routine
 ;
 ; 2)	init I/O ports of CIA ?? for keyboard scan and set pointers to decode
-; 	table 1. clear the character counter
+;	table 1. clear the character counter
 ;
 ; 3)	set one line of port B low and test for a closed key on port A by
 ;	shifting the byte read from the port. if the carry is clear then a key
@@ -12045,7 +11936,7 @@ A_EA7B:					;				[EA7B]
 
 ; scan the keyboard
 
-ScanKeyboard2:				;				[EA87]
+ScanKeyboard2				;				[EA87]
 	lda	#$00			; clear A
 	sta	SHFLAG			; clear keyboard shift/control/c= flag
 
@@ -12068,16 +11959,16 @@ ScanKeyboard2:				;				[EA87]
 
 	lda	#$FE			; set column 0 low
 	sta	CIA1DRA			; save CIA 1 DRA, keyboard column drive
-A_EAA8:					;				[EAA8]
+A_EAA8					;				[EAA8]
 	ldx	#$08			; set the row count
 
 	pha				; save the column
-A_EAAB:					;				[EAAB]
+A_EAAB					;				[EAAB]
 	lda	CIA1DRB			; read CIA 1 DRB, keyboard row port
 	cmp	CIA1DRB			; compare it with itself
 	bne	A_EAAB			; loop if changing
 
-A_EAB3:					;				[EAB3]
+A_EAB3					;				[EAB3]
 	lsr				; shift row to Cb
 	bcs	A_EACC			; if no key closed on this row go do
 					; next row
@@ -12098,11 +11989,11 @@ A_EAB3:					;				[EAB3]
 	sta	SHFLAG			; save keyboard shift/control/c= flag
 	bpl	A_EACB			; skip save key, branch always
 
-A_EAC9:					;				[EAC9]
+A_EAC9					;				[EAC9]
 	sty	SFDX			; save key count
-A_EACB:					;				[EACB]
+A_EACB					;				[EACB]
 	pla				; restore row
-A_EACC:					;				[EACC]
+A_EACC					;				[EACC]
 	iny				; increment key count
 	cpy	#$41			; compare with max+1
 	bcs	A_EADC			; exit loop if >= max+1
@@ -12117,13 +12008,13 @@ A_EACC:					;				[EACC]
 	sta	CIA1DRA			; save CIA 1 DRA, keyboard column drive
 	bne	A_EAA8			; loop for next column, branch always
 
-A_EADC:					;				[EADC]
+A_EADC					;				[EADC]
 	pla				; dump the saved column
 	jmp	(KEYLOG)		; evaluate the SHIFT/CTRL/C= keys
 
 ; key decoding continues here after the SHIFT/CTRL/C= keys are evaluated
 
-DecodeKeys:				;				[EAE0]
+DecodeKeys				;				[EAE0]
 	ldy	SFDX			; get saved key count
 	lda	(KEYTAB),Y		; get character from decode table
 	tax				; copy character to X
@@ -12135,7 +12026,7 @@ DecodeKeys:				;				[EAE0]
 	sty	DELAY			; save the repeat delay count
 	bne	A_EB26			; branch always
 
-A_EAF0:					;				[EAF0]
+A_EAF0					;				[EAF0]
 	and	#$7F			; clear b7
 	bit	RPTFLG			; test key repeat
 	bmi	A_EB0D			; if repeat all go ??
@@ -12143,7 +12034,7 @@ A_EAF0:					;				[EAF0]
 	bvs	A_EB42			; if repeat none go ??
 
 	cmp	#$7F			; compare with end marker
-A_EAFB:					;				[EAFB]
+A_EAFB					;				[EAFB]
 	beq	A_EB26			; if $00/end marker go save key to
 					; buffer and exit
 	cmp	#$14			; compare with [INSERT]/[DELETE]
@@ -12160,7 +12051,7 @@ A_EAFB:					;				[EAFB]
 
 ; was one of the cursor movement keys, insert/delete key or the space bar so
 ; always do repeat tests
-A_EB0D:					;				[EB0D]
+A_EB0D					;				[EB0D]
 	ldy	DELAY			; get the repeat delay counter
 	beq	A_EB17			; if delay expired go ??
 
@@ -12168,7 +12059,7 @@ A_EB0D:					;				[EB0D]
 	bne	A_EB42			; if delay not expired go ??
 
 ; repeat delay counter has expired
-A_EB17:					;				[EB17]
+A_EB17					;				[EB17]
 	dec	KOUNT			; decrement the repeat speed counter
 	bne	A_EB42			; branch if not expired
 
@@ -12185,7 +12076,7 @@ A_EB17:					;				[EB17]
 ; the key was not found during the scan (possibly due to key bounce) then X
 ; will be $FF here
 
-A_EB26:					;				[EB26]
+A_EB26					;				[EB26]
 	ldy	SFDX			; get the key count
 	sty	LSTX			; save it as the current key count
 
@@ -12206,7 +12097,7 @@ A_EB26:					;				[EB26]
 
 	inx				; increment the index
 	stx	NDX			; save the keyboard buffer index
-A_EB42:					;				[EB42]
+A_EB42					;				[EB42]
 	lda	#$7F			; enable column 7 for the stop key
 	sta	CIA1DRA			; save CIA 1 DRA, keyboard column drive
 
@@ -12217,7 +12108,7 @@ A_EB42:					;				[EB42]
 ;
 ; evaluate the SHIFT/CTRL/C= keys
 
-ShftCtrlCbmKey:				;				[EB48]
+ShftCtrlCbmKey				;				[EB48]
 	lda	SHFLAG			; get the keyboard shift/control/c= flag
 	cmp	#$03			; compare with [SHIFT][C=]
 	bne	A_EB64			; if not [SHIFT][C=] go ??
@@ -12238,14 +12129,14 @@ ShftCtrlCbmKey:				;				[EB48]
 
 ; select keyboard table
 
-A_EB64:					;				[EB64]
+A_EB64					;				[EB64]
 	asl				; << 1
 	cmp	#$08			; compare with [CTRL]
 	bcc	A_EB6B			; if [CTRL] is not pressed skip the
 					; index change
 	lda	#$06			; else [CTRL] was pressed so make the
 					; index = $06
-A_EB6B:					;				[EB6B]
+A_EB6B					;				[EB6B]
 	tax				; copy the index to X
 
 	lda	D_EB79,X		; get decode table pointer LB
@@ -12253,7 +12144,7 @@ A_EB6B:					;				[EB6B]
 
 	lda	D_EB79+1,X		; get decode table pointer HB
 	sta	KEYTAB+1		; save decode table pointer HB
-J_EB76:					;				[EB76]
+J_EB76					;				[EB76]
 	jmp	DecodeKeys		; continue the keyboard decode	[EAE0]
 
 
@@ -12261,7 +12152,7 @@ J_EB76:					;				[EB76]
 ;
 ; table addresses
 
-D_EB79:					;				[EB79]
+D_EB79					;				[EB79]
 .word	TblStandardKeys			; standard
 .word	TblShiftKeys			; shift
 .word	TblCbmKeys			; commodore
@@ -12272,7 +12163,7 @@ D_EB79:					;				[EB79]
 ;
 ; standard keyboard table
 
-TblStandardKeys:			;				[EB81]
+TblStandardKeys				;				[EB81]
 .byte	$14,$0D,$1D,$88,$85,$86,$87,$11
 .byte	$33,$57,$41,$34,$5A,$53,$45,$01
 .byte	$35,$52,$44,$36,$43,$46,$54,$58
@@ -12284,7 +12175,7 @@ TblStandardKeys:			;				[EB81]
 .byte	$FF
 
 ;	DEL	RETURN	CRSR RI	F7	F1	F3	F5	CRSR DO
-;	3	w	a	4	z	s	e	L SHIFT	
+;	3	w	a	4	z	s	e	L SHIFT
 ;	5	r	d	6	c	f	t	x
 ;	6	y	g	8	b	h	u	v
 ;	9	i	j	0	m	k	o	n
@@ -12295,7 +12186,7 @@ TblStandardKeys:			;				[EB81]
 
 ; shifted keyboard table
 
-TblShiftKeys:				;				[EBC2]
+TblShiftKeys				;				[EBC2]
 .byte	$94,$8D,$9D,$8C,$89,$8A,$8B,$91
 .byte	$23,$D7,$C1,$24,$DA,$D3,$C5,$01
 .byte	$25,$D2,$C4,$26,$C3,$C6,$D4,$D8
@@ -12318,7 +12209,7 @@ TblShiftKeys:				;				[EBC2]
 
 ; CBM key keyboard table
 
-TblCbmKeys:				;				[EC03]
+TblCbmKeys				;				[EC03]
 .byte	$94,$8D,$9D,$8C,$89,$8A,$8B,$91
 .byte	$96,$B3,$B0,$97,$AD,$AE,$B1,$01
 .byte	$98,$B2,$AC,$99,$BC,$BB,$A3,$BD
@@ -12343,8 +12234,8 @@ TblCbmKeys:				;				[EC03]
 ;
 ; check for special character codes
 
-ChkSpecCodes:				;				[EC44]
-	cmp	#$0E			; compare with [SWITCH TO LOWER CASE]
+ChkSpecCodes				;				[EC44]
+	cmp	#'{swlc}'		; compare with [SWITCH TO LOWER CASE]
 	bne	Chk4SpecChar		; if not equal, skip the switch
 
 	lda	VICRAM			; get start of character memory address
@@ -12353,33 +12244,33 @@ ChkSpecCodes:				;				[EC44]
 
 ; check for special character codes except fro switch to lower case
 
-Chk4SpecChar:				;				[EC4F]
-	cmp	#$8E			; compare with [SWITCH TO UPPER CASE]
+Chk4SpecChar				;				[EC4F]
+	cmp	#'{swuc}'		; compare with [SWITCH TO UPPER CASE]
 	bne	CheckShiftCbm		; if not [SWITCH TO UPPER CASE] go do
 					; the [SHIFT]+[C=] key check
 	lda	VICRAM			; get start of character memory address
 	and	#$FD			; mask xx0x, set upper case characters
-A_EC58:					;				[EC58]
+A_EC58					;				[EC58]
 	sta	VICRAM			; save start of character memory address
-A_EC5B:					;				[EC5B]
+A_EC5B					;				[EC5B]
 	jmp	RestorRegsQuot		; restore the registers, set the quote
 					; flag and exit	[E6A8]
 ; do the [SHIFT]+[C=] key check
 
-CheckShiftCbm:				;				[EC5E]
-	cmp	#$08			; compare with disable [SHIFT][C=]
+CheckShiftCbm				;				[EC5E]
+	cmp	#'{dish}'		; compare with disable [SHIFT][C=]
 	bne	A_EC69			; if not disable [SHIFT][C=], skip set
 
 	lda	#$80			; set to lock shift mode switch
 	ora	MODE			; OR it with the shift mode switch
 	bmi	A_EC72			; go save the value, branch always
-A_EC69:					;				[EC69]
-	cmp	#$09			; compare with enable [SHIFT][C=]
+A_EC69					;				[EC69]
+	cmp	#'{ensh}'		; compare with enable [SHIFT][C=]
 	bne	A_EC5B			; exit if not enable [SHIFT][C=]
 
 	lda	#$7F			; set to unlock shift mode switch
 	and	MODE			; AND it with the shift mode switch
-A_EC72:					;				[EC72]
+A_EC72					;				[EC72]
 	sta	MODE			; save the shift mode switch
 					; $00 = enabled, $80 = locked
 	jmp	RestorRegsQuot		; restore the registers, set the quote
@@ -12389,7 +12280,7 @@ A_EC72:					;				[EC72]
 ;
 ; control keyboard table
 
-TblControlKeys:				;				[EC78]
+TblControlKeys				;				[EC78]
 .byte	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 .byte	$1C,$17,$01,$9F,$1A,$13,$05,$FF
 .byte	$9C,$12,$04,$1E,$03,$06,$14,$18
@@ -12405,7 +12296,7 @@ TblControlKeys:				;				[EC78]
 ;
 ; vic ii chip initialisation values
 
-TblValuesVIC:				;				[ECB9]
+TblValuesVIC				;				[ECB9]
 .byte	$00,$00				; sprite 0 x,y
 .byte	$00,$00				; sprite 1 x,y
 .byte	$00,$00				; sprite 2 x,y
@@ -12491,7 +12382,7 @@ TblValuesVIC:				;				[ECB9]
 .byte	$05				; sprite 4 colour
 .byte	$06				; sprite 5 colour
 .byte	$07				; sprite 6 colour
-;	.bytete	$4C			; sprite 7 colour, actually the first
+;	.byte	$4C			; sprite 7 colour, actually the first
 					; character of "LOAD"
 
 
@@ -12499,15 +12390,15 @@ TblValuesVIC:				;				[ECB9]
 ;
 ; keyboard buffer for auto load/run
 
-TblAutoLoadRun:				;				[ECE7]
-.text	"LOAD",$0D,"RUN",$0D
+TblAutoLoadRun				;				[ECE7]
+.text	"load{cr}run{cr}"
 
 
 ;******************************************************************************
 ;
 ; LBs of screen line addresses
 
-TblScrLinesLB:				;				[ECF0]
+TblScrLinesLB				;				[ECF0]
 .byte	$00,$28,$50,$78,$A0
 .byte	$C8,$F0,$18,$40,$68
 .byte	$90,$B8,$E0,$08,$30
@@ -12519,7 +12410,7 @@ TblScrLinesLB:				;				[ECF0]
 ;
 ; command serial bus device to TALK
 
-CmdTALK2:				;				[ED09]
+CmdTALK2				;				[ED09]
 	ora	#$40			; OR with the TALK command
 .byte	$2C				; makes next line BIT $xx20
 
@@ -12528,7 +12419,7 @@ CmdTALK2:				;				[ED09]
 ;
 ; command devices on the serial bus to LISTEN
 
-CmdLISTEN2:				;				[ED0C]
+CmdLISTEN2				;				[ED0C]
 	ora	#$20			; OR with the LISTEN command
 	jsr	IsRS232Idle		; check RS232 bus idle		[F0A4]
 
@@ -12537,7 +12428,7 @@ CmdLISTEN2:				;				[ED0C]
 ;
 ; send a control character
 
-SendCtrlChar:				;				[ED11]
+SendCtrlChar				;				[ED11]
 	pha				; save device address
 
 	bit	C3PO			; test deferred character flag
@@ -12550,7 +12441,7 @@ SendCtrlChar:				;				[ED11]
 
 	lsr	C3PO			; clear deferred character flag
 	lsr	TEMPA3			; clear EOI flag
-A_ED20:					;				[ED20]
+A_ED20					;				[ED20]
 	pla				; restore the device address
 	sta	BSOUR			; save as serial defered character
 
@@ -12564,7 +12455,7 @@ A_ED20:					;				[ED20]
 					; result can never be $3F ??
 
 	jsr	IecClockH		; set the serial clock out high	[EE85]
-A_ED2E:					;				[ED2E]
+A_ED2E					;				[ED2E]
 	lda	CIA2DRA			; read CIA 2 DRA, serial port and video
 					; address
 	ora	#$08			; mask 1xxx, set serial ATN low
@@ -12577,7 +12468,7 @@ A_ED2E:					;				[ED2E]
 
 ; set the serial clk/data, wait and Tx byte on the serial bus
 
-PrepareIEC:				;				[ED36]
+PrepareIEC				;				[ED36]
 	sei				; disable the interrupts
 
 	jsr	IecClockL		; set the serial clock out low	[EE8E]
@@ -12589,13 +12480,13 @@ PrepareIEC:				;				[ED36]
 ;
 ; Tx byte on serial bus
 
-IecByteOut22:				;				[ED40]
+IecByteOut22				;				[ED40]
 	sei				; disable the interrupts
 
 	jsr	IecDataH		; set the serial data out high	[EE97]
 
 	jsr	IecData2Carry		; get serial data status in Cb	[EEA9]
-	bcs	A_EDAD			; if the serial data is high go do 
+	bcs	A_EDAD			; if the serial data is high go do
 					;'device not present'
 	jsr	IecClockH		; set the serial clock out high	[EE85]
 
@@ -12606,7 +12497,7 @@ IecByteOut22:				;				[ED40]
 ; the serial data is being held low by the peripheral. first up wait for the
 ; serial data to rise
 
-A_ED50:					;				[ED50]
+A_ED50					;				[ED50]
 	jsr	IecData2Carry		; get serial data status in Cb	[EEA9]
 	bcc	A_ED50			; loop if the data is low
 
@@ -12614,7 +12505,7 @@ A_ED50:					;				[ED50]
 ; pulling the serial clock line low again. the listener should respond by
 ; pulling the serial data line low
 
-A_ED55:					;				[ED55]
+A_ED55					;				[ED55]
 	jsr	IecData2Carry		; get serial data status in Cb	[EEA9]
 	bcs	A_ED55			; loop if the data is high
 
@@ -12622,7 +12513,7 @@ A_ED55:					;				[ED55]
 ; serial data line to go high again or, if this isn't an EOI sequence, just
 ; wait for the serial data to go high the first time
 
-A_ED5A:					;				[ED5A]
+A_ED5A					;				[ED5A]
 	jsr	IecData2Carry		; get serial data status in Cb	[EEA9]
 	bcc	A_ED5A			; loop if the data is low
 
@@ -12637,7 +12528,7 @@ A_ED5A:					;				[ED5A]
 
 	lda	#$08			; eight bits to do
 	sta	CNTDN			; set serial bus bit count
-A_ED66:					;				[ED66]
+A_ED66					;				[ED66]
 	lda	CIA2DRA			; read CIA 2 DRA, serial port and video
 					; address
 	cmp	CIA2DRA			; compare it with itself
@@ -12651,9 +12542,9 @@ A_ED66:					;				[ED66]
 					; out high
 	jsr	IecDataL		; else set serial data out low	[EEA0]
 	bne	A_ED7D			; continue, branch always
-A_ED7A:					;				[ED7A]
+A_ED7A					;				[ED7A]
 	jsr	IecDataH		; set the serial data out high	[EE97]
-A_ED7D:					;				[ED7D]
+A_ED7D					;				[ED7D]
 	jsr	IecClockH		; set the serial clock out high	[EE85]
 
 	nop				; waste ..
@@ -12682,7 +12573,7 @@ A_ED7D:					;				[ED7D]
 	sta	CIA1CTR2		; save CIA 1 CRB
 
 	lda	CIA1IRQ			; read CIA 1 ICR
-A_ED9F:					;				[ED9F]
+A_ED9F					;				[ED9F]
 	lda	CIA1IRQ			; read CIA 1 ICR
 	and	#$02			; mask 0000 00x0, timer A interrupt
 	bne	A_EDB0			; if timer A interrupt, do serial bus
@@ -12695,15 +12586,15 @@ A_ED9F:					;				[ED9F]
 
 ; device not present
 
-A_EDAD:					;				[EDAD]
+A_EDAD					;				[EDAD]
 	lda	#$80			; error $80, device not present
 .byte	$2C				; makes next line BIT $03A9
 
 ; timeout on serial bus
 
-A_EDB0:					;				[EDB0]
+A_EDB0					;				[EDB0]
 	lda	#$03			; error $03, read timeout, write timeout
-SetIecStatus:				;				[EDB2]
+SetIecStatus				;				[EDB2]
 	jsr	AorIecStatus		; OR into serial status byte	[FE1C]
 
 	cli				; enable the interrupts
@@ -12727,7 +12618,7 @@ SetIecStatus:				;				[EDB2]
 ; When a secondary address is to be sent to a device on the serial bus the
 ; address must first be ORed with $60.
 
-SAafterLISTEN2:				;				[EDB9]
+SAafterLISTEN2				;				[EDB9]
 	sta	BSOUR			; save the defered Tx byte
 
 	jsr	PrepareIEC		; set the serial clk/data, wait and Tx
@@ -12738,7 +12629,7 @@ SAafterLISTEN2:				;				[EDB9]
 ;
 ; set serial ATN high
 
-IecAtnH:				;				[EDBE]
+IecAtnH					;				[EDBE]
 	lda	CIA2DRA			; read CIA 2 DRA, serial port and video
 					; address
 	and	#$F7			; mask 0xxx, set serial ATN high
@@ -12758,7 +12649,7 @@ IecAtnH:				;				[EDBE]
 ; over the serial bus. This routine can only be called after a call to the TALK
 ; routine. It will not work after a LISTEN.
 
-SAafterTALK2:				;				[EDC7]
+SAafterTALK2				;				[EDC7]
 	sta	BSOUR			; save the defered Tx byte
 
 	jsr	PrepareIEC		; set the serial clk/data, wait and Tx
@@ -12769,13 +12660,13 @@ SAafterTALK2:				;				[EDC7]
 ;
 ; wait for the serial bus end after send
 
-Wait4IEC:				; return address from patch 6:
+Wait4IEC				; return address from patch 6:
 	sei				; disable the interrupts
 
 	jsr	IecDataL		; set the serial data out low	[EEA0]
 	jsr	IecAtnH			; set serial ATN high		[EDBE]
 	jsr	IecClockH		; set the serial clock out high	[EE85]
-A_EDD6:					;				[EDD6]
+A_EDD6					;				[EDD6]
 	jsr	IecData2Carry		; get serial data status in Cb	[EEA9]
 	bmi	A_EDD6			; loop if the clock is high
 
@@ -12798,7 +12689,7 @@ A_EDD6:					;				[EDD6]
 ; F_FFAE, is made to end the data transmission, the buffered character is
 ; sent with EOI set. Then the UNLISTEN command is sent to the device.
 
-IecByteOut2:				;				[EDDD]
+IecByteOut2				;				[EDDD]
 	bit	C3PO			; test the deferred character flag
 	bmi	A_EDE6			; if there is a defered character go
 					; send it
@@ -12806,13 +12697,13 @@ IecByteOut2:				;				[EDDD]
 	ror	C3PO			; shift into the deferred character flag
 	bne	A_EDEB			; save the byte and exit, branch always
 
-A_EDE6:					;				[EDE6]
+A_EDE6					;				[EDE6]
 	pha				; save the byte
 
 	jsr	IecByteOut22		; Tx byte on serial bus		[ED40]
 
 	pla				; restore the byte
-A_EDEB:					;				[EDEB]
+A_EDEB					;				[EDEB]
 	sta	BSOUR			; save the defered Tx byte
 
 	clc				; flag ok
@@ -12827,7 +12718,7 @@ A_EDEB:					;				[EDEB]
 ; this routine will transmit an UNTALK command on the serial bus. All devices
 ; previously set to TALK will stop sending data when this command is received.
 
-IecUNTALK2:				;				[EDEF]
+IecUNTALK2				;				[EDEF]
 	sei				; disable the interrupts
 
 	jsr	IecClockL		; set the serial clock out low	[EE8E]
@@ -12854,21 +12745,21 @@ IecUNTALK2:				;				[EDEF]
 ; external devices. Sending the UNLISTEN will command the listening devices to
 ; get off the serial bus so it can be used for other purposes.
 
-IecUNLISTEN2:				;				[EDFE]
+IecUNLISTEN2				;				[EDFE]
 	lda	#$3F			; set the UNLISTEN command
 	jsr	SendCtrlChar		; send a control character	[ED11]
 
 ; ATN high, delay, clock high then data high
 
-A_EE03:					;				[EE03]
+A_EE03					;				[EE03]
 	jsr	IecAtnH			; set serial ATN high		[EDBE]
 
 ; 1ms delay, clock high then data high
 
-ResetIEC:				;				[EE06]
+ResetIEC				;				[EE06]
 	txa				; save the device number
 	ldx	#$0A			; short delay
-A_EE09:					;				[EE09]
+A_EE09					;				[EE09]
 	dex				; decrement the count
 	bne	A_EE09			; loop if not all done
 
@@ -12892,7 +12783,7 @@ A_EE09:					;				[EE09]
 ; errors are returned in the status word which can be read by calling the
 ; READST routine, ReadIoStatus.
 
-IecByteIn2:				;				[EE13]
+IecByteIn2				;				[EE13]
 	sei				; disable the interrupts
 
 	lda	#$00			; set 0 bits to do, will flag EOI on
@@ -12900,11 +12791,11 @@ IecByteIn2:				;				[EE13]
 	sta	CNTDN			; save the serial bus bit count
 
 	jsr	IecClockH		; set the serial clock out high	[EE85]
-A_EE1B:					;				[EE1B]
+A_EE1B					;				[EE1B]
 	jsr	IecData2Carry		; get serial data status in Cb	[EEA9]
 	bpl	A_EE1B			; loop if the serial clock is low
 
-A_EE20:					;				[EE20]
+A_EE20					;				[EE20]
 	lda	#$01			; set the timeout count HB
 	sta	CIA1TI2H		; save CIA 1 timer B HB
 
@@ -12915,7 +12806,7 @@ A_EE20:					;				[EE20]
 	jsr	IecDataH		; set the serial data out high	[EE97]
 
 	lda	CIA1IRQ			; read CIA 1 ICR
-A_EE30:					;				[EE30]
+A_EE30					;				[EE30]
 	lda	CIA1IRQ			; read CIA 1 ICR
 	and	#$02			; mask 0000 00x0, timer A interrupt
 	bne	A_EE3E			; if timer A interrupt go ??
@@ -12926,14 +12817,14 @@ A_EE30:					;				[EE30]
 	bpl	A_EE56			; else go set 8 bits to do, branch
 					; always
 ; timer A timed out
-A_EE3E:					;				[EE3E]
+A_EE3E					;				[EE3E]
 	lda	CNTDN			; get the serial bus bit count
 	beq	A_EE47			; if not already EOI then go flag EOI
 
 	lda	#$02			; else error $02, read timeour
 	jmp	SetIecStatus		; set the serial status and exit [EDB2]
 
-A_EE47:					;				[EE47]
+A_EE47					;				[EE47]
 	jsr	IecDataL		; set the serial data out low	[EEA0]
 	jsr	IecClockH		; set the serial clock out high	[EE85]
 
@@ -12944,10 +12835,10 @@ A_EE47:					;				[EE47]
 					; do error on the next timeout
 	bne	A_EE20			; go try again, branch always
 
-A_EE56:					;				[EE56]
+A_EE56					;				[EE56]
 	lda	#$08			; set 8 bits to do
 	sta	CNTDN			; save the serial bus bit count
-A_EE5A:					;				[EE5A]
+A_EE5A					;				[EE5A]
 	lda	CIA2DRA			; read CIA 2 DRA, serial port and video
 					; address
 	cmp	CIA2DRA			; compare it with itself
@@ -12957,7 +12848,7 @@ A_EE5A:					;				[EE5A]
 	bpl	A_EE5A			; loop while the serial clock is low
 
 	ror	TEMPA4			; shift data bit into receive byte
-A_EE67:					;				[EE67]
+A_EE67					;				[EE67]
 	lda	CIA2DRA			; read CIA 2 DRA, serial port and video
 					; address
 	cmp	CIA2DRA			; compare it with itself
@@ -12976,7 +12867,7 @@ A_EE67:					;				[EE67]
 
 	jsr	ResetIEC		; 1ms delay, clock high then data high
 					;				[EE06]
-A_EE80:					;				[EE80]
+A_EE80					;				[EE80]
 	lda	TEMPA4			; get the receive byte
 
 	cli				; enable the interrupts
@@ -12989,7 +12880,7 @@ A_EE80:					;				[EE80]
 ;
 ; set the serial clock out high
 
-IecClockH:				;				[EE85]
+IecClockH				;				[EE85]
 	lda	CIA2DRA			; read CIA 2 DRA, serial port and video
 					; address
 	and	#$EF			; mask xxx0, set serial clock out high
@@ -13003,7 +12894,7 @@ IecClockH:				;				[EE85]
 ;
 ; set the serial clock out low
 
-IecClockL:				;				[EE8E]
+IecClockL				;				[EE8E]
 	lda	CIA2DRA			; read CIA 2 DRA, serial port and video
 					; address
 	ora	#$10			; mask xxx1, set serial clock out low
@@ -13016,7 +12907,7 @@ IecClockL:				;				[EE8E]
 ;
 ; set the serial data out high
 
-IecDataH:				;				[EE97]
+IecDataH				;				[EE97]
 	lda	CIA2DRA			; read CIA 2 DRA, serial port and video
 					; address
 	and	#$DF			; mask xx0x, set serial data out high
@@ -13029,7 +12920,7 @@ IecDataH:				;				[EE97]
 ;
 ; set the serial data out low
 
-IecDataL:				;				[EEA0]
+IecDataL				;				[EEA0]
 	lda	CIA2DRA			; read CIA 2 DRA, serial port and video
 					; address
 	ora	#$20			; mask xx1x, set serial data out low
@@ -13042,7 +12933,7 @@ IecDataL:				;				[EEA0]
 ;
 ; get serial data status in Cb
 
-IecData2Carry:				;				[EEA9]
+IecData2Carry				;				[EEA9]
 	lda	CIA2DRA			; read CIA 2 DRA, serial port and video
 					; address
 	cmp	CIA2DRA			; compare it with itself
@@ -13057,10 +12948,10 @@ IecData2Carry:				;				[EEA9]
 ;
 ; 1ms delay
 
-Wait1ms:				;				[EEB3]
+Wait1ms					;				[EEB3]
 	txa				; save X
 	ldx	#$B8			; set the loop count
-A_EEB6:					;				[EEB6]
+A_EEB6					;				[EEB6]
 	dex				; decrement the loop count
 	bne	A_EEB6			; loop if more to do
 
@@ -13073,7 +12964,7 @@ A_EEB6:					;				[EEB6]
 ;
 ; RS232 Tx NMI routine
 
-RS232_TX_NMI:				;				[EEBB]
+RS232_TX_NMI				;				[EEBB]
 	lda	BITTS			; get RS232 bit count
 	beq	RS232_NextTx		; if zero go setup next RS232 Tx byte
 					; and return
@@ -13086,7 +12977,7 @@ RS232_TX_NMI:				;				[EEBB]
 	bcc	A_EEC8			; branch if bit was 0
 
 	dex				; set $FF for bit = 1
-A_EEC8:					;				[EEC8]
+A_EEC8					;				[EEC8]
 	txa				; copy bit to A
 	eor	ROPRTY			; EOR with RS232 parity byte
 	sta	ROPRTY			; save RS232 parity byte
@@ -13095,7 +12986,7 @@ A_EEC8:					;				[EEC8]
 	beq	A_EED7			; if RS232 bit count now zero go do
 					; parity bit
 ; save bit and exit
-A_EED1:					;				[EED1]
+A_EED1					;				[EED1]
 	txa				; copy bit to A
 	and	#$04			; mask 0000 0x00, RS232 Tx DATA bit
 	sta	NXTBIT			; save the next RS232 data bit to send
@@ -13104,7 +12995,7 @@ A_EED1:					;				[EED1]
 
 ; do RS232 parity bit, enters with RS232 bit count = 0
 
-A_EED7:					;				[EED7]
+A_EED7					;				[EED7]
 	lda	#$20			; mask 00x0 0000, parity enable bit
 	bit	M51CDR			; test the pseudo 6551 command register
 	beq	A_EEF2			; if parity disabled go ??
@@ -13117,9 +13008,9 @@ A_EED7:					;				[EED7]
 	lda	ROPRTY			; get RS232 parity byte
 	bne	A_EEE7			; if not zero leave parity bit = 0
 
-A_EEE6:					;				[EEE6]
+A_EEE6					;				[EEE6]
 	dex				; make parity bit = 1
-A_EEE7:					;				[EEE7]
+A_EEE7					;				[EEE7]
 	dec	BITTS			; decrement RS232 bit count, 1 stop bit
 
 	lda	M51CTR			; get pseudo 6551 control register
@@ -13132,20 +13023,20 @@ A_EEE7:					;				[EEE7]
 ; parity is disabled so the parity bit becomes the first, and possibly only,
 ; stop bit. to do this increment the bit count which effectively decrements the
 ; stop bit count.
-A_EEF2:					;				[EEF2]
+A_EEF2					;				[EEF2]
 	inc	BITTS			; increment RS232 bit count, = -1 stop
 					; bit
 	bne	A_EEE6			; set stop bit = 1 and exit
 
 ; do even parity
-A_EEF6:					;				[EEF6]
+A_EEF6					;				[EEF6]
 	lda	ROPRTY			; get RS232 parity byte
 	beq	A_EEE7			; if parity zero leave parity bit = 0
 
 	bne	A_EEE6			; else branch always
 
 ; fixed mark or space parity
-A_EEFC:					;				[EEFC]
+A_EEFC					;				[EEFC]
 	bvs	A_EEE7			; if fixed space parity leave parity
 					; bit = 0
 	bvc	A_EEE6			; else fixed mark parity make parity
@@ -13154,7 +13045,7 @@ A_EEFC:					;				[EEFC]
 ; decrement stop bit count, set stop bit = 1 and exit. $FF is one stop bit, $FE
 ; is two stop bits
 
-A_EF00:					;				[EF00]
+A_EF00					;				[EF00]
 	inc	BITTS			; decrement RS232 bit count
 
 	ldx	#$FF			; set stop bit = 1
@@ -13165,7 +13056,7 @@ A_EF00:					;				[EF00]
 ;
 ; setup next RS232 Tx byte
 
-RS232_NextTx:				;				[EF06]
+RS232_NextTx				;				[EF06]
 	lda	M51CDR			; read the 6551 pseudo command register
 	lsr				; handshake bit inot Cb
 	bcc	A_EF13			; if 3 line interface go ??
@@ -13177,7 +13068,7 @@ RS232_NextTx:				;				[EF06]
 	bvc	A_EF31			; if CTS = 0 set CTS signal not present
 					; and exit
 ; was 3 line interface
-A_EF13:					;				[EF13]
+A_EF13					;				[EF13]
 	lda	#$00			; clear A
 	sta	ROPRTY			; clear the RS232 parity byte
 	sta	NXTBIT			; clear the RS232 next bit to send
@@ -13202,7 +13093,7 @@ A_EF13:					;				[EF13]
 ;
 ; set DSR signal not present
 
-A_EF2E:					;				[EF2E]
+A_EF2E					;				[EF2E]
 	lda	#$40			; set DSR signal not present
 .byte	$2C				; makes next line BIT $10A9
 
@@ -13211,7 +13102,7 @@ A_EF2E:					;				[EF2E]
 ;
 ; set CTS signal not present
 
-A_EF31:					;				[EF31]
+A_EF31					;				[EF31]
 	lda	#$10			; set CTS signal not present
 	ora	RSSTAT			; OR it with the RS232 status register
 	sta	RSSTAT			; save the RS232 status register
@@ -13221,7 +13112,7 @@ A_EF31:					;				[EF31]
 ;
 ; disable timer A interrupt
 
-A_EF39:					;				[EF39]
+A_EF39					;				[EF39]
 	lda	#$01			; disable timer A interrupt
 
 
@@ -13229,7 +13120,7 @@ A_EF39:					;				[EF39]
 ;
 ; set CIA 2 ICR from A
 
-Set_VIA2_ICR:				;				[EF3B]
+Set_VIA2_ICR				;				[EF3B]
 	sta	CIA2IRQ			; save CIA 2 ICR
 
 	eor	ENABL			; EOR with RS-232 interrupt enable byte
@@ -13244,7 +13135,7 @@ Set_VIA2_ICR:				;				[EF3B]
 ;
 ; compute bit count
 
-CalcBitCounts:				;				[EF4A]
+CalcBitCounts				;				[EF4A]
 	ldx	#$09			; set bit count to 8 data + 1 stop bit
 
 	lda	#$20			; mask for 8/7 data bits
@@ -13252,12 +13143,12 @@ CalcBitCounts:				;				[EF4A]
 	beq	A_EF54			; branch if 8 bits
 
 	dex				; else decrement count for 7 data bits
-A_EF54:					;				[EF54]
+A_EF54					;				[EF54]
 	bvc	A_EF58			; branch if 7 bits
 
 	dex				; else decrement count ..
 	dex				; .. for 5 data bits
-A_EF58:					;				[EF58]
+A_EF58					;				[EF58]
 	rts
 
 
@@ -13265,7 +13156,7 @@ A_EF58:					;				[EF58]
 ;
 ; RS232 Rx NMI
 
-RS232_RX_NMI:				;				[EF59]
+RS232_RX_NMI				;				[EF59]
 	ldx	RINONE			; get start bit check flag
 	bne	A_EF90			; if no start bit received go ??
 
@@ -13280,12 +13171,12 @@ RS232_RX_NMI:				;				[EF59]
 
 	lsr	INBIT			; shift the RS232 received data bit
 	ror	RIDATA			;.
-A_EF6D:					;				[EF6D]
+A_EF6D					;				[EF6D]
 	rts
 
-A_EF6E:					;				[EF6E]
+A_EF6E					;				[EF6E]
 	dec	BITCI			; decrement receiver bit count in
-A_EF70:					;				[EF70]
+A_EF70					;				[EF70]
 	lda	INBIT			; get the RS232 received data bit
 	beq	A_EFDB			;.
 
@@ -13301,7 +13192,7 @@ A_EF70:					;				[EF70]
 ;
 ; setup to receive an RS232 bit
 
-SetupRS232_RX:				;				[EF7E]
+SetupRS232_RX				;				[EF7E]
 	lda	#$90			; enable FLAG interrupt
 	sta	CIA2IRQ			; save CIA 2 ICR
 
@@ -13317,7 +13208,7 @@ SetupRS232_RX:				;				[EF7E]
 ;
 ; no RS232 start bit received
 
-A_EF90:					;				[EF90]
+A_EF90					;				[EF90]
 	lda	INBIT			; get the RS232 received data bit
 	bne	SetupRS232_RX		; if ?? go setup to receive an RS232
 					; bit and return
@@ -13329,7 +13220,7 @@ A_EF90:					;				[EF90]
 ;
 ; received a whole byte, add it to the buffer
 
-A_EF97:					;				[EF97]
+A_EF97					;				[EF97]
 	ldy	RIDBE			; get index to Rx buffer end
 	iny				; increment index
 	cpy	RIDBS			; compare with index to Rx buffer start
@@ -13342,7 +13233,7 @@ A_EF97:					;				[EF97]
 	lda	RIDATA			; get assembled byte
 
 	ldx	BITNUM			; get bit count
-A_EFA9:					;				[EFA9]
+A_EFA9					;				[EFA9]
 	cpx	#$09			; compare with byte + stop
 	beq	A_EFB1			; branch if all nine bits received
 
@@ -13351,7 +13242,7 @@ A_EFA9:					;				[EFA9]
 	inx				; increment bit count
 	bne	A_EFA9			; loop, branch always
 
-A_EFB1:					;				[EFB1]
+A_EFB1					;				[EFB1]
 	sta	(RIBUF),Y		; save received byte to Rx buffer
 
 	lda	#$20			; mask 00x0 0000, parity enable bit
@@ -13367,18 +13258,18 @@ A_EFB1:					;				[EFB1]
 	bvs	A_EF6D			; if ?? just exit
 
 .byte	$2C				; makes next line BIT $xxxx
-A_EFC5:					;				[EFC5]
+A_EFC5					;				[EFC5]
 	bvc	A_EF6D			; if ?? just exit
 
 	lda	#$01			; set Rx parity error
 .byte	$2C				; makes next line BIT $04A9
-A_EFCA:					;				[EFCA]
+A_EFCA					;				[EFCA]
 	lda	#$04			; set Rx overrun error
 .byte	$2C				; makes next line BIT NumericTestA9
-A_EFCD:					;				[EFCD]
+A_EFCD					;				[EFCD]
 	lda	#$80			; set Rx break error
 .byte	$2C				; makes next line BIT $02A9
-A_EFD0:					;				[EFD0]
+A_EFD0					;				[EFD0]
 	lda	#$02			; set Rx frame error
 	ora	RSSTAT			; OR it with the RS232 status byte
 	sta	RSSTAT			; save the RS232 status byte
@@ -13386,7 +13277,7 @@ A_EFD0:					;				[EFD0]
 	jmp	SetupRS232_RX		; setup to receive an RS232 bit and
 					; return			[EF7E]
 
-A_EFDB:					;				[EFDB]
+A_EFDB					;				[EFDB]
 	lda	RIDATA			;.
 	bne	A_EFD0			; if ?? do frame error
 
@@ -13397,7 +13288,7 @@ A_EFDB:					;				[EFDB]
 ;
 ; open RS232 channel for output
 
-OpenRsChan4Out:				;				[EFE1]
+OpenRsChan4Out				;				[EFE1]
 	sta	DFLTO			; save the output device number
 
 	lda	M51CDR			; read the pseudo 6551 command register
@@ -13410,19 +13301,19 @@ OpenRsChan4Out:				;				[EFE1]
 
 	bne	A_F012			; if RTS = 1 just exit
 
-A_EFF2:					;				[EFF2]
+A_EFF2					;				[EFF2]
 	lda	ENABL			; get RS-232 interrupt enable byte
 	and	#$02			; mask 0000 00x0, timer B interrupt
 	bne	A_EFF2			; loop while timer B interrupt is
 					; enebled
-A_EFF9:					;				[EFF9]
+A_EFF9					;				[EFF9]
 	bit	CIA2DRB			; test CIA 2 DRB, RS232 port
 	bvs	A_EFF9			; loop while CTS high
 
 	lda	CIA2DRB			; read CIA 2 DRB, RS232 port
 	ora	#$02			; mask xx1x, set RTS high
 	sta	CIA2DRB			; save CIA 2 DRB, RS232 port
-A_F006:					;				[F006]
+A_F006					;				[F006]
 	bit	CIA2DRB			; test CIA 2 DRB, RS232 port
 	bvs	A_F012			; exit if CTS high
 
@@ -13430,10 +13321,10 @@ A_F006:					;				[F006]
 
 ; set no DSR and exit
 
-DeactivateDSR:				;				[F00D]
+DeactivateDSR				;				[F00D]
 	lda	#$40			; set DSR signal not present
 	sta	RSSTAT			; save the RS232 status register
-A_F012:					;				[F012]
+A_F012					;				[F012]
 	clc				; flag ok
 
 	rts
@@ -13443,12 +13334,12 @@ A_F012:					;				[F012]
 ;
 ; send byte to the RS232 buffer
 
-A_F014:					;				[F014]
+A_F014					;				[F014]
 	jsr	SetupRS232_TX		; setup for RS232 transmit	[F028]
 
 ; send byte to the RS232 buffer, no setup
 
-Byte2RS232Buf:				;				[F017]
+Byte2RS232Buf				;				[F017]
 	ldy	RODBS			; get index to Tx buffer end
 	iny				; + 1
 	cpy	RODBE			; compare with index to Tx buffer start
@@ -13465,7 +13356,7 @@ Byte2RS232Buf:				;				[F017]
 ;
 ; setup for RS232 transmit
 
-SetupRS232_TX:				;				[F028]
+SetupRS232_TX				;				[F028]
 	lda	ENABL			; get RS-232 interrupt enable byte
 	lsr				; shift the enable bit to Cb
 	bcs	A_F04C			; if interrupts are enabled just exit
@@ -13486,7 +13377,7 @@ SetupRS232_TX:				;				[F028]
 
 	lda	#$11			; load timer A, start timer A
 	sta	CIA2CTR1		; save CIA 2 CRA
-A_F04C:					;				[F04C]
+A_F04C					;				[F04C]
 	rts
 
 
@@ -13494,7 +13385,7 @@ A_F04C:					;				[F04C]
 ;
 ; input from RS232 buffer
 
-InputRS232Buf:				;				[F04D]
+InputRS232Buf				;				[F04D]
 	sta	DFLTN			; save the input device number
 
 	lda	M51CDR			; get pseudo 6551 command register
@@ -13511,7 +13402,7 @@ InputRS232Buf:				;				[F04D]
 
 	beq	A_F084			; if RTS = 0 just exit
 
-A_F062:					;				[F062]
+A_F062					;				[F062]
 	lda	ENABL			; get RS-232 interrupt enable byte
 	lsr				; shift the timer A interrupt enable
 					; bit to Cb
@@ -13521,22 +13412,22 @@ A_F062:					;				[F062]
 	lda	CIA2DRB			; read CIA 2 DRB, RS232 port
 	and	#$FD			; mask xx0x, clear RTS out
 	sta	CIA2DRB			; save CIA 2 DRB, RS232 port
-A_F070:					;				[F070]
+A_F070					;				[F070]
 	lda	CIA2DRB			; read CIA 2 DRB, RS232 port
 	and	#$04			; mask x1xx, DTR in
 	beq	A_F070			; loop while DTR low
 
-A_F077:					;				[F077]
+A_F077					;				[F077]
 	lda	#$90			; enable the FLAG interrupt
 	clc				; flag ok
 	jmp	Set_VIA2_ICR		; set CIA 2 ICR from A and return [EF3B]
 
-A_F07D:					;				[F07D]
+A_F07D					;				[F07D]
 	lda	ENABL			; get RS-232 interrupt enable byte
 	and	#$12			; mask 000x 00x0
 	beq	A_F077			; if FLAG or timer B bits set go enable
 					; the FLAG inetrrupt
-A_F084:					;				[F084]
+A_F084					;				[F084]
 	clc				; flag ok
 
 	rts
@@ -13546,7 +13437,7 @@ A_F084:					;				[F084]
 ;
 ; get byte from RS232 buffer
 
-GetBytRS232Buf:				;				[F086]
+GetBytRS232Buf				;				[F086]
 	lda	RSSTAT			; get the RS232 status register
 
 	ldy	RIDBS			; get index to Rx buffer start
@@ -13563,7 +13454,7 @@ GetBytRS232Buf:				;				[F086]
 	rts
 
 
-A_F09C:					;				[F09C]
+A_F09C					;				[F09C]
 	ora	#$08			; set the Rx buffer empty bit
 	sta	RSSTAT			; save the RS232 status register
 
@@ -13575,12 +13466,12 @@ A_F09C:					;				[F09C]
 ;
 ; check RS232 bus idle
 
-IsRS232Idle:				;				[F0A4]
+IsRS232Idle				;				[F0A4]
 	pha				; save A
 	lda	ENABL			; get RS-232 interrupt enable byte
 	beq	A_F0BB			; if no interrupts enabled just exit
 
-A_F0AA:					;				[F0AA]
+A_F0AA					;				[F0AA]
 	lda	ENABL			; get RS-232 interrupt enable byte
 	and	#$03			; mask 0000 00xx, the error bits
 	bne	A_F0AA			; if there are errors loop
@@ -13590,7 +13481,7 @@ A_F0AA:					;				[F0AA]
 
 	lda	#$00			; clear A
 	sta	ENABL			; clear RS-232 interrupt enable byte
-A_F0BB:					;				[F0BB]
+A_F0BB					;				[F0BB]
 	pla				; restore A
 	rts
 
@@ -13599,67 +13490,50 @@ A_F0BB:					;				[F0BB]
 ;
 ; kernel I/O messages
 
-TxtIO_ERROR:				;				[F0BD]
-.byte $0D
-.text "I/O ERROR "
-.byte $A3
+IO_ERROR .logical 0
+TxtIO_ERROR				;				[F0BD]
+.shift "{cr}i/o error #"
 
-TxtSEARCHING:				;				[F0C9]
-.byte $0D
-.text "SEARCHING"
-.byte $A0
+TxtSEARCHING				;				[F0C9]
+.shift "{cr}searching "
 
-TxtFOR:					;				[F0D4]
-.text "FOR"
-.byte $A0
+TxtFOR					;				[F0D4]
+.shift "for "
 
-TxtPRESS_PLAY:				;				[F0D8]
-.byte $0D
-.text "PRESS PLAY ON TAP"
-.byte $C5
+TxtPRESS_PLAY				;				[F0D8]
+.shift "{cr}press play on tape"
 
-TxtPRESS_RECO:				;				[F0EB]
-.text "PRESS RECORD & PLAY ON TAP"
-.byte $C5
+TxtPRESS_RECO				;				[F0EB]
+.shift "press record & play on tape"
 
-TxtLOADING:				;				[F106]
-.byte $0D
-.text "LOADIN"
-.byte $C7
+TxtLOADING				;				[F106]
+.shift "{cr}loading"
 
-TxtSAVING:				;				[F10E]
-.byte $0D
-.text "SAVING"
-.byte $A0
+TxtSAVING				;				[F10E]
+.shift "{cr}saving "
 
-TxtVERIFYING:				;				[F116]
-.byte $0D
-.text "VERIFYIN"
-.byte $C7
+TxtVERIFYING				;				[F116]
+.shift "{cr}verifying"
 
-TxtFOUND:				;				[F120]
-.byte $0D
-.text "FOUND"
-.byte $A0
+TxtFOUND				;				[F120]
+.shift "{cr}found "
 
-TxtOK2:					;				[F127]
-.byte $0D
-.text "OK"
-.byte $8D
-
+TxtOK2					;				[F127]
+.shift "{cr}ok{cr}"
+.here
 
 ;******************************************************************************
 ;
 ; display control I/O message if in direct mode
 
-DisplayIoMsg:				;				[F12B]
+DisplayIoMsg				;				[F12B]
 	bit	MSGFLG			; test message mode flag
 	bpl	A_F13C			; exit if control messages off
 
 ; display kernel I/O message
 
-DisplayIoMsg2:				;				[F12F]
-	lda	TxtIO_ERROR,Y		; get byte from message table
+DisplayIoMsg2				;				[F12F]
+	lda	IO_ERROR,Y		; get byte from message table
 	php				; save status
 	and	#$7F			; clear b7
 	jsr	OutByteChan		; output character to channel	[FFD2]
@@ -13669,7 +13543,7 @@ DisplayIoMsg2:				;				[F12F]
 	plp				; restore status
 	bpl	DisplayIoMsg2		; loop if not end of message
 
-A_F13C:					;				[F13C]
+A_F13C					;				[F13C]
 	clc				;.
 
 	rts
@@ -13688,7 +13562,7 @@ A_F13C:					;				[F13C]
 ; If the keyboard buffer is empty the value returned in the accumulator will be
 ; zero
 
-GetByteInpDev:				;				[F13E]
+GetByteInpDev				;				[F13E]
 	lda	DFLTN			; get the input device number
 	bne	A_F14A			; if not the keyboard go handle other
 					; devices
@@ -13702,18 +13576,18 @@ GetByteInpDev:				;				[F13E]
 					; and return			[E5B4]
 
 ; the input device was not the keyboard
-A_F14A:					;				[F14A]
+A_F14A					;				[F14A]
 	cmp	#$02			; compare device with the RS232 device
 	bne	A_F166			; if not the RS232 device, ->
 
 ; the input device is the RS232 device
-GetByteInpDev2:				;				[F14E]
+GetByteInpDev2				;				[F14E]
 	sty	TEMP97			; save Y
 
 	jsr	GetBytRS232Buf		; get a byte from RS232 buffer	[F086]
 
 	ldy	TEMP97			; restore Y
-A_F155:					;				[F155]
+A_F155					;				[F155]
 	clc				; flag no error
 
 	rts
@@ -13738,7 +13612,7 @@ A_F155:					;				[F155]
 ; returned the entire line has been processed. the next time this routine is
 ; called the whole process begins again.
 
-ByteFromChan2:				;				[F157]
+ByteFromChan2				;				[F157]
 	lda	DFLTN			; get the input device number
 	bne	A_F166			; if not the keyboard continue
 
@@ -13752,12 +13626,12 @@ ByteFromChan2:				;				[F157]
 	jmp	InputScrKeyb		; input from screen or keyboard	[E632]
 
 ; the input device was not the keyboard
-A_F166:					;				[F166]
+A_F166					;				[F166]
 	cmp	#$03			; compare device number with screen
 	bne	A_F173			; if not screen continue
 
 ; the input device was the screen
-	sta	CRSW			; input from keyboard or screen, 
+	sta	CRSW			; input from keyboard or screen,
 					;$xx = screen,
 					; $00 = keyboard
 	lda	CurLineLeng		; get current screen line length
@@ -13766,7 +13640,7 @@ A_F166:					;				[F166]
 	jmp	InputScrKeyb		; input from screen or keyboard	[E632]
 
 ; the input device was not the screen
-A_F173:					;				[F173]
+A_F173					;				[F173]
 	bcs	A_F1AD			; if input device > screen, do IEC
 					; devices
 ; the input device was < screen
@@ -13790,7 +13664,7 @@ A_F173:					;				[F173]
 
 	lda	#$40			; set EOI
 	jsr	AorIecStatus		; OR into the serial status byte [FE1C]
-A_F18D:					;				[F18D]
+A_F18D					;				[F18D]
 	dec	BUFPNT			; decrement tape buffer index
 
 	ldx	TEMP97			; restore X
@@ -13800,12 +13674,12 @@ A_F18D:					;				[F18D]
 
 ; error exit from input character
 
-A_F193:					;				[F193]
+A_F193					;				[F193]
 	tax				; copy the error byte
 
 	pla				; dump the saved byte
 	txa				; restore error byte
-A_F196:					;				[F196]
+A_F196					;				[F196]
 	ldx	TEMP97			; restore X
 	rts
 
@@ -13814,7 +13688,7 @@ A_F196:					;				[F196]
 ;
 ; get byte from tape
 
-GetByteTape:				;				[F199]
+GetByteTape				;				[F199]
 	jsr	BumpTapePtr		; bump tape pointer		[F80D]
 	bne	A_F1A9			; if not end get next byte and exit
 
@@ -13825,7 +13699,7 @@ GetByteTape:				;				[F199]
 	sta	BUFPNT			; clear tape buffer index
 	beq	GetByteTape		; loop, branch always
 
-A_F1A9:					;				[F1A9]
+A_F1A9					;				[F1A9]
 	lda	(TapeBufPtr),Y		; get next byte from buffer
 
 	clc				; flag no error
@@ -13833,22 +13707,22 @@ A_F1A9:					;				[F1A9]
 	rts
 
 ; input device was serial bus
-A_F1AD:					;				[F1AD]
+A_F1AD					;				[F1AD]
 	lda	STATUS			; get the serial status byte
 	beq	A_F1B5			; if no errors flagged go input byte
 					; and return
-A_F1B1:					;				[F1B1]
-	lda	#$0D			; else return [EOL]
-A_F1B3:					;				[F1B3]
+A_F1B1					;				[F1B1]
+	lda	#'{cr}'			; else return [EOL]
+A_F1B3					;				[F1B3]
 	clc				; flag no error
-A_F1B4:					;				[F1B4]
+A_F1B4					;				[F1B4]
 	rts
 
-A_F1B5:					;				[F1B5]
+A_F1B5					;				[F1B5]
 	jmp	IecByteIn2		; input byte from serial bus and return
 					;				[EE13]
 ; input device was RS232 device
-A_F1B8:					;				[F1B8]
+A_F1B8					;				[F1B8]
 	jsr	GetByteInpDev2		; get byte from RS232 device	[F14E]
 	bcs	A_F1B4			; branch if error, this doesn't get
 					; taken as the last instruction in the
@@ -13882,11 +13756,11 @@ A_F1B8:					;				[F1B8]
 ; actually intended destination channel must be closed by a call to the KERNAL
 ; close channel routine.
 
-OutByteChan2:				;				[F1CA]
+OutByteChan2				;				[F1CA]
 	pha				; save the character to output
 
 	lda	DFLTO			; get the output device number
-S_F1CD:
+S_F1CD
 	cmp	#$03			; compare the output device with screen
 	bne	A_F1D5			; if not the screen go ??
 
@@ -13896,7 +13770,7 @@ S_F1CD:
 					;				[E716]
 
 ; the output device was not the screen
-A_F1D5:					;				[F1D5]
+A_F1D5					;				[F1D5]
 	bcc	OutByteChan2b		; if < screen go ??
 
 ; the output device was > screen so it is a serial bus device
@@ -13905,7 +13779,7 @@ A_F1D5:					;				[F1D5]
 					; bus				[EDDD]
 
 ; the output device is < screen
-OutByteChan2b:				;				[F1DB]
+OutByteChan2b				;				[F1DB]
 	lsr				; shift b0 of the device into Cb
 
 	pla				; restore the output character
@@ -13915,7 +13789,7 @@ OutByteChan2b:				;				[F1DB]
 ;
 ; output the character to the cassette or RS232 device
 
-OutByteCasRS:				;				[F1DD]
+OutByteCasRS				;				[F1DD]
 	sta	PTR1			; save character to character buffer
 
 	txa				; copy X
@@ -13940,12 +13814,12 @@ OutByteCasRS:				;				[F1DD]
 
 	iny				; increment index
 	sty	BUFPNT			; save tape buffer index
-A_F1F8:					;				[F1F8]
+A_F1F8					;				[F1F8]
 	lda	PTR1			; restore char from character buffer
 	sta	(TapeBufPtr),Y		; save to buffer
-J_F1FC:					;				[F1FC]
+J_F1FC					;				[F1FC]
 	clc				; flag no error
-A_F1FD:					;				[F1FD]
+A_F1FD					;				[F1FD]
 	pla				; pull Y
 	tay				; restore Y
 
@@ -13956,11 +13830,11 @@ A_F1FD:					;				[F1FD]
 	bcc	A_F207			; exit if no error
 
 	lda	#$00			; else clear A
-A_F207:					;				[F207]
+A_F207					;				[F207]
 	rts
 
 ; output the character to the RS232 device
-A_F208:					;				[F208]
+A_F208					;				[F208]
 	jsr	Byte2RS232Buf		; send byte to RS232 buffer, no setup
 					;				[F017]
 	jmp	J_F1FC			; do no error exit		[F1FC]
@@ -13991,15 +13865,15 @@ A_F208:					;				[F208]
 ;	5 : device not present
 ;	6 : file is not an input file
 
-OpenChanInput:				;				[F20E]
+OpenChanInput				;				[F20E]
 	jsr	FindFile		; find a file			[F30F]
 	beq	A_F216			; if the file is open continue
 
 	jmp	FileNotOpenErr		; else do 'file not open' error and
 					; return			[F701]
-A_F216:					;				[F216]
+A_F216					;				[F216]
 	jsr	SetFileDetails		; set file details from table,X	[F31F]
-S_F219:
+S_F219
 	lda	FA			; get the device number
 	beq	A_F233			; if the device was the keyboard save
 					; the device #, flag ok and exit
@@ -14014,7 +13888,7 @@ S_F219:
 	jmp	InputRS232Buf		; else go get input from the RS232
 					; buffer and return		[F04D]
 ; Handle tape
-A_F22A:					;				[F22A]
+A_F22A					;				[F22A]
 	ldx	SA			; get the secondary address
 	cpx	#$60			;.
 	beq	A_F233			;.
@@ -14022,7 +13896,7 @@ A_F22A:					;				[F22A]
 	jmp	NoInputFileErr		; go do 'not input file' error and
 					; return			[F70A]
 
-A_F233:					;				[F233]
+A_F233					;				[F233]
 	sta	DFLTN			; save the input device number
 
 	clc				; flag ok
@@ -14030,7 +13904,7 @@ A_F233:					;				[F233]
 	rts
 
 ; the device was a serial bus device
-A_F237:					;				[F237]
+A_F237					;				[F237]
 	tax				; copy device number to X
 	jsr	CmdTALK2		; command serial device to TALK	[ED09]
 
@@ -14041,10 +13915,10 @@ A_F237:					;				[F237]
 					; send				[EDCC]
 	jmp	A_F248			;				[F248]
 
-A_F245:					;				[F245]
+A_F245					;				[F245]
 	jsr	SAafterTALK2		; send secondary address after TALK
 					;				[EDC7]
-A_F248:					;				[F248]
+A_F248					;				[F248]
 	txa				; copy device back to A
 	bit	STATUS			; test the serial status byte
 	bpl	A_F233			; if device present save device number
@@ -14076,22 +13950,22 @@ A_F248:					;				[F248]
 ;	5 : device not present
 ;	7 : file is not an output file
 
-OpenChanOutput:				;				[F250]
+OpenChanOutput				;				[F250]
 	jsr	FindFile		; find a file			[F30F]
 	beq	A_F258			; if file found continue
 
 	jmp	FileNotOpenErr		; else do 'file not open' error and
 					; return			[F701]
 
-A_F258:					;				[F258]
+A_F258					;				[F258]
 	jsr	SetFileDetails		; set file details from table,X	[F31F]
-S_F25B:
+S_F25B
 	lda	FA			; get the device number
 	bne	A_F262			; if not the keyboard, ->
-A_F25F:					;				[F25F]
+A_F25F					;				[F25F]
 	jmp	NoOutpFileErr		; go do 'not output file' error and
 					; return			[F70D]
-A_F262:					;				[F262]
+A_F262					;				[F262]
 	cmp	#$03			; compare the device with the screen
 	beq	A_F275			; if device is screen go save output
 					; device number and exit
@@ -14103,12 +13977,12 @@ A_F262:					;				[F262]
 	jmp	OpenRsChan4Out		; else go open RS232 channel for output
 					;				[EFE1]
 ; open a tape channel for output
-A_F26F:					;				[F26F]
+A_F26F					;				[F26F]
 	ldx	SA			; get the secondary address
 	cpx	#$60			;.
 	beq	A_F25F			; if ?? do not output file error and
 					; return
-A_F275:					;				[F275]
+A_F275					;				[F275]
 	sta	DFLTO			; save the output device number
 
 	clc				; flag ok
@@ -14116,7 +13990,7 @@ A_F275:					;				[F275]
 	rts
 
 ; open an IEC channel for output
-A_F279:					;				[F279]
+A_F279					;				[F279]
 	tax				; copy the device number
 	jsr	CmdLISTEN2		; command devices on the serial bus to
 					; LISTEN			[ED0C]
@@ -14126,10 +14000,10 @@ A_F279:					;				[F279]
 
 	jsr	IecAtnH			; else set serial ATN high	[EDBE]
 	bne	A_F289			; go ??, branch always
-A_F286:					;				[F286]
+A_F286					;				[F286]
 	jsr	SAafterLISTEN2		; send secondary address after LISTEN
 					;				[EDB9]
-A_F289:					;				[F289]
+A_F289					;				[F289]
 	txa				; copy device number back to A
 	bit	STATUS			; test the serial status byte
 	bpl	A_F275			; if device is present go save output
@@ -14146,7 +14020,7 @@ A_F289:					;				[F289]
 ; loaded with the logical file number to be closed, the same number used when
 ; the file was opened using the OPEN routine.
 
-CloseLogFile2:				;				[F291]
+CloseLogFile2				;				[F291]
 	jsr	FindFileA		; find file A			[F314]
 	beq	A_F298			; if file found go close it
 
@@ -14154,11 +14028,11 @@ CloseLogFile2:				;				[F291]
 	rts
 
 ; file found so close it
-A_F298:					;				[F298]
+A_F298					;				[F298]
 	jsr	SetFileDetails		; set file details from table,X	[F31F]
 	txa				; copy file index to A
 	pha				; save file index
-S_F29D:
+S_F29D
 	lda	FA			; get the device number
 	beq	J_F2F1			; if it is keyboard go restore index
 					; and close the file
@@ -14181,20 +14055,20 @@ S_F29D:
 	beq	A_F2BA			; if no RS232 input buffer go ??
 
 	iny				; else reclaim RS232 input buffer memory
-A_F2BA:					;				[F2BA]
+A_F2BA					;				[F2BA]
 	lda	ROBUF+1			; get RS232 output buffer pointer HB
 	beq	A_F2BF			; if no RS232 output buffer skip reclaim
 
 	iny				; else reclaim RS232 output buf memory
-A_F2BF:					;				[F2BF]
+A_F2BF					;				[F2BF]
 	lda	#$00			; clear A
 	sta	RIBUF+1			; clear RS232 input buffer pointer HB
 	sta	ROBUF+1			; clear RS232 output buffer pointer HB
 
-	jmp	SetTopOfMem		; go set top of memory to F0xx 	[F47D]
+	jmp	SetTopOfMem		; go set top of memory to F0xx	[F47D]
 
 ; is not the RS232 device
-A_F2C8:					;				[F2C8]
+A_F2C8					;				[F2C8]
 	lda	SA			; get the secondary address
 	and	#$0F			; mask the device #
 	beq	J_F2F1			; if ?? restore index and close file
@@ -14213,7 +14087,7 @@ A_F2C8:					;				[F2C8]
 	lda	#$00			;.
 	rts
 
-A_F2E0:					;				[F2E0]
+A_F2E0					;				[F2E0]
 	lda	SA			; get the secondary address
 	cmp	#$62			;.
 	bne	J_F2F1			; if not ?? restore index and close file
@@ -14228,9 +14102,9 @@ A_F2E0:					;				[F2E0]
 ;
 ; serial bus device close
 
-A_F2EE:					;				[F2EE]
+A_F2EE					;				[F2EE]
 	jsr	CloseIecDevice		; close serial bus device	[F642]
-J_F2F1:					;				[F2F1]
+J_F2F1					;				[F2F1]
 	pla				; restore file index
 
 
@@ -14238,7 +14112,7 @@ J_F2F1:					;				[F2F1]
 ;
 ; close file index X
 
-ClosFileIndxX:				;				[F2F2]
+ClosFileIndxX				;				[F2F2]
 	tax				; copy index to file to close
 
 	dec	LDTND			; decrement the open file count
@@ -14261,7 +14135,7 @@ ClosFileIndxX:				;				[F2F2]
 					; secondary address table
 	sta	SecAddrTbl,X		; save secondary address over closed
 					; file
-A_F30D:					;				[F30D]
+A_F30D					;				[F30D]
 	clc				; flag ok
 
 	rts
@@ -14271,7 +14145,7 @@ A_F30D:					;				[F30D]
 ;
 ; find a file
 
-FindFile:				;				[F30F]
+FindFile				;				[F30F]
 	lda	#$00			; clear A
 	sta	STATUS			; clear the serial status byte
 
@@ -14282,9 +14156,9 @@ FindFile:				;				[F30F]
 ;
 ; find file A
 
-FindFileA:				;				[F314]
+FindFileA				;				[F314]
 	ldx	LDTND			; get the open file count
-A_F316:					;				[F316]
+A_F316					;				[F316]
 	dex				; decrememnt the count to give the index
 	bmi	A_F32E			; if no files just exit
 
@@ -14299,7 +14173,7 @@ A_F316:					;				[F316]
 ;
 ; set file details from table,X
 
-SetFileDetails:				;				[F31F]
+SetFileDetails				;				[F31F]
 	lda	LogFileTbl,X		; get logical file from logical file
 					; table
 	sta	LA			; save the logical file
@@ -14311,7 +14185,7 @@ SetFileDetails:				;				[F31F]
 	lda	SecAddrTbl,X		; get secondary address from secondary
 					; address table
 	sta	SA			; save the secondary address
-A_F32E:					;				[F32E]
+A_F32E					;				[F32E]
 	rts
 
 
@@ -14323,7 +14197,7 @@ A_F32E:					;				[F32E]
 ; into the open file table are reset, closing all files. Also the routine
 ; automatically resets the I/O channels.
 
-ClsAllChnFil:				;				[F32F]
+ClsAllChnFil				;				[F32F]
 	lda	#$00			; clear A
 	sta	LDTND			; clear the open file count
 
@@ -14345,7 +14219,7 @@ ClsAllChnFil:				;				[F32F]
 ; to TALK and the disk to LISTEN. This would allow direct printing of a disk
 ; file.
 
-CloseIoChans:				;				[F333]
+CloseIoChans				;				[F333]
 	ldx	#$03			; set the screen device
 	cpx	DFLTO			; compare the screen with the output
 					; device number
@@ -14353,14 +14227,14 @@ CloseIoChans:				;				[F333]
 
 	jsr	IecUNLISTEN2		; else command the serial bus to
 					; UNLISTEN			[EDFE]
-A_F33C:					;				[F33C]
+A_F33C					;				[F33C]
 	cpx	DFLTN			; compare the screen with the input
 					; device number
 	bcs	A_F343			; if <= screen skip serial bus untalk
 
 	jsr	IecUNTALK2		; else command the serial bus to
 					; UNTALK			[EDEF]
-A_F343:					;				[F343]
+A_F343					;				[F343]
 	stx	DFLTO			; save the screen as the output
 					; device number
 	lda	#$00			; set the keyboard as the input device
@@ -14380,26 +14254,26 @@ A_F343:					;				[F343]
 ; SETNAM, SetFileName, KERNAL routines must be called before using this
 ; routine.
 
-OpenLogFile2:				;				[F34A]
+OpenLogFile2				;				[F34A]
 	ldx	LA			; get the logical file
 	bne	A_F351			; if there is a file continue
 
 	jmp	NoInputFileErr		; else do 'not input file error' and
 					; return			[F70A]
-A_F351:					;				[F351]
+A_F351					;				[F351]
 	jsr	FindFile		; find a file			[F30F]
 	bne	A_F359			; if file not found continue
 
 	jmp	FileAlreadyOpen		; else do 'file already open' error and
 					; return			[F6FE]
-A_F359:					;				[F359]
+A_F359					;				[F359]
 	ldx	LDTND			; get the open file count
 	cpx	#10			; < maximum + 1 ?
 	bcc	A_F362			; if less than maximum + 1 go open file
 
 	jmp	TooManyFilesErr		; else do 'too many files error' and
 					; return			[F6FB]
-A_F362:					;				[F362]
+A_F362					;				[F362]
 	inc	LDTND			; increment the open file count
 
 	lda	LA			; get the logical file
@@ -14413,7 +14287,7 @@ A_F362:					;				[F362]
 	lda	FA			; get the device number
 	sta	DevNumTbl,X		; save it to the device number table
 	beq	A_F3D3			; if it is the keyboard, do ok exit
-S_F379:
+S_F379
 	cmp	#$03			; compare device number with screen
 	beq	A_F3D3			; if it is the screen go do the ok exit
 	bcc	OpenLogFile3		; if tape or RS232 device go ??
@@ -14423,20 +14297,20 @@ S_F379:
 					;				[F3D5]
 	bcc	A_F3D3			; go do ok exit, branch always
 
-OpenLogFile3:				;				[F384]
+OpenLogFile3				;				[F384]
 	cmp	#$02			; RS-232?
-	bne	A_F38B			; no, -> 
+	bne	A_F38B			; no, ->
 
 	jmp	OpenRS232Dev		; go open RS232 device and return [F409]
 
-A_F38B:					;				[F38B]
+A_F38B					;				[F38B]
 	jsr	TapeBufPtr2XY		; get tape buffer start pointer in XY
 					;				[F7D0]
 	bcs	A_F393			; if >= $0200 go ??
 
 	jmp	IllegalDevNum		; else do 'illegal device number' and
 					; return			[F713]
-A_F393:					;				[F393]
+A_F393					;				[F393]
 	lda	SA			; get the secondary address
 	and	#$0F			;.
 	bne	A_F3B8			;.
@@ -14454,10 +14328,10 @@ A_F393:					;				[F393]
 
 	beq	A_F3D4			; exit if ??
 
-A_F3AC:					;				[F3AC]
+A_F3AC					;				[F3AC]
 	jmp	FileNotFound		; do file not found error and return
 					;	[F704]
-A_F3AF:					;				[F3AF]
+A_F3AF					;				[F3AF]
 	jsr	FindTapeHdr2		; find tape header, exit with header in
 					; buffer			[F72C]
 	beq	A_F3D4			; exit if end of tape found
@@ -14466,13 +14340,13 @@ A_F3AF:					;				[F3AF]
 
 	bcs	A_F3AC			; always ->
 
-A_F3B8:					;				[F3B8]
+A_F3B8					;				[F3B8]
 	jsr	WaitForPlayRec		; wait for PLAY/RECORD		[F838]
 	bcs	A_F3D4			; exit if STOP was pressed
 
 	lda	#$04			; set data file header
 	jsr	WriteTapeHdr		; write tape header		[F76A]
-A_F3C2:					;				[F3C2]
+A_F3C2					;				[F3C2]
 	lda	#$BF			;.
 
 	ldy	SA			; get the secondary address
@@ -14484,11 +14358,11 @@ A_F3C2:					;				[F3C2]
 	sta	(TapeBufPtr),Y		;.save to tape buffer
 
 	tya				;.clear A
-A_F3D1:					;				[F3D1]
+A_F3D1					;				[F3D1]
 	sta	BUFPNT			;.save tape buffer index
-A_F3D3:					;				[F3D3]
+A_F3D3					;				[F3D3]
 	clc				; flag ok
-A_F3D4:					;				[F3D4]
+A_F3D4					;				[F3D4]
 	rts
 
 
@@ -14496,7 +14370,7 @@ A_F3D4:					;				[F3D4]
 ;
 ; send secondary address and filename
 
-SndSecAdrFilNm:				;				[F3D5]
+SndSecAdrFilNm				;				[F3D5]
 	lda	SA			; get the secondary address
 	bmi	A_F3D3			; ok exit if -ve
 
@@ -14516,25 +14390,25 @@ SndSecAdrFilNm:				;				[F3D5]
 	lda	STATUS			; get the serial status byte
 	bpl	A_F3F6			; if device present skip the 'device
 					; not present' error
-S_F3F1:
+S_F3F1
 	pla				; else dump calling address LB
 	pla				; dump calling address HB
 
 	jmp	DevNotPresent		; do 'device not present' error and
 					; return			[F707]
-A_F3F6:					;				[F3F6]
+A_F3F6					;				[F3F6]
 	lda	FNLEN			; get filename length
 	beq	A_F406			; branch if null name
 
 	ldy	#$00			; clear index
-A_F3FC:					;				[F3FC]
+A_F3FC					;				[F3FC]
 	lda	(FNADR),Y		; get filename byte
 	jsr	IecByteOut2		; output byte to serial bus	[EDDD]
 
 	iny				; increment index
 	cpy	FNLEN			; compare with filename length
 	bne	A_F3FC			; loop if not all done
-A_F406:					;				[F406]
+A_F406					;				[F406]
 	jmp	DoUNLISTEN		; command serial bus to UNLISTEN and
 					; return			[F654]
 
@@ -14542,10 +14416,10 @@ A_F406:					;				[F406]
 ;
 ; open RS232 device
 
-OpenRS232Dev:				;				[F409]
+OpenRS232Dev				;				[F409]
 	jsr	InitRS232_TX		; initialise RS232 output	[F483]
 	sty	RSSTAT			; save the RS232 status register
-A_F40F:					;				[F40F]
+A_F40F					;				[F40F]
 	cpy	FNLEN			; compare with filename length
 	beq	A_F41D			; exit loop if done
 
@@ -14556,7 +14430,7 @@ A_F40F:					;				[F40F]
 	cpy	#$04			; compare with $04
 	bne	A_F40F			; loop if not to 4 yet
 
-A_F41D:					;				[F41D]
+A_F41D					;				[F41D]
 	jsr	CalcBitCounts		; compute bit count		[EF4A]
 	stx	BITNUM			; save bit count
 
@@ -14574,13 +14448,13 @@ A_F41D:					;				[F41D]
 	lda	TblBaudNTSC-2,X		; get the NTSC baud rate value LB
 	jmp	SaveBaudRate		; go save the baud rate values	[F440]
 
-A_F43A:					;				[F43A]
+A_F43A					;				[F43A]
 	ldy	TblBaudRates-1,X	; get the PAL baud rate value HB
 	lda	TblBaudRates-2,X	; get the PAL baud rate value LB
-SaveBaudRate:				;				[F440]
+SaveBaudRate				;				[F440]
 	sty	M51AJB+1		; save the nonstandard bit timing HB
 	sta	M51AJB			; save the nonstandard bit timing LB
-A_F446:					;				[F446]
+A_F446					;				[F446]
 	lda	M51AJB			; get the nonstandard bit timing LB
 	asl				; * 2
 	jsr	SetTimerBaudR		;.				[FF2E]
@@ -14594,7 +14468,7 @@ A_F446:					;				[F446]
 	bcs	A_F45C			; if DSR present skip the error set
 
 	jsr	DeactivateDSR		; set no DSR			[F00D]
-A_F45C:					;				[F45C]
+A_F45C					;				[F45C]
 	lda	RIDBE			; get index to Rx buffer end
 	sta	RIDBS			; set index to Rx buffer start, clear
 					; Rx buffer
@@ -14610,7 +14484,7 @@ A_F45C:					;				[F45C]
 					; buffer
 	sty	RIBUF+1			; save RS232 input buffer pointer HB
 	stx	RIBUF			; save RS232 input buffer pointer LB
-A_F474:					;				[F474]
+A_F474					;				[F474]
 	lda	ROBUF+1			; get RS232 output buffer pointer HB
 	bne	SetTopOfMem		; if > 0 go set the top of memory to
 					; $F0xx
@@ -14624,7 +14498,7 @@ A_F474:					;				[F474]
 ;
 ; set the top of memory to F0xx
 
-SetTopOfMem:				;				[F47D]
+SetTopOfMem				;				[F47D]
 	sec				; read the top of memory
 	lda	#$F0			; set $F000
 	jmp	SetTopOfMem2		; set the top of memory and return
@@ -14634,7 +14508,7 @@ SetTopOfMem:				;				[F47D]
 ;
 ; initialise RS232 output
 
-InitRS232_TX:				;				[F483]
+InitRS232_TX				;				[F483]
 	lda	#$7F			; disable all interrupts
 	sta	CIA2IRQ			; save CIA 2 ICR
 
@@ -14673,7 +14547,7 @@ InitRS232_TX:				;				[F483]
 ; Before this routine can be called, the SETLFS, SetAddresses, and SETNAM,
 ; SetFileName, routines must be called.
 
-LoadRamFrmDev2:				;				[F49E]
+LoadRamFrmDev2				;				[F49E]
 	stx	MEMUSS			; set kernal setup pointer LB
 	sty	MEMUSS+1		; set kernal setup pointer HB
 
@@ -14684,20 +14558,20 @@ LoadRamFrmDev2:				;				[F49E]
 ;
 ; load
 
-LoadRamFrmDev22:			;				[F4A5]
+LoadRamFrmDev22				;				[F4A5]
 	sta	LoadVerify2		; save load/verify flag
 
 	lda	#$00			; clear A
 	sta	STATUS			; clear the serial status byte
-S_F4AB:
+S_F4AB
 	lda	FA			; get the device number
 	bne	A_F4B2			; if not the keyboard continue
 
 ; can't load form keyboard so ..
-A_F4AF:					;				[F4AF]
+A_F4AF					;				[F4AF]
 	jmp	IllegalDevNum		; else do 'illegal device number' and
 					; return			[F713]
-A_F4B2:					;				[F4B2]
+A_F4B2					;				[F4B2]
 	cmp	#$03			; screen?
 	beq	A_F4AF			; yes, ->
 
@@ -14709,7 +14583,7 @@ A_F4B2:					;				[F4B2]
 
 	jmp	MissingFileNam		; else do 'missing filename' error and
 					; return			[F710]
-A_F4BF:					;				[F4BF]
+A_F4BF					;				[F4BF]
 	ldx	SA			; get the secondary address
 	jsr	PrtSEARCHING		; print "Searching..."		[F5AF]
 
@@ -14724,7 +14598,7 @@ A_F4BF:					;				[F4BF]
 	lda	SA			; get the secondary address
 	jsr	SAafterTALK2		; send secondary address after TALK
 					;				[EDC7]
-LoadRamFrmDev22b:			;				[F4D5]
+LoadRamFrmDev22b			;				[F4D5]
 	jsr	IecByteIn2		; input byte from serial bus	[EE13]
 	sta	EAL			; save program start address LB
 
@@ -14745,9 +14619,9 @@ LoadRamFrmDev22b:			;				[F4D5]
 	lda	MEMUSS+1		; get the load address HB
 	sta	EAL+1			; save the program start address HB
 
-A_F4F0:					;				[F4F0]
+A_F4F0					;				[F4F0]
 	jsr	LoadVerifying		;.				[F5D2]
-A_F4F3:					;				[F4F3]
+A_F4F3					;				[F4F3]
 	lda	#$FD			; mask xx0x, clear time out read bit
 	and	STATUS			; mask the serial status byte
 	sta	STATUS			; set the serial status byte
@@ -14758,7 +14632,7 @@ A_F4F3:					;				[F4F3]
 
 	jmp	CloseIecBus		; else close the serial bus device and
 					; flag stop			[F633]
-A_F501:					;				[F501]
+A_F501					;				[F501]
 	jsr	IecByteIn2		; input byte from serial bus	[EE13]
 	tax				; copy byte
 
@@ -14781,14 +14655,14 @@ A_F501:					;				[F501]
 	lda	#$10			; flag read error
 	jsr	AorIecStatus		; OR into the serial status byte [FE1C]
 .byte	$2C				; makes next line BIT $AE91
-A_F51C:					;				[F51C]
+A_F51C					;				[F51C]
 	sta	(EAL),Y			; save byte to memory
-A_F51E:					;				[F51E]
+A_F51E					;				[F51E]
 	inc	EAL			; increment save pointer LB
 	bne	A_F524			; if no rollover go ??
 
 	inc	EAL+1			; else increment save pointer HB
-A_F524:					;				[F524]
+A_F524					;				[F524]
 	bit	STATUS			; test the serial status byte
 	bvc	A_F4F3			; loop if not end of file
 
@@ -14797,7 +14671,7 @@ A_F524:					;				[F524]
 
 	jsr	CloseIecDevice		; close serial device, error?	[F642]
 	bcc	A_F5A9			; no, -> exit
-A_F530:					;				[F530]
+A_F530					;				[F530]
 	jmp	FileNotFound		; do file not found error and return
 					;				[F704]
 
@@ -14805,13 +14679,13 @@ A_F530:					;				[F530]
 ;
 ; Load from tape
 
-LoadFromTape:				;				[F533]
+LoadFromTape				;				[F533]
 	lsr				; tape?
 	bcs	A_F539			; yes, ->
 
 	jmp	IllegalDevNum		; else do 'illegal device number' and
 					; return			[F713]
-A_F539:					;				[F539]
+A_F539					;				[F539]
 	jsr	TapeBufPtr2XY		; get tape buffer start pointer in XY
 					;				[F7D0]
 	bcs	A_F541			; if ??
@@ -14819,12 +14693,12 @@ A_F539:					;				[F539]
 	jmp	IllegalDevNum		; else do 'illegal device number' and
 					; return			[F713]
 
-A_F541:					;				[F541]
+A_F541					;				[F541]
 	jsr	WaitForPlayKey		; wait for PLAY			[F817]
 	bcs	A_F5AE			; exit if STOP was pressed
 
 	jsr	PrtSEARCHING		; print "Searching..."		[F5AF]
-A_F549:					;				[F549]
+A_F549					;				[F549]
 	lda	FNLEN			; get filename length
 	beq	A_F556			;.
 
@@ -14835,13 +14709,13 @@ A_F549:					;				[F549]
 
 	bcs	A_F530			; file not found, branch always
 
-A_F556:					;				[F556]
+A_F556					;				[F556]
 	jsr	FindTapeHdr2		; find tape header, exit with header in
 					; buffer			[F72C]
 	beq	A_F5AE			; exit if ??
 
 	bcs	A_F530			;.
-A_F55D:					;				[F55D]
+A_F55D					;				[F55D]
 	lda	STATUS			; get the serial status byte
 	and	#$10			; mask 000x 0000, read error
 	sec				; flag fail
@@ -14853,7 +14727,7 @@ A_F55D:					;				[F55D]
 	cpx	#$03			;.
 	bne	A_F549			;.
 
-A_F56C:					;				[F56C]
+A_F56C					;				[F56C]
 	ldy	#$01			;.
 	lda	(TapeBufPtr),Y		;.
 	sta	MEMUSS			;.
@@ -14863,11 +14737,11 @@ A_F56C:					;				[F56C]
 	sta	MEMUSS+1		;.
 	bcs	A_F57D			;.
 
-A_F579:					;				[F579]
+A_F579					;				[F579]
 	lda	SA			; get the secondary address
 	bne	A_F56C			;.
 
-A_F57D:					;				[F57D]
+A_F57D					;				[F57D]
 	ldy	#$03			;.
 	lda	(TapeBufPtr),Y		;.
 	ldy	#$01			;.
@@ -14900,12 +14774,12 @@ A_F57D:					;				[F57D]
 	jsr	ReadTape		; do the tape read		[F84A]
 
 .byte	$24				; keep the error flag in Carry
-A_F5A9:					;				[F5A9]
+A_F5A9					;				[F5A9]
 	clc				; flag ok
 
 	ldx	EAL			; get the LOAD end pointer LB
 	ldy	EAL+1			; get the LOAD end pointer HB
-A_F5AE:					;				[F5AE]
+A_F5AE					;				[F5AE]
 	rts
 
 
@@ -14913,17 +14787,17 @@ A_F5AE:					;				[F5AE]
 ;
 ; print "Searching..."
 
-PrtSEARCHING:				;				[F5AF]
+PrtSEARCHING				;				[F5AF]
 	lda	MSGFLG			; get message mode flag
 	bpl	A_F5D1			; exit if control messages off
 
-	ldy	#TxtSEARCHING-TxtIO_ERROR ; index to "SEARCHING "
+	ldy	#TxtSEARCHING		; index to "SEARCHING "
 	jsr	DisplayIoMsg2		; display kernel I/O message	[F12F]
 
 	lda	FNLEN			; get filename length
 	beq	A_F5D1			; exit if null name
 
-	ldy	#TxtFOR-TxtIO_ERROR	; else index to "FOR "
+	ldy	#TxtFOR			; else index to "FOR "
 	jsr	DisplayIoMsg2		; display kernel I/O message	[F12F]
 
 
@@ -14931,19 +14805,19 @@ PrtSEARCHING:				;				[F5AF]
 ;
 ; print filename
 
-PrintFileName:				;				[F5C1]
+PrintFileName				;				[F5C1]
 	ldy	FNLEN			; get filename length
 	beq	A_F5D1			; exit if null filename
 
 	ldy	#$00			; clear index
-A_F5C7:					;				[F5C7]
+A_F5C7					;				[F5C7]
 	lda	(FNADR),Y		; get filename byte
 	jsr	OutByteChan		; output character to channel	[FFD2]
 	iny				; increment index
 	cpy	FNLEN			; compare with filename length
 	bne	A_F5C7			; loop if more to do
 
-A_F5D1:					;				[F5D1]
+A_F5D1					;				[F5D1]
 	rts
 
 
@@ -14951,14 +14825,14 @@ A_F5D1:					;				[F5D1]
 ;
 ; display "LOADING" or "VERIFYING"
 
-LoadVerifying:				;				[F5D2]
-	ldy	#TxtLOADING-TxtIO_ERROR	; point to "LOADING"
+LoadVerifying				;				[F5D2]
+	ldy	#TxtLOADING		; point to "LOADING"
 
 	lda	LoadVerify2		; get load/verify flag
 	beq	A_F5DA			; branch if load
 
-	ldy	#TxtVERIFYING-TxtIO_ERROR ; point to "VERIFYING"
-A_F5DA:					;				[F5DA]
+	ldy	#TxtVERIFYING		; point to "VERIFYING"
+A_F5DA					;				[F5DA]
 	jmp	DisplayIoMsg		; display kernel I/O message if in
 					; direct mode and return	[F12B]
 
@@ -14976,7 +14850,7 @@ A_F5DA:					;				[F5DA]
 ; NOTE: device 0, the keyboard, and device 3, the screen, cannot be SAVEd to.
 ; If the attempt is made, an error will occur, and the SAVE stopped.
 
-SaveRamToDev2:				;				[F5DD]
+SaveRamToDev2				;				[F5DD]
 	stx	EAL			; save end address LB
 	sty	EAL+1			; save end address HB
 
@@ -14995,15 +14869,15 @@ SaveRamToDev2:				;				[F5DD]
 ;
 ; save
 
-SaveRamToDev22:				;				[F5ED]
+SaveRamToDev22				;				[F5ED]
 	lda	FA			; get the device number, keyboard?
-	bne	A_F5F4			; no, -> 
+	bne	A_F5F4			; no, ->
 
 ; else ..
-A_F5F1:					;				[F5F1]
+A_F5F1					;				[F5F1]
 	jmp	IllegalDevNum		; else do 'illegal device number' and
 					; return			[F713]
-A_F5F4:					;				[F5F4]
+A_F5F4					;				[F5F4]
 	cmp	#$03			; compare device number with screen
 	beq	A_F5F1			; if screen do illegal device number
 					; and return
@@ -15021,11 +14895,11 @@ A_F5F4:					;				[F5F4]
 
 	jmp	MissingFileNam		; else do 'missing filename' error and
 					; return			[F710]
-A_F605:					;				[F605]
+A_F605					;				[F605]
 	jsr	SndSecAdrFilNm		; send secondary address and filename
 					;				[F3D5]
 	jsr	PrtSAVING		; print saving <filename>	[F68F]
-SaveRamToDev22b:
+SaveRamToDev22b
 	lda	FA			; get the device number
 	jsr	CmdLISTEN2		; command devices on the serial bus to
 					; LISTEN			[ED0C]
@@ -15041,7 +14915,7 @@ SaveRamToDev22b:
 
 	lda	SAL+1			; get buffer address HB
 	jsr	IecByteOut2		; output byte to serial bus	[EDDD]
-A_F624:					;				[F624]
+A_F624					;				[F624]
 	jsr	ChkRdWrPtr		; check read/write pointer, return
 					; Cb = 1 if pointer >= end	[FCD1]
 	bcs	A_F63F			; go do UNLISTEN if at end
@@ -15056,7 +14930,7 @@ A_F624:					;				[F624]
 
 ; close the serial bus device and flag stop
 
-CloseIecBus:				;				[F633]
+CloseIecBus				;				[F633]
 	jsr	CloseIecDevice		; close serial bus device	[F642]
 
 	lda	#$00			;.
@@ -15064,15 +14938,15 @@ CloseIecBus:				;				[F633]
 	rts
 
 
-A_F63A:					;				[F63A]
+A_F63A					;				[F63A]
 	jsr	IncRdWrPtr		; increment read/write pointer	[FCDB]
 	bne	A_F624			; loop, branch always
-A_F63F:					;				[F63F]
+A_F63F					;				[F63F]
 	jsr	IecUNLISTEN2		; command serial bus to UNLISTEN [EDFE]
 
 ; close serial bus device
 
-CloseIecDevice:				;				[F642]
+CloseIecDevice				;				[F642]
 	bit	SA			; test the secondary address
 	bmi	A_F657			; if already closed just exit
 
@@ -15085,19 +14959,19 @@ CloseIecDevice:				;				[F642]
 	ora	#$E0			; OR with the CLOSE command
 	jsr	SAafterLISTEN2		; send secondary address after LISTEN
 					;				[EDB9]
-DoUNLISTEN:				;				[F654]
+DoUNLISTEN				;				[F654]
 	jsr	IecUNLISTEN2		; command serial bus to UNLISTEN [EDFE]
-A_F657:					;				[F657]
+A_F657					;				[F657]
 	clc				; flag ok
 	rts
 
-SaveRamToTape:				;				[F659]
+SaveRamToTape				;				[F659]
 	lsr				; bit 0 is set, = tape?
 	bcs	A_F65F			; yes, -> OK
 
 	jmp	IllegalDevNum		; else do 'illegal device number' and
 					; return			[F713]
-A_F65F:					;				[F65F]
+A_F65F					;				[F65F]
 	jsr	TapeBufPtr2XY		; get tape buffer start pointer in XY
 					;				[F7D0]
 	bcc	A_F5F1			; if < $0200 do illegal device number
@@ -15115,7 +14989,7 @@ A_F65F:					;				[F65F]
 
 	ldx	#$01			; else set header for a relocatable
 					; program file
-A_F676:					;				[F676]
+A_F676					;				[F676]
 	txa				; copy header type to A
 	jsr	WriteTapeHdr		; write tape header		[F76A]
 	bcs	A_F68E			; exit if error
@@ -15131,9 +15005,9 @@ A_F676:					;				[F676]
 	jsr	WriteTapeHdr		; write tape header		[F76A]
 .byte	$24				; makes next line BIT LASTPT+1 so Cb is
 					; not changed
-A_F68D:					;				[F68D]
+A_F68D					;				[F68D]
 	clc				; flag ok
-A_F68E:					;				[F68E]
+A_F68E					;				[F68E]
 	rts
 
 
@@ -15141,11 +15015,11 @@ A_F68E:					;				[F68E]
 ;
 ; print saving <filename>
 
-PrtSAVING:				;				[F68F]
+PrtSAVING				;				[F68F]
 	lda	MSGFLG			; get message mode flag
 	bpl	A_F68E			; exit if control messages off
 
-	ldy	#TxtSAVING-TxtIO_ERROR	; index to "SAVING "
+	ldy	#TxtSAVING		; index to "SAVING "
 	jsr	DisplayIoMsg2		; display kernel I/O message	[F12F]
 
 	jmp	PrintFileName		; print filename and return	[F5C1]
@@ -15161,7 +15035,7 @@ PrtSAVING:				;				[F68F]
 ; Also, the STOP key routine must be called if the stop key is to remain
 ; functional.
 
-IncrClock2:				;				[F69B]
+IncrClock2				;				[F69B]
 	ldx	#$00			; clear X
 
 	inc	TimeBytes+2		; increment the jiffy clock LB
@@ -15174,7 +15048,7 @@ IncrClock2:				;				[F69B]
 
 ; now subtract a days worth of jiffies from current count and remember only the
 ; Cb result
-A_F6A7:					;				[F6A7]
+A_F6A7					;				[F6A7]
 	sec				; set carry for subtract
 	lda	TimeBytes+2		; get the jiffy clock LB
 	sbc	#$01			; subtract $4F1A01 LB
@@ -15196,7 +15070,7 @@ A_F6A7:					;				[F6A7]
 					; $4F1A00 and not $4F1A01. This would
 					; give an extra jiffy every day and a
 					; possible TI value of 24:00:00
-IncrClock22:				;				[F6BC]
+IncrClock22				;				[F6BC]
 	lda	CIA1DRB			; read CIA 1 DRB, keyboard row port
 	cmp	CIA1DRB			; compare it with itself
 	bne	IncrClock22		; loop if changing
@@ -15207,7 +15081,7 @@ IncrClock22:				;				[F6BC]
 	ldx	#$BD			; set c6
 	stx	CIA1DRA			; save CIA 1 DRA, keyboard column drive
 
-A_F6CC:					;				[F6CC]
+A_F6CC					;				[F6CC]
 	ldx	CIA1DRB			; read CIA 1 DRB, keyboard row port
 	cpx	CIA1DRB			; compare it with itself
 	bne	A_F6CC			; loop if changing
@@ -15217,9 +15091,9 @@ A_F6CC:					;				[F6CC]
 	inx				;.
 	bne	A_F6DC			;.
 
-A_F6DA:					;				[F6DA]
+A_F6DA					;				[F6DA]
 	sta	StopKey			; save the stop key column
-A_F6DC:					;				[F6DC]
+A_F6DC					;				[F6DC]
 	rts
 
 
@@ -15230,7 +15104,7 @@ A_F6DC:					;				[F6DC]
 ; this routine returns the time, in jiffies, in AXY. The accumulator contains
 ; the most significant byte.
 
-ReadClock2:				;				[F6DD]
+ReadClock2				;				[F6DD]
 	sei				; disable the interrupts
 
 	lda	TimeBytes+2		; get the jiffy clock LB
@@ -15249,7 +15123,7 @@ ReadClock2:				;				[F6DD]
 ; set the clock the new time, in jiffies, should be in YXA, the accumulator
 ; containing the most significant byte.
 
-SetClock2:				;				[F6E4]
+SetClock2				;				[F6E4]
 	sei				; disable the interrupts
 
 	sta	TimeBytes+2		; save the jiffy clock LB
@@ -15272,7 +15146,7 @@ SetClock2:				;				[F6E4]
 
 ; The user can also check for certain other keys this way.
 
-Scan4StopKey:				;				[F6ED]
+Scan4StopKey				;				[F6ED]
 	lda	StopKey			; read the stop key column
 	cmp	#$7F			; compare with [STP] down
 	bne	A_F6FA			; if not [STOP] or not just [STOP] exit
@@ -15285,7 +15159,7 @@ Scan4StopKey:				;				[F6ED]
 
 	plp				; restore status
 
-A_F6FA:					;				[F6FA]
+A_F6FA					;				[F6FA]
 	rts
 
 
@@ -15293,45 +15167,45 @@ A_F6FA:					;				[F6FA]
 ;
 ; file error messages
 
-TooManyFilesErr:			;				[F6FB]
+TooManyFilesErr				;				[F6FB]
 	lda	#$01			; 'too many files' error
 .byte	$2C				; makes next line BIT $02A9
 
-FileAlreadyOpen:			;				[F6FE]
+FileAlreadyOpen				;				[F6FE]
 	lda	#$02			; 'file already open' error
 .byte	$2C				; makes next line BIT $03A9
 
-FileNotOpenErr:				;				[F701]
+FileNotOpenErr				;				[F701]
 	lda	#$03			; 'file not open' error
 .byte	$2C				; makes next line BIT $04A9
 
-FileNotFound:				;				[F704]
+FileNotFound				;				[F704]
 	lda	#$04			; 'file not found' error
 .byte	$2C				; makes next line BIT $05A9
 
-DevNotPresent:				;				[F707]
+DevNotPresent				;				[F707]
 	lda	#$05			; 'device not present' error
 .byte	$2C				; makes next line BIT $06A9
 
-NoInputFileErr:				;				[F70A]
+NoInputFileErr				;				[F70A]
 	lda	#$06			; 'not input file' error
 .byte	$2C				; makes next line BIT $07A9
 
-NoOutpFileErr:				;				[F70D]
+NoOutpFileErr				;				[F70D]
 	lda	#$07			; 'not output file' error
 .byte	$2C				; makes next line BIT $08A9
 
-MissingFileNam:				;				[F710]
+MissingFileNam				;				[F710]
 	lda	#$08			; 'missing filename' error
 .byte	$2C				; makes next line BIT $09A9
 
-IllegalDevNum:				;				[F713]
+IllegalDevNum				;				[F713]
 	lda	#$09			; do 'illegal device number'
 	pha				; save the error #
 
 	jsr	CloseIoChannls		; close input and output channels [FFCC]
 
-	ldy	#TxtIO_ERROR-TxtIO_ERROR;	index to "I/O ERROR #"
+	ldy	#TxtIO_ERROR		; index to "I/O ERROR #"
 
 	bit	MSGFLG			; test message mode flag
 	bvc	A_F729			; exit if kernal messages off
@@ -15343,7 +15217,7 @@ IllegalDevNum:				;				[F713]
 
 	ora	#'0'			; convert to ASCII
 	jsr	OutByteChan		; output character to channel	[FFD2]
-A_F729:					;				[F729]
+A_F729					;				[F729]
 	pla				; pull error number
 	sec				; flag error
 
@@ -15354,7 +15228,7 @@ A_F729:					;				[F729]
 ;
 ; find the tape header, exit with header in buffer
 
-FindTapeHdr2:				;				[F72C]
+FindTapeHdr2				;				[F72C]
 	lda	LoadVerify2		; get load/verify flag
 	pha				; save load/verify flag
 
@@ -15381,16 +15255,16 @@ FindTapeHdr2:				;				[F72C]
 	bne	FindTapeHdr2		; if data file loop to find tape header
 
 ; was a program file header
-A_F74B:					;				[F74B]
+A_F74B					;				[F74B]
 	tax				; copy header type
 	bit	MSGFLG			; get message mode flag
 	bpl	A_F767			; exit if control messages off
 
-	ldy	#TxtFOUND-TxtIO_ERROR	; index to "FOUND "
+	ldy	#TxtFOUND		; index to "FOUND "
 	jsr	DisplayIoMsg2		; display kernel I/O message	[F12F]
 
 	ldy	#$05			; index to the tape filename
-A_F757:					;				[F757]
+A_F757					;				[F757]
 	lda	(TapeBufPtr),Y		; get byte from tape buffer
 	jsr	OutByteChan		; output character to channel	[FFD2]
 
@@ -15402,11 +15276,11 @@ A_F757:					;				[F757]
 	jsr	Wait8Seconds		; wait ~8.5 seconds for any key from
 					; the STOP key column		[E4E0]
 	nop				; waste cycles
-A_F767:					;				[F767]
+A_F767					;				[F767]
 	clc				; flag no error
 
 	dey				; decrement the index
-A_F769:					;				[F769]
+A_F769					;				[F769]
 	rts
 
 
@@ -15414,7 +15288,7 @@ A_F769:					;				[F769]
 ;
 ; write the tape header
 
-WriteTapeHdr:				;				[F76A]
+WriteTapeHdr				;				[F76A]
 	sta	PTR1			; save header type
 
 	jsr	TapeBufPtr2XY		; get tape buffer start pointer in XY
@@ -15435,7 +15309,7 @@ WriteTapeHdr:				;				[F76A]
 
 	ldy	#$BF			; index to header end
 	lda	#' '			; clear byte, [SPACE]
-A_F781:					;				[F781]
+A_F781					;				[F781]
 	sta	(TapeBufPtr),Y		; clear header byte
 
 	dey				; decrement index
@@ -15465,7 +15339,7 @@ A_F781:					;				[F781]
 
 	ldy	#$00			; clear Y
 	sty	PTR1			; clear the name index
-A_F7A5:					;				[F7A5]
+A_F7A5					;				[F7A5]
 	ldy	PTR1			; get name index
 	cpy	FNLEN			; compare with filename length
 	beq	A_F7B7			; if all done exit the loop
@@ -15478,7 +15352,7 @@ A_F7A5:					;				[F7A5]
 	inc	PTR2			; increment tape buffer index
 	bne	A_F7A5			; loop, branch always
 
-A_F7B7:					;				[F7B7]
+A_F7B7					;				[F7B7]
 	jsr	SetTapeBufStart		; set tape buffer start and end
 					; pointers			[F7D7]
 	lda	#$69			; set write lead cycle count
@@ -15501,7 +15375,7 @@ A_F7B7:					;				[F7B7]
 	sta	STAL+1			; restore it
 
 	tya				;.
-A_F7CF:					;				[F7CF]
+A_F7CF					;				[F7CF]
 	rts
 
 
@@ -15509,7 +15383,7 @@ A_F7CF:					;				[F7CF]
 ;
 ; get the tape buffer start pointer
 
-TapeBufPtr2XY:				;				[F7D0]
+TapeBufPtr2XY				;				[F7D0]
 	ldx	TapeBufPtr		; get tape buffer start pointer LB
 
 	ldy	TapeBufPtr+1		; get tape buffer start pointer HB
@@ -15521,7 +15395,7 @@ TapeBufPtr2XY:				;				[F7D0]
 ;
 ; set the tape buffer start and end pointers
 
-SetTapeBufStart:			;				[F7D7]
+SetTapeBufStart				;				[F7D7]
 	jsr	TapeBufPtr2XY		; get tape buffer start pointer in XY
 					;				[F7D0]
 	txa				; copy tape buffer start pointer LB
@@ -15544,7 +15418,7 @@ SetTapeBufStart:			;				[F7D7]
 ;
 ; find specific tape header
 
-FindTapeHeader:				;				[F7EA]
+FindTapeHeader				;				[F7EA]
 	jsr	FindTapeHdr2		; find tape header, exit with header in
 					; buffer			[F72C]
 	bcs	A_F80C			; just exit if error
@@ -15554,7 +15428,7 @@ FindTapeHeader:				;				[F7EA]
 
 	ldy	#$00			; clear Y
 	sty	PTR1			; save as name buffer index
-A_F7F7:					;				[F7F7]
+A_F7F7					;				[F7F7]
 	cpy	FNLEN			; compare with filename length
 	beq	A_F80B			; ok exit if match
 
@@ -15569,9 +15443,9 @@ A_F7F7:					;				[F7F7]
 	ldy	PTR1			; get name buffer index
 	bne	A_F7F7			; loop, branch always
 
-A_F80B:					;				[F80B]
+A_F80B					;				[F80B]
 	clc				; flag ok
-A_F80C:					;				[F80C]
+A_F80C					;				[F80C]
 	rts
 
 
@@ -15579,7 +15453,7 @@ A_F80C:					;				[F80C]
 ;
 ; bump tape pointer
 
-BumpTapePtr:				;				[F80D]
+BumpTapePtr				;				[F80D]
 	jsr	TapeBufPtr2XY		; get tape buffer start pointer in XY
 					;				[F7D0]
 	inc	BUFPNT			; increment tape buffer index
@@ -15593,15 +15467,15 @@ BumpTapePtr:				;				[F80D]
 ;
 ; wait for PLAY
 
-WaitForPlayKey:				;				[F817]
+WaitForPlayKey				;				[F817]
 	jsr	ReadTapeSense		; return cassette sense in Zb	[F82E]
 	beq	A_F836			; if switch closed just exit
 
 ; cassette switch was open
-	ldy	#TxtPRESS_PLAY-TxtIO_ERROR;	index to "PRESS PLAY ON TAPE"
-A_F81E:					;				[F81E]
+	ldy	#TxtPRESS_PLAY		; index to "PRESS PLAY ON TAPE"
+A_F81E					;				[F81E]
 	jsr	DisplayIoMsg2		; display kernel I/O message	[F12F]
-A_F821:					;				[F821]
+A_F821					;				[F821]
 	jsr	ScanStopKey0		; scan stop key and flag abort if
 					; pressed			[F8D0]
 					; note if STOP was pressed the return
@@ -15610,7 +15484,7 @@ A_F821:					;				[F821]
 	jsr	ReadTapeSense		; return cassette sense in Zb	[F82E]
 	bne	A_F821			; loop if the cassette switch is open
 
-	ldy	#TxtOK2-TxtIO_ERROR	; index to "OK"
+	ldy	#TxtOK2			; index to "OK"
 	jmp	DisplayIoMsg2		; display kernel I/O message and return
 					;				[F12F]
 
@@ -15619,13 +15493,13 @@ A_F821:					;				[F821]
 ;
 ; return cassette sense in Zb
 
-ReadTapeSense:				;				[F82E]
+ReadTapeSense				;				[F82E]
 	lda	#$10			; set the mask for the cassette switch
 	bit	P6510			; test the 6510 I/O port
 	bne	A_F836			; branch if cassette sense high
 
 	bit	P6510			; test the 6510 I/O port
-A_F836:					;				[F836]
+A_F836					;				[F836]
 	clc				;.
 	rts
 
@@ -15634,12 +15508,12 @@ A_F836:					;				[F836]
 ;
 ; wait for PLAY/RECORD
 
-WaitForPlayRec:				;				[F838]
+WaitForPlayRec				;				[F838]
 	jsr	ReadTapeSense		; return the cassette sense in Zb [F82E]
 	beq	A_F836			; exit if switch closed
 
 ; cassette switch was open
-	ldy	#TxtPRESS_RECO-TxtIO_ERROR  ; index to "PRESS RECORD & PLAY ON
+	ldy	#TxtPRESS_RECO		; index to "PRESS RECORD & PLAY ON
 					; TAPE"
 	bne	A_F81E			; display message and wait for switch,
 					; branch always
@@ -15648,14 +15522,14 @@ WaitForPlayRec:				;				[F838]
 ;
 ; initiate a tape read
 
-InitTapeRead:				;				[F841]
+InitTapeRead				;				[F841]
 	lda	#$00			; clear A
 	sta	STATUS			; clear serial status byte
 	sta	LoadVerify2		; clear the load/verify flag
 
 	jsr	SetTapeBufStart		; set the tape buffer start and end
 					; pointers			[F7D7]
-ReadTape:				;				[F84A]
+ReadTape				;				[F84A]
 	jsr	WaitForPlayKey		; wait for PLAY			[F817]
 	bcs	A_F86E			; exit if STOP was pressed, uses a
 					; further BCS at the target address to
@@ -15680,21 +15554,21 @@ ReadTape:				;				[F84A]
 ;
 ; initiate a tape write
 
-InitTapeWrite:				;				[F864]
-	jsr	SetTapeBufStart		; set tape buffer start and end 
+InitTapeWrite				;				[F864]
+	jsr	SetTapeBufStart		; set tape buffer start and end
 					; pointers			[F7D7]
 
 ; do tape write, 20 cycle count
 
-WriteTape20Cyc:				;				[F867]
+WriteTape20Cyc				;				[F867]
 	lda	#$14			; set write lead cycle count
 	sta	RIPRTY			; save write lead cycle count
 
 ; do tape write, no cycle count set
 
-WriteTape20:				;				[F86B]
+WriteTape20				;				[F86B]
 	jsr	WaitForPlayRec		; wait for PLAY/RECORD		[F838]
-A_F86E:					;				[F86E]
+A_F86E					;				[F86E]
 	bcs	ClrSavIrqAddr		; if STOPped clear save IRQ address and
 					; exit
 	sei				; disable interrupts
@@ -15707,7 +15581,7 @@ A_F86E:					;				[F86E]
 ;
 ; tape read/write
 
-A_F875:					;				[F875]
+A_F875					;				[F875]
 	ldy	#$7F			; disable all interrupts
 	sty	CIA1IRQ			; save CIA 1 ICR, disable all interrupts
 
@@ -15752,9 +15626,9 @@ A_F875:					;				[F875]
 
 ; 326656 cycle delay, allow tape motor speed to stabilise
 	ldx	#$FF			; outer loop count
-A_F8B5:					;				[F8B5]
+A_F8B5					;				[F8B5]
 	ldy	#$FF			; inner loop count
-A_F8B7:					;				[F8B7]
+A_F8B7					;				[F8B7]
 	dey				; decrement inner loop count
 	bne	A_F8B7			; loop if more to do
 
@@ -15762,7 +15636,7 @@ A_F8B7:					;				[F8B7]
 	bne	A_F8B5			; loop if more to do
 
 	cli				; enable tape interrupts
-J_F8BE:					;				[F8BE]
+J_F8BE					;				[F8BE]
 	lda	IRQTMP+1		; get saved IRQ HB
 	cmp	CINV+1			; compare with the current IRQ HB
 	clc				; flag ok
@@ -15781,7 +15655,7 @@ J_F8BE:					;				[F8BE]
 ;
 ; scan stop key and flag abort if pressed
 
-ScanStopKey0:				;				[F8D0]
+ScanStopKey0				;				[F8D0]
 	jsr	ScanStopKey		; scan stop key			[FFE1]
 	clc				; flag no stop
 	bne	A_F8E1			; exit if no stop
@@ -15798,10 +15672,10 @@ ScanStopKey0:				;				[F8D0]
 ;
 ; clear saved IRQ address
 
-ClrSavIrqAddr:				;				[F8DC]
+ClrSavIrqAddr				;				[F8DC]
 	lda	#$00			; clear A
 	sta	IRQTMP+1		; clear saved IRQ address HB
-A_F8E1:					;				[F8E1]
+A_F8E1					;				[F8E1]
 	rts
 
 
@@ -15809,7 +15683,7 @@ A_F8E1:					;				[F8E1]
 ;
 ;## set timing
 
-InitReadTape:				;				[F8E2]
+InitReadTape				;				[F8E2]
 	stx	CMPO+1			; save tape timing constant max byte
 
 	lda	CMPO			; get tape timing constant min byte
@@ -15826,13 +15700,13 @@ InitReadTape:				;				[F8E2]
 	bmi	A_F8F7			; branch if b7 set
 
 	rol				; else shift carry into ??
-A_F8F7:					;				[F8F7]
+A_F8F7					;				[F8F7]
 	asl	CMPO+1			; shift tape timing constant max byte
 	rol				;.
 	asl	CMPO+1			; shift tape timing constant max byte
 	rol				;.
 	tax				;.
-A_F8FE:					;				[F8FE]
+A_F8FE					;				[F8FE]
 	lda	CIA1TI2L		; get CIA 1 timer B LB
 	cmp	#$16			;.compare with ??
 	bcc	A_F8FE			; loop if less
@@ -15862,7 +15736,7 @@ A_F8FE:					;				[F8FE]
 	jmp	SaveStatGoIRQ		; save the status and do the IRQ
 					; routine			[FF43]
 
-A_F92A:					;				[F92A]
+A_F92A					;				[F92A]
 	cli				; enable interrupts
 	rts
 
@@ -15898,7 +15772,7 @@ A_F92A:					;				[F92A]
 
 ; read T2C which has been counting down from $FFFF. subtract this from $FFFF
 
-TapeRead_IRQ:				;				[F92C]
+TapeRead_IRQ				;				[F92C]
 	ldx	CIA1TI2H		; read CIA 1 timer B HB
 
 	ldy	#$FF			;.set $FF
@@ -15947,7 +15821,7 @@ TapeRead_IRQ:				;				[F92C]
 
 	jmp	StoreTapeChar		;.store the tape character	[FA60]
 
-A_F969:					;				[F969]
+A_F969					;				[F969]
 	ldx	TEMPA3			;.get EOI flag byte
 	bmi	A_F988			;.
 
@@ -15973,23 +15847,23 @@ A_F969:					;				[F969]
 					; byte
 	bcc	A_F98B			;.
 
-A_F988:					;				[F988]
+A_F988					;				[F988]
 	jmp	J_FA10			;.				[FA10]
 
-A_F98B:					;				[F98B]
+A_F98B					;				[F98B]
 	lda	BITTS			; get the bit count
 	beq	A_F9AC			; if all done go ??
 
 	sta	BITCI			; save receiver bit count in
 	bne	A_F9AC			; branch always
 
-A_F993:					;				[F993]
+A_F993					;				[F993]
 	inc	RINONE			; increment ?? start bit check flag
 	bcs	A_F999			;.
 
-J_F997:					;				[F997]
+J_F997					;				[F997]
 	dec	RINONE			; decrement ?? start bit check flag
-A_F999:					;				[F999]
+A_F999					;				[F999]
 	sec				;.
 	sbc	#$13			;.
 	sbc	CMPO+1			; subtract tape timing constant max byte
@@ -16002,7 +15876,7 @@ A_F999:					;				[F999]
 	beq	A_F9D5			;.
 
 	stx	TEMPD7			;.
-A_F9AC:					;				[F9AC]
+A_F9AC					;				[F9AC]
 	lda	BITTS			; get the bit count
 	beq	A_F9D2			; if all done go ??
 
@@ -16014,7 +15888,7 @@ A_F9AC:					;				[F9AC]
 	lda	Copy6522CRA		; read CIA 1 CRA shadow copy
 	bne	A_F9D2			; if ?? just exit
 
-A_F9BC:					;				[F9BC]
+A_F9BC					;				[F9BC]
 	lda	#$00			; clear A
 	sta	TEMPA4			; clear the tape bit cycle phase
 	sta	Copy6522CRA		; save CIA 1 CRA shadow copy
@@ -16024,16 +15898,16 @@ A_F9BC:					;				[F9BC]
 
 	bmi	A_F988			; always ->
 
-A_F9C9:					;				[F9C9]
+A_F9C9					;				[F9C9]
 	ldx	#$A6			; set timimg max byte
 	jsr	InitReadTape		; set timing			[F8E2]
 
 	lda	PRTY			;.
 	bne	A_F98B			;.
-A_F9D2:					;				[F9D2]
+A_F9D2					;				[F9D2]
 	jmp	End_RS232_NMI		; restore registers and exit interrupt
 					;				[FEBC]
-A_F9D5:					;				[F9D5]
+A_F9D5					;				[F9D5]
 	lda	SVXT			; get timing constant for tape
 	beq	A_F9E0			;.
 
@@ -16042,10 +15916,10 @@ A_F9D5:					;				[F9D5]
 	dec	CMPO			; decrement tape timing constant min
 					; byte
 .byte	$2C
-A_F9DE:					;				[F9DE]
+A_F9DE					;				[F9DE]
 	inc	CMPO			; increment tape timing constant min
 					; byte
-A_F9E0:					;				[F9E0]
+A_F9E0					;				[F9E0]
 	lda	#$00			;.
 	sta	SVXT			; clear timing constant for tape
 
@@ -16064,7 +15938,7 @@ A_F9E0:					;				[F9E0]
 	sta	SYNO			;.save cassette block synchronization
 					; number
 	bcs	A_F9AC			;.
-A_F9F7:					;				[F9F7]
+A_F9F7					;				[F9F7]
 	txa				;.
 	eor	PRTY			;.
 	sta	PRTY			;.
@@ -16083,20 +15957,20 @@ A_F9F7:					;				[F9F7]
 
 	jmp	End_RS232_NMI		; restore registers and exit interrupt
 					;				[FEBC]
-J_FA10:					;				[FA10]
+J_FA10					;				[FA10]
 	lda	SYNO			; get cassette block synchron. number
 	beq	A_FA18			;.
 
 	lda	BITTS			;.
 	beq	A_FA1F			;.
 
-A_FA18:					;				[FA18]
+A_FA18					;				[FA18]
 	lda	TEMPA3			;.get EOI flag byte
 	bmi	A_FA1F			;.
 
 	jmp	J_F997			;.				[F997]
 
-A_FA1F:					;				[FA1F]
+A_FA1F					;				[FA1F]
 	lsr	CMPO+1			; shift tape timing constant max byte
 
 	lda	#$93			;.
@@ -16124,7 +15998,7 @@ A_FA1F:					;				[FA1F]
 	lda	#$81			; enable timer A interrupt
 	sta	CIA1IRQ			; save CIA 1 ICR
 	sta	BITTS			;.
-A_FA44:					;				[FA44]
+A_FA44					;				[FA44]
 	lda	SYNO			; get cassette block synchron. number
 	sta	NXTBIT			;.
 	beq	A_FA53			;.
@@ -16134,14 +16008,14 @@ A_FA44:					;				[FA44]
 
 	lda	#$01			; disable timer A interrupt
 	sta	CIA1IRQ			; save CIA 1 ICR
-A_FA53:					;				[FA53]
+A_FA53					;				[FA53]
 	lda	MYCH			;.parity count
 	sta	ROPRTY			;.save RS232 parity byte
 
 	lda	BITCI			; get receiver bit count in
 	ora	RINONE			; OR with start bit check flag
 	sta	RODATA			;.
-A_FA5D:					;				[FA5D]
+A_FA5D					;				[FA5D]
 	jmp	End_RS232_NMI		; restore registers and exit interrupt
 					;				[FEBC]
 
@@ -16149,7 +16023,7 @@ A_FA5D:					;				[FA5D]
 ;
 ;## store character
 
-StoreTapeChar:				;				[FA60]
+StoreTapeChar				;				[FA60]
 	jsr	SetCounter		; new tape byte setup		[FB97]
 	sta	DPSW			; clear byte received flag
 
@@ -16161,7 +16035,7 @@ StoreTapeChar:				;				[FA60]
 
 	sta	INBIT			; save receiver input bit temporary
 					; storage
-A_FA70:					;				[FA70]
+A_FA70					;				[FA70]
 	lda	#$0F			;.
 	bit	RIDATA			;.
 	bpl	A_FA8D			;.
@@ -16177,13 +16051,13 @@ A_FA70:					;				[FA70]
 	jsr	AorIecStatus		; OR into serial status byte	[FE1C]
 	bne	A_FA8A			; restore registers and exit interrupt,
 					; branch always
-A_FA86:					;				[FA86]
+A_FA86					;				[FA86]
 	lda	#$00			;.
 	sta	RIDATA			;.
-A_FA8A:					;				[FA8A]
+A_FA8A					;				[FA8A]
 	jmp	End_RS232_NMI		; restore registers and exit interrupt
 					;				[FEBC]
-A_FA8D:					;				[FA8D]
+A_FA8D					;				[FA8D]
 	bvs	A_FAC0			;.
 
 	bne	A_FAA9			;.
@@ -16204,12 +16078,12 @@ A_FA8D:					;				[FA8D]
 	bcc	A_FABA			;.
 
 	clc				;.
-A_FAA3:					;				[FAA3]
+A_FAA3					;				[FAA3]
 	bcs	A_FABA			;.
 
 	and	#$0F			;.
 	sta	RIDATA			;.
-A_FAA9:					;				[FAA9]
+A_FAA9					;				[FAA9]
 	dec	RIDATA			;.
 	bne	A_FA8A			;.
 
@@ -16221,12 +16095,12 @@ A_FAA9:					;				[FAA9]
 	lda	#$00			;.
 	sta	RIPRTY			;.
 	beq	A_FA8A			;.
-A_FABA:					;				[FABA]
+A_FABA					;				[FABA]
 	lda	#$80			;.
 	sta	RIDATA			;.
 	bne	A_FA8A			; restore registers and exit interrupt,
 					; branch always
-A_FAC0:					;				[FAC0]
+A_FAC0					;				[FAC0]
 	lda	NXTBIT			;.
 	beq	A_FACE			;.
 
@@ -16236,14 +16110,14 @@ A_FAC0:					;				[FAC0]
 	lda	#$00			;.
 	jmp	J_FB4A			;.				[FB4A]
 
-A_FACE:					;				[FACE]
+A_FACE					;				[FACE]
 	jsr	ChkRdWrPtr		; check read/write pointer, return
 					;Cb = 1 if pointer >= end	[FCD1]
 	bcc	A_FAD6			;.
 
 	jmp	J_FB48			;.				[FB48]
 
-A_FAD6:					;				[FAD6]
+A_FAD6					;				[FAD6]
 	ldx	INBIT			; get receiver input bit temporary
 					; storage
 	dex				;.
@@ -16259,7 +16133,7 @@ A_FAD6:					;				[FAD6]
 
 	lda	#$01			;.
 	sta	RODATA			;.
-A_FAEB:					;				[FAEB]
+A_FAEB					;				[FAEB]
 	lda	RODATA			;.
 	beq	J_FB3A			;.
 
@@ -16280,7 +16154,7 @@ A_FAEB:					;				[FAEB]
 
 	jmp	J_FB3A			;.				[FB3A]
 
-A_FB08:					;				[FB08]
+A_FB08					;				[FB08]
 	ldx	PTR2			;.
 	cpx	PTR1			;.
 	beq	A_FB43			;.
@@ -16306,27 +16180,27 @@ A_FB08:					;				[FB08]
 
 	iny				;.
 	sty	RODATA			;.
-A_FB2F:					;				[FB2F]
+A_FB2F					;				[FB2F]
 	lda	RODATA			;.
 	beq	J_FB3A			;.
-A_FB33:					;				[FB33]
+A_FB33					;				[FB33]
 	lda	#$10			;.
 	jsr	AorIecStatus		; OR into serial status byte	[FE1C]
 	bne	A_FB43			;.
-J_FB3A:					;				[FB3A]
+J_FB3A					;				[FB3A]
 	lda	LoadVerify2		; get load/verify flag
 	bne	A_FB43			; if verify go ??
 
 	tay				;.
 	lda	ROPRTY			;.get RS232 parity byte
 	sta	(SAL),Y			;.
-A_FB43:					;				[FB43]
+A_FB43					;				[FB43]
 	jsr	IncRdWrPtr		; increment read/write pointer	[FCDB]
 	bne	A_FB8B			; restore registers and exit interrupt,
 					; branch always
-J_FB48:					;				[FB48]
+J_FB48					;				[FB48]
 	lda	#$80			;.
-J_FB4A:					;				[FB4A]
+J_FB4A					;				[FB4A]
 	sta	RIDATA			;.
 
 	sei				;.
@@ -16341,7 +16215,7 @@ J_FB4A:					;				[FB4A]
 	bmi	A_FB5C			;.
 
 	stx	FSBLK			;.save copies count
-A_FB5C:					;				[FB5C]
+A_FB5C					;				[FB5C]
 	dec	INBIT			; decrement receiver input bit temporary
 					; storage
 	beq	A_FB68			;.
@@ -16352,21 +16226,21 @@ A_FB5C:					;				[FB5C]
 	sta	FSBLK			;.save copies count
 	beq	A_FB8B			; restore registers and exit interrupt,
 					; branch always
-A_FB68:					;				[FB68]
+A_FB68					;				[FB68]
 	jsr	StopUsingTape		; restore everything for STOP	[FC93]
 	jsr	CopyIoAdr2Buf		; copy I/O start address to buffer
 					; address	[FB8E]
 
 	ldy	#$00			; clear index
 	sty	RIPRTY			; clear checksum
-A_FB72:					;				[FB72]
+A_FB72					;				[FB72]
 	lda	(SAL),Y			; get byte from buffer
 	eor	RIPRTY			; XOR with checksum
 	sta	RIPRTY			; save new checksum
 
 	jsr	IncRdWrPtr		; increment read/write pointer	[FCDB]
 
-	jsr	ChkRdWrPtr		; check read/write pointer, return 
+	jsr	ChkRdWrPtr		; check read/write pointer, return
 					;Cb = 1 if pointer >= end	[FCD1]
 	bcc	A_FB72			; loop if not at end
 
@@ -16376,7 +16250,7 @@ A_FB72:					;				[FB72]
 					; exit interrupt
 	lda	#$20			; else set checksum error
 	jsr	AorIecStatus		; OR into the serial status byte [FE1C]
-A_FB8B:					;				[FB8B]
+A_FB8B					;				[FB8B]
 	jmp	End_RS232_NMI		; restore registers and exit interrupt
 					;				[FEBC]
 
@@ -16384,7 +16258,7 @@ A_FB8B:					;				[FB8B]
 ;
 ; copy I/O start address to buffer address
 
-CopyIoAdr2Buf:				;				[FB8E]
+CopyIoAdr2Buf				;				[FB8E]
 	lda	STAL+1			; get I/O start address HB
 	sta	SAL+1			; set buffer address HB
 
@@ -16398,7 +16272,7 @@ CopyIoAdr2Buf:				;				[FB8E]
 ;
 ; new tape byte setup
 
-SetCounter:				;				[FB97]
+SetCounter				;				[FB97]
 	lda	#$08			; eight bits to do
 	sta	TEMPA3			; set bit count
 
@@ -16421,7 +16295,7 @@ SetCounter:				;				[FB97]
 ; this routine does not shift the bits of the tape write byte but uses a copy
 ; of that byte, the byte itself is shifted elsewhere
 
-WriteBitToTape:				;				[FBA6]
+WriteBitToTape				;				[FBA6]
 	lda	ROPRTY			; get tape write byte
 	lsr				; shift lsb into Cb
 
@@ -16430,17 +16304,17 @@ WriteBitToTape:				;				[FBA6]
 
 ; set time constant for bit = 1 and toggle tape
 
-SetTimeBitIs1:				;				[FBAD]
+SetTimeBitIs1				;				[FBAD]
 	lda	#$B0			; set time constant LB for bit = 1
 
 ; write time constant and toggle tape
 
-SetTimeHByte:				;				[FBAF]
+SetTimeHByte				;				[FBAF]
 	ldx	#$00			; set time constant HB
 
 ; write time constant and toggle tape
 
-WrTimeTgglTape:				;				[FBB1]
+WrTimeTgglTape				;				[FBB1]
 	sta	CIA1TI2L		; save CIA 1 timer B LB
 	stx	CIA1TI2H		; save CIA 1 timer B HB
 
@@ -16462,7 +16336,7 @@ WrTimeTgglTape:				;				[FBB1]
 ;
 ; flag block done and exit interrupt
 
-FlagBlockDone:				;				[FBC8]
+FlagBlockDone				;				[FBC8]
 	sec				; set carry flag
 	ror	RODATA			; set buffer address HB negative, flag
 					; all sync, data and checksum bytes
@@ -16481,7 +16355,7 @@ FlagBlockDone:				;				[FBC8]
 ; done, if so it checks if the checksum byte is done, if so it checks if both
 ; the load and verify copies have been done, if so it stops the tape
 
-TapeWrite_IRQ:				;				[FBCD]
+TapeWrite_IRQ				;				[FBCD]
 	lda	BITCI			; get start bit first cycle done flag
 	bne	A_FBE3			; if first cycle done go do rest of byte
 
@@ -16507,7 +16381,7 @@ TapeWrite_IRQ:				;				[FBCD]
 ; continue tape byte write. the first start cycle, both half cycles of it, is
 ; complete so the routine drops straight through to here
 
-A_FBE3:					;				[FBE3]
+A_FBE3					;				[FBE3]
 	lda	RINONE			; get start bit check flag
 	bne	A_FBF0			; if start bit is complete, go send byte
 
@@ -16515,7 +16389,7 @@ A_FBE3:					;				[FBE3]
 ; with two half cycles of $00B0 system clocks. this is the same as the first
 ; part of a 1 bit
 
-	jsr	SetTimeBitIs1		; set time constant for bit = 1 and 
+	jsr	SetTimeBitIs1		; set time constant for bit = 1 and
 					; toggle tape			[FBAD]
 	bne	A_FC09			; if first half cycle go restore
 					; registers and exit interrupt
@@ -16527,7 +16401,7 @@ A_FBE3:					;				[FBE3]
 ; the routine drops straight through to here. now the cycle pairs for each bit,
 ; and the parity bit, are sent
 
-A_FBF0:					;				[FBF0]
+A_FBF0					;				[FBF0]
 	jsr	WriteBitToTape		; send lsb from tape write byte to tape
 					;				[FBA6]
 	bne	A_FC09			; if first half cycle go restore
@@ -16553,14 +16427,14 @@ A_FBF0:					;				[FBF0]
 	and	#$01			; mask b0
 	eor	PRTY			; EOR with tape write byte parity bit
 	sta	PRTY			; save tape write byte parity bit
-A_FC09:					;				[FC09]
+A_FC09					;				[FC09]
 	jmp	End_RS232_NMI		; restore registers and exit interrupt
 					;				[FEBC]
 
 ; the bit cycle phase is complete so shift out the just written bit and test
 ; for byte end
 
-A_FC0C:					;				[FC0C]
+A_FC0C					;				[FC0C]
 	lsr	ROPRTY			; shift bit out of tape write byte
 
 	dec	TEMPA3			; decrement tape write bit count
@@ -16577,7 +16451,7 @@ A_FC0C:					;				[FC0C]
 ; the byte is complete. the start bit, data bits and parity bit have been
 ; written to the tape so setup for the next byte
 
-A_FC16:					;				[FC16]
+A_FC16					;				[FC16]
 	jsr	SetCounter		; new tape byte setup		[FB97]
 
 	cli				; enable the interrupts
@@ -16606,7 +16480,7 @@ A_FC16:					;				[FC16]
 	ora	#$80			; this is the load block so make the
 					; synchronisation count
 					; go $89, $88, ..... $82, $81
-A_FC2C:					;				[FC2C]
+A_FC2C					;				[FC2C]
 	sta	ROPRTY			; save the synchronisation byte as the
 					; tape write byte
 	bne	A_FC09			; restore registers and exit interrupt,
@@ -16615,7 +16489,7 @@ A_FC2C:					;				[FC2C]
 ; the synchronization bytes have been done so now check and do the actual block
 ; data
 
-A_FC30:					;				[FC30]
+A_FC30					;				[FC30]
 	jsr	ChkRdWrPtr		; check read/write pointer, return
 					; Cb = 1 if pointer >= end	[FCD1]
 	bcc	A_FC3F			; if not all done yet go get the byte
@@ -16636,7 +16510,7 @@ A_FC30:					;				[FC30]
 
 ; the block isn't finished so get the next byte to write to tape
 
-A_FC3F:					;				[FC3F]
+A_FC3F					;				[FC3F]
 	ldy	#$00			; clear index
 	lda	(SAL),Y			; get byte from buffer
 	sta	ROPRTY			; save as tape write byte
@@ -16649,22 +16523,22 @@ A_FC3F:					;				[FC3F]
 					; branch always
 
 ; set parity as next bit and exit interrupt
-A_FC4E:					;				[FC4E]
+A_FC4E					;				[FC4E]
 	lda	PRTY			; get parity bit
 	eor	#$01			; toggle it
 	sta	ROPRTY			; save as tape write byte
-A_FC54:					;				[FC54]
+A_FC54					;				[FC54]
 	jmp	End_RS232_NMI		; restore registers and exit interrupt
 					;	[FEBC]
 
 ; tape routine, block complete exit
-J_FC57:					;				[FC57]
+J_FC57					;				[FC57]
 	dec	FSBLK			; decrement copies remaining to
 					; read/write
 	bne	A_FC5E			; branch if more to do
 
 	jsr	StopTapeMotor		; stop the cassette motor	[FCCA]
-A_FC5E:					;				[FC5E]
+A_FC5E					;				[FC5E]
 	lda	#$50			; set tape write leader count
 	sta	INBIT			; save tape write leader count
 
@@ -16681,7 +16555,7 @@ A_FC5E:					;				[FC5E]
 ;
 ; write tape leader IRQ routine
 
-TapeLeader_IRQ:				;				[FC6A]
+TapeLeader_IRQ				;				[FC6A]
 	lda	#$78			; set time constant LB for bit = leader
 	jsr	SetTimeHByte		; write time constant and toggle tape
 					;				[FBAF]
@@ -16717,7 +16591,7 @@ TapeLeader_IRQ:				;				[FC6A]
 ;
 ; restore everything for STOP
 
-StopUsingTape:				;				[FC93]
+StopUsingTape				;				[FC93]
 	php				; save status
 
 	sei				; disable the interrupts
@@ -16741,7 +16615,7 @@ StopUsingTape:				;				[FC93]
 
 	lda	IRQTMP			; get saved IRQ vector LB
 	sta	CINV			; restore IRQ vector LB
-A_FCB6:					;				[FCB6]
+A_FCB6					;				[FCB6]
 	plp				; restore status
 
 	rts
@@ -16751,7 +16625,7 @@ A_FCB6:					;				[FCB6]
 ;
 ; reset vector
 
-A_FCB8:					;				[FCB8]
+A_FCB8					;				[FCB8]
 	jsr	StopUsingTape		; restore everything for STOP	[FC93]
 	beq	A_FC54			; restore registers and exit interrupt,
 					; branch always
@@ -16760,7 +16634,7 @@ A_FCB8:					;				[FCB8]
 ;
 ; set tape vector
 
-SetTapeVector:				;				[FCBD]
+SetTapeVector				;				[FCBD]
 	lda	TapeIrqVectors-8,X	; get tape IRQ vector LB
 	sta	CINV			; set IRQ vector LB
 
@@ -16774,7 +16648,7 @@ SetTapeVector:				;				[FCBD]
 ;
 ; stop the cassette motor
 
-StopTapeMotor:				;				[FCCA]
+StopTapeMotor				;				[FCCA]
 	lda	P6510			; read the 6510 I/O port
 	ora	#$20			; mask xx1x, turn the cassette motor off
 	sta	P6510			; save the 6510 I/O port
@@ -16787,7 +16661,7 @@ StopTapeMotor:				;				[FCCA]
 ; check read/write pointer
 ; return Cb = 1 if pointer >= end
 
-ChkRdWrPtr:				;				[FCD1]
+ChkRdWrPtr				;				[FCD1]
 	sec				; set carry for subtract
 	lda	SAL			; get buffer address LB
 	sbc	EAL			; subtract buffer end LB
@@ -16802,12 +16676,12 @@ ChkRdWrPtr:				;				[FCD1]
 ;
 ; increment read/write pointer
 
-IncRdWrPtr:				;				[FCDB]
+IncRdWrPtr				;				[FCDB]
 	inc	SAL			; increment buffer address LB
 	bne	A_FCE1			; branch if no overflow
 
 	inc	SAL+1			; increment buffer address LB
-A_FCE1:					;				[FCE1]
+A_FCE1					;				[FCE1]
 	rts
 
 
@@ -16815,7 +16689,7 @@ A_FCE1:					;				[FCE1]
 ;
 ; RESET, hardware reset starts here
 
-RESET_routine:				;				[FCE2]
+RESET_routine				;				[FCE2]
 	ldx	#$FF			; set X for stack
 	sei				; disable the interrupts
 	txs				; clear stack
@@ -16827,8 +16701,8 @@ RESET_routine:				;				[FCE2]
 
 	jmp	(RomStart)		; else call ROM start code
 
-A_FCEF:					;				[FCEF]
-	stx	VICCTR2			; read the horizontal fine scroll and 
+A_FCEF					;				[FCEF]
+	stx	VICCTR2			; read the horizontal fine scroll and
 					;control register
 	jsr	InitSidCIAIrq2		; initialise SID, CIA and IRQ	[FDA3]
 	jsr	TestRAM2		; RAM test and find RAM end	[FD50]
@@ -16844,9 +16718,9 @@ A_FCEF:					;				[FCEF]
 ;
 ; scan for autostart ROM at $8000, returns Zb=1 if ROM found
 
-Chk4Cartridge:				;				[FD02]
+Chk4Cartridge				;				[FD02]
 	ldx	#$05			; five characters to test
-A_FD04:					;				[FD04]
+A_FD04					;				[FD04]
 	lda	RomSignature-1,X	; get test character
 	cmp	RomIdentStr-1,X		; compare wiith byte in ROM space
 	bne	D_FD0F			; exit if no match
@@ -16854,7 +16728,7 @@ A_FD04:					;				[FD04]
 	dex				; decrement index
 	bne	A_FD04			; loop if not all done
 
-D_FD0F:					;				[FD0F]
+D_FD0F					;				[FD0F]
 	rts
 
 
@@ -16862,8 +16736,8 @@ D_FD0F:					;				[FD0F]
 ;
 ; autostart ROM signature
 
-RomSignature:				;				[FD10]
-.byte	$C3,$C2,$CD,$38,$30		; CBM80
+RomSignature				;				[FD10]
+.text	"CBM80"				; CBM80
 
 
 ;******************************************************************************
@@ -16874,10 +16748,10 @@ RomSignature:				;				[FD10]
 ; and BASIC routines and interrupts. The KERNAL VECTOR routine is used to read
 ; and alter individual system vectors.
 
-SetVectorsIO2:				;				[FD15]
+SetVectorsIO2				;				[FD15]
 	ldx	#<TblVectors		; pointer to vector table LB
 	ldy	#>TblVectors		; pointer to vector table HB
-S_FD19:
+S_FD19
 	clc				; flag set vectors
 
 
@@ -16896,16 +16770,16 @@ S_FD19:
 ; first read the entire vector contents into the user area, alter the desired
 ; vectors, and then copy the contents back to the system vectors.
 
-CopyVectorsIO2:				;				[FD1A]
+CopyVectorsIO2				;				[FD1A]
 	stx	MEMUSS			; save pointer LB
 	sty	MEMUSS+1		; save pointer HB
 	ldy	#$1F			; set byte count
-A_FD20:					;				[FD20]
+A_FD20					;				[FD20]
 	lda	CINV,Y			; read vector byte from vectors
 	bcs	A_FD27			; branch if read vectors
 
 	lda	(MEMUSS),Y		; read vector byte from (XY)
-A_FD27:					;				[FD27]
+A_FD27					;				[FD27]
 	sta	(MEMUSS),Y		; save byte to (XY)
 	sta	CINV,Y			; save byte to vector
 	dey				; decrement index
@@ -16941,18 +16815,18 @@ A_FD27:					;				[FD27]
 ;
 ; kernal vectors
 
-TblVectors:				;				[FD30]
-.word	IRQ_vector		; CINV    IRQ vector
-.word	BRK_vector		; BINV    BRK vector
-.word	NMI_vector		; NMINV   NMI vector
-.word	OpenLogFile2		; IOPEN   open a logical file
+TblVectors				;				[FD30]
+.word	IRQ_vector		; CINV	  IRQ vector
+.word	BRK_vector		; BINV	  BRK vector
+.word	NMI_vector		; NMINV	  NMI vector
+.word	OpenLogFile2		; IOPEN	  open a logical file
 .word	CloseLogFile2		; ICLOSE  close a specified logical file
 .word	OpenChanInput		; ICHKIN  open channel for input
 .word	OpenChanOutput		; ICKOUT  open channel for output
 .word	CloseIoChans		; ICLRCH  close input and output channels
 .word	ByteFromChan2		; IBASIN  input character from channel
 .word	OutByteChan2		; IBSOUT  output character to channel
-.word	Scan4StopKey		; ISTOP   scan stop key
+.word	Scan4StopKey		; ISTOP	  scan stop key
 .word	GetByteInpDev		; IGETIN  get character from the input device
 .word	ClsAllChnFil		; ICLALL  close all channels and files
 .word	BRK_vector		; UserFn  user function
@@ -16976,10 +16850,10 @@ TblVectors:				;				[FD30]
 ;
 ; test RAM and find RAM end
 
-TestRAM2:				;				[FD50]
+TestRAM2				;				[FD50]
 	lda	#$00			; clear A
 	tay				; clear index
-A_FD53:					;				[FD53]
+A_FD53					;				[FD53]
 	sta	D6510+2,Y		; clear page 0, don't do $0000 or $0001
 	sta	CommandBuf,Y		; clear page 2
 	sta	IERROR,Y		; clear page 3
@@ -16996,9 +16870,9 @@ A_FD53:					;				[FD53]
 
 	lda	#$03			; set RAM test pointer HB
 	sta	STAL+1			; save RAM test pointer HB
-A_FD6C:					;				[FD6C]
+A_FD6C					;				[FD6C]
 	inc	STAL+1			; increment RAM test pointer HB
-A_FD6E:					;				[FD6E]
+A_FD6E					;				[FD6E]
 	lda	(STAL),Y		;.
 	tax				;.
 
@@ -17020,7 +16894,7 @@ A_FD6E:					;				[FD6E]
 	bne	A_FD6E			;.
 	beq	A_FD6C			; always ->
 
-A_FD88:					;				[FD88]
+A_FD88					;				[FD88]
 	tya				;.
 	tax				;.
 
@@ -17041,7 +16915,7 @@ A_FD88:					;				[FD88]
 ;
 ; tape IRQ vectors
 
-TapeIrqVectors:				;				[FD9B]
+TapeIrqVectors				;				[FD9B]
 .word	TapeLeader_IRQ			; $08	write tape leader IRQ routine
 .word	TapeWrite_IRQ			; $0A	tape write IRQ routine
 .word	IRQ_vector			; $0C	normal IRQ vector
@@ -17052,7 +16926,7 @@ TapeIrqVectors:				;				[FD9B]
 ;
 ; initialise SID, CIA and IRQ
 
-InitSidCIAIrq2:				;				[FDA3]
+InitSidCIAIrq2				;				[FDA3]
 	lda	#$7F			; disable all interrupts
 	sta	CIA1IRQ			; save CIA 1 ICR
 	sta	CIA2IRQ			; save CIA 2 ICR
@@ -17087,7 +16961,7 @@ InitSidCIAIrq2:				;				[FDA3]
 
 	lda	#$2F			; set 0010 1111, 0 = input, 1 = output
 	sta	D6510			; save 6510 I/O port direction register
-TimingPalNtsc:				;				[FDDD]
+TimingPalNtsc				;				[FDDD]
 	lda	PALNTSC			; get the PAL/NTSC flag
 	beq	A_FDEC			; if NTSC go set NTSC timing
 
@@ -17098,12 +16972,12 @@ TimingPalNtsc:				;				[FDDD]
 	lda	#$40			;.
 	jmp	J_FDF3			;.				[FDF3]
 
-A_FDEC:					;				[FDEC]
+A_FDEC					;				[FDEC]
 	lda	#$95			;.
 	sta	CIA1TI1L		; save CIA 1 timer A LB
 
 	lda	#$42			;.
-J_FDF3:					;				[FDF3]
+J_FDF3					;				[FDF3]
 	sta	CIA1TI1H		; save CIA 1 timer A HB
 
 	jmp	SetTimerIRQ		;.				[FF6E]
@@ -17118,10 +16992,10 @@ J_FDF3:					;				[FDF3]
 ; with the pointer to filename, X being the LB. The address can be any
 ; valid memory address in the system where a string of characters for the file
 ; name is stored. If no filename desired the accumulator must be set to 0,
-; representing a zero file length, in that case  XY may be set to any memory
+; representing a zero file length, in that case	 XY may be set to any memory
 ; address.
 
-SetFileName2:				;				[FDF9]
+SetFileName2				;				[FDF9]
 	sta	FNLEN			; set filename length
 	stx	FNADR			; set filename pointer LB
 	sty	FNADR+1			; set filename pointer HB
@@ -17157,7 +17031,7 @@ SetFileName2:				;				[FDF9]
 ; after the device number is sent during the serial attention handshaking
 ; sequence. If no secondary address is to be sent Y should be set to $FF.
 
-SetAddresses2:				;				[FE00]
+SetAddresses2				;				[FE00]
 	sta	LA			; save the logical file
 	stx	FA			; save the device number
 	sty	SA			; save the secondary address
@@ -17174,7 +17048,7 @@ SetAddresses2:				;				[FE00]
 ; routine will give information about device status, or errors that have
 ; occurred during the I/O operation.
 
-ReadIoStatus2:				;				[FE07]
+ReadIoStatus2				;				[FE07]
 	lda	FA			; get the device number
 	cmp	#$02			; compare device with RS232 device
 	bne	A_FE1A			; if not RS232 device go ??
@@ -17205,9 +17079,9 @@ ReadIoStatus2:				;				[FE07]
 ; 7 is set one of the error messages from the KERNAL will be printed. If bit 6
 ; is set a control message will be printed.
 
-CtrlKernalMsg2:				;				[FE18]
+CtrlKernalMsg2				;				[FE18]
 	sta	MSGFLG			; set message mode flag
-A_FE1A:					;				[FE1A]
+A_FE1A					;				[FE1A]
 	lda	STATUS			; read the serial status byte
 
 
@@ -17215,7 +17089,7 @@ A_FE1A:					;				[FE1A]
 ;
 ; OR into the serial status byte
 
-AorIecStatus:				;				[FE1C]
+AorIecStatus				;				[FE1C]
 	ora	STATUS			; OR with the serial status byte
 	sta	STATUS			; save the serial status byte
 
@@ -17236,7 +17110,7 @@ AorIecStatus:				;				[FE1C]
 ; NOTE: The the timeout feature is used to communicate that a disk file is not
 ; found on an attempt to OPEN a file.
 
-IecTimeout2:				;				[FE21]
+IecTimeout2				;				[FE21]
 	sta	TIMOUT			; save serial bus timeout flag
 
 	rts
@@ -17251,7 +17125,7 @@ IecTimeout2:				;				[FE21]
 ; into XY. When this routine is called with the carry bit clear XY will be
 ; saved as the top of memory pointer changing the top of memory.
 
-TopOfMem2:				;				[FE25]
+TopOfMem2				;				[FE25]
 	bcc	SetTopOfMem2		; if Cb clear go set the top of memory
 
 
@@ -17259,7 +17133,7 @@ TopOfMem2:				;				[FE25]
 ;
 ; read the top of memory
 
-ReadTopOfMem:				;				[FE27]
+ReadTopOfMem				;				[FE27]
 	ldx	EndOfMem		; get memory top LB
 	ldy	EndOfMem+1		; get memory top HB
 
@@ -17268,7 +17142,7 @@ ReadTopOfMem:				;				[FE27]
 ;
 ; set the top of memory
 
-SetTopOfMem2:				;				[FE2D]
+SetTopOfMem2				;				[FE2D]
 	stx	EndOfMem		; set memory top LB
 	sty	EndOfMem+1		; set memory top HB
 
@@ -17284,7 +17158,7 @@ SetTopOfMem2:				;				[FE2D]
 ; into XY. When this routine is called with the carry bit clear XY will be
 ; saved as the bottom of memory pointer changing the bottom of memory.
 
-BottomOfMem2:				;				[FE34]
+BottomOfMem2				;				[FE34]
 	bcc	A_FE3C			; if Cb clear go set bottom of memory
 
 	ldx	StartOfMem		; get the OS start of memory LB
@@ -17292,7 +17166,7 @@ BottomOfMem2:				;				[FE34]
 
 ; set the bottom of memory
 
-A_FE3C:					;				[FE3C]
+A_FE3C					;				[FE3C]
 	stx	StartOfMem		; save the OS start of memory LB
 	sty	StartOfMem+1		; save the OS start of memory HB
 
@@ -17303,7 +17177,7 @@ A_FE3C:					;				[FE3C]
 ;
 ; NMI vector
 
-NMI_routine:				;				[FE43]
+NMI_routine				;				[FE43]
 	sei				; disable the interrupts
 
 	jmp	(NMINV)			; do NMI vector
@@ -17313,7 +17187,7 @@ NMI_routine:				;				[FE43]
 ;
 ; NMI handler
 
-NMI_vector:				;				[FE47]
+NMI_vector				;				[FE47]
 	pha				; save A
 
 	txa				; copy X
@@ -17333,7 +17207,7 @@ NMI_vector:				;				[FE47]
 
 	jmp	(RomIRQ)		; else do autostart ROM break entry
 
-A_FE5E:					;				[FE5E]
+A_FE5E					;				[FE5E]
 	jsr	IncrClock22		; increment real time clock	[F6BC]
 
 	jsr	ScanStopKey		; scan stop key			[FFE1]
@@ -17346,7 +17220,7 @@ A_FE5E:					;				[FE5E]
 ; user function default vector
 ; BRK handler
 
-BRK_vector:				;				[FE66]
+BRK_vector				;				[FE66]
 	jsr	SetVectorsIO2		; restore default I/O vectors	[FD15]
 	jsr	InitSidCIAIrq2		; initialise SID, CIA and IRQ	[FDA3]
 	jsr	InitScreenKeyb		; initialise the screen and keyboard
@@ -17358,7 +17232,7 @@ BRK_vector:				;				[FE66]
 ;
 ; RS232 NMI routine
 
-RS232_NMI:				;				[FE72]
+RS232_NMI				;				[FE72]
 	tya				;.
 	and	ENABL			; AND with RS-232 interrupt enable byte
 	tax				;.
@@ -17385,13 +17259,13 @@ RS232_NMI:				;				[FE72]
 	jsr	ReadFromRS232		;.				[FED6]
 	jmp	J_FE9D			;.				[FE9D]
 
-A_FE9A:					;				[FE9A]
+A_FE9A					;				[FE9A]
 	jsr	WriteToRS232		;.				[FF07]
-J_FE9D:					;				[FE9D]
+J_FE9D					;				[FE9D]
 	jsr	RS232_TX_NMI		;.				[EEBB]
 	jmp	J_FEB6			;.				[FEB6]
 
-A_FEA3:					;				[FEA3]
+A_FEA3					;				[FEA3]
 	txa				; get active interrupts back
 	and	#$02			; mask ?? interrupt
 	beq	A_FEAE			; branch if not ?? interrupt
@@ -17400,17 +17274,17 @@ A_FEA3:					;				[FEA3]
 	jsr	ReadFromRS232		;.				[FED6]
 	jmp	J_FEB6			;.				[FEB6]
 
-A_FEAE:					;				[FEAE]
+A_FEAE					;				[FEAE]
 	txa				; get active interrupts back
 	and	#$10			; mask CB1 interrupt, Rx data bit
 					; transition
 	beq	J_FEB6			; if no bit restore registers and exit
 					; interrupt
 	jsr	WriteToRS232		;.				[FF07]
-J_FEB6:					;				[FEB6]
+J_FEB6					;				[FEB6]
 	lda	ENABL			; get RS-232 interrupt enable byte
 	sta	CIA2IRQ			; save CIA 2 ICR
-End_RS232_NMI:				;				[FEBC]
+End_RS232_NMI				;				[FEBC]
 	pla				; pull Y
 	tay				; restore Y
 
@@ -17431,28 +17305,28 @@ End_RS232_NMI:				;				[FEBC]
 ;		system clock
 ;		------------
 ; PAL		  985248 Hz
-; NTSC	 	 1022727 Hz
+; NTSC		 1022727 Hz
 
 ; baud rate tables for NTSC C64
 
-TblBaudNTSC:				;				[FEC2]
-.word	$27C1				;   50   baud	1027700
-.word	$1A3E				;   75   baud	1022700
-.word	$11C5				;  110   baud	1022780
+TblBaudNTSC				;				[FEC2]
+.word	$27C1				;   50	 baud	1027700
+.word	$1A3E				;   75	 baud	1022700
+.word	$11C5				;  110	 baud	1022780
 .word	$0E74				;  134.5 baud	1022200
-.word	$0CED				;  150   baud	1022700
-.word	$0645				;  300   baud	1023000
-.word	$02F0				;  600   baud	1022400
-.word	$0146				; 1200   baud	1022400
-.word	$00B8				; 1800   baud	1022400
-.word	$0071				; 2400   baud	1022400
+.word	$0CED				;  150	 baud	1022700
+.word	$0645				;  300	 baud	1023000
+.word	$02F0				;  600	 baud	1022400
+.word	$0146				; 1200	 baud	1022400
+.word	$00B8				; 1800	 baud	1022400
+.word	$0071				; 2400	 baud	1022400
 
 
 ;******************************************************************************
 ;
 ; Read from RS-232
 
-ReadFromRS232:				;				[FED6]
+ReadFromRS232				;				[FED6]
 	lda	CIA2DRB			; read CIA 2 DRB, RS232 port
 	and	#$01			; mask 0000 000x, RS232 Rx DATA
 	sta	INBIT			; save the RS232 received data bit
@@ -17484,7 +17358,7 @@ ReadFromRS232:				;				[FED6]
 ;
 ; Write to RS-232
 
-WriteToRS232:				;				[FF07]
+WriteToRS232				;				[FF07]
 	lda	M51AJB			; nonstandard bit timing LB
 	sta	CIA2TI2L		; save CIA 2 timer B LB
 
@@ -17512,7 +17386,7 @@ WriteToRS232:				;				[FF07]
 ;
 ; Set the timer for the Baud rate
 
-SetTimerBaudR:				;				[FF2E]
+SetTimerBaudR				;				[FF2E]
 	tax				;.
 
 	lda	M51AJB+1		; nonstandard bit timing HB
@@ -17543,7 +17417,7 @@ SetTimerBaudR:				;				[FF2E]
 ;
 ; save the status and do the IRQ routine
 
-SaveStatGoIRQ:				;				[FF43]
+SaveStatGoIRQ				;				[FF43]
 	php				; save the processor status
 
 	pla				; pull the processor status
@@ -17555,7 +17429,7 @@ SaveStatGoIRQ:				;				[FF43]
 ;
 ; IRQ vector
 
-IRQ_routine:				;				[FF48]
+IRQ_routine				;				[FF48]
 	pha				; save A
 
 	txa				; copy X
@@ -17571,7 +17445,7 @@ IRQ_routine:				;				[FF48]
 
 	jmp	(BINV)			; else do BRK vector (iBRK)
 
-A_FF58:					;				[FF58]
+A_FF58					;				[FF58]
 	jmp	(CINV)			; do IRQ vector (iIRQ)
 
 
@@ -17579,10 +17453,10 @@ A_FF58:					;				[FF58]
 ;
 ; initialise VIC and screen editor
 
-InitialiseVIC2:				;				[FF5B]
+InitialiseVIC2				;				[FF5B]
 	jsr	InitScreenKeyb		; initialise the screen and keyboard
 					;				[E518]
-A_FF5E:					;				[FF5E]
+A_FF5E					;				[FF5E]
 	lda	VICLINE			; read the raster compare register
 	bne	A_FF5E			; loop if not raster line $00
 
@@ -17596,7 +17470,7 @@ A_FF5E:					;				[FF5E]
 ;
 ; Set the timer that generates the interrupts
 
-SetTimerIRQ:				;				[FF6E]
+SetTimerIRQ				;				[FF6E]
 	lda	#$81			; enable timer A interrupt
 	sta	CIA1IRQ			; save CIA 1 ICR
 
@@ -17622,7 +17496,7 @@ SetTimerIRQ:				;				[FF6E]
 ;
 ; initialise VIC and screen editor
 
-InitialiseVIC:				;				[FF81]
+InitialiseVIC				;				[FF81]
 	jmp	InitialiseVIC2		; initialise VIC and screen editor
 					;				[FF5B]
 
@@ -17630,7 +17504,7 @@ InitialiseVIC:				;				[FF81]
 ;
 ; initialise SID, CIA and IRQ, unused
 
-InitSidCIAIrq:				;				[FF84]
+InitSidCIAIrq				;				[FF84]
 	jmp	InitSidCIAIrq2		; initialise SID, CIA and IRQ	[FDA3]
 
 
@@ -17649,7 +17523,7 @@ InitSidCIAIrq:				;				[FF84]
 ; this routine restores the default values of all system vectors used in KERNAL
 ; and BASIC routines and interrupts.
 
-SetVectorsIO:				;				[FF8A]
+SetVectorsIO				;				[FF8A]
 	jmp	SetVectorsIO2		; restore default I/O vectors	[FD15]
 
 
@@ -17667,7 +17541,7 @@ SetVectorsIO:				;				[FF8A]
 ; first read the entire vector contents into the user area, alter the desired
 ; vectors and then copy the contents back to the system vectors.
 
-CopyVectorsIO:				;				[FF8D]
+CopyVectorsIO				;				[FF8D]
 	jmp	CopyVectorsIO2		; read/set vectored I/O		[FD1A]
 
 
@@ -17686,7 +17560,7 @@ CopyVectorsIO:				;				[FF8D]
 ; 7 is set one of the error messages from the KERNAL will be printed. If bit 6
 ; is set a control message will be printed.
 
-CtrlKernalMsg:				;				[FF90]
+CtrlKernalMsg				;				[FF90]
 	jmp	CtrlKernalMsg2		; control kernal messages	[FE18]
 
 
@@ -17705,7 +17579,7 @@ CtrlKernalMsg:				;				[FF90]
 ; When a secondary address is to be sent to a device on the serial bus the
 ; address must first be ORed with $60.
 
-SAafterLISTEN:				;				[FF93]
+SAafterLISTEN				;				[FF93]
 	jmp	SAafterLISTEN2		; send secondary address after LISTEN
 					;	[EDB9]
 
@@ -17719,7 +17593,7 @@ SAafterLISTEN:				;				[FF93]
 ; over the serial bus. This routine can only be called after a call to the TALK
 ; routine. It will not work after a LISTEN.
 
-SAafterTALK:				;				[FF96]
+SAafterTALK				;				[FF96]
 	jmp	SAafterTALK2		; send secondary address after TALK
 					;				[EDC7]
 
@@ -17732,7 +17606,7 @@ SAafterTALK:				;				[FF96]
 ; into XY. When this routine is called with the carry bit clear XY will be
 ; saved as the top of memory pointer changing the top of memory.
 
-TopOfMem:				;				[FF99]
+TopOfMem				;				[FF99]
 	jmp	TopOfMem2		; read/set the top of memory	[FE25]
 
 
@@ -17745,7 +17619,7 @@ TopOfMem:				;				[FF99]
 ; into XY. When this routine is called with the carry bit clear XY will be
 ; saved as the bottom of memory pointer changing the bottom of memory.
 
-BottomOfMem:				;				[FF9C]
+BottomOfMem				;				[FF9C]
 	jmp	BottomOfMem2		; read/set the bottom of memory	[FE34]
 
 
@@ -17757,7 +17631,7 @@ BottomOfMem:				;				[FF9C]
 ; same routine called by the interrupt handler. If a key is down, its ASCII
 ; value is placed in the keyboard queue.
 
-ScanKeyboard:				;				[FF9F]
+ScanKeyboard				;				[FF9F]
 	jmp	ScanKeyboard2		; scan keyboard			[EA87]
 
 
@@ -17775,7 +17649,7 @@ ScanKeyboard:				;				[FF9F]
 ; NOTE: The the timeout feature is used to communicate that a disk file is not
 ; found on an attempt to OPEN a file.
 
-IecTimeout:				;				[FFA2]
+IecTimeout				;				[FFA2]
 	jmp	IecTimeout2		; set timeout on serial bus	[FE21]
 
 
@@ -17792,7 +17666,7 @@ IecTimeout:				;				[FFA2]
 ; errors are returned in the status word which can be read by calling the
 ; READST routine, ReadIoStatus.
 
-IecByteIn:				;				[FFA5]
+IecByteIn				;				[FFA5]
 	jmp	IecByteIn2		; input byte from serial bus	[EE13]
 
 
@@ -17811,7 +17685,7 @@ IecByteIn:				;				[FFA5]
 ; F_FFAE, is made to end the data transmission, the buffered character is
 ; sent with EOI set. Then the UNLISTEN command is sent to the device.
 
-IecByteOut:				;				[FFA8]
+IecByteOut				;				[FFA8]
 	jmp	IecByteOut2		; output byte to serial bus	[EDDD]
 
 
@@ -17822,7 +17696,7 @@ IecByteOut:				;				[FFA8]
 ; this routine will transmit an UNTALK command on the serial bus. All devices
 ; previously set to TALK will stop sending data when this command is received.
 
-IecUNTALK:				;				[FFAB]
+IecUNTALK				;				[FFAB]
 	jmp	IecUNTALK2		; command serial bus to UNTALK	[EDEF]
 
 
@@ -17839,7 +17713,7 @@ IecUNTALK:				;				[FFAB]
 ; external devices. Sending the UNLISTEN will command the listening devices to
 ; get off the serial bus so it can be used for other purposes.
 
-IecUNLISTEN:				;				[FFAE]
+IecUNLISTEN				;				[FFAE]
 	jmp	IecUNLISTEN2		; command serial bus to UNLISTEN [EDFE]
 
 
@@ -17853,7 +17727,7 @@ IecUNLISTEN:				;				[FFAE]
 ; this data as a command on the serial bus. The specified device will then go
 ; into listen mode and be ready to accept information.
 
-CmdLISTEN:				;				[FFB1]
+CmdLISTEN				;				[FFB1]
 	jmp	CmdLISTEN2		; command devices on the serial bus to
 					; LISTEN			[ED0C]
 
@@ -17865,7 +17739,7 @@ CmdLISTEN:				;				[FFB1]
 ; between 4 and 30. When called this routine converts this device number to a
 ; talk address. Then this data is transmitted as a command on the Serial bus.
 
-CmdTALK:				;				[FFB4]
+CmdTALK					;				[FFB4]
 	jmp	CmdTALK2		; command serial bus device to TALK
 					;				[ED09]
 
@@ -17878,7 +17752,7 @@ CmdTALK:				;				[FFB4]
 ; routine will give information about device status, or errors that have
 ; occurred during the I/O operation.
 
-ReadIoStatus:				;				[FFB7]
+ReadIoStatus				;				[FFB7]
 	jmp	ReadIoStatus2		; read I/O status word		[FE07]
 
 
@@ -17910,7 +17784,7 @@ ReadIoStatus:				;				[FFB7]
 ; after the device number is sent during the serial attention handshaking
 ; sequence. If no secondary address is to be sent Y should be set to $FF.
 
-SetAddresses:				;				[FFBA]
+SetAddresses				;				[FFBA]
 	jmp	SetAddresses2		; set logical, first and second
 					; addresses			[FE00]
 
@@ -17923,10 +17797,10 @@ SetAddresses:				;				[FFBA]
 ; with the pointer to filename, X being th LB. The address can be any
 ; valid memory address in the system where a string of characters for the file
 ; name is stored. If no filename desired the accumulator must be set to 0,
-; representing a zero file length, in that case  XY may be set to any memory
+; representing a zero file length, in that case	 XY may be set to any memory
 ; address.
 
-SetFileName:				;				[FFBD]
+SetFileName				;				[FFBD]
 	jmp	SetFileName2		; set the filename		[FDF9]
 
 
@@ -17940,7 +17814,7 @@ SetFileName:				;				[FFBD]
 ; need to be set up to use this routine, but both the SETLFS, SetAddresses, and
 ; SETNAM, SetFileName, KERNAL routines must be called before using this routine.
 
-OpenLogFile:				;				[FFC0]
+OpenLogFile				;				[FFC0]
 	jmp	(IOPEN)			; do open a logical file
 
 
@@ -17953,7 +17827,7 @@ OpenLogFile:				;				[FFC0]
 ; loaded with the logical file number to be closed, the same number used when
 ; the file was opened using the OPEN routine.
 
-CloseLogFile:				;				[FFC3]
+CloseLogFile				;				[FFC3]
 	jmp	(ICLOSE)		; do close a specified logical file
 
 
@@ -17980,7 +17854,7 @@ CloseLogFile:				;				[FFC3]
 ;	5 : device not present
 ;	6 : file is not an input file
 
-OpenChan4Inp:				;				[FFC6]
+OpenChan4Inp				;				[FFC6]
 	jmp	(ICHKIN)		; do open channel for input
 
 
@@ -18007,7 +17881,7 @@ OpenChan4Inp:				;				[FFC6]
 ;	5 : device not present
 ;	7 : file is not an output file
 
-OpenChan4Outp:				;				[FFC9]
+OpenChan4Outp				;				[FFC9]
 	jmp	(ICKOUT)		; do open channel for output
 
 
@@ -18028,7 +17902,7 @@ OpenChan4Outp:				;				[FFC9]
 ; to TALK and the disk to LISTEN. This would allow direct printing of a disk
 ; file.
 
-CloseIoChannls:				;				[FFCC]
+CloseIoChannls				;				[FFCC]
 	jmp	(ICLRCH)		; do close input and output channels
 
 
@@ -18051,7 +17925,7 @@ CloseIoChannls:				;				[FFCC]
 ; returned the entire line has been processed. the next time this routine is
 ; called the whole process begins again.
 
-ByteFromChan:				;				[FFCF]
+ByteFromChan				;				[FFCF]
 	jmp	(IBASIN)		; do input character from channel
 
 
@@ -18073,7 +17947,7 @@ ByteFromChan:				;				[FFCF]
 ; actually intended destination channel must be closed by a call to the KERNAL
 ; close channel routine.
 
-OutByteChan:				;				[FFD2]
+OutByteChan				;				[FFD2]
 	jmp	(IBSOUT)		; do output character to channel
 
 
@@ -18097,7 +17971,7 @@ OutByteChan:				;				[FFD2]
 ; Before this routine can be called, the SETLFS, SetAddresses, and SETNAM,
 ; SetFileName, routines must be called.
 
-LoadRamFrmDev:				;				[FFD5]
+LoadRamFrmDev				;				[FFD5]
 	jmp	LoadRamFrmDev2		; load RAM from a device	[F49E]
 
 
@@ -18115,7 +17989,7 @@ LoadRamFrmDev:				;				[FFD5]
 ; NOTE: device 0, the keyboard, and device 3, the screen, cannot be SAVEd to.
 ; If the attempt is made, an error will occur, and the SAVE stopped.
 
-SaveRamToDev:				;				[FFD8]
+SaveRamToDev				;				[FFD8]
 	jmp	SaveRamToDev2		; save RAM to device		[F5DD]
 
 
@@ -18130,7 +18004,7 @@ SaveRamToDev:				;				[FFD8]
 ; set the clock the new time, in jiffies, should be in YXA, the accumulator
 ; containing the most significant byte.
 
-SetClock:				;				[FFDB]
+SetClock				;				[FFDB]
 	jmp	SetClock2		; set real time clock		[F6E4]
 
 
@@ -18141,7 +18015,7 @@ SetClock:				;				[FFDB]
 ; this routine returns the time, in jiffies, in AXY. The accumulator contains
 ; the most significant byte.
 
-ReadClock:				;				[FFDE]
+ReadClock				;				[FFDE]
 	jmp	ReadClock2		; read real time clock		[F6DD]
 
 
@@ -18156,7 +18030,7 @@ ReadClock:				;				[FFDE]
 
 ; The user can also check for certain other keys this way.
 
-ScanStopKey:				;				[FFE1]
+ScanStopKey				;				[FFE1]
 	jmp	(ISTOP)			; do scan stop key
 
 
@@ -18173,7 +18047,7 @@ ScanStopKey:				;				[FFE1]
 ; If the keyboard buffer is empty the value returned in the accumulator will be
 ; zero.
 
-GetCharInpDev:				;				[FFE4]
+GetCharInpDev				;				[FFE4]
 	jmp	(IGETIN)		; do get character from input device
 
 
@@ -18185,7 +18059,7 @@ GetCharInpDev:				;				[FFE4]
 ; into the open file table are reset, closing all files. Also the routine
 ; automatically resets the I/O channels.
 
-CloseAllChan:				;				[FFE7]
+CloseAllChan				;				[FFE7]
 	jmp	(ICLALL)		; do close all channels and files
 
 
@@ -18199,7 +18073,7 @@ CloseAllChan:				;				[FFE7]
 ; Also, the STOP key routine must be called if the stop key is to remain
 ; functional.
 
-IncrClock:				;				[FFEA]
+IncrClock				;				[FFEA]
 	jmp	IncrClock2		; increment real time clock	[F69B]
 
 
@@ -18209,7 +18083,7 @@ IncrClock:				;				[FFEA]
 
 ; this routine returns the x,y organisation of the screen in X,Y
 
-GetSizeScreen:				;				[FFED]
+GetSizeScreen				;				[FFED]
 	jmp	GetSizeScreen2		; return X,Y organization of screen
 					;				[E505]
 
@@ -18224,7 +18098,7 @@ GetSizeScreen:				;				[FFED]
 ; with the carry bit clear moves the cursor to the position determined by the X
 ; and Y registers.
 
-CursorPosXY:				;				[FFF0]
+CursorPosXY				;				[FFF0]
 	jmp	CursorPosXY2		; read/set X,Y cursor position	[E50A]
 
 
@@ -18236,7 +18110,7 @@ CursorPosXY:				;				[FFF0]
 ; memory mapped I/O devices are located. This address can then be used with an
 ; offset to access the memory mapped I/O devices in the computer.
 
-GetAddrIoDevs:				;				[FFF3]
+GetAddrIoDevs				;				[FFF3]
 	jmp	GetAddrIoDevs2		; return the base address of the I/O
 					; devices			[E500]
 
@@ -18245,7 +18119,7 @@ GetAddrIoDevs:				;				[FFF3]
 ;
 
 ;S_FFF6
-.text	"RRBY"
+.text	"rrby"
 
 ; hardware vectors
 
