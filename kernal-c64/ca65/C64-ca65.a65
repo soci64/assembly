@@ -1575,52 +1575,52 @@ HierachyCode:				;				[A080]
 ; first are the primary command keywords, only these can start a statement
 
 TblBasicCodes:				;				[A09E]
-D_A09E:		.byte "enD"		; END		$80		128
-D_A0A1:		.byte "foR"		; FOR		$81		129
-D_A0A4:		.byte "nexT"		; NEXT		$82		130
-D_A0A8:		.byte "datA"		; DATA		$83		131
+D_A09E:		.byte "en", 'd'+$80	; END		$80		128
+D_A0A1:		.byte "fo", 'r'+$80	; FOR		$81		129
+D_A0A4:		.byte "nex", 't'+$80	; NEXT		$82		130
+D_A0A8:		.byte "dat", 'a'+$80	; DATA		$83		131
 D_A0AC:		.byte "input", '#'+$80	; INPUT#	$84		132
-D_A0B2:		.byte "inpuT"		; INPUT		$85		133
-D_A0B7:		.byte "diM"		; DIM		$86		134
-D_A0BA:		.byte "reaD"		; READ		$87		135
-D_A0BE:		.byte "leT"		; LET		$88		136
-D_A0C1:		.byte "gotO"		; GOTO		$89		137
-D_A0C5:		.byte "ruN"		; RUN		$8A		138
-D_A0C8:		.byte "iF"		; IF		$8B		139
-D_A0CA:		.byte "restorE"		; RESTORE	$8C		140
-D_A0D1:		.byte "gosuB"		; GOSUB		$8D		141
-D_A0D6:		.byte "returN"		; RETURN	$8E		142
-D_A0DC:		.byte "reM"		; REM		$8F		143
-D_A0DF:		.byte "stoP"		; STOP		$90		144
-D_A0E3:		.byte "oN"		; ON		$91		145
-D_A0E5:		.byte "waiT"		; WAIT		$92		146
-D_A0E9:		.byte "loaD"		; LOAD		$93		147
-D_A0ED:		.byte "savE"		; SAVE		$94		148
-D_A0F1:		.byte "verifY"		; VERIFY	$95		149
-D_A0F7:		.byte "deF"		; DEF		$96		150
-D_A0FA:		.byte "pokE"		; POKE		$97		151
+D_A0B2:		.byte "inpu", 't'+$80	; INPUT		$85		133
+D_A0B7:		.byte "di", 'm'+$80	; DIM		$86		134
+D_A0BA:		.byte "rea", 'd'+$80	; READ		$87		135
+D_A0BE:		.byte "le", 't'+$80	; LET		$88		136
+D_A0C1:		.byte "got", 'o'+$80	; GOTO		$89		137
+D_A0C5:		.byte "ru", 'n'+$80	; RUN		$8A		138
+D_A0C8:		.byte "i", 'f'+$80	; IF		$8B		139
+D_A0CA:		.byte "restor", 'e'+$80	; RESTORE	$8C		140
+D_A0D1:		.byte "gosu", 'b'+$80	; GOSUB		$8D		141
+D_A0D6:		.byte "retur", 'n'+$80	; RETURN	$8E		142
+D_A0DC:		.byte "re", 'm'+$80	; REM		$8F		143
+D_A0DF:		.byte "sto", 'p'+$80	; STOP		$90		144
+D_A0E3:		.byte "o", 'n'+$80	; ON		$91		145
+D_A0E5:		.byte "wai", 't'+$80	; WAIT		$92		146
+D_A0E9:		.byte "loa", 'd'+$80	; LOAD		$93		147
+D_A0ED:		.byte "sav", 'e'+$80	; SAVE		$94		148
+D_A0F1:		.byte "verif", 'y'+$80	; VERIFY	$95		149
+D_A0F7:		.byte "de", 'f'+$80	; DEF		$96		150
+D_A0FA:		.byte "pok", 'e'+$80	; POKE		$97		151
 D_A0FE:		.byte "print", '#'+$80	; PRINT#	$98		152
-D_A104:		.byte "prinT"		; PRINT		$99		153
-D_A109:		.byte "conT"		; CONT		$9A		154
-D_A10D:		.byte "lisT"		; LIST		$9B		155
-D_A111:		.byte "clR"		; CLR		$9C		156
-D_A114:		.byte "cmD"		; CMD		$9D		157
-D_A117:		.byte "syS"		; SYS		$9E		158
-D_A11A:		.byte "opeN"		; OPEN		$9F		159
-D_A11E:		.byte "closE"		; CLOSE		$A0		160
-D_A123:		.byte "geT"		; GET		$A1		161
-D_A126:		.byte "neW"		; NEW		$A2		162
+D_A104:		.byte "prin", 't'+$80	; PRINT		$99		153
+D_A109:		.byte "con", 't'+$80	; CONT		$9A		154
+D_A10D:		.byte "lis", 't'+$80	; LIST		$9B		155
+D_A111:		.byte "cl", 'r'+$80	; CLR		$9C		156
+D_A114:		.byte "cm", 'd'+$80	; CMD		$9D		157
+D_A117:		.byte "sy", 's'+$80	; SYS		$9E		158
+D_A11A:		.byte "ope", 'n'+$80	; OPEN		$9F		159
+D_A11E:		.byte "clos", 'e'+$80	; CLOSE		$A0		160
+D_A123:		.byte "ge", 't'+$80	; GET		$A1		161
+D_A126:		.byte "ne", 'w'+$80	; NEW		$A2		162
 
 ; table of functions, each ended with a +$80
 ; next are the secondary command keywords, these can not start a statement
 
 D_A129:		.byte "tab", '('+$80	; TAB(		$A3		163
-D_A12D:		.byte "tO"		; TO		$A4		164
-D_A12F:		.byte "fN"		; FN		$A5		165
+D_A12D:		.byte "t", 'o'+$80	; TO		$A4		164
+D_A12F:		.byte "f", 'n'+$80	; FN		$A5		165
 D_A131:		.byte "spc", '('+$80	; SPC(		$A6		166
-D_A135:		.byte "theN"		; THEN		$A7		167
-D_A139:		.byte "noT"		; NOT		$A8		168
-D_A13C:		.byte "steP"		; STEP		$A9		169
+D_A135:		.byte "the", 'n'+$80	; THEN		$A7		167
+D_A139:		.byte "no", 't'+$80	; NOT		$A8		168
+D_A13C:		.byte "ste", 'p'+$80	; STEP		$A9		169
 
 ; next are the operators
 
@@ -1629,33 +1629,33 @@ D_A141:		.byte '-'+$80		; -		$AB		171
 D_A142:		.byte '*'+$80		; *		$AC		172
 D_A143:		.byte '/'+$80		; /		$AD		173
 D_A144:		.byte '^'+$80		; ^		$AE		174
-D_A145:		.byte "anD"		; AND		$AF		175
-D_A148:		.byte "oR"		; OR		$B0		176
+D_A145:		.byte "an", 'd'+$80	; AND		$AF		175
+D_A148:		.byte "o", 'r'+$80	; OR		$B0		176
 D_A14A:		.byte '>'+$80		; >		$B1		177
 D_A14B:		.byte '='+$80		; =		$B2		178
 D_A14C:		.byte '<'+$80		; <		$B3		179
 
 ; and finally the functions
 
-D_A14D:		.byte "sgN"		; SGN		$B4		180
-D_A150:		.byte "inT"		; INT		$B5		181
-D_A153:		.byte "abS"		; ABS		$B6		182
-D_A156:		.byte "usR"		; USR		$B7		183
-D_A159:		.byte "frE"		; FRE		$B8		184
-D_A15C:		.byte "poS"		; POS		$B9		185
-D_A15F:		.byte "sqR"		; SQR		$BA		186
-D_A162:		.byte "rnD"		; RND		$BB		187
-D_A165:		.byte "loG"		; LOG		$BC		188
-D_A168:		.byte "exP"		; EXP		$BD		189
-D_A16B:		.byte "coS"		; COS		$BE		190
-D_A16E:		.byte "siN"		; SIN		$BF		191
-D_A171:		.byte "taN"		; TAN		$C0		192
-D_A174:		.byte "atN"		; ATN		$C1		193
-D_A177:		.byte "peeK"		; PEEK		$C2		194
-D_A17B:		.byte "leN"		; LEN		$C3		195
+D_A14D:		.byte "sg", 'n'+$80	; SGN		$B4		180
+D_A150:		.byte "in", 't'+$80	; INT		$B5		181
+D_A153:		.byte "ab", 's'+$80	; ABS		$B6		182
+D_A156:		.byte "us", 'r'+$80	; USR		$B7		183
+D_A159:		.byte "fr", 'e'+$80	; FRE		$B8		184
+D_A15C:		.byte "po", 's'+$80	; POS		$B9		185
+D_A15F:		.byte "sq", 'r'+$80	; SQR		$BA		186
+D_A162:		.byte "rn", 'd'+$80	; RND		$BB		187
+D_A165:		.byte "lo", 'g'+$80	; LOG		$BC		188
+D_A168:		.byte "ex", 'p'+$80	; EXP		$BD		189
+D_A16B:		.byte "co", 's'+$80	; COS		$BE		190
+D_A16E:		.byte "si", 'n'+$80	; SIN		$BF		191
+D_A171:		.byte "ta", 'n'+$80	; TAN		$C0		192
+D_A174:		.byte "at", 'n'+$80	; ATN		$C1		193
+D_A177:		.byte "pee", 'k'+$80	; PEEK		$C2		194
+D_A17B:		.byte "le", 'n'+$80	; LEN		$C3		195
 D_A17E:		.byte "str", '$'+$80	; STR$		$C4		196
-D_A182:		.byte "vaL"		; VAL		$C5		197
-D_A185:		.byte "asC"		; ASC		$C6		198
+D_A182:		.byte "va", 'l'+$80	; VAL		$C5		197
+D_A185:		.byte "as", 'c'+$80	; ASC		$C6		198
 D_A188:		.byte "chr", '$'+$80	; CHR$		$C7		199
 D_A18C:		.byte "left", '$'+$80	; LEFT$		$C8		200
 D_A191:		.byte "right", '$'+$80	; RIGHT$	$C9		201
@@ -1663,7 +1663,7 @@ D_A197:		.byte "mid", '$'+$80	; MID$		$CA		202
 
 ; lastly is GO, this is an add on so that GO TO, as well as GOTO, will work
 
-D_A19B:		.byte "gO"		; GO		$CB		203
+D_A19B:		.byte "g", 'o'+$80	; GO		$CB		203
 
 .byte	$00				; end marker
 
@@ -1672,35 +1672,35 @@ D_A19B:		.byte "gO"		; GO		$CB		203
 ;
 ; BASIC error messages
 
-TxtTooManyFile:		.byte "too many fileS"			;	[A19E]
-TxtFileOpen:		.byte "file opeN"			;	[A1AC]
-TxtFileNotOpen:		.byte "file not opeN"			;	[A1B5]
-TxtFileNotFound:	.byte "file not founD"			;	[A1C2]
-TxtDevNotPresent:	.byte "device not presenT"		;	[A1D0]
-TxtNotInputFile:	.byte "not input filE"			;	[A1E2]
-TxtNotOutputFile:	.byte "not output filE"			;	[A1F0]
-TxtMissingFile:		.byte "missing file namE"		;	[A1FF]
-TxtIllegalDevice:	.byte "illegal device numbeR"		;	[A210]
-TxtNextWithout:		.byte "next without foR"		;	[A225]
-TxtSyntax:		.byte "syntaX"				;	[A235]
-TxtReturnWithout:	.byte "return without gosuB"		;	[A23B]
-TxtOutOfData:		.byte "out of datA"			;	[A24F]
-TxtIllegalQuan:		.byte "illegal quantitY"		;	[A25A]
-TxtOverflow:		.byte "overfloW"			;	[A26A]
-TxtOutOfMemory:		.byte "out of memorY"			;	[A272]
-TxtUndefdState:		.byte "undef'd statemenT"		;	[A27F]
-TxtBadSubscript:	.byte "bad subscripT"			;	[A290]
-TxtRedimdArray:		.byte "redim'd arraY"			;	[A29D]
-TxtDivisByZero:		.byte "division by zerO"		;	[A2AA]
-TxtIllegalDirect:	.byte "illegal direcT"			;	[A2BA]
-TxtTypeMismatc:		.byte "type mismatcH"			;	[A2C8]
-TxtStringTooLong:	.byte "string too lonG"			;	[A2D5]
-TxtFileData:		.byte "file datA"			;	[A2E4]
-TxtFormulaTooC:		.byte "formula too compleX"		;	[A2ED]
-TxtCantContinue:	.byte "can't continuE"			;	[A300]
-TxtUndefdFunct:		.byte "undef'd functioN"		;	[A30E]
-TxtVerify:		.byte "verifY"				;	[A31E]
-TxtLoad:		.byte "loaD"				;	[A324]
+TxtTooManyFile:		.byte "too many file", 's'+$80		;	[A19E]
+TxtFileOpen:		.byte "file ope", 'n'+$80		;	[A1AC]
+TxtFileNotOpen:		.byte "file not ope", 'n'+$80		;	[A1B5]
+TxtFileNotFound:	.byte "file not foun", 'd'+$80		;	[A1C2]
+TxtDevNotPresent:	.byte "device not presen", 't'+$80	;	[A1D0]
+TxtNotInputFile:	.byte "not input fil", 'e'+$80		;	[A1E2]
+TxtNotOutputFile:	.byte "not output fil", 'e'+$80		;	[A1F0]
+TxtMissingFile:		.byte "missing file nam", 'e'+$80	;	[A1FF]
+TxtIllegalDevice:	.byte "illegal device numbe", 'r'+$80	;	[A210]
+TxtNextWithout:		.byte "next without fo", 'r'+$80	;	[A225]
+TxtSyntax:		.byte "synta", 'x'+$80			;	[A235]
+TxtReturnWithout:	.byte "return without gosu", 'b'+$80	;	[A23B]
+TxtOutOfData:		.byte "out of dat", 'a'+$80		;	[A24F]
+TxtIllegalQuan:		.byte "illegal quantit", 'y'+$80	;	[A25A]
+TxtOverflow:		.byte "overflo", 'w'+$80		;	[A26A]
+TxtOutOfMemory:		.byte "out of memor", 'y'+$80		;	[A272]
+TxtUndefdState:		.byte "undef'd statemen", 't'+$80	;	[A27F]
+TxtBadSubscript:	.byte "bad subscrip", 't'+$80		;	[A290]
+TxtRedimdArray:		.byte "redim'd arra", 'y'+$80		;	[A29D]
+TxtDivisByZero:		.byte "division by zer", 'o'+$80	;	[A2AA]
+TxtIllegalDirect:	.byte "illegal direc", 't'+$80		;	[A2BA]
+TxtTypeMismatc:		.byte "type mismatc", 'h'+$80		;	[A2C8]
+TxtStringTooLong:	.byte "string too lon", 'g'+$80		;	[A2D5]
+TxtFileData:		.byte "file dat", 'a'+$80		;	[A2E4]
+TxtFormulaTooC:		.byte "formula too comple", 'x'+$80	;	[A2ED]
+TxtCantContinue:	.byte "can't continu", 'e'+$80		;	[A300]
+TxtUndefdFunct:		.byte "undef'd functio", 'n'+$80	;	[A30E]
+TxtVerify:		.byte "verif", 'y'+$80			;	[A31E]
+TxtLoad:		.byte "loa", 'd'+$80			;	[A324]
 
 
 ; error message pointer table
@@ -4289,10 +4289,10 @@ A_ACFB:					;				[ACFB]
 ; input error messages
 
 txtEXTRA:				;				[ACFC]
-.byte	"?extra ignored",$0D,$00
+.byte	"?extra ignored", $0D, $00
 
 txtREDOFROM:				;				[AD0C]
-.byte	"?redo from start",$0D,$00
+.byte	"?redo from start", $0D, $00
 
 
 ;******************************************************************************
@@ -10325,7 +10325,7 @@ A_E455:					;				[E455]
 ; BASIC startup messages
 
 BasicBytesFree:				;				[E460]
-.byte	" basic bytes free",$0D,$00
+.byte	" basic bytes free", $0D, $00
 
 TxtCommodore64:				;				[E473]
 .byte	$93,$0D, "    **** commodore 64 basic v2 ****", $0D, $0D
@@ -12391,7 +12391,7 @@ TblValuesVIC:				;				[ECB9]
 ; keyboard buffer for auto load/run
 
 TblAutoLoadRun:				;				[ECE7]
-.byte	"load",$0D,"run",$0D
+.byte	"load", $0D, "run", $0D
 
 
 ;******************************************************************************
@@ -13500,25 +13500,25 @@ TxtFOR:					;				[F0D4]
 .byte "for", ' '+$80
 
 TxtPRESS_PLAY:				;				[F0D8]
-.byte	$0D, "press play on tapE"
+.byte	$0D, "press play on tap", 'e'+$80
 
 TxtPRESS_RECO:				;				[F0EB]
-.byte "press record & play on tapE"
+.byte "press record & play on tap", 'e'+$80
 
 TxtLOADING:				;				[F106]
-.byte	$0D, "loadinG"
+.byte	$0D, "loadin", 'g'+$80
 
 TxtSAVING:				;				[F10E]
 .byte	$0D, "saving", ' '+$80
 
 TxtVERIFYING:				;				[F116]
-.byte	$0D, "verifyinG"
+.byte	$0D, "verifyin", 'g'+$80
 
 TxtFOUND:				;				[F120]
 .byte	$0D, "found", ' '+$80
 
 TxtOK2:					;				[F127]
-.byte	$0D, "ok", $8D
+.byte	$0D, "ok", $0D+$80
 
 
 ;******************************************************************************

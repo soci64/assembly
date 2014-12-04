@@ -1628,7 +1628,7 @@ D_A140:		.asc '+'+$80		; +		$AA		170
 D_A141:		.asc '-'+$80		; -		$AB		171
 D_A142:		.asc '*'+$80		; *		$AC		172
 D_A143:		.asc '/'+$80		; /		$AD		173
-D_A144:		.asc $DE		;		$AE		174
+D_A144:		.asc $5E+$80		;		$AE		174
 D_A145:		.asc "an", 'd'+$80	; AND		$AF		175
 D_A148:		.asc 'o', 'r'+$80	; OR		$B0		176
 D_A14A:		.asc '>'+$80		; >		$B1		177
@@ -4289,10 +4289,10 @@ A_ACFB:					;				[ACFB]
 ; input error messages
 
 txtEXTRA:				;				[ACFC]
-.asc	"?extra ignored",$0D,$00
+.asc	"?extra ignored", $0D, $00
 
 txtREDOFROM:				;				[AD0C]
-.asc	"?redo from start",$0D,$00
+.asc	"?redo from start", $0D, $00
 
 
 ;******************************************************************************
@@ -10325,11 +10325,11 @@ A_E455:					;				[E455]
 ; BASIC startup messages
 
 BasicBytesFree:				;				[E460]
-.asc	" basic bytes free",$0D,$00
+.asc	" basic bytes free", $0D, $00
 
 TxtCommodore64:				;				[E473]
-.asc	$93,$0D,"    **** commodore 64 basic v2 ****",$0D, $0D
-.asc	" 64k ram system  ",$00
+.asc	$93, $0D, "    **** commodore 64 basic v2 ****", $0D, $0D
+.asc	" 64k ram system  ", $00
 
 
 ;******************************************************************************
@@ -12382,7 +12382,7 @@ TblValuesVIC:				;				[ECB9]
 .byte	$05				; sprite 4 colour
 .byte	$06				; sprite 5 colour
 .byte	$07				; sprite 6 colour
-;	.bytte	$4C			; sprite 7 colour, actually the first
+;	.byte	$4C			; sprite 7 colour, actually the first
 					; character of "LOAD"
 
 
@@ -12391,7 +12391,7 @@ TblValuesVIC:				;				[ECB9]
 ; keyboard buffer for auto load/run
 
 TblAutoLoadRun:				;				[ECE7]
-.asc	"load",$0D,"run",$0D
+.asc	"load", $0D, "run", $0D
 
 
 ;******************************************************************************
@@ -13518,7 +13518,7 @@ TxtFOUND:				;				[F120]
 .asc	$0D, "found", ' '+$80
 
 TxtOK2:					;				[F127]
-.asc	$0D, "ok", $8D
+.asc	$0D, "ok", $0D+$80
 
 
 ;******************************************************************************
