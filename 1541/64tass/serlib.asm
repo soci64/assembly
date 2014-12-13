@@ -1,0 +1,88 @@
+
+; C1541 ROM source, Soci/Singular
+
+NODRRD  .macro		; read nodrv,x absolute
+	.byte $bd,$ff,$00
+	.endm
+
+NODRWR  .macro		; write nodrv,x absolute
+	.byte $9d,$ff,$00
+	.endm
+
+	*=$c000
+	.fill $4000,$aa
+
+	.include "equate.asm"
+	.include "iodef.asm"
+        .include "lccio.asm"
+	.include "ramvar.asm"
+
+	.include "romsf.asm"
+	.include "leds.asm"
+	.include "parsex.asm"
+	.include "setdrv.asm"
+	.include "lookup.asm"
+	.include "trnsfr.asm"
+	.include "scrtch.asm"
+	.include "duplct.asm"
+	.include "copset.asm"
+        .include "copall.asm"
+        .include "copy.asm"
+        .include "rename.asm"
+	.include "memrw.asm"
+	.include "block.asm"
+	.include "fndrel.asm"
+	.include "tst2.asm"
+	.include "tst3.asm"
+	.include "tst4.asm"
+	.include "jobssf.asm"
+	.include "addfil.asm"
+	.include "open.asm"
+	.include "close.asm"
+	.include "opnchnl.asm"
+	.include "tstflg.asm"
+	.include "tsutil.asm"
+	.include "ssutil.asm"
+	.include "sstest.asm"
+	.include "getact.asm"
+	.include "rel1.asm"
+	.include "rel2.asm"
+	.include "rel3.asm"
+	.include "rel4.asm"
+	.include "ssend.asm"
+	.include "record.asm"
+	.include "nulbuf.asm"
+	.include "addrel.asm"
+	.include "newss.asm"
+	.include "erproc.asm"
+	.include "utlodr.asm"
+	.include "sieee.asm"
+	.include "dskintsf.asm"
+	.include "idlesf.asm"
+	.include "lstdir.asm"
+	.include "verdir.asm"
+	.include "new.asm"
+	.include "map.asm"
+	.include "frets.asm"
+	.include "bamutl.asm"
+	.include "tstfnd.asm"
+	.include "system.asm"
+	.include "lccinit.asm"
+	.include "lcccntrl.asm"
+	.include "lccseek.asm"
+        .include "lccread.asm"
+        .include "lccwrt.asm"
+        .include "lccbingc.asm"
+        .include "lccgcrbi.asm"
+        .include "lccconhd.asm"
+	.include "lccutil.asm"
+        .include "lccend.asm"
+        .include "lccfmt1.asm"
+        .include "lccfmt2.asm"
+        .include "lccfmt3.asm"
+        .include "lccfmt4.asm"
+	.include "irq.asm"
+	.include "romtblsf.asm"
+	.include "patch.asm"
+	.include "vects.asm"
+
