@@ -3,5 +3,5 @@ The complete 1541-II ROM source.
 
 This is not a disassembly, but is based on original sources!
 
-It was recreated from fragments and converted to a modern tool-chain
-by Soci/Singular in Aug 2010. First release on 2014-12-13.
+It was recreated from fragments of 1571 sources and converted to a modern
+tool-chain by Soci/Singular in Aug 2010. First release on 2014-12-13.
