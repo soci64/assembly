@@ -20,13 +20,13 @@ relp05  tya
 
 relp07  lda  #ovrflo    ; yes,set overflow
         jmp  setflg
-relp10          	; write back new pointer
+relp10                  ; write back new pointer
         inc  buftab,x
         bne  relp20     ; test if =0
 
-	lda  relsw
-	ora  #bit4
-	sta  relsw	; set overflow flag
+        lda  relsw
+        ora  #bit4
+        sta  relsw      ; set overflow flag
         jmp  nrbuf      ; (rts) prepare nxt buffer
 relp20  rts
 

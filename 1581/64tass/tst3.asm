@@ -1,11 +1,11 @@
 ; .a=#buffers needed
 ; sets up buffer # and allocates lindx
 
-getwch  sec     	; set .c=1 indicate write
+getwch  sec             ; set .c=1 indicate write
         bcs  getr2
 
-getrch  clc     	; set .c=0 indicate read
-getr2   php     	; save r/w flag (.c)
+getrch  clc             ; set .c=0 indicate read
+getr2   php             ; save r/w flag (.c)
         sta  temp       ; save #bufs needed
         jsr  frechn     ; free any channels
         jsr  fndlnx     ; get next lindx open
@@ -17,7 +17,7 @@ getr2   php     	; save r/w flag (.c)
         ora  #$80
 getr55  sta  lintab,x   ; save lindx in lintab
         and  #$3f
-        tay     	; now get the buffers
+        tay             ; now get the buffers
         lda  #$ff
         sta  buf0,y
         sta  buf1,y
@@ -110,13 +110,13 @@ rel3    rts
 ;        .n= 1 if failed
 ;     if successful init jobs & lstjob
 ;
-getbuf  tya     	; save .y
+getbuf  tya             ; save .y
         pha
         jsr  fndbuf
         bpl  gbf1       ; found one
 
         jsr  stlbuf     ; steal one
-        tax     	; test it
+        tax             ; test it
         bmi  gbf2       ; didn't find one
 
 gbf1    lda  jobs,x
@@ -131,8 +131,8 @@ gbf1    lda  jobs,x
         lda  #2
         sta  buftab,y
 gbf2    pla
-        tay     	; restore .y
-        txa     	; exit with buf # in .a & cc set
+        tay             ; restore .y
+        txa             ; exit with buf # in .a & cc set
         rts
 
 ; find a free buf # & set bit in bufuse
@@ -149,13 +149,13 @@ fb1     lda  bufuse     ; search bufuse
         bpl  fb1        ; until all bits are tested
 
         rts
-fb2             	; set it used
+fb2                     ; set it used
         lda  bufuse
         eor  bmask,x    ; set bit
         sta  bufuse
         txa
         rts
-freiac          	; free inactive buffer
+freiac                  ; free inactive buffer
         ldx  lindx
         lda  buf0,x
         bmi  fri10
@@ -213,7 +213,7 @@ cld2    dec  sa
 
         rts
 stlbuf  lda  t0         ; search chnl's for least recently
-        pha     	; used buf & steals first inact buf.
+        pha             ; used buf & steals first inact buf.
         ldy  #0         ; input: lrutbl-least recently
 stl05   ldx  lrutbl,y   ; output: a=buf#
         lda  buf0,x     ;         x=chnl index
@@ -224,7 +224,7 @@ stl05   ldx  lrutbl,y   ; output: a=buf#
 
 stl10   txa
         clc
-        adc  #mxchns+1	; <<<<<<<<<<<<<<
+        adc  #mxchns+1  ; <<<<<<<<<<<<<<
         tax
         lda  buf0,x
         bpl  stl20
@@ -248,11 +248,11 @@ stl40   lda  jobs,x
         cmp  #2         ; errors?
         bcc  stl50      ; ok
 
-	cmp  #15	; no drive
-	beq  stl50	; steal it also
+        cmp  #15        ; no drive
+        beq  stl50      ; steal it also
 
         ldx  t0
-        cpx  #mxchns+1	; <<<<<<<<<<<<<<
+        cpx  #mxchns+1  ; <<<<<<<<<<<<<<
         bcc  stl10      ; check opposite slot
 
         bcs  stl20      ; check another channel
@@ -262,7 +262,7 @@ stl50   ldy  t0         ; found one !, so lets
         sta  buf0,y     ; clear slot
 stl60   pla
         sta  t0
-        txa     	; buf # in .a & set cc's
+        txa             ; buf # in .a & set cc's
         rts
 
 fndlnx  ldy  #0         ; find free lindx to use
@@ -280,5 +280,5 @@ fnd10   bit  linuse     ; 1=free 0=used
 fnd30   eor  #$ff       ; toggle bit mask
         and  linuse     ; mark bit used
         sta  linuse
-        tya     	; return lindx in .a
+        tya             ; return lindx in .a
         rts

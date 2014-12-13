@@ -69,7 +69,7 @@ op049   txa
         lda  #badsyn    ; something amiss
         jmp  cmderr
 
-op10    dey     	; back up to ":"
+op10    dey             ; back up to ":"
         beq  op20       ; 1st char is ":"
 
         dey
@@ -349,7 +349,7 @@ loadir  lda  #ldcmd
         dex
         beq  ld02
 
-        dex     	; load by name
+        dex             ; load by name
         bne  ld03
 
         lda  cmdbuf+1

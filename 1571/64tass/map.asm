@@ -11,14 +11,14 @@ newmpv
         sta  (bmpnt),y
         iny
         iny
-        iny     	; .y=4
+        iny             ; .y=4
 nm10
         lda  #0         ; clear track map
         sta  t0
         sta  t1
         sta  t2
 
-        tya      	; 4=>1
+        tya             ; 4=>1
         lsr  a
         lsr  a          ; .a=track #
         jsr  maxsec     ; store blks free byte away
@@ -26,13 +26,13 @@ nm10
         iny
         tax
 nm20
-        sec     	; set map bits
+        sec             ; set map bits
         rol  t0         ;      t0          t1          t2
         rol  t1         ;   76543210  111111         xxx21111
         rol  t2         ;             54321098          09876
-        dex      	;   11111111  11111111          11111
+        dex             ;   11111111  11111111          11111
         bne  nm20
-nm30            	; .x=0
+nm30                    ; .x=0
         lda  t0,x
         sta  (bmpnt),y  ; write out bit map
         iny
@@ -59,7 +59,7 @@ scrbam
         ldy  drvnum
         lda  mdirty,y
         bne  sb10
-        rts     	; not dirty
+        rts             ; not dirty
 sb10
         lda  #0         ; set to clean bam
         sta  mdirty,y
@@ -77,7 +77,7 @@ sb10
 ; matches the bits
 
         lda  track
-        pha     	; save track var
+        pha             ; save track var
         lda  #1
         sta  track
 sb20
@@ -87,7 +87,7 @@ sb20
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jsr  ptch39	; *** rom ds 02/25/85 ***
+        jsr  ptch39     ; *** rom ds 02/25/85 ***
 ;       jsr  avck       ; check available blocks
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -96,12 +96,12 @@ sb20
         lda  track
         cmp  maxtrk
         bcc  sb20
-        pla     	; restore track var
+        pla             ; restore track var
         sta  track
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jmp  wrt_bam
+        jmp  wrt_bam
 ;       jmp  dowrit     ; write it out
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><>

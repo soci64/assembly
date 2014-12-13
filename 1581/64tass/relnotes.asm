@@ -10,8 +10,8 @@
 ;Accept an unspecified drive.
 ;Set wpstat on init.
 ;Add two additional vectors :
-;	jspinout - carry set is spout
-;		 - carry clr is spinp
+;       jspinout - carry set is spout
+;                - carry clr is spinp
 ;      jallocbuf - allocates buffer
 ;
 ;Add spread and spwrt controller commands these command will read and

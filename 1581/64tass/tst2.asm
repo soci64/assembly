@@ -5,7 +5,7 @@ lruilp  txa
         cpx  #cmdchn
         bne  lruilp
 
-	lda  #cmdchn
+        lda  #cmdchn
         sta  lrutbl,x
         rts
 
@@ -49,7 +49,7 @@ dblget  cmp  #$ff
         eor  #$80
         sta  buf1,x
         tay
-        pla     	; get active buffer
+        pla             ; get active buffer
         bpl  dbljmp
 
         tya
@@ -222,17 +222,17 @@ l42     lda  #cmdchn    ; write to cmd chanl
         jsr  putbyt     ; store the byte
 l50     lda  eoiflg     ; tst if lst byte of msg
         beq  l45        ; it is
-        rts     	; not yet , return
+        rts             ; not yet , return
 
 l45     inc  cmdwat     ; set cmd waiting flag
         rts
 ; put .a into active buffer of lindx
 ;
-putbyt  pha     	;  save .a
+putbyt  pha             ;  save .a
         jsr  getact     ; get active buf#
         bpl  putb1      ; brach if there is one
 
-        pla     	; no buffer error
+        pla             ; no buffer error
         lda  #filnop
         jmp  cmderr     ;  jmp to error routine
 
@@ -241,24 +241,24 @@ putb1   asl  a          ; save the byte in buffer
         pla
         sta  (buftab,x)
         inc  buftab,x   ; inc the buffer pointer
-        rts     	; last slot in buf, acm=1
+        rts             ; last slot in buf, acm=1
 ;
 ; find the active buffer # (lindx)
 intdrv  jsr  simprs     ; init drvs (command)
-	jsr  psetdef	; set def parms
-	jsr  setdef	; *
+        jsr  psetdef    ; set def parms
+        jsr  setdef     ; *
         jsr  initdr
-	bit  dejavu
-	bvc  +
+        bit  dejavu
+        bvc  +
 
-	jmp  cbmboot	; auto boot
+        jmp  cbmboot    ; auto boot
 
 +       jmp  endcmd
 
 itrial  jsr  getbuf
         sta  jobnum
-	tax
-	jsr  fb2	; release buffer
+        tax
+        jsr  fb2        ; release buffer
         ldx  #0
         stx  sector
         ldx  dirtrk
@@ -266,32 +266,32 @@ itrial  jsr  getbuf
         jsr  seth       ; set the bam header
         lda  #seekhd_dv
         jsr  dojob      ; do a seek
-	ldx  jobnum
-	pha
-	lda  #detwp_dv
-	jsr  strobe_controller
-	sta  wpstat	; save write protect status
-	pla		; restore status from seek
-	rts
+        ldx  jobnum
+        pha
+        lda  #detwp_dv
+        jsr  strobe_controller
+        sta  wpstat     ; save write protect status
+        pla             ; restore status from seek
+        rts
 initdr  lda  dejavu
-	and  #all-bit6
-	sta  dejavu
-	lda  dkoramask
-	ora  #bit7
-	sta  dkoramask	; set alien
-	jsr  cldchn
+        and  #all-bit6
+        sta  dejavu
+        lda  dkoramask
+        ora  #bit7
+        sta  dkoramask  ; set alien
+        jsr  cldchn
         jsr  itrial
-	cmp  #2
-	bcs  +		; problems don't bother
+        cmp  #2
+        bcs  +          ; problems don't bother
 
-	lda  psectorsiz
-	cmp  #sysiz
-	beq  ++
+        lda  psectorsiz
+        cmp  #sysiz
+        beq  ++
 
-+	jmp  nmf21
++       jmp  nmf21
 
-+	jsr  doread     ; rd in dir header
-	lda  jobnum
++       jsr  doread     ; rd in dir header
+        lda  jobnum
         asl  a
         tax
         lda  #1         ; skip track link
@@ -302,54 +302,54 @@ initdr  lda  dejavu
         sta  buftab,x
         lda  (buftab,x)
         sta  dskver     ; set up disk version #
-	lda  #0
-	sta  bam1
-        jsr  setbpt	; read in both bams
+        lda  #0
+        sta  bam1
+        jsr  setbpt     ; read in both bams
         lda  #0
         sta  wpsw       ; clear wp switch
         sta  nodrv      ; clr not active flag
-	ldy  #2
-	lda  (bmpnt),y	; vernum here?
-	cmp  vernum
-	bne  nmf21
+        ldy  #2
+        lda  (bmpnt),y  ; vernum here?
+        cmp  vernum
+        bne  nmf21
 
-	iny
-	lda  (bmpnt),y
-	eor  #$ff
-	cmp  vernum	; eor of vernum?
-	bne  nmf21
+        iny
+        lda  (bmpnt),y
+        eor  #$ff
+        cmp  vernum     ; eor of vernum?
+        bne  nmf21
 
-	lda  dkoramask
-	and  #all-bit7
-	sta  dkoramask	; set resident
+        lda  dkoramask
+        and  #all-bit7
+        sta  dkoramask  ; set resident
 
-	ldy  #4
-	lda  (bmpnt),y
-	sta  dskid	; save id's
-	iny
-	lda  (bmpnt),y
-	sta  dskid+1
-	iny
-	lda  (bmpnt),y
-	sta  iobyte	; get i/o byte
-	and  #bit5
-	sta  relsw
-	iny
-	lda  (bmpnt),y	; check auto boot flag
-	bpl  nfcalc
+        ldy  #4
+        lda  (bmpnt),y
+        sta  dskid      ; save id's
+        iny
+        lda  (bmpnt),y
+        sta  dskid+1
+        iny
+        lda  (bmpnt),y
+        sta  iobyte     ; get i/o byte
+        and  #bit5
+        sta  relsw
+        iny
+        lda  (bmpnt),y  ; check auto boot flag
+        bpl  nfcalc
 
-	lda  dejavu	; boot on initdrv command
-	ora  #bit6
-	sta  dejavu
+        lda  dejavu     ; boot on initdrv command
+        ora  #bit6
+        sta  dejavu
 
 nfcalc  lda  track      ; get current trk
-        pha     	; save it
+        pha             ; save it
         ldx  #0         ;
         stx  ndbl       ; lsb
         stx  ndbh       ; msb
-	ldx  startrk
-	.byte  skip1
-nmf10   inx     	; next trk
+        ldx  startrk
+        .byte  skip1
+nmf10   inx             ; next trk
         stx  track
         cpx  dirtrk
         beq  nmf10      ; skip the dir trk
@@ -367,26 +367,26 @@ nmf10   inx     	; next trk
         inc  ndbh       ; msb
         bne  nmf10      ; always branch
 
-nmf20   pla     	; restore track
+nmf20   pla             ; restore track
         sta  track
-	ldx  #0         ; restore it
-	rts
+        ldx  #0         ; restore it
+        rts
 
 nmf21   ldx  #sysdirsec
-	stx  dirst	; starting directory sector
+        stx  dirst      ; starting directory sector
 
-	ldx  #sysiob
-	stx  iobyte	; init iobyte crccheck on,verify on
+        ldx  #sysiob
+        stx  iobyte     ; init iobyte crccheck on,verify on
 
-	ldx  #0
-	stx  relsw	; huge rel
+        ldx  #0
+        stx  relsw      ; huge rel
         stx  wpsw       ; clear wp switch
         stx  nodrv      ; clr not active flag
         stx  ndbl       ; lsb
         stx  ndbh       ; msb
-	stx  dskid
-	stx  dskid+1
-	rts
+        stx  dskid
+        stx  dskid+1
+        rts
 strrd   jsr  sethdr     ; start dbl buf, use
         jsr  rdbuf      ; trk, sec as start block
         jsr  watjob
@@ -406,10 +406,10 @@ str1    jsr  dblbuf
         jsr  rdbuf
         jmp  dblbuf
 
-rdbuf   lda  #read_dv	; rd job on trk, sec
+rdbuf   lda  #read_dv   ; rd job on trk, sec
         bne  strtit
 
-wrtbuf  lda  #wrtsd_dv	; wr job on trk, sec
+wrtbuf  lda  #wrtsd_dv  ; wr job on trk, sec
 strtit  sta  cmd
         jsr  getact
         tax
@@ -476,7 +476,7 @@ fndw15  bmi  fndw10
 
 fndw20  sec
         rts
-typfil          	; get file type
+typfil                  ; get file type
         ldx  lindx
         lda  filtyp,x
         lsr  a
@@ -495,12 +495,12 @@ getpre  jsr  getact
 ; if last then z=1 else z=0 ;
 
 getbyt
-	ldx  lindx
-	lda  buf0,x	; active buffer
-	bpl  +
+        ldx  lindx
+        lda  buf0,x     ; active buffer
+        bpl  +
 
-	lda  buf1,x
-+	and  #$bf
+        lda  buf1,x
++       and  #$bf
         asl  a
         tax
         ldy  lindx
@@ -626,11 +626,11 @@ incptr
 ; sec carry auto boot loader
 ;
 ;
-vujade  lda  dejavu	; clear bit7
-	and  #all-bit7
-	sta  dejavu
-	lda  #0
-	ror  a		; new bit 7
-	ora  dejavu
-	sta  dejavu
-	rts
+vujade  lda  dejavu     ; clear bit7
+        and  #all-bit7
+        sta  dejavu
+        lda  #0
+        ror  a          ; new bit 7
+        ora  dejavu
+        sta  dejavu
+        rts

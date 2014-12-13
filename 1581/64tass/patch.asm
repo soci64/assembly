@@ -1,49 +1,49 @@
 ; the following patches to SPIN and SPOUT insure clean shift register
-; before starting data transmission.	3/20/87 F.Bowen
+; before starting data transmission.    3/20/87 F.Bowen
 
 spin_patch
-	sta cra		;in
-	lda pb
-	ora #fsdir
-	sta pb		;turn driver out (protection, just in case...)
-	lda cra
-	ora #$40
-	sta cra		;out
-	and #$bf
-	sta cra		;in
-	rts
+        sta cra         ;in
+        lda pb
+        ora #fsdir
+        sta pb          ;turn driver out (protection, just in case...)
+        lda cra
+        ora #$40
+        sta cra         ;out
+        and #$bf
+        sta cra         ;in
+        rts
 
 
 spout_patch
-	sta cra		;out
-	and #$bf
-	sta cra		;in
-	ora #$40
-	sta cra		;out
-	rts
+        sta cra         ;out
+        and #$bf
+        sta cra         ;in
+        ora #$40
+        sta cra         ;out
+        rts
 
 
 
 ; the following patch causes the BAM to be updated after each partition
-; is deleted.		3/19/87 F.Bowen
+; is deleted.           3/19/87 F.Bowen
 
 scrtch_patch
-	jsr mapout	;fix BAM
-	jmp sc20	;continue scratch command
+        jsr mapout      ;fix BAM
+        jmp sc20        ;continue scratch command
 
 
 
 ; the following patch fixes QUERY by reading in the header after initial
-; restore.		3/19/87 F.Bowen
+; restore.              3/19/87 F.Bowen
 
 query_patch
-	jsr strobe_controller	;do restore_dv
-	cmp #2
-	bcs +			;branch if error
+        jsr strobe_controller   ;do restore_dv
+        cmp #2
+        bcs +                   ;branch if error
 
-	lda #seekhd_dv
-	jsr strobe_controller	;do seek-any-header
+        lda #seekhd_dv
+        jsr strobe_controller   ;do seek-any-header
 
-+	rts			;end of patch: check for error & continue
++       rts                     ;end of patch: check for error & continue
 
-;	.end
+;       .end

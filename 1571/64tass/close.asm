@@ -91,7 +91,7 @@ clsr1   jmp  frechn
 
 ; close a write chanl
 
-clswrt          	; close seq write file
+clswrt                  ; close seq write file
         ldx  lindx
         lda  nbkl,x
         ora  nbkh,x
@@ -121,11 +121,11 @@ clsw15
 clsw20
         sec
         sbc  #1         ; back up 1
-        pha     	; save it
+        pha             ; save it
         lda  #0
         jsr  setpnt
         jsr  putbyt     ; tlink=0
-        pla     	; lstchr count
+        pla             ; lstchr count
         jsr  putbyt
 
         jsr  wrtbuf     ; write out last buffer

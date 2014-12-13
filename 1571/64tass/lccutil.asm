@@ -15,7 +15,7 @@ errr10
         jsr  trnoff     ;  start timeout on drive
 ;
         ldx  savsp
-        txs     	;  reset stack pointer
+        txs             ;  reset stack pointer
 ;
         jmp  top        ;  back to the top
 ;
@@ -30,7 +30,7 @@ turnon  lda  #$a0       ;  turn on drive
         ora  #$04       ;  turn motor on
         sta  dskcnt
 ;
-        lda  #50	;  delay  .4 sec *** rom ds 04/17/85 ***
+        lda  #50        ;  delay  .4 sec *** rom ds 04/17/85 ***
         sta  acltim
 ;
         rts
@@ -42,9 +42,9 @@ trnoff  ldx  cdrive     ;  start time out of current drive
         ora  #$10
         sta  drvst
 ;
-	jmp  ptch20	; setup timers for timeout *rom-05ds 01/22/85*
-	nop		; fill
-	nop		; fill
+        jmp  ptch20     ; setup timers for timeout *rom-05ds 01/22/85*
+        nop             ; fill
+        nop             ; fill
 
 ;       lda  #255       ;  255*.025s time out
 ;       sta  acltim

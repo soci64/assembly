@@ -6,7 +6,7 @@
 nxtts   jsr  gethdr
         lda  #3
         sta  temp       ; set pass count
-	lda  #1         ; find next
+        lda  #1         ; find next
         ora  wbam
         sta  wbam
 nxtds   jmp  ptch36
@@ -42,7 +42,7 @@ nxterr  lda  #dskful
 nxt2    dec  track
         bne  nxtds
 
-nxt3	ldx  dirtrk
+nxt3    ldx  dirtrk
         inx
         stx  track
         lda  #0
@@ -53,43 +53,43 @@ nxt3	ldx  dirtrk
         beq  nxterr
 
 fndnxt  lda  sector     ; get current sec
-        clc     	; add in the incr
+        clc             ; add in the incr
         adc  secinc
         sta  sector
         lda  track
         jsr  maxsec
         sta  lstsec
         sta  cmd
-        cmp  sector	; is it over?
+        cmp  sector     ; is it over?
         bcs  fndn0      ; no..it's ok
 
-	sec
-	lda  sector
-	sbc  lstsec
-	sta  sector
-	beq  fndn0
+        sec
+        lda  sector
+        sbc  lstsec
+        sta  sector
+        beq  fndn0
 
-	dec  sector	; -1
+        dec  sector     ; -1
 
 fndn0   jsr  getsec
-        beq  fndn2	; nothing here...
+        beq  fndn2      ; nothing here...
 
 fndn1
-	jmp  wused
+        jmp  wused
 
 fndn2
         lda  #0
         sta  sector     ; start again
-	jsr  getsec
-        bne  fndn1	; sumtin here...
+        jsr  getsec
+        bne  fndn1      ; sumtin here...
 
-	jmp  derr
+        jmp  derr
 
 intts   lda  #1         ; find init opt t&s
         ora  wbam
         sta  wbam
         lda  r0
-        pha     	; save temp var
+        pha             ; save temp var
         lda  #1         ; clr r0
         sta  r0
 its1    lda  dirtrk     ; track:= dirtrk-r0
@@ -100,7 +100,7 @@ its1    lda  dirtrk     ; track:= dirtrk-r0
 
         beq  its2       ; then begin
 
-	jmp  ptch37     ; set the bam pntr
+        jmp  ptch37     ; set the bam pntr
 rtch37  lda  (bmpnt),y
 rtch37a bne  fndsec
 
@@ -131,8 +131,8 @@ fndsec  pla
 derr    lda  #direrr
         jsr  cmder2
 getsec  jmp  ptch35
-rtch35	tya
-	pha
+rtch35  tya
+        pha
         jsr  avck       ; chk bits & count
         lda  track
         jsr  maxsec
@@ -150,14 +150,14 @@ gs10    lda  sector
         bne  gs10       ; bra
 
 gs20    lda  #0         ; nothing free
-gs30    rts     	; (z=1): free
+gs30    rts             ; (z=1): free
 
 avck    lda  temp
-	pha
-	lda  #0
+        pha
+        lda  #0
         sta  temp       ; blk counter
         ldy  bamsiz
-        dey     	; adjust it
+        dey             ; adjust it
 ac10    ldx  #7
 ac20    lda  (bmpnt),y
         and  bmask,x    ; used ?
@@ -167,23 +167,23 @@ ac20    lda  (bmpnt),y
 ac30    dex
         bpl  ac20       ; do next bit
 
-        dey     	; do next byte
+        dey             ; do next byte
         bne  ac10
 
         lda  (bmpnt),y
         cmp  temp
         bne  ac40       ; counts don't match
 
-	pla
-	sta  temp
+        pla
+        sta  temp
         rts
 
 ac40    lda  #direrr
         jsr  cmder2
 
 maxsec  jsr  ptch26
--	cmp  trknum-1,x
-	dex
-	bcs  -
-	lda  numsec,x
-	rts
+-       cmp  trknum-1,x
+        dex
+        bcs  -
+        lda  numsec,x
+        rts

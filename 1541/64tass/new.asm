@@ -14,7 +14,7 @@ new     jsr  onedrv
 n101    and  #1
         sta  drvnum
 
-;	jsr  setlds
+;       jsr  setlds
         jsr  ptch11     ; clr nodrv ***rom ds 01/21/85***
 
         lda  drvnum
@@ -37,9 +37,9 @@ n101    and  #1
         jsr  patch7     ; set format flag
 ;-------------------------------------------
 
-	jsr  clrbam     ; zero bam
+        jsr  clrbam     ; zero bam
 
-	jmp  n110
+        jmp  n110
 
 n108    jsr  initdr     ; clear directory only
 

@@ -35,7 +35,7 @@ erroff
 
 erron   sei
         txa
-        pha     	; save .x
+        pha             ; save .x
         lda  #80
         sta  erword
         ldx  #0
@@ -44,6 +44,6 @@ erron   sei
         ora  ledprt     ; set led on
         sta  ledprt
         pla
-        tax     	; restore .x
+        tax             ; restore .x
         cli
         rts

@@ -15,13 +15,13 @@ usrint  lda  #<ublock   ; set default block add
 us10    jsr  usrexc     ; execute code by table
         jmp  endcmd
 
-usrexc  dey     	; entry is(((index-1)and$f)*2)
+usrexc  dey             ; entry is(((index-1)and$f)*2)
         tya
         and  #$f
         asl  a
         tay
 
-	lda  (usrjmp),y
+        lda  (usrjmp),y
         sta  ip
         iny
         lda  (usrjmp),y
@@ -37,7 +37,7 @@ opnblk  lda  lstdrv
         lda  sa         ; sa is destroyed by this patch
         pha
         jsr  autoi      ; init disk for proper channel assignment
-        pla     	; restore sa
+        pla             ; restore sa
         sta  sa
         ldx  cmdsiz
         dex
@@ -130,7 +130,7 @@ blk30   lda  #badsyn
 blk40   txa
         bne  blk30
 
-        ldx  #nbcmds-1	; find command
+        ldx  #nbcmds-1  ; find command
         lda  cmdbuf,y
 blk50   cmp  bctab,x
         beq  blk60
@@ -158,11 +158,11 @@ bctab    .text  'AFRWEP'
 nbcmds   =*-bctab
 
 bcjmp    .word blkalc   ; block-allocate
-	 .word blkfre	; block-free
-	 .word blkrd    ; block-read
-	 .word blkwt    ; block-write
-	 .word blkexc   ; block-execute
-	 .word blkptr   ; block-pointer
+         .word blkfre   ; block-free
+         .word blkrd    ; block-read
+         .word blkwt    ; block-write
+         .word blkexc   ; block-execute
+         .word blkptr   ; block-pointer
 
 blkpar  ldy  #0         ; parse block parms
         ldx  #0
@@ -185,7 +185,7 @@ bp10    iny
         cpy  cmdsiz
         bcc  bp05
 
-        rts     	; that's all
+        rts             ; that's all
 
 bp20    jsr  aschex
         inc  f1cnt
@@ -223,7 +223,7 @@ ah10    lda  cmdbuf,y   ; test for dec #
         bcc  ah10       ; still in string
 
 ah20    sty  f2ptr      ; convert digits to...
-        clc     	; ...binary by dec table
+        clc             ; ...binary by dec table
         lda  #0
 
 ah30    inx
@@ -275,7 +275,7 @@ ba10
         jmp  endcmd
 
 ba15
-        pla     	; pop stack
+        pla             ; pop stack
 ba20
         lda  #0
         sta  sector
@@ -350,7 +350,7 @@ bw20    jsr  drtwrt     ; write block
         tax
 
 ;       jsr  rnget2
-	jsr  ptch15	; fix for block read *rom ds 01/22/85*
+        jsr  ptch15     ; fix for block read *rom ds 01/22/85*
 
         jmp  endcmd
 

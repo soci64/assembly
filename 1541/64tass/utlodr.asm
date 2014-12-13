@@ -1,47 +1,47 @@
 
-	rts
-boot	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	rts
+        rts
+boot    nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        rts
 
 utlodr  lda  #$8d
-	jsr  parse
+        jsr  parse
 
-rtch18	jsr  killp
+rtch18  jsr  killp
         lda  f2cnt
-        pha     	; save file count for utility
+        pha             ; save file count for utility
         lda  #1
         sta  f2cnt
         lda  #$ff       ; init firstbyte flag
@@ -73,9 +73,9 @@ utld10  lda  #$00       ; init checksum
         beq  utld20     ; br if not
 
         lda  r2         ; sav this adr
-        pha     	; lo first
+        pha             ; lo first
         lda  r3
-        pha     	; hi next
+        pha             ; hi next
         lda  #$00       ; clear flag
         sta  r0         ; first byte flag
 utld20  jsr  gtabyt     ; fetch data byte count
@@ -107,7 +107,7 @@ utld35  dec  r4         ; update byte counter
 utld50  lda  eoiflg     ; check for eof
         bne  utld10     ; if nonzero, not done
 
-        pla     	; xfer cntrl to
+        pla             ; xfer cntrl to
         sta  r3         ; 1st byte addr.
         pla
         sta  r2

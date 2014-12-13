@@ -53,7 +53,7 @@ gethdr  jsr  getact
         lda  hdrs+1,y   ; 4/12
         sta  sector
         rts
-wrtab   lda  #wrtsd_dv	; wrtab/rdab
+wrtab   lda  #wrtsd_dv  ; wrtab/rdab
         sta  cmd        ; wrtout/rdin
         bne  sj10       ; wrtss/rdss
 

@@ -6,24 +6,24 @@
 ;** U0 n S  = int. dos    **
 ;** U0 n R  = retries     **
 ;** U0 n T  = signature   **
-;** U0 n H  = side  	  **
-;** U0 n #  = device 	  **
+;** U0 n H  = side        **
+;** U0 n #  = device      **
 ;**                       **
 ;**     n = ">" ascii     **
 ;**                       **
 ;***************************
 cmdsec  lda  cmdbuf+4
         sta  secinc
-	rts
+        rts
 
 cmdret  lda  cmdbuf+4
         sta  revcnt
-	rts
+        rts
 
-sign	jmp  signature	; finish up there
+sign    jmp  signature  ; finish up there
 
 sside   .proc
-	sei
+        sei
         lda  pota1
         and  #$20     ;**TODO**
         bne  utlbad
@@ -48,55 +48,55 @@ fst     lda  pota1
         bmi  +
 ht      jmp  initdr
 +       rts
-	.pend
+        .pend
 
 chgutl  ldx  cmdsiz     ; chk cmd size
         cpx  #4
-	bcc  utlbad     ; br, error no parameters
+        bcc  utlbad     ; br, error no parameters
 
-	lda  cmdbuf+3
+        lda  cmdbuf+3
         cmp  #'S'       ; sector interleave ?
         beq  cmdsec
 
         cmp  #'R'       ; retry
         beq  cmdret
 
-        cmp  #'T'	; test ROM
+        cmp  #'T'       ; test ROM
         beq  sign
 
-        cmp  #'M'	; mode
+        cmp  #'M'       ; mode
         beq  smode
 
-	cmp  #'H'
-	beq  sside
-	jmp  ptch61
-rtch61	bcc  utlbad
+        cmp  #'H'
+        beq  sside
+        jmp  ptch61
+rtch61  bcc  utlbad
 
-	cpy  #31
-	bcs  utlbad
+        cpy  #31
+        bcs  utlbad
 
-	lda  #$40	; change device #
-	sta  tlkadr	; clear old
+        lda  #$40       ; change device #
+        sta  tlkadr     ; clear old
 
-	lda  #$20
-	sta  lsnadr	; *
+        lda  #$20
+        sta  lsnadr     ; *
 
-	tya
-	clc
-	adc  tlkadr
-	sta  tlkadr	; new
-	tya
-	clc
-	adc  lsnadr
-	sta  lsnadr	; new
-	rts
+        tya
+        clc
+        adc  tlkadr
+        sta  tlkadr     ; new
+        tya
+        clc
+        adc  lsnadr
+        sta  lsnadr     ; new
+        rts
 
 utlbad  lda  #badcmd
-	jmp  cmderr
+        jmp  cmderr
 
-smode	sei
-	lda  cmdbuf+4
-	cmp  #'1'
+smode   sei
+        lda  cmdbuf+4
+        cmp  #'1'
         beq  +
         cmp  #'0'
         bne  utlbad

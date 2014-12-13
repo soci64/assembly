@@ -12,7 +12,7 @@
 ;
 lcc
 ;
-        tsx     	;  save current stack pointer
+        tsx             ;  save current stack pointer
         stx  savsp
 ;
         lda  t1lc2      ; reset irq flag
@@ -32,7 +32,7 @@ cont10
         cmp  #jumpc     ;  test if its a jump command
         bne  cont30
 ;
-        tya     	;  put job num in .a
+        tya             ;  put job num in .a
         jmp  ex2
 ;
 ;
@@ -106,7 +106,7 @@ que20   and  #1         ;  test if same drive
         lda  drvtrk
         beq  gotu       ;  uninit. track #
 ;
-        sec     	;  calc distance to track
+        sec             ;  calc distance to track
         sbc  (hdrpnt),y
         beq  gotu       ;  on track
 ;
@@ -134,7 +134,7 @@ gotu10  cmp  trknum-1,x
         lda  numsec,x
         sta  sectr
 ;
-        txa     	;  set density
+        txa             ;  set density
         asl  a
         asl  a
         asl  a
@@ -197,7 +197,7 @@ setjb1  lda  jobs,y
         asl  a
         adc  #<hdrs
         sta  hdrpnt
-        tya     	;  point at buffer
+        tya             ;  point at buffer
         clc
         adc  #>bufs
         sta  bufpnt+1

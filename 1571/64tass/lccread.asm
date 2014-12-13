@@ -46,7 +46,7 @@ read28  jsr  chkblk     ;  calc checksum
         beq  read40
 ;
         lda  #5         ;  data block checksum error
-	.byte  skip2
+        .byte  skip2
 ;
 read40  lda  #1         ;  read data block ok
         jmp  errr
@@ -93,7 +93,7 @@ srch20  jsr  sync       ;  find sync
         ldy  #0         ;  test 8 gcr bytes
 ;
 srch25  bvc  *
-        clv     	;  wait for byte
+        clv             ;  wait for byte
 ;
         lda  data2
         cmp  stab,y     ;  test if the same
@@ -106,7 +106,7 @@ srch25  bvc  *
         rts
 ;
 ;
-srch30  dex     	; try again
+srch30  dex             ; try again
         bne  srch20
 ;
         lda  #2         ;  cant find this header

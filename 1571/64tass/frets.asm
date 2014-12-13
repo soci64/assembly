@@ -1,7 +1,7 @@
 
-	jsr  wrtbm
+        jsr  wrtbm
 frets   jmp  ptch33
-frets2	sec
+frets2  sec
         bne  fre10      ; free already
 
         lda  (bmpnt),y  ; not free, free it
@@ -24,9 +24,9 @@ fre20   inc  ndbl,x
 fre10   rts
 
 dtybam  ldx  drvnum
-	lda  #1
-	sta  mdirty,x
-	rts
+        lda  #1
+        sta  mdirty,x
+        rts
 
 wused   jsr  wrtbm      ; get bam index
 usedts  jmp  ptch34
@@ -62,19 +62,19 @@ use20   lda  ndbh,x
 +       rts
 
 freuse  jsr  setbam
-	tya
-	sta  temp
+        tya
+        sta  temp
 
 bambit  lda  sector     ; get sector bit in bam
         lsr  a          ; sectr/8
         lsr  a
         lsr  a
-        sec		; adjust it
+        sec             ; adjust it
         adc  temp
         tay
         lda  sector     ; get remainder
         and  #$07
-        tax     	; bit mask index
+        tax             ; bit mask index
         lda  (bmpnt),y
         and  bmask,x
         rts

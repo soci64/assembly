@@ -71,9 +71,9 @@ os40    rol  a
         jmp  os35
 
 schtbl  .byte    0,$80,$41
-	.byte    1,1,1,1
-	.byte    $81,$81,$81,$81
-	.byte    $42,$42,$42,$42
+        .byte    1,1,1,1
+        .byte    $81,$81,$81,$81
+        .byte    $42,$42,$42,$42
 ;   look up all files in stream
 ;   and fill tables w/ info
 
@@ -84,7 +84,7 @@ lk05    lda  #0
         bne  lk25
 lk10    dec  drvcnt
         bpl  lk15
-        rts     	; no more drive searches
+        rts             ; no more drive searches
 
 lk15    lda  #1         ; toggle drive #
         sta  drvflg
@@ -158,7 +158,7 @@ compar  ldx  #$ff
         stx  patflg
         jsr  cmpchk
         beq  cp10
-cp02    rts     	; all are found
+cp02    rts             ; all are found
 
 cp05    jsr  cc10
         bne  cp02
@@ -260,7 +260,7 @@ cmpchk  lda  #$ff
 
 cc10    dec  f2ptr
         bpl  cc15
-        rts     	; table exhausted
+        rts             ; table exhausted
 
 cc15    ldx  f2ptr
         lda  pattyp,x
@@ -294,7 +294,7 @@ srchst
 
 sr10    lda  lstbuf     ; last buffer if 0
         bne  sr15
-        rts     	; (z=1)
+        rts             ; (z=1)
 
 sr15    lda  #7
         sta  filcnt
@@ -318,7 +318,7 @@ sr20    jsr  getpnt
         ldx  delind     ; bit1: want deleted entry
         sta  delind
         beq  search     ; need valid entry
-        rts     	; (z=0)
+        rts             ; (z=0)
 
 sr30    ldx  #1
         cpx  delind     ; ?looking for deleted?
@@ -350,7 +350,7 @@ sr50    lda  dirbuf     ; found valid entry
         lda  sector
         sta  dirsec
 
-        rts     	; (z=0)
+        rts             ; (z=0)
 autoi
 ;  check drive for active diskette
 ;  init if needed
@@ -382,10 +382,10 @@ auto1
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jmp  ptch44	; *** rom ds 05/01/85 ***
+        jmp  ptch44     ; *** rom ds 05/01/85 ***
 ;       tya
 ;       sta  nodrv,x    ; set condn of no-drive
-rtch44			; ret address
+rtch44                  ; ret address
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
@@ -397,7 +397,7 @@ auto2
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jmp  ptch50	; *** rom ds 05/01/85 ***
+        jmp  ptch50     ; *** rom ds 05/01/85 ***
 ;       lda  nodrv,x    ; return no-drive condn
 ;       rts
 

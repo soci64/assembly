@@ -16,10 +16,10 @@ end
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jmp  ptch21	;  do auto on code *** rom ds 01/22/85 ***
-	nop		;  fill
-	nop		;  fill
-	nop		;  fill
+        jmp  ptch21     ;  do auto on code *** rom ds 01/22/85 ***
+        nop             ;  fill
+        nop             ;  fill
+        nop             ;  fill
 
 ;       beq  end002     ;  no
 
@@ -27,7 +27,7 @@ end
 ;       sta  wpsw
 ;
 
-rtch21			; return
+rtch21                  ; return
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
@@ -59,7 +59,7 @@ end33x  jmp  end33      ;  motor just running
 end10   dec  acltim     ;  dec timer
         bne  end30
 ;
-        tya     	;  test if acel
+        tya             ;  test if acel
         bpl  end20
 ;
 ;
@@ -69,13 +69,13 @@ end10   dec  acltim     ;  dec timer
 end20   and  #$10       ;  test if time out state
         beq  end30
 
-	dec  acltim2	;  timer2 *rom-05ds 01/22/85*
-	bne  end30
-	nop		;  fill
-	jsr  motoff	;  off the motor, ok...
+        dec  acltim2    ;  timer2 *rom-05ds 01/22/85*
+        bne  end30
+        nop             ;  fill
+        jsr  motoff     ;  off the motor, ok...
 ;
 ;       lda  dskcnt     ;
-;	and  #$ff-$04   ;  turnoff motor
+;       and  #$ff-$04   ;  turnoff motor
 ;       sta  dskcnt
 ;
 ;
@@ -86,7 +86,7 @@ end20   and  #$10       ;  test if time out state
         sta  drvst      ;  clear on bit and timout
         beq  end33x
 ;
-end30   tya     	;  test if step needed
+end30   tya             ;  test if step needed
         and  #$40
         bne  end30x     ;  stepping
 ;
@@ -111,7 +111,7 @@ inac10  cmp  minstp     ;  test if we can accel
         sta  nxtst+1
         bne  dostep
 ;
-inac20          	;  calc the # of run steps
+inac20                  ;  calc the # of run steps
         sbc  as
         sbc  as
         sta  rsteps
@@ -128,14 +128,14 @@ dostep  lda  steps
 ;
 ;---------rom05-bc 09/12/84--------
 ;stpout inc steps
-;	ldx dskcnt
-;	dex
-;	jmp stp
+;       ldx dskcnt
+;       dex
+;       jmp stp
 
 stpout  jmp  patch9     ; check track 0 (photo sensor)
-        nop     	;
-        nop     	;
-        nop     	;
+        nop             ;
+        nop             ;
+        nop             ;
 pppppp  jmp  stp        ; goto step
 ;----------------------------------
 ;
@@ -176,7 +176,7 @@ stp     txa
         sta  dskcnt
         jmp  end33
 ;
-ssacl           	;  sub acel factor
+ssacl                   ;  sub acel factor
         sec
         lda  t1hl2
         sbc  af
@@ -204,7 +204,7 @@ ssrun   dec  rsteps
         sta  nxtst+1
         bne  ssa10
 ;
-ssdec           	;  decel
+ssdec                   ;  decel
         lda  t1hl2
         clc
         adc  af

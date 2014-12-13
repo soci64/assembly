@@ -19,7 +19,7 @@ seek10  jsr  sync       ;  find sync char
         bne  seek20     ;  not header
 ;
 seek15  bvc  *
-        clv     	;  read in gcr header
+        clv             ;  read in gcr header
 ;
         lda  data2
         sta  stab+1,x
@@ -74,10 +74,10 @@ eseek   lda  header     ; harris fix....
         sta  dskid+1    ; ....
 ;
 done    lda  #1         ;  return ok code
-	.byte    skip2
+        .byte    skip2
 ;
 badid   lda  #11        ;  disk id mismatch
-	.byte    skip2
+        .byte    skip2
 ;
 cserr   lda  #9         ;  checksum error in header
         jmp  errr
@@ -131,7 +131,7 @@ l480    jsr  setjb
 l465    cmp  csect
         bcs  l470
 ;
-        pha     	;  save it
+        pha             ;  save it
         lda  job
         beq  tstrdj     ;  must be a read
 ;
@@ -158,7 +158,7 @@ tstrdj  pla
 l470    dec  jobn
         bpl  l480
 ;
-        txa     	;  test if a job to do
+        txa             ;  test if a job to do
         bpl  l490
 ;
         jmp  end        ;  no job found
@@ -174,7 +174,7 @@ l490    stx  jobn
 cnvbin  lda  bufpnt
         pha
         lda  bufpnt+1
-        pha     	;  save buffer pntr
+        pha             ;  save buffer pntr
 ;
         lda  #<stab
         sta  bufpnt     ;  point at gcr code

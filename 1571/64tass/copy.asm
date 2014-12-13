@@ -22,7 +22,7 @@ copy    jsr  lookup     ; look ip all files
         sta  f2ptr
         jsr  opirfl
         jsr  typfil
-        beq  cop01    	; greater than or equal to relative...
+        beq  cop01      ; greater than or equal to relative...
 
         cmp  #prgtyp
         bne  cop05
@@ -127,7 +127,7 @@ gcbyte  jsr  gbyte
 gib20   rts
 
 cyext   jsr  setdrn
-	jsr  ssend      ; copy rel rec's
+        jsr  ssend      ; copy rel rec's
         lda  ssind
         pha
         lda  ssnum
@@ -145,9 +145,9 @@ cyext   jsr  setdrn
         lda  #0
         sta  r2
         sta  recptr
-	sta  relptr
-	pla
+        sta  relptr
+        pla
         sta  ssnum
-	pla
-	sta  ssind
-	jmp  addr1
+        pla
+        sta  ssind
+        jmp  addr1

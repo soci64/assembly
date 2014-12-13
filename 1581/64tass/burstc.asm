@@ -1,388 +1,388 @@
 logical_err
-	lda  #%10001101
-	jmp  fail
+        lda  #%10001101
+        jmp  fail
 
 logical_rd
-	lda  dkoramask
-	bmi  logical_err
+        lda  dkoramask
+        bmi  logical_err
 
-	ldx  #0         ; job #0
-	lda  cmdbuf+3   ; get track
-	sta  hdrs,x
-	lda  cmdbuf+4   ; get sector
-	sta  hdrs+1,x
+        ldx  #0         ; job #0
+        lda  cmdbuf+3   ; get track
+        sta  hdrs,x
+        lda  cmdbuf+4   ; get sector
+        sta  hdrs+1,x
 
-	lda  #read_dv   ; read
-	jsr  stbctl
-	jsr  upinst     ; update controller status
+        lda  #read_dv   ; read
+        jsr  stbctl
+        jsr  upinst     ; update controller status
 
-	bit  switch     ; check E
-	bvs  lerror_sw
+        bit  switch     ; check E
+        bvs  lerror_sw
 
-	cmp  #2         ; error
-	bcc  lerror_sw
+        cmp  #2         ; error
+        bcc  lerror_sw
 
-	jmp  fail
+        jmp  fail
 
 lerror_sw
-	jsr  hskstat    ; handshake on state of clkin
+        jsr  hskstat    ; handshake on state of clkin
 
-	ldy  #0         ; even page
-	sty  bufpnt
-	lda  #>buff0
-	sta  bufpnt+1   ; pointer to data
+        ldy  #0         ; even page
+        sty  bufpnt
+        lda  #>buff0
+        sta  bufpnt+1   ; pointer to data
 -       lda  (bufpnt),y ; get data
-	jsr  hskrd      ; handshake on state
-	iny
-	bne  -
+        jsr  hskrd      ; handshake on state
+        iny
+        bne  -
 
-	dec  cmdbuf+5   ; any more sectors
-	beq  +
+        dec  cmdbuf+5   ; any more sectors
+        beq  +
 
-	jsr  lsectnx    ; next sector
-	jmp  logical_rd ; read next
+        jsr  lsectnx    ; next sector
+        jmp  logical_rd ; read next
 
 +       jmp  lchksee    ; next track
 
 nchnl   lda  #%00001011 ; no channel
-	.byte skip2
+        .byte skip2
 ndkrd   lda  #%01001111 ; no drive
 
 fail    jsr  upinst     ; update dkmode
-	jsr  statqy     ; wait for state handshake
+        jsr  statqy     ; wait for state handshake
 final   lda  burst_stat
-	cmp  #2
-	bcs  exbad
+        cmp  #2
+        bcs  exbad
 
-	rts
+        rts
 
 exbad   and  #15        ; bits 0-3 only
-	ldx  #0         ; jobnum
-	jmp  error      ; controller error entry
+        ldx  #0         ; jobnum
+        jmp  error      ; controller error entry
 
 ; (1) FAST READ
 
 fstrd   lda  wpsw       ; disk change?
-	bne  nchnl      ; br, bad
+        bne  nchnl      ; br, bad
 
 fstread jsr  spout      ; output mode
-	lda  switch     ; check for L
-	bmi  logical_rd
+        lda  switch     ; check for L
+        bmi  logical_rd
 
-	ldx  #0         ; job #0
-	lda  cmdbuf+3   ; get track
-	sta  hdrs,x
-	lda  cmdbuf+4   ; get sector
-	sta  hdrs+1,x
+        ldx  #0         ; job #0
+        lda  cmdbuf+3   ; get track
+        sta  hdrs,x
+        lda  cmdbuf+4   ; get sector
+        sta  hdrs+1,x
 
-	lda  switch
-	and  #bit4
-	sta  sids,x
-	lda  #tpread_dv ; read
-	jsr  stbctl
-	jsr  upinst     ; update controller status
+        lda  switch
+        and  #bit4
+        sta  sids,x
+        lda  #tpread_dv ; read
+        jsr  stbctl
+        jsr  upinst     ; update controller status
 
-	bit  switch     ; check E
-	bvs  error_sw
+        bit  switch     ; check E
+        bvs  error_sw
 
-	cmp  #2         ; error
-	bcs  fail
+        cmp  #2         ; error
+        bcs  fail
 
 error_sw
-	jsr  hskstat    ; handshake on state of clkin
+        jsr  hskstat    ; handshake on state of clkin
 
 buffer_sw
-	ldy  #0         ; even page
-	sty  bufpnt
-	lda  cacheoff,y
-	and  #all-bit7
-	clc
-	adc  cache+1
-	sta  bufpnt+1   ; pointer to data
-	ldx  psectorsiz
-	cpx  #3
-	bne  +
+        ldy  #0         ; even page
+        sty  bufpnt
+        lda  cacheoff,y
+        and  #all-bit7
+        clc
+        adc  cache+1
+        sta  bufpnt+1   ; pointer to data
+        ldx  psectorsiz
+        cpx  #3
+        bne  +
 
-	inx
+        inx
 +
 -       lda  (bufpnt),y ; get data
-	jsr  hskrd      ; handshake on state
-	iny
-	bne  -
+        jsr  hskrd      ; handshake on state
+        iny
+        bne  -
 
-	dex
-	beq  trans_sw
+        dex
+        beq  trans_sw
 
-	inc  bufpnt+1
-	bne  -          ; bra
+        inc  bufpnt+1
+        bne  -          ; bra
 
 trans_sw
-	dec  cmdbuf+5   ; any more sectors ?
-	beq  +
+        dec  cmdbuf+5   ; any more sectors ?
+        beq  +
 
-	jsr  sectnx     ; next sector
-	jmp  fstread    ; more to do
+        jsr  sectnx     ; next sector
+        jmp  fstread    ; more to do
 
 +       jmp  chksee     ; next track ?
 
 ; (2) FAST WRITE
 
 logical_werr
-	lda  #%10001101
-	sta  burst_stat
-	lda  switch     ; set internal abort switch
-	ora  #%00001000
-	sta  switch
-	bne  lfstwrite  ; bra
+        lda  #%10001101
+        sta  burst_stat
+        lda  switch     ; set internal abort switch
+        ora  #%00001000
+        sta  switch
+        bne  lfstwrite  ; bra
 
 logical_wrt
-	lda  dkoramask
-	bmi  logical_werr
+        lda  dkoramask
+        bmi  logical_werr
 
 lfstwrite
-	ldy  #0
-	sty  bufpnt
-	lda  #>buff0
-	sta  bufpnt+1
+        ldy  #0
+        sty  bufpnt
+        lda  #>buff0
+        sta  bufpnt+1
 -       lda  pb         ; debounce
-	eor  #clkout    ; toggle state of clock
-	bit  icr        ; clear pending
-	sta  pb
-	lda  #8
+        eor  #clkout    ; toggle state of clock
+        bit  icr        ; clear pending
+        sta  pb
+        lda  #8
 -       bit  pb
-	bmi  +          ; br, attn low
+        bmi  +          ; br, attn low
 
-	bit  icr        ; wait for byte
-	beq  -
+        bit  icr        ; wait for byte
+        beq  -
 
-	lda  sdr        ; get data
-	sta  (bufpnt),y ; put away data
-	iny
-	bne  --         ; more ?
+        lda  sdr        ; get data
+        sta  (bufpnt),y ; put away data
+        iny
+        bne  --         ; more ?
 
-	beq  ltrans_sw1 ; bra
+        beq  ltrans_sw1 ; bra
 
 +       jsr  tstatn
-	jmp  -          ; if it comes back then ok
+        jmp  -          ; if it comes back then ok
 
 labort_sw
-	lda  burst_stat
-	jmp  fail       ; abort
+        lda  burst_stat
+        jmp  fail       ; abort
 
 ltrans_sw1
-	jsr  clkhi      ; release clock
-	lda  switch     ; check internal abort switch
-	and  #%00001000
-	bne  labort_sw  ; br, ok...
+        jsr  clkhi      ; release clock
+        lda  switch     ; check internal abort switch
+        and  #%00001000
+        bne  labort_sw  ; br, ok...
 
-	ldx  #0         ; job #0
-	lda  cmdbuf+3   ; get track
-	sta  hdrs,x
-	lda  cmdbuf+4   ; get sector
-	sta  hdrs+1,x
-	lda  #wrtsd_dv  ; get write job
-	jsr  stbctl
-	jsr  upinst     ; update status
-	jsr  statqb     ; send status
-	bit  switch     ; check error ignore switch
-	bvs  +
+        ldx  #0         ; job #0
+        lda  cmdbuf+3   ; get track
+        sta  hdrs,x
+        lda  cmdbuf+4   ; get sector
+        sta  hdrs+1,x
+        lda  #wrtsd_dv  ; get write job
+        jsr  stbctl
+        jsr  upinst     ; update status
+        jsr  statqb     ; send status
+        bit  switch     ; check error ignore switch
+        bvs  +
 
-	lda  burst_stat
-	cmp  #2         ; error on job ?
-	bcc  +
+        lda  burst_stat
+        cmp  #2         ; error on job ?
+        bcc  +
 
-	jmp  exbad
+        jmp  exbad
 
 +       dec  cmdbuf+5   ; any more sectors
-	beq  +
+        beq  +
 
-	jsr  lsectnx    ; next sector
-	jmp  logical_wrt
+        jsr  lsectnx    ; next sector
+        jmp  logical_wrt
 
 +       jmp  lchksee    ; next track
 
 wnochnl lda  #%00001011 ; no channel
-	.byte  skip2
+        .byte  skip2
 ndkwrt  lda  #%01001111 ; no drv 1
-	sta  burst_stat
-	jmp  fstwrt1    ; bra
+        sta  burst_stat
+        jmp  fstwrt1    ; bra
 
 fstwrt  lda  wpsw       ; disk change
-	bne  wnochnl
+        bne  wnochnl
 
-	lda  switch     ; check for logical
-	bpl  +
+        lda  switch     ; check for logical
+        bpl  +
 
-	jmp  logical_wrt
+        jmp  logical_wrt
 
 +       ldx  #0         ; job #0
-	lda  switch
-	and  #bit4
-	sta  sids,x
-	lda  cmdbuf+3   ; get track
-	sta  hdrs,x
-	lda  cmdbuf+4   ; get sector
-	sta  hdrs+1,x
-	lda  #tpwrt_dv  ; get write job
-	jsr  stbctl
-	jsr  upinst     ; update status
-	cmp  #2
-	bcc  fstwrite
+        lda  switch
+        and  #bit4
+        sta  sids,x
+        lda  cmdbuf+3   ; get track
+        sta  hdrs,x
+        lda  cmdbuf+4   ; get sector
+        sta  hdrs+1,x
+        lda  #tpwrt_dv  ; get write job
+        jsr  stbctl
+        jsr  upinst     ; update status
+        cmp  #2
+        bcc  fstwrite
 
-	lda  #0
-	sta  dirty      ; clear dirty flag
+        lda  #0
+        sta  dirty      ; clear dirty flag
 
 fstwrt1 lda  switch     ; set internal abort switch
-	ora  #%00001000
-	sta  switch
+        ora  #%00001000
+        sta  switch
 fstwrite
-	jsr  cachepoint ; set pointer to cache buffer
-	ldx  psectorsiz
-	cpx  #3
-	bne  +
+        jsr  cachepoint ; set pointer to cache buffer
+        ldx  psectorsiz
+        cpx  #3
+        bne  +
 
-	inx
+        inx
 +
 -       lda  pb         ; debounce
-	eor  #clkout    ; toggle state of clock
-	bit  icr        ; clear pending
-	sta  pb
-	lda  #8
+        eor  #clkout    ; toggle state of clock
+        bit  icr        ; clear pending
+        sta  pb
+        lda  #8
 -       bit  pb
-	bmi  +          ; br, attn low
+        bmi  +          ; br, attn low
 
-	bit  icr        ; wait for byte
-	beq  -
+        bit  icr        ; wait for byte
+        beq  -
 
-	lda  sdr        ; get data
-	sta  (bufpnt),y ; put away data
-	iny
-	bne  --         ; more ?
+        lda  sdr        ; get data
+        sta  (bufpnt),y ; put away data
+        iny
+        bne  --         ; more ?
 
-	inc  bufpnt+1
+        inc  bufpnt+1
 
-	dex
-	bne  --
+        dex
+        bne  --
 
-	beq  trans_sw1  ; bra
+        beq  trans_sw1  ; bra
 
 +       jsr  tstatn
-	jmp  -          ; if it comes back then ok
+        jmp  -          ; if it comes back then ok
 
 abort_sw
-	lda  burst_stat
-	jmp  fail       ; abort
+        lda  burst_stat
+        jmp  fail       ; abort
 
 trans_sw1
-	jsr  clkhi      ; release clock
-	lda  switch     ; check internal abort switch
-	and  #%00001000
-	bne  abort_sw   ; br, ok...
+        jsr  clkhi      ; release clock
+        lda  switch     ; check internal abort switch
+        and  #%00001000
+        bne  abort_sw   ; br, ok...
 
-	jsr  statqb     ; send status
+        jsr  statqb     ; send status
 
-	bit  switch     ; check error ignore switch
-	bvs  buffer_sw1
+        bit  switch     ; check error ignore switch
+        bvs  buffer_sw1
 
-	lda  burst_stat
-	cmp  #2         ; error on job ?
-	bcc  buffer_sw1
+        lda  burst_stat
+        cmp  #2         ; error on job ?
+        bcc  buffer_sw1
 
-	jmp  exbad
+        jmp  exbad
 
 buffer_sw1
-	dec  cmdbuf+5   ; more sectors ?
-	beq  +
+        dec  cmdbuf+5   ; more sectors ?
+        beq  +
 
-	jsr  sectnx     ; increment sector
-	jmp  fstwrt
+        jsr  sectnx     ; increment sector
+        jmp  fstwrt
 
 +       jmp  chksee     ; next track ?
 
 
 cachepoint
 
-	ldy  #0         ; even page
-	sty  bufpnt
-	lda  cmdbuf+4   ; sector
-	sec
-	sbc  pstartsec
-	ldx  psectorsiz ; multiply by sector size
+        ldy  #0         ; even page
+        sty  bufpnt
+        lda  cmdbuf+4   ; sector
+        sec
+        sbc  pstartsec
+        ldx  psectorsiz ; multiply by sector size
 -       dex
-	beq  +
+        beq  +
 
-	asl  a
-	jmp  -
+        asl  a
+        jmp  -
 
 +       clc
-	adc  cache+1    ; add offset
-	sta  bufpnt+1
-	rts
+        adc  cache+1    ; add offset
+        sta  bufpnt+1
+        rts
 
 ; (3) FAST SEEK
 
 fstsek  lda  cmdbuf+2   ; check drive number
-	and  #1
-	bne  +          ; drive 1 - error
+        and  #1
+        bne  +          ; drive 1 - error
 
-	ldx  #0
-	stx  dkmode
+        ldx  #0
+        stx  dkmode
 
-	lda  #restore_dv
-	jsr  stbctl     ; restore head
+        lda  #restore_dv
+        jsr  stbctl     ; restore head
 
-	php
-	cli
-	lda  #bit7
-	sta  xjobrtn    ; return
-	jsr  fintdsk    ; init new dsk
-	jsr  initdr     ; read in appropiate info
-	asl  xjobrtn    ; clear
-	plp
-	lda  switch
-	and  #bit4
-	lsr  a
-	lsr  a
-	lsr  a
-	lsr  a
-	sta  sids,x
-	lda  #side_dv   ; select side
-	jsr  strobe_controller
+        php
+        cli
+        lda  #bit7
+        sta  xjobrtn    ; return
+        jsr  fintdsk    ; init new dsk
+        jsr  initdr     ; read in appropiate info
+        asl  xjobrtn    ; clear
+        plp
+        lda  switch
+        and  #bit4
+        lsr  a
+        lsr  a
+        lsr  a
+        lsr  a
+        sta  sids,x
+        lda  #side_dv   ; select side
+        jsr  strobe_controller
 
-	lda  #seekhd_dv ; seek
-	jsr  stbctl
-	.byte  skip2    ; return status
+        lda  #seekhd_dv ; seek
+        jsr  stbctl
+        .byte  skip2    ; return status
 +       lda  #%01001111 ; no drv 1
 -       jsr  fail       ; update status
-	lda  #1
-	sta  minsek
-	sta  pstartsec
-	ldx  header+3
-	lda  nsecks,x   ; get max #
-	beq  +          ; br, error
+        lda  #1
+        sta  minsek
+        sta  pstartsec
+        ldx  header+3
+        lda  nsecks,x   ; get max #
+        beq  +          ; br, error
 
-	sta  pnumsec
-	sta  pendsec
-	sta  maxsek
-	rts
+        sta  pnumsec
+        sta  pendsec
+        sta  maxsek
+        rts
 
 +       lda  #$0e
-	bne  -          ; bra, not supported
+        bne  -          ; bra, not supported
 
 nsecks  .byte 0,16,10,5
 
 nonedr  lda  #%01001111 ; no drive one
-	jsr  upinst     ; update status
-	jmp  final      ; finish up ...
+        jsr  upinst     ; update status
+        jmp  final      ; finish up ...
 
 ; (4) BURST FORMAT MFM/GCR
 
 fstfmt  lda  cmdbuf+2   ; check drive number
-	and  #1
-	bne  nonedr
+        and  #1
+        bne  nonedr
 
-	lda  cmdbuf+2   ; format gcr or mfm ?
-	bpl  usenew
+        lda  cmdbuf+2   ; format gcr or mfm ?
+        bpl  usenew
 
 ; (4) FORMAT DISK
 
@@ -390,242 +390,242 @@ fstfmt  lda  cmdbuf+2   ; check drive number
 ;  ^     ^    ^    ^    ^    ^    ^    ^   ^     ^
 ; "U" + "0" + N + SZ + LT + NS + ST + FL + SS + GP
 
-	lda  cmdsiz     ; setup default parms
-	sec
-	sbc  #3         ; less mandatory + 1
-	tay
-	beq  sz00       ; not sz
+        lda  cmdsiz     ; setup default parms
+        sec
+        sbc  #3         ; less mandatory + 1
+        tay
+        beq  sz00       ; not sz
 
-	lda  cmdbuf+3
-	sta  psectorsiz
+        lda  cmdbuf+3
+        sta  psectorsiz
 
-	dey
-	beq  lt00       ; sz only, not lt
+        dey
+        beq  lt00       ; sz only, not lt
 
-	dey
-	beq  ns00       ; sz, lt only, not ns
+        dey
+        beq  ns00       ; sz, lt only, not ns
 
-	dey
-	beq  st00       ; sz, lt, ns only, not st
+        dey
+        beq  st00       ; sz, lt, ns only, not st
 
-	dey
-	beq  fl00       ; sz, lt, ns, st only, not fl
+        dey
+        beq  fl00       ; sz, lt, ns, st only, not fl
 
-	dey
-	beq  ss00       ; sz, lt, ns, st ,fl only, not ss
+        dey
+        beq  ss00       ; sz, lt, ns, st ,fl only, not ss
 
-	lda  cmdbuf+8
-	sta  pstartsec
+        lda  cmdbuf+8
+        sta  pstartsec
 
-	dey
-	beq  gap00      ; sz, lt, ns, st ,fl,ss only, not gp
+        dey
+        beq  gap00      ; sz, lt, ns, st ,fl,ss only, not gp
 
-	lda  cmdbuf+9
-	sta  gap3
+        lda  cmdbuf+9
+        sta  gap3
 
-	jmp  startfmt
+        jmp  startfmt
 
 fmtfil  .text 'N0:COPYRIGHT CBM,86',$0D
 flenf=*-fmtfil
 
 usenew
 
-	ldy  #flenf-1
+        ldy  #flenf-1
 -       lda  fmtfil,y
-	sta  cmdbuf,y   ; transfer filename to cmd buffer
-	dey
-	bpl  -
+        sta  cmdbuf,y   ; transfer filename to cmd buffer
+        dey
+        bpl  -
 
-	lda  #20
-	sta  cmdsiz
-	lda  #17
-	sta  filtbl+1   ; set dskid
-	lda  #1
-	sta  filtbl
-	ldx  #0
-	jmp  jnew       ; new it
+        lda  #20
+        sta  cmdsiz
+        lda  #17
+        sta  filtbl+1   ; set dskid
+        lda  #1
+        sta  filtbl
+        ldx  #0
+        jmp  jnew       ; new it
 
 cp00
 sz00    lda  #sysiz     ; 512 byte sectors
-	sta  psectorsiz
+        sta  psectorsiz
 
 lt00    lda  #79        ; last track is #79, 80 tracks total
-	sta  cmdbuf+4   ; *** pmaxtrk ***
+        sta  cmdbuf+4   ; *** pmaxtrk ***
 
 ns00    ldx  psectorsiz
-	lda  nsecks,x   ; x=sector size index for # of sectors per track
-	sta  cmdbuf+5   ; *** pnumsec ***
+        lda  nsecks,x   ; x=sector size index for # of sectors per track
+        sta  cmdbuf+5   ; *** pnumsec ***
 
 st00    lda  #0         ; default track #0 start
-	sta  cmdbuf+6   ; *** startrk - 1 ***
+        sta  cmdbuf+6   ; *** startrk - 1 ***
 
 fl00    lda  #$e5       ; default block fill
-	sta  cmdbuf+7   ; *** fillbyte ***
+        sta  cmdbuf+7   ; *** fillbyte ***
 ss00    lda  #1
-	sta  pstartsec
+        sta  pstartsec
 gap00   ldx  psectorsiz
-	lda  gp3,x      ; get gap
-	sta  gap3
+        lda  gp3,x      ; get gap
+        sta  gap3
 
 startfmt
-	lda  startrk
-	pha
-	lda  fillbyte
-	pha
-	lda  pmaxtrk
-	pha
-	lda  cmdbuf+4
-	sta  pmaxtrk    ; maximum track
-	lda  cmdbuf+5   ; # of sectors
-	sta  pnumsec
-	clc
-	adc  pstartsec
-	sec
-	sbc  #1         ; get ending sector and maximum sector
-	sta  pendsec
-	sta  maxsek
-	ldy  cmdbuf+6   ; store logical
-	iny
-	sty  startrk
+        lda  startrk
+        pha
+        lda  fillbyte
+        pha
+        lda  pmaxtrk
+        pha
+        lda  cmdbuf+4
+        sta  pmaxtrk    ; maximum track
+        lda  cmdbuf+5   ; # of sectors
+        sta  pnumsec
+        clc
+        adc  pstartsec
+        sec
+        sbc  #1         ; get ending sector and maximum sector
+        sta  pendsec
+        sta  maxsek
+        ldy  cmdbuf+6   ; store logical
+        iny
+        sty  startrk
 
-	lda  cmdbuf+7
-	sta  fillbyte
-	lda  startrk
-	sta  track
-	lda  #0
-	sta  sector
-	jsr  seth       ; set header
-	lda  #restore_dv
-	jsr  strobe_controller
-	lda  #formatdk_dv
-	jsr  strobe_controller
-	cmp  #2
-	bcs  c_801
+        lda  cmdbuf+7
+        sta  fillbyte
+        lda  startrk
+        sta  track
+        lda  #0
+        sta  sector
+        jsr  seth       ; set header
+        lda  #restore_dv
+        jsr  strobe_controller
+        lda  #formatdk_dv
+        jsr  strobe_controller
+        cmp  #2
+        bcs  c_801
 
 c_802   lda  #0
-	.byte  skip2
+        .byte  skip2
 c_801   lda  #6
-	jsr  upinst
-	pla
-	sta  pmaxtrk
-	pla
-	sta  fillbyte
-	pla
-	sta  startrk
-	jmp  final
+        jsr  upinst
+        pla
+        sta  pmaxtrk
+        pla
+        sta  fillbyte
+        pla
+        sta  startrk
+        jmp  final
 
 gp3  .byte 14,22,38,68
 
 ; (5) SOFT INTERLEAVE NOT SUPPORTED
 
 cpmint
-	lda  #%00001110 ; syntax error
-	jsr  upinst     ; update dkmode
+        lda  #%00001110 ; syntax error
+        jsr  upinst     ; update dkmode
 
-	lda  #badcmd
-	jmp  cmderr
+        lda  #badcmd
+        jmp  cmderr
 
 ; (6) QUERY DISK FORMAT
 
 querdk  .proc
-	jsr  fstsek     ; send initial
-	ldx  #0
-	stx  tmp+5
-	lda  #restore_dv
-	jsr  query_patch ; do restore & seek any header
-	cmp  #2
-	bcs  m2
+        jsr  fstsek     ; send initial
+        ldx  #0
+        stx  tmp+5
+        lda  #restore_dv
+        jsr  query_patch ; do restore & seek any header
+        cmp  #2
+        bcs  m2
 
-	lda  header
-	sta  pstartrk   ; set physical starting track
-	bit  switch     ; seek to n-track ?
-	bpl  m1
+        lda  header
+        sta  pstartrk   ; set physical starting track
+        bit  switch     ; seek to n-track ?
+        bpl  m1
 
-	lda  cmdbuf+3
-	sta  hdrs2      ; goto this track
-	lda  #seek_dv
-	jsr  strobe_controller
-	cmp  #2
-	bcs  m2
+        lda  cmdbuf+3
+        sta  hdrs2      ; goto this track
+        lda  #seek_dv
+        jsr  strobe_controller
+        cmp  #2
+        bcs  m2
 
 m1      lda  switch
-	and  #bit4
-	lsr  a
-	lsr  a
-	lsr  a
-	lsr  a
-	sta  sids,x
-	lda  #side_dv
-	jsr  strobe_controller
+        and  #bit4
+        lsr  a
+        lsr  a
+        lsr  a
+        lsr  a
+        sta  sids,x
+        lda  #side_dv
+        jsr  strobe_controller
 
-	lda  #seekhd_dv ; read a header
-	jsr  strobe_controller
-	cmp  #2
-	bcs  m2
+        lda  #seekhd_dv ; read a header
+        jsr  strobe_controller
+        cmp  #2
+        bcs  m2
 
-	lda  header+2   ; sector is?
-	sta  tmp+6      ; this is where we stop
+        lda  header+2   ; sector is?
+        sta  tmp+6      ; this is where we stop
 
 m3      ldx  #0
-	lda  #seekhd_dv
-	jsr  strobe_controller
-	cmp  #2
-	bcs  m2
+        lda  #seekhd_dv
+        jsr  strobe_controller
+        cmp  #2
+        bcs  m2
 
-	lda  header+2   ; get next sector
-	ldy  tmp+5
-	sta  cmdbuf+11,y
-	inc  tmp+5      ; inc sector count
-	cpy  #31        ; went too far ?
-	bcs  m5
+        lda  header+2   ; get next sector
+        ldy  tmp+5
+        sta  cmdbuf+11,y
+        inc  tmp+5      ; inc sector count
+        cpy  #31        ; went too far ?
+        bcs  m5
 
-	cmp  tmp+6      ; done yet ?
-	bne  m3         ; wait for rap...
+        cmp  tmp+6      ; done yet ?
+        bne  m3         ; wait for rap...
 
-	lda  tmp+5
-	sta  pnumsec    ; physical
+        lda  tmp+5
+        sta  pnumsec    ; physical
 
-	lda  #0
-	.byte  skip2
+        lda  #0
+        .byte  skip2
 m5      lda  #2
 m2      jsr  upinst
-	cmp  #2
-	bcc  +
+        cmp  #2
+        bcc  +
 
-	jmp  fail
+        jmp  fail
 
 +       jsr  maxmin     ; determine low/high sector
-	jsr  spout      ; serial port output
-	lda  minsek
-	sta  pstartsec
-	lda  maxsek     ; send max.
-	sta  pendsec
-	jsr  hskstat    ; send status
+        jsr  spout      ; serial port output
+        lda  minsek
+        sta  pstartsec
+        lda  maxsek     ; send max.
+        sta  pendsec
+        jsr  hskstat    ; send status
 
-	lda  pnumsec    ; get number of sectors
-	jsr  hskrd      ; send it
+        lda  pnumsec    ; get number of sectors
+        jsr  hskrd      ; send it
 
-	lda  header     ; get logical track number
-	jsr  hskrd      ; send track
+        lda  header     ; get logical track number
+        jsr  hskrd      ; send track
 
-	lda  minsek
-	jsr  hskrd      ; wait for handshake
+        lda  minsek
+        jsr  hskrd      ; wait for handshake
 
-	lda  maxsek     ; send max.
-	jsr  hskrd      ; wait for handshake
+        lda  maxsek     ; send max.
+        jsr  hskrd      ; wait for handshake
 
-	lda  #1
-	jsr  hskrd      ; interleave
-	lda  #bit5
-	bit  switch
-	beq  +
+        lda  #1
+        jsr  hskrd      ; interleave
+        lda  #bit5
+        bit  switch
+        beq  +
 
-	ldy  #0
+        ldy  #0
 -       lda  cmdbuf+11,y
-	jsr  hskrd      ; send back sector table
-	iny
-	cpy  pnumsec    ; done?
-	bne  -
+        jsr  hskrd      ; send back sector table
+        iny
+        cpy  pnumsec    ; done?
+        bne  -
 
 +       rts
         .pend
@@ -633,91 +633,91 @@ m2      jsr  upinst
 ; (7) QUERY/INIT STATUS
 
 inqst   bit  switch     ; read/write op ?
-	bpl  wrstat
+        bpl  wrstat
 
 statqy  jsr  spout      ; serial port out
-	jsr  hskstat    ; send status
-	jmp  spinp      ; serial port input
+        jsr  hskstat    ; send status
+        jmp  spinp      ; serial port input
 
 wrstat  lda  cmdbuf+3   ; new value
-	sta  dkmode
+        sta  dkmode
 
-	lda  #bit5
-	bit  switch     ; M mask?
-	beq  +
+        lda  #bit5
+        bit  switch     ; M mask?
+        beq  +
 
-	lda  cmdbuf+4   ; new value
-	sta  dkoramask
-	lda  cmdbuf+5   ; new value
-	sta  dkandmask
+        lda  cmdbuf+4   ; new value
+        sta  dkoramask
+        lda  cmdbuf+5   ; new value
+        sta  dkandmask
 +       bit  switch     ; clear wp-latch the hard way
-	bvc  fintdsk
+        bvc  fintdsk
 
-	php
-	cli
-	lda  #bit7
-	sta  xjobrtn    ; return
-	jsr  jintdsk    ; init new disk
-	jsr  initdr     ; read in appropiate info
-	asl  xjobrtn    ; clear
-	plp
-	rts
+        php
+        cli
+        lda  #bit7
+        sta  xjobrtn    ; return
+        jsr  jintdsk    ; init new disk
+        jsr  initdr     ; read in appropiate info
+        asl  xjobrtn    ; clear
+        plp
+        rts
 
 
 fintdsk lda  #bit0
-	sta  wpsw
-	jmp  jintdsk    ; clear it default
+        sta  wpsw
+        jmp  jintdsk    ; clear it default
 
 ; (8) BACKUP DISK
 
 duplc1  ldx  #%00001110
-	jsr  upinst     ; update dkmode
+        jsr  upinst     ; update dkmode
 
-	lda  #badcmd
-	jmp  cmderr
+        lda  #badcmd
+        jmp  cmderr
 
 ; (9) DUMP BUFFER
 
 dumpbuf .proc
-	lda  cmdbuf+2   ; check drive number
-	tay             ; save it
-	and  #1
-	bne  m2         ; drive 1 - error
+        lda  cmdbuf+2   ; check drive number
+        tay             ; save it
+        and  #1
+        bne  m2         ; drive 1 - error
 
-	ldx  #0         ; job 0
+        ldx  #0         ; job 0
 
-	tya             ; retrieve
-	bpl  m1         ; force bit on?
+        tya             ; retrieve
+        bpl  m1         ; force bit on?
 
-	and  #bit6      ; extract side
-	lsr  a
-	lsr  a
-	lsr  a
-	lsr  a
-	lsr  a
-	lsr  a
-	and  #bit0      ; got this bit correct!!!
-	sta  cacheside
-	lda  cmdbuf+3
-	sta  cachetrk
-	lda  #bit7
-	sta  dirty
+        and  #bit6      ; extract side
+        lsr  a
+        lsr  a
+        lsr  a
+        lsr  a
+        lsr  a
+        lsr  a
+        and  #bit0      ; got this bit correct!!!
+        sta  cacheside
+        lda  cmdbuf+3
+        sta  cachetrk
+        lda  #bit7
+        sta  dirty
 
 m1      lda  dirty      ; dirty?
-	bpl  m3
+        bpl  m3
 
-	lda  #detwp_dv  ; wp?
-	jsr  strobe_controller
-	sta  wpstat
-	bne  m4         ; br, wp
+        lda  #detwp_dv  ; wp?
+        jsr  strobe_controller
+        sta  wpstat
+        bne  m4         ; br, wp
 
-	lda  #bit7
-	sta  xjobrtn
-	jsr  jdumptrk   ; dump it now!!!
-	asl  xjobrtn
-	.byte  skip2    ; return status
+        lda  #bit7
+        sta  xjobrtn
+        jsr  jdumptrk   ; dump it now!!!
+        asl  xjobrtn
+        .byte  skip2    ; return status
 m2      lda  #%01001111 ; no drv 1
-	.byte  skip2
+        .byte  skip2
 m3      lda  #0
 m4      jmp  fail       ; update status
         .pend
@@ -725,40 +725,40 @@ m4      jmp  fail       ; update status
 ;       SUBROUTINES
 
 lchksee
-	dec  cmdbuf+6
+        dec  cmdbuf+6
 
 chksee  lda  cmdsiz     ; chk for next track
-	cmp  #7
-	bcc  +
+        cmp  #7
+        bcc  +
 
-	ldx  #0
-	lda  cmdbuf+6   ; next track
-	sta  hdrs,x
-	lda  #pseek_dv
-	jmp  strobe_controller
+        ldx  #0
+        lda  cmdbuf+6   ; next track
+        sta  hdrs,x
+        lda  #pseek_dv
+        jmp  strobe_controller
 
 +       rts
 
 ;******************************************************
 
 statqb  jsr  spout      ; serial port out
-	jsr  hskstat    ; send status
-	jsr  burst      ; other side
-	jmp  spinp      ; serial port input
+        jsr  hskstat    ; send status
+        jsr  burst      ; other side
+        jmp  spinp      ; serial port input
 
 ;******************************************************
 
 upinst  sta  burst_stat
-	ldx  psectorsiz
-	lda  dkmode     ; update main status w/ controller status
-	and  #%10000000 ; clear old controller status
-	ora  burst_stat
-	ora  shftsiz,x  ; mask in sector size
-	and  dkandmask  ; mask status
-	ora  dkoramask  ; *
-	sta  dkmode     ; updated
-	lda  burst_stat
-	rts
+        ldx  psectorsiz
+        lda  dkmode     ; update main status w/ controller status
+        and  #%10000000 ; clear old controller status
+        ora  burst_stat
+        ora  shftsiz,x  ; mask in sector size
+        and  dkandmask  ; mask status
+        ora  dkoramask  ; *
+        sta  dkmode     ; updated
+        lda  burst_stat
+        rts
 
 shftsiz .byte $00,$10,$20,$30
 
@@ -767,193 +767,193 @@ shftsiz .byte $00,$10,$20,$30
 hsktst  jmp  tstatn     ; test for atn
 hskrd   pha
 -       lda  pb         ; debounce
-	cmp  pb
-	bne  -
+        cmp  pb
+        bne  -
 
-	and  #$ff       ; set/clr neg flag
-	bmi  hsktst     ; br, attn low
+        and  #$ff       ; set/clr neg flag
+        bmi  hsktst     ; br, attn low
 
-	eor  fsflag     ; wait for state chg
-	and  #4
-	beq  -
+        eor  fsflag     ; wait for state chg
+        and  #4
+        beq  -
 
 hsksnd  pla             ; retrieve data
-	sta  sdr        ; send it
-	lda  fsflag
-	eor  #clkin     ; change state of clk
-	sta  fsflag
+        sta  sdr        ; send it
+        lda  fsflag
+        eor  #clkin     ; change state of clk
+        sta  fsflag
 
-	lda  #8
+        lda  #8
 -       bit  icr        ; wait transmission time
-	beq  -
+        beq  -
 
-	rts
+        rts
 
 ;******************************************************
 
 hskstat
-	lda  dkmode     ; get status and send it
-	jmp  hskrd      ; transmit status
+        lda  dkmode     ; get status and send it
+        jmp  hskrd      ; transmit status
 
 ;******************************************************
 
 stbctl
-	pha
-	lda  #bit6
-	sta  jobrtn     ; no check t&s, vernum
-	pla
+        pha
+        lda  #bit6
+        sta  jobrtn     ; no check t&s, vernum
+        pla
 stbctr  php
-	cli             ; let controller run free
-	sta  cmd        ; save cmd for later
-	jsr  strobe_controller
-	cmp  #2         ; was there an error ?
-	bcc  +          ; br, nope
+        cli             ; let controller run free
+        sta  cmd        ; save cmd for later
+        jsr  strobe_controller
+        cmp  #2         ; was there an error ?
+        bcc  +          ; br, nope
 
-	jsr  stbret     ; let DOS retry
+        jsr  stbret     ; let DOS retry
 
 +       lda  #0
-	sta  jobrtn
-	lda  jobs,x     ; get error
-	plp             ; restore status
-	rts
+        sta  jobrtn
+        lda  jobs,x     ; get error
+        plp             ; restore status
+        rts
 
 ;******************************************************
 
 stbret  lda  jobrtn
-	ora  #bit7
-	sta  jobrtn     ; set error recovery on
-	stx  jobnum     ; set job #
-	lda  cmd        ; set for dos
-	sta  lstjob,x   ; set last job
-	jsr  strobe_controller
-	jmp  watjob     ; let dos clean it up
+        ora  #bit7
+        sta  jobrtn     ; set error recovery on
+        stx  jobnum     ; set job #
+        lda  cmd        ; set for dos
+        sta  lstjob,x   ; set last job
+        jsr  strobe_controller
+        jmp  watjob     ; let dos clean it up
 
 ;******************************************************
 
 dumptrk lda  #trkwrt_dv
-	sta  lstjob,x
-	lda  cachetrk
-	sta  track
-	lda  pstartsec
-	sta  sector     ; sector
-	stx  jobnum
-	txa
-	jsr  seth
-	ldx  jobnum
+        sta  lstjob,x
+        lda  cachetrk
+        sta  track
+        lda  pstartsec
+        sta  sector     ; sector
+        stx  jobnum
+        txa
+        jsr  seth
+        ldx  jobnum
 
-	lda  revcnt
-	and  #$3f
-	sta  cmd        ; set retry
-	jsr  firstdump  ; first dump
-	bcc  +
+        lda  revcnt
+        and  #$3f
+        sta  cmd        ; set retry
+        jsr  firstdump  ; first dump
+        bcc  +
 
 -       jsr  retrydump  ; retry dump
-	bcc  +
+        bcc  +
 
-	dec  cmd
-	bne  -
+        dec  cmd
+        bne  -
 
-	bit  xjobrtn
-	bmi  +          ; ok return
+        bit  xjobrtn
+        bmi  +          ; ok return
 
-	bit  jobrtn
-	bmi  +          ; ok return
+        bit  jobrtn
+        bmi  +          ; ok return
 
-	jmp  quit2
+        jmp  quit2
 
 +       rts
 
 ;******************************
 
 retrydump
-	lda  #bit7
-	sta  dirty
+        lda  #bit7
+        sta  dirty
 firstdump               ; Ah .. Oh .. Eh
-	lda  track
-	sta  cachetrk   ; set track
-	ldy  #1
-	jmp  dorec1     ; go for it
+        lda  track
+        sta  cachetrk   ; set track
+        ldy  #1
+        jmp  dorec1     ; go for it
 
 ;******************************************************
 
 burtst  jsr  tstatn     ; test for atn
 burst
 -       lda  pb         ; debounce
-	cmp  pb
-	bne  -          ; same ?
+        cmp  pb
+        bne  -          ; same ?
 
-	and  #$ff       ; set/clr neg flag
-	bmi  burtst     ; br, attn low
+        and  #$ff       ; set/clr neg flag
+        bmi  burtst     ; br, attn low
 
-	eor  fsflag     ; wait for state chg
-	and  #4
-	beq  -
+        eor  fsflag     ; wait for state chg
+        and  #4
+        beq  -
 
-	eor  fsflag
-	sta  fsflag     ; state change
-	rts
+        eor  fsflag
+        sta  fsflag     ; state change
+        rts
 
 
 ;******************************************************
 
 sectnx  .proc
-	sec
-	lda  minsek
-	beq  +
+        sec
+        lda  minsek
+        beq  +
 
-	sbc  #2
-	.byte skip2
+        sbc  #2
+        .byte skip2
 +       sbc  #1
-	sta  tmp+5      ; save min sector - 1, -2
+        sta  tmp+5      ; save min sector - 1, -2
 
-	lda  cmdbuf+4   ; get original sector
-	cmp  maxsek
-	beq  +          ; equal to or
+        lda  cmdbuf+4   ; get original sector
+        cmp  maxsek
+        beq  +          ; equal to or
 
-	clc
-	adc  #1         ; next sector
-	jmp  m5
+        clc
+        adc  #1         ; next sector
+        jmp  m5
 
 +       lda  switch     ; check side
-	tay
-	eor  #bit4      ; invert side
-	sta  switch
-	tya
-	and  #bit4
-	beq  +          ; bra
+        tay
+        eor  #bit4      ; invert side
+        sta  switch
+        tya
+        and  #bit4
+        beq  +          ; bra
 
         inc  cmdbuf+3   ; next track
 +       lda  pstartsec
-	bcs  +          ; bra ... here or there
+        bcs  +          ; bra ... here or there
 
 m5      bcc  +          ; less than
 
-	sbc  maxsek     ; rap around
-	clc
-	adc  tmp+5      ; add min now
+        sbc  maxsek     ; rap around
+        clc
+        adc  tmp+5      ; add min now
 +       sta  cmdbuf+4   ; next sector for controller
-	rts
+        rts
         .pend
 ;******************************************************
 
 lsectnx .proc
-	lda  numsec
-	sec
-	sbc  #1
-	sta  tmp+5      ; last logical sector number
+        lda  numsec
+        sec
+        sbc  #1
+        sta  tmp+5      ; last logical sector number
 
-	lda  cmdbuf+4   ; get original sector
-	cmp  tmp+5
-	beq  m1         ; equal to or
+        lda  cmdbuf+4   ; get original sector
+        cmp  tmp+5
+        beq  m1         ; equal to or
 
-	clc
-	adc  #1         ; next sector
-	jmp  m2
+        clc
+        adc  #1         ; next sector
+        jmp  m2
 
 m1      inc  cmdbuf+3   ; next track
-	lda  #0
+        lda  #0
 m2      sta  cmdbuf+4
-	rts
+        rts
         .pend
 
 ;******************************************************
@@ -962,29 +962,29 @@ m2      sta  cmdbuf+4
 ;******************************************************
 
 maxmin  ldy  pnumsec    ; get ns
-	dey             ; one less
-	lda  #255       ; as small as min can get
+        dey             ; one less
+        lda  #255       ; as small as min can get
 minim   cmp  cmdbuf+11,y
-	bcc  no_min     ; br, no change
+        bcc  no_min     ; br, no change
 
-	lda  cmdbuf+11,y
+        lda  cmdbuf+11,y
 no_min  dey
-	bpl  minim
+        bpl  minim
 
-	sta  minsek     ; save min
+        sta  minsek     ; save min
 
-	ldy  pnumsec
-	dey             ; one less
-	lda  #0         ; as small as max can get
+        ldy  pnumsec
+        dey             ; one less
+        lda  #0         ; as small as max can get
 maxim   cmp  cmdbuf+11,y
-	bcs  no_max     ; br, no change
+        bcs  no_max     ; br, no change
 
-	lda  cmdbuf+11,y
+        lda  cmdbuf+11,y
 no_max  dey
-	bpl  maxim
+        bpl  maxim
 
-	sta  maxsek     ; save max
-	rts
+        sta  maxsek     ; save max
+        rts
 
 ;******************************************************
 

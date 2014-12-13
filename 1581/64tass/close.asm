@@ -19,7 +19,7 @@ cls10   cmp  #$f
         lda  erword
         bne  cls15      ; last command had an error
 
-	jsr  mapout     ; write bam
+        jsr  mapout     ; write bam
         jmp  endcmd
 
 cls15   jmp  scren1
@@ -33,7 +33,7 @@ cls20   jsr  clschn
         lda  erword
         bne  cls25      ; last command had an error
 
-	jsr  mapout     ; write bam
+        jsr  mapout     ; write bam
         jmp  endcmd
 
 cls25   jmp  scren1
@@ -65,10 +65,10 @@ clsrel  jsr  scrub
         jsr  ssend
         ldx  ssnum
         stx  t4
-	jsr  hugerel
-	beq  clsbig	; close the big one
+        jsr  hugerel
+        beq  clsbig     ; close the big one
 
-	inc  t4
+        inc  t4
         lda  #0
         sta  t1
         sta  t2
@@ -83,33 +83,33 @@ clsrel  jsr  scrub
         lda  t2
         sta  nbkh,x
 clsre1
-	lda  #dyfile
+        lda  #dyfile
         jsr  tstflg
         beq  clsr1
 
         jsr  clsdir
 clsr1   jmp  frechn
 
-clsbig	lda  ssind
-	sec
-	sbc  #ssioff-2
-	sta  t3
-	lda  grpnum
-	sta  r3
-	jsr  ssscal
-	ldx  #0
-	lda  #2
-	jsr  addlit
-	ldx  lindx
-	lda  result
-	sta  nbkl,x
-	lda  result+1
-	sta  nbkh,x
-	jmp  clsre1
+clsbig  lda  ssind
+        sec
+        sbc  #ssioff-2
+        sta  t3
+        lda  grpnum
+        sta  r3
+        jsr  ssscal
+        ldx  #0
+        lda  #2
+        jsr  addlit
+        ldx  lindx
+        lda  result
+        sta  nbkl,x
+        lda  result+1
+        sta  nbkh,x
+        jmp  clsre1
 ;
 ; close write channel
 ;
-clswrt          	; close seq write file
+clswrt                  ; close seq write file
         ldx  lindx
         lda  nbkl,x
         ora  nbkh,x
@@ -135,11 +135,11 @@ clsw15  dec  nbkl,x
         lda  #0
 clsw20  sec
         sbc  #1         ; back up 1
-        pha     	; save it
+        pha             ; save it
         lda  #0
         jsr  setpnt
         jsr  putbyt     ; tlink=0
-        pla     	; lstchr count
+        pla             ; lstchr count
         jsr  putbyt
         jsr  wrtbuf     ; write out last buffer
         jsr  watjob     ; finish job up
@@ -224,7 +224,7 @@ clsd6   ldx  wlindx
         sta  (r0),y
         pla
         tax
-        lda  #wrtsd_dv	; write directory sector
+        lda  #wrtsd_dv  ; write directory sector
         jsr  doit
         pla
         sta  sa

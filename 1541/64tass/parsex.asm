@@ -59,8 +59,8 @@ scren1
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jmp  ptch43	; *** rom ds 05/01/85 ***
-	nop		; fill
+        jmp  ptch43     ; *** rom ds 05/01/85 ***
+        nop             ; fill
 ;       lda  #0
 ;       sta  nodrv,x
 rtch43
@@ -120,7 +120,7 @@ tc30    dey
         bne  tc25       ; err: "," before ":"
 tc35    lda  #'='       ; search: "="
         jsr  parse
-        txa     	; ?file count= 1-1?
+        txa             ; ?file count= 1-1?
         beq  tc40
         lda  #%01000000 ; g1-bit
 tc40    ora  #%00100001 ; e1,^e2-bits
@@ -135,16 +135,16 @@ tc40    ora  #%00100001 ; e1,^e2-bits
         sta  image
         lda  #0
         sta  patflg     ; clear pattern flag
-tc50    tya     	; ptr to fs2
+tc50    tya             ; ptr to fs2
         beq  tc75       ;  fs2 not here
         sta  filtbl,x
         lda  f1cnt      ; fs2 is here now,...
         sta  f2ptr      ; ...now set f2 ptr
         lda  #$8d       ; find cr-shifted
         jsr  parse      ; parse rest of cmd string
-        inx     	; advance filtbl ptr to end
+        inx             ; advance filtbl ptr to end
         stx  f2cnt      ; save it
-        dex     	; restore for test
+        dex             ; restore for test
         lda  patflg     ; save last pattern
         beq  tc60       ; ?any patterns?
         lda  #%1000     ; yes, p2-bit
@@ -208,7 +208,7 @@ pr35    lda  cmdsiz
         beq  pr40
         lda  #$80
         sta  pattyp,x
-pr40    tya     	; z is set
+pr40    tya             ; z is set
         rts
 
 ;initialize command tables, ptrs, etc.

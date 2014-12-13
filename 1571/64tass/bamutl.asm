@@ -1,62 +1,62 @@
 
-wrtbm	lda  #$ff
-	bit  wbam
-	beq  +
-	bpl  +
-	bvs  +
-	lda  #0
-	sta  wbam
-	jmp  wrt_bam
-+	rts
+wrtbm   lda  #$ff
+        bit  wbam
+        beq  +
+        bpl  +
+        bvs  +
+        lda  #0
+        sta  wbam
+        jmp  wrt_bam
++       rts
 
-clrbam	jmp  ptch25
-rtch25	ldy  #0
-	tya
--	sta  (bmpnt),y
-	iny
-	bne  -
-	rts
-	
+clrbam  jmp  ptch25
+rtch25  ldy  #0
+        tya
+-       sta  (bmpnt),y
+        iny
+        bne  -
+        rts
+        
 setbam  lda t0
-	pha
-	lda t1
-	pha
-	jmp ptch52
-	nop
+        pha
+        lda t1
+        pha
+        jmp ptch52
+        nop
 rtch52  beq  +
         lda  #nodriv
         jsr  cmder2
 +       jsr  bam2a
-	sta  t0
-	txa
-	asl  a
-	sta  t1
-	tax
-	lda  track
-	cmp  bamis,x
-	beq  +
-	inx
-	stx  t1
-	cmp  bamis,x
-	beq  +
-	jsr  xttu
-+	lda  t1
-	ldx  drvnum
-	sta  bamlu,x
-	asl  a
-	asl  a
-	clc
-	adc  #<bami
-	sta  bmpnt
-	lda  #>bami
-	adc  #0
-	sta  bmpnt+1
-	ldy  #0
-	pla
-	sta  t1
-	pla
-	sta  t0
-	rts
+        sta  t0
+        txa
+        asl  a
+        sta  t1
+        tax
+        lda  track
+        cmp  bamis,x
+        beq  +
+        inx
+        stx  t1
+        cmp  bamis,x
+        beq  +
+        jsr  xttu
++       lda  t1
+        ldx  drvnum
+        sta  bamlu,x
+        asl  a
+        asl  a
+        clc
+        adc  #<bami
+        sta  bmpnt
+        lda  #>bami
+        adc  #0
+        sta  bmpnt+1
+        ldy  #0
+        pla
+        sta  t1
+        pla
+        sta  t0
+        rts
 
 xttu    ldx  t0
         jsr  redbam
@@ -125,7 +125,7 @@ putbam  tay
         tya
         and  #3
         bne -
-+	rts
++       rts
 
 clnbam  lda  drvnum
         asl  a
@@ -137,7 +137,7 @@ clnbam  lda  drvnum
         rts
 
 redbam  .proc
-	lda  buf0,x
+        lda  buf0,x
         cmp  #$ff
         bne  m1
         txa
@@ -162,18 +162,18 @@ redbam  .proc
         sta  hdrs+1,x
         jmp  ptch23
 
-m1	and  #15
-	sta  jobnum
-	rts
-	.pend
+m1      and  #15
+        sta  jobnum
+        rts
+        .pend
 
 bam2a   lda  #mxchns
-	ldx  drvnum
-	bne  +
-	clc
-	adc  #mxchns+1
-+	rts
+        ldx  drvnum
+        bne  +
+        clc
+        adc  #mxchns+1
++       rts
 
 bam2x   jsr bam2a
-	tax
-	rts
+        tax
+        rts

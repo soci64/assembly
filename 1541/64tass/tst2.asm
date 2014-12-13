@@ -5,7 +5,7 @@ lruilp  txa
         cpx  #cmdchn
         bne  lruilp
 
-	lda  #cmdchn+2
+        lda  #cmdchn+2
         sta  lrutbl,x
         rts
 
@@ -60,8 +60,8 @@ dblbuf
         jsr  tglbuf     ; just switch on write
         jmp  dbl08
 
-dbl05	jsr  tglbuf
-	jsr  rdab
+dbl05   jsr  tglbuf
+        jsr  rdab
 dbl08
         pla
         sta  sector
@@ -156,17 +156,17 @@ l42     lda  #cmdchn    ; write to cmd chanl
         jsr  putbyt     ; store the byte
 l50     lda  eoiflg     ; tst if lst byte of msg
         beq  l45        ; it is
-        rts     	; not yet , return
+        rts             ; not yet , return
 
 l45     inc  cmdwat     ; set cmd waiting flag
         rts
 ; put .a into active buffer of lindx
 ;
-putbyt  pha     	;  save .a
+putbyt  pha             ;  save .a
         jsr  getact     ; get active buf#
         bpl  putb1      ; brach if there is one
 
-        pla     	; no buffer error
+        pla             ; no buffer error
         lda  #filnop
         jmp  cmderr     ;  jmp to error routine
 
@@ -175,57 +175,57 @@ putb1   asl  a          ; save the byte in buffer
         pla
         sta  (buftab,x)
         inc  buftab,x   ; inc the buffer pointer
-        rts     	; last slot in buf, acm=1
+        rts             ; last slot in buf, acm=1
 ;
 ; find the active buffer # (lindx)
 intdrv  jsr  simprs     ; init drvs (command)
-	jsr  initdr	; set def parms
+        jsr  initdr     ; set def parms
         jmp  endcmd
 
 itrial  .proc
-	jsr  bam2a
-	tay
-	ldx  buf0,y
-	cpx  #$ff
-	bne  nk
-	pha
-	jsr  getbuf
-	tax
-	bpl  +
-	lda  #nochnl
-	jsr  cmder3
-+	pla
-	tay
-	txa
-	ora  #$80
-	sta  buf0,y
-nk	txa
-	and  #15
-	sta  jobnum
-	ldx  #$00
-	stx  sector
-	ldx  dirtrk
-	stx  track
-	jsr  seth
-	lda  #seek
-	jmp  dojob
-	.pend
+        jsr  bam2a
+        tay
+        ldx  buf0,y
+        cpx  #$ff
+        bne  nk
+        pha
+        jsr  getbuf
+        tax
+        bpl  +
+        lda  #nochnl
+        jsr  cmder3
++       pla
+        tay
+        txa
+        ora  #$80
+        sta  buf0,y
+nk      txa
+        and  #15
+        sta  jobnum
+        ldx  #$00
+        stx  sector
+        ldx  dirtrk
+        stx  track
+        jsr  seth
+        lda  #seek
+        jmp  dojob
+        .pend
 
 initdr  jsr  clnbam
-	jsr  cldchn
+        jsr  cldchn
         jsr  itrial
-	ldx  drvnum
-	lda  #0
-	sta  mdirty,x
-	txa
-	asl  a
-	tax
-	lda  header
-	sta  dskid,x
-	lda  header+1
-	sta  dskid+1,x
-	jsr  doread
-	lda  jobnum
+        ldx  drvnum
+        lda  #0
+        sta  mdirty,x
+        txa
+        asl  a
+        tax
+        lda  header
+        sta  dskid,x
+        lda  header+1
+        sta  dskid+1,x
+        jsr  doread
+        lda  jobnum
         asl  a
         tax
         lda  #2         ; skip link bytes
@@ -233,34 +233,34 @@ initdr  jsr  clnbam
         lda  (buftab,x)
         ldx  drvnum
         sta  dskver,x   ; set up disk version #
-	lda  #0
-	jmp  ptch51
-	nop
+        lda  #0
+        jmp  ptch51
+        nop
 rtch51
 nfcalc  jsr  setbpt
-	ldy  #4
-	lda  #0
-	tax
--	clc
-	adc  (bmpnt),y
-	bcc +
-	inx
+        ldy  #4
+        lda  #0
+        tax
+-       clc
+        adc  (bmpnt),y
+        bcc +
+        inx
 +
--	iny
-	iny
-	iny
-	iny
-	cpy  #$48
-	beq -
-	cpy #$90
-	bne --
-	pha
-	txa
-	ldx  drvnum
-	sta  ndbh,x
-	pla
-	sta  ndbl,x
-	rts
+-       iny
+        iny
+        iny
+        iny
+        cpy  #$48
+        beq -
+        cpy #$90
+        bne --
+        pha
+        txa
+        ldx  drvnum
+        sta  ndbh,x
+        pla
+        sta  ndbl,x
+        rts
 
 strrd   jsr  sethdr     ; start dbl buf, use
         jsr  rdbuf      ; trk, sec as start block
@@ -281,10 +281,10 @@ str1    jsr  dblbuf
         jsr  rdbuf
         jmp  dblbuf
 
-rdbuf   lda  #read	; rd job on trk, sec
+rdbuf   lda  #read      ; rd job on trk, sec
         bne  strtit
 
-wrtbuf  lda  #write	; wr job on trk, sec
+wrtbuf  lda  #write     ; wr job on trk, sec
 strtit  sta  cmd
         jsr  getact
         tax
@@ -351,7 +351,7 @@ fndw15  bmi  fndw10
 
 fndw20  sec
         rts
-typfil          	; get file type
+typfil                  ; get file type
         ldx  lindx
         lda  filtyp,x
         lsr  a
@@ -369,7 +369,7 @@ getpre  jsr  getact
 ; and set flag if last data byte
 ; if last then z=1 else z=0 ;
 
-getbyt	jsr  getpre
+getbyt  jsr  getpre
         lda  lstchr,y
         beq  getb1
 
@@ -434,7 +434,7 @@ wrtbyt  jsr  putbyt
         rts
 
 wrt0    jsr  setdrn
-	jsr  nxtts
+        jsr  nxtts
         lda  #0
         jsr  setpnt
         lda  track

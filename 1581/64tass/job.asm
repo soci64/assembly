@@ -1,214 +1,214 @@
 setljb  lda  cmd
 setjob  pha             ; set up job and
-	stx  jobnum     ; chk trk/sec
-	bit  jobrtn
-	bvs  sjb1       ; no check on vernum & track,sector
+        stx  jobnum     ; chk trk/sec
+        bit  jobrtn
+        bvs  sjb1       ; no check on vernum & track,sector
 
-	txa             ; accm=job cmd/x=job#
-	asl  a
-	tax
-	lda  hdrs+1,x   ; 4/12
-	sta  cmd        ; save sector
-	lda  hdrs,x     ; 4/12
-	beq  tserr
+        txa             ; accm=job cmd/x=job#
+        asl  a
+        tax
+        lda  hdrs+1,x   ; 4/12
+        sta  cmd        ; save sector
+        lda  hdrs,x     ; 4/12
+        beq  tserr
 
-	cmp  maxtrk
-	bcs  tserr      ; track too large
+        cmp  maxtrk
+        bcs  tserr      ; track too large
 
-	pla             ; check for write
-	pha
-	cmp  #wrtsd_dv
-	bne  sjb1       ; not write,skip check
+        pla             ; check for write
+        pha
+        cmp  #wrtsd_dv
+        bne  sjb1       ; not write,skip check
 
-	lda  dskver     ; get version #
-	cmp  vernum
-	bne  vnerr      ; not same vernum #
+        lda  dskver     ; get version #
+        cmp  vernum
+        bne  vnerr      ; not same vernum #
 
-	lda  numsec
-	cmp  cmd
-	beq  tserr
+        lda  numsec
+        cmp  cmd
+        beq  tserr
 
-	bcs  sjb1       ; sector is ok!
+        bcs  sjb1       ; sector is ok!
 
 tserr   jsr  hed2ts     ; illegal trk/sec
 tser1   lda  #badts
-	jmp  cmder2
+        jmp  cmder2
 
 hed2ts  lda  jobnum
-	asl  a
-	tax
-	lda  hdrs,x     ; 4/12
-	sta  track
-	lda  hdrs+1,x   ; 4/12
-	sta  sector
-	rts
+        asl  a
+        tax
+        lda  hdrs,x     ; 4/12
+        sta  track
+        lda  hdrs+1,x   ; 4/12
+        sta  sector
+        rts
 
 tschk   lda  track
-	beq  tser1
+        beq  tser1
 
-	cmp  maxtrk
-	bcs  tser1
+        cmp  maxtrk
+        bcs  tser1
 
-	cmp  startrk
-	bcc  tser1
+        cmp  startrk
+        bcc  tser1
 
-	lda  numsec
-	cmp  sector
-	beq  tser1
+        lda  numsec
+        cmp  sector
+        beq  tser1
 
-	bcc  tser1
+        bcc  tser1
 
-	rts
+        rts
 vnerr   jsr  hed2ts
-	lda  #cbmv2     ; write to wrong version
-	jmp  cmder2
+        lda  #cbmv2     ; write to wrong version
+        jmp  cmder2
 
 sjb1    ldx  jobnum
-	pla
-	sta  cmd
-	sta  lstjob,x
-	jmp  strobe_controller
+        pla
+        sta  cmd
+        sta  lstjob,x
+        jmp  strobe_controller
 
 ;do job in .a, set up error count
 ;and lstjob. rtn when job done ok
 
 doread  lda  #read_dv
-	bne  dojob      ; -jmp
+        bne  dojob      ; -jmp
 
 dowrit  lda  #wrtsd_dv
 dojob   ldx  jobnum
 doit    sta  cmd
 doit2   lda  cmd
-	jsr  setjob
+        jsr  setjob
 watjob  jsr  tstjob     ; wait job(x) done
-	pha             ; clr jobrtn flag
-	lda  #0
-	sta  jobrtn
-	pla
-	rts
+        pha             ; clr jobrtn flag
+        lda  #0
+        sta  jobrtn
+        pla
+        rts
 
 tstjob  jsr  test_controller
-	cmp  #2
-	bcc  ok
+        cmp  #2
+        bcc  ok
 
-	cmp  #8         ; check for wp switch on
-	beq  tj10
+        cmp  #8         ; check for wp switch on
+        beq  tj10
 
-	cmp  #11        ; check for id mismatch
-	beq  tj10
+        cmp  #11        ; check for id mismatch
+        beq  tj10
 
-	cmp  #$3        ; check for nodrive
-	beq  tj10
+        cmp  #$3        ; check for nodrive
+        beq  tj10
 
-	cmp  #$f        ; check for nodrive
-	bne  recov
+        cmp  #$f        ; check for nodrive
+        bne  recov
 
 tj10    bit  xjobrtn    ; job return which is not cleared
-	bmi  ok
+        bmi  ok
 
-	bit  jobrtn
-	bpl  quit2
+        bit  jobrtn
+        bpl  quit2
 
 ok      clc             ; c=0 finished ok or quit
-	rts
+        rts
 
 recov   tya             ; save .y
-	pha
-	jsr  dorec
-	cmp  #2
-	bcc  rec92
+        pha
+        jsr  dorec
+        cmp  #2
+        bcc  rec92
 
-	bit  revcnt     ; check bump-on flag
-	bpl  rec7       ; no bump?
+        bit  revcnt     ; check bump-on flag
+        bpl  rec7       ; no bump?
 
 quit    pla
-	cmp  #wrtsd_dv  ; check original job
-	bne  quit2
+        cmp  #wrtsd_dv  ; check original job
+        bne  quit2
 
-	sta  lstjob,x   ; must restore original
+        sta  lstjob,x   ; must restore original
 quit2   lda  #0
-	sta  jobrtn
-	lda  jobs,x     ; .a= error #
-	jsr  error
+        sta  jobrtn
+        lda  jobs,x     ; .a= error #
+        jsr  error
 
 rec7    bit  xjobrtn
-	bmi  rec95
+        bmi  rec95
 
-	bit  jobrtn
-	bmi  rec95      ; return job error
+        bit  jobrtn
+        bmi  rec95      ; return job error
 
-	pha
-	lda  #restore_dv
-	jsr  strobe_controller
+        pha
+        lda  #restore_dv
+        jsr  strobe_controller
 
-	jsr  dorec      ; try one last set
-	cmp  #2
-	bcs  quit       ; it clearly ain't gonna work
+        jsr  dorec      ; try one last set
+        cmp  #2
+        bcs  quit       ; it clearly ain't gonna work
 
 rec9    pla             ; check original job for write
-	cmp  #wrtsd_dv
-	bne  rec95      ; original job worked
+        cmp  #wrtsd_dv
+        bne  rec95      ; original job worked
 
-	sta  lstjob,x   ; set write job back
-	jsr  dorec      ; try last set of writes
+        sta  lstjob,x   ; set write job back
+        jsr  dorec      ; try last set of writes
 rec92   cmp  #2         ; check error code
-	bcs  quit2      ; error
+        bcs  quit2      ; error
 
 rec95   pla
-	tay             ; restore .y
-	lda  jobs,x
-	clc             ; ok!
-	rts
+        tay             ; restore .y
+        lda  jobs,x
+        clc             ; ok!
+        rts
 
 
 dorec   lda  revcnt     ; re-try job revcnt...
-	and  #$3f       ; ...# of times
-	tay
+        and  #$3f       ; ...# of times
+        tay
 dorec1  lda  ledprint
-	ora  #pwr_led
-	sta  ledprint
-	lda  lstjob,x   ; set last job
-	jsr  strobe_controller
-	cmp  #2
-	bcc  dorec3     ; it worked
+        ora  #pwr_led
+        sta  ledprint
+        lda  lstjob,x   ; set last job
+        jsr  strobe_controller
+        cmp  #2
+        bcc  dorec3     ; it worked
 
-	dey
-	bne  dorec1     ; keep trying
+        dey
+        bne  dorec1     ; keep trying
 
 dorec3  pha
-	lda  ledprint
-	and  #all-pwr_led
-	sta  ledprint
-	pla
-	rts             ; finished
+        lda  ledprint
+        and  #all-pwr_led
+        sta  ledprint
+        pla
+        rts             ; finished
 
 sethdr  jsr  getact     ; set hdr of act buf of
 seth    asl  a          ; current lindx to t,s,id
-	tay
-	lda  track
-	sta  hdrs,y     ; 4/12 set track
-	lda  sector
-	sta  hdrs+1,y   ; 4/12 set sector
-	lda  #0
-	tax
-	rts
+        tay
+        lda  track
+        sta  hdrs,y     ; 4/12 set track
+        lda  sector
+        sta  hdrs+1,y   ; 4/12 set sector
+        lda  #0
+        tax
+        rts
 
 test_controller
-	php
-	cli
-	jmp  brk_controller
+        php
+        cli
+        jmp  brk_controller
 
 strobe_controller
-	php
-	cli             ; let controller run free
-	sta  jobs,x     ; send job
+        php
+        cli             ; let controller run free
+        sta  jobs,x     ; send job
 
 brk_controller
-	brk
-	nop
+        brk
+        nop
 -       lda  jobs,x
-	bmi  -
+        bmi  -
 
-	plp
-	lda  jobs,x     ; get status
-	rts
+        plp
+        lda  jobs,x     ; get status
+        rts

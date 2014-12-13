@@ -47,7 +47,7 @@ end33x  jmp  end33      ;  motor just running
 end10   dec  acltim     ;  dec timer
         bne  end30
 ;
-        tya     	;  test if acel
+        tya             ;  test if acel
         bpl  end20
 ;
 ;
@@ -58,7 +58,7 @@ end20   and  #$10       ;  test if time out state
         beq  end30
 
         lda  dskcnt     ;
- 	and  #$ff-$04   ;  turnoff motor
+        and  #$ff-$04   ;  turnoff motor
         sta  dskcnt
 ;
         lda  #$ff       ;  no active drive now
@@ -68,7 +68,7 @@ end20   and  #$10       ;  test if time out state
         sta  drvst      ;  clear on bit and timout
         beq  end33x
 ;
-end30   tya     	;  test if step needed
+end30   tya             ;  test if step needed
         and  #$40
         bne  end30x     ;  stepping
 ;
@@ -93,7 +93,7 @@ inac10  cmp  minstp     ;  test if we can accel
         sta  nxtst+1
         bne  dostep
 ;
-inac20          	;  calc the # of run steps
+inac20                  ;  calc the # of run steps
         sbc  as
         sbc  as
         sta  rsteps
@@ -109,9 +109,9 @@ dostep  lda  steps
         bpl  stpin
 ;
 stpout  inc steps
-	ldx dskcnt
-	dex
-	jmp stp
+        ldx dskcnt
+        dex
+        jmp stp
 ;
 short   lda  steps      ; step end ?
         bne  dostep     ; no
@@ -150,7 +150,7 @@ stp     txa
         sta  dskcnt
         jmp  end33
 ;
-ssacl           	;  sub acel factor
+ssacl                   ;  sub acel factor
         sec
         lda  t1hl2
         sbc  af
@@ -178,7 +178,7 @@ ssrun   dec  rsteps
         sta  nxtst+1
         bne  ssa10
 ;
-ssdec           	;  decel
+ssdec                   ;  decel
         lda  t1hl2
         clc
         adc  af

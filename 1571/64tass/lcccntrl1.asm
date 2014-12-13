@@ -12,7 +12,7 @@
 ;
 jlcc
 ;
-        tsx     	;  save current stack pointer
+        tsx             ;  save current stack pointer
         stx  savsp
 ;
         bit  t1lc2      ; reset irq flag
@@ -99,17 +99,17 @@ jque20  and  #1         ;  test if same drive
 ;
         lda  drvtrk
         beq  jgotu       ;  uninit. track #
-	lda  drvtrk
-	cmp  #36
-	php
-	lda  (hdrpnt),y
-	cmp  #36
-	ror  a
-	plp
-	and  #$80
-	bcc  +
-	bmi  jto
-	
+        lda  drvtrk
+        cmp  #36
+        php
+        lda  (hdrpnt),y
+        cmp  #36
+        ror  a
+        plp
+        and  #$80
+        bcc  +
+        bmi  jto
+        
         lda  drvtrk
         sbc  #35
         sta  drvtrk
@@ -120,7 +120,7 @@ jque20  and  #1         ;  test if same drive
         adc  #35
         sta  drvtrk
 jto
-        sec     	;  calc distance to track
+        sec             ;  calc distance to track
         lda  (hdrpnt),y
         sbc  drvtrk
         beq  jgotu       ;  on track
@@ -141,8 +141,8 @@ jgotu   ldx  #4         ;  set track and sectr
         tya
         bcc  +
         sbc  #35
-+	tax
-	lda  worktable-1,x
++       tax
+        lda  worktable-1,x
         sta  sectr
 ;
         lda  dskcnt
@@ -183,14 +183,14 @@ jbmp
         lda  #256-92    ;  step back 45 traks
         sta  steps
 ;
-	lda  side
-	bmi  +
+        lda  side
+        bmi  +
         lda  #1         ;  drvtrk now 1
         .byte skip2
 +       lda  #36
         sta  drvtrk
 ;
-	lda  #1
+        lda  #1
         jmp  jerrr      ;  job done return 1
 ;
 ;
@@ -207,7 +207,7 @@ jsetjb1 lda  jobs,y
         sta  hdrpnt
         lda  #>hdrs
         sta  hdrpnt+1
-        tya     	;  point at buffer
+        tya             ;  point at buffer
         clc
         adc  #>bufs
         sta  bufpnt+1
@@ -223,10 +223,10 @@ jsetjb1 lda  jobs,y
 ;
 ;.end
 set_side
-	bcs  +
-	lda  #0
-	.byte skip2
-+	lda  #$84
+        bcs  +
+        lda  #0
+        .byte skip2
++       lda  #$84
         sta  side
         lda  pota1
         and  #$ff-$04
@@ -240,8 +240,8 @@ set_side
         .byte $20, $20, $20, $20, $20, $20
         .byte $00, $00, $00, $00, $00
 
-num_sec	.byte $15, $15, $15, $15, $15, $15, $15, $15, $15
-	.byte $15, $15, $15, $15, $15, $15, $15, $15
-	.byte $13, $13, $13, $13, $13, $13, $13
-	.byte $12, $12, $12, $12, $12, $12
-	.byte $11, $11, $11, $11, $11
+num_sec .byte $15, $15, $15, $15, $15, $15, $15, $15, $15
+        .byte $15, $15, $15, $15, $15, $15, $15, $15
+        .byte $13, $13, $13, $13, $13, $13, $13
+        .byte $12, $12, $12, $12, $12, $12
+        .byte $11, $11, $11, $11, $11

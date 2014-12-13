@@ -74,7 +74,7 @@ or30
 initp   ldx  lindx
         lda  buf0,x
         asl  a
-	bmi  +		; *** rom ds 02/27/85 ***
+        bmi  +          ; *** rom ds 02/27/85 ***
 
         tay
         lda  #2
@@ -84,7 +84,7 @@ initp   ldx  lindx
         ora  #$80
         sta  buf1,x
         asl  a
-	bmi  +		; *** rom ds 02/27/85 ***
+        bmi  +          ; *** rom ds 02/27/85 ***
 
         tay
         lda  #2
@@ -92,8 +92,8 @@ initp   ldx  lindx
 +       lda  #0
         sta  nbkl,x
 
-	jmp  ptch41	; *** rom ds 02/27/85 ***
-	nop		; fill
+        jmp  ptch41     ; *** rom ds 02/27/85 ***
+        nop             ; fill
 
 ;       sta  nbkh,x
 ;       lda  #0

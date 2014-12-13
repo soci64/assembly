@@ -28,7 +28,7 @@ se30    ldy  #0         ; set ssind
 
         iny
         lda  (dirbuf),y
-        tay     	; back up to track
+        tay             ; back up to track
         dey
         sty  ssind
         tya

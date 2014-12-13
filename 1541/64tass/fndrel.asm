@@ -8,7 +8,7 @@
 ;* inputs
 ;*  recl   - 1byte=lo record #
 ;*  rech   - 1byte=hi record #
-;*  rs 	   - 1byte=record size
+;*  rs     - 1byte=record size
 ;*  recptr - 1byte=first byte
 ;*            wanted from record
 ;*
@@ -88,7 +88,7 @@ mul400  rts
 ;  destroys a,x
 
 div254  lda  #254       ; divide by 254
-	.byte  skip2	; skip two bytes
+        .byte  skip2    ; skip two bytes
 div120  lda  #120       ; divide by 120
         sta  temp       ; save divisor
         ldx  #3         ; swap accum+1,2,3 with
@@ -112,9 +112,9 @@ div200  lda  accum+1,x  ; divide by 256
         bit  temp       ; a div120 ?
         bmi  div300     ; no
         asl  accum      ; only divide by 128
-        php     	; save carry
+        php             ; save carry
         lsr  accum      ; normalize
-        plp     	; restore carry
+        plp             ; restore carry
         jsr  acc200     ; 2*(x/256)=x/128
 div300  jsr  addres     ; total a quotient
         jsr  accx2      ; a=2*a

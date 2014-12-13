@@ -9,17 +9,17 @@
 ;            1 no    1 no   er3
 ;
 sstest  jsr  hugerel
-	bne  st50
+        bne  st50
 
-	lda  grpnum
-	jsr  rdss1
+        lda  grpnum
+        jsr  rdss1
 
-	beq  st50
+        beq  st50
 
-	bit  er3
-	rts
+        bit  er3
+        rts
 st50
-	jsr  ssset      ; set pointer & ss #
+        jsr  ssset      ; set pointer & ss #
         cmp  ssnum
         bne  st20       ; not this ss
 

@@ -11,7 +11,7 @@ new     jsr  onedrv
 
 n10     lda  #0
         sta  nodrv      ; clr drive status
-	sta  wpstat	; and write protect status
+        sta  wpstat     ; and write protect status
         jsr  setlds
         ldx  #0         ; drv 0
         ldy  filtbl+1   ; get disk id
@@ -22,14 +22,14 @@ n10     lda  #0
         sta  dskid,x    ; store in proper drive
         lda  cmdbuf+1,y ; (y=0)
         sta  dskid+1,x
-	jsr  clrchn	; clear all channels
-	jsr  jintdsk	; init disk
+        jsr  clrchn     ; clear all channels
+        jsr  jintdsk    ; init disk
         jsr  format     ; format disk
-	jsr  clrbam	; zero bam
+        jsr  clrbam     ; zero bam
         jmp  n30
 
-n20	jsr  jintdsk	; init disk
-	jsr  initdr     ; clear directory only
+n20     jsr  jintdsk    ; init disk
+        jsr  initdr     ; clear directory only
         lda  dskver     ; use current version #
         cmp  vernum
         beq  n30
@@ -50,8 +50,8 @@ n30     lda  jobnum
         lda  dirtrk
         sta  (dirbuf),y ; directory track
         iny
-	lda  #sysdirsec
-    	sta  dirst
+        lda  #sysdirsec
+        sta  dirst
         sta  (dirbuf),y ; link to first dir blk
         iny
         lda  vernum
@@ -91,33 +91,33 @@ n32     sta  (dirbuf),y ; clr remaining
         jsr  drtwrt     ; write it out
         lda  #0
         sta  dirbuf     ; lsb reset
-        tay     	; set up 1st dir blk
+        tay             ; set up 1st dir blk
 n34     sta  (dirbuf),y
         iny
         bne  n34
 
-        iny     	; set sector link
+        iny             ; set sector link
         lda  #$ff
         sta  (dirbuf),y
-        lda  dirst	; wrt it to dirtrk
+        lda  dirst      ; wrt it to dirtrk
         jsr  settrk
         jsr  drtwrt
         jsr  newmap     ; build new bam
-	lda  dirtrk
-	sta  track
-	lda  #0
-	sta  sector	; allocate 3 sectors & directory sector
-	jsr  wused	; 0
-	inc  sector
-	jsr  wused	; 1
-	inc  sector
-	jsr  wused	; 2
+        lda  dirtrk
+        sta  track
+        lda  #0
+        sta  sector     ; allocate 3 sectors & directory sector
+        jsr  wused      ; 0
+        inc  sector
+        jsr  wused      ; 1
+        inc  sector
+        jsr  wused      ; 2
 
-	lda  dirst
-	sta  sector
-	jsr  wused	; 3 usually
+        lda  dirst
+        sta  sector
+        jsr  wused      ; 3 usually
         jsr  bamout     ; write the bams
-	jsr  initdr	; read it back
+        jsr  initdr     ; read it back
         jmp  endcmd
 
 settrk  sta  sector
@@ -125,11 +125,11 @@ settrk  sta  sector
         sta  track
         rts
 
-clrbam	lda  #0
-	tay
--	sta  bam1,y	; zero
-	sta  bam2,y
-	iny
-	bne  -
+clrbam  lda  #0
+        tay
+-       sta  bam1,y     ; zero
+        sta  bam2,y
+        iny
+        bne  -
 
-	rts
+        rts

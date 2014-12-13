@@ -5,19 +5,19 @@ dskid    *=*+2          ; master copy of disk id
 header   *=*+6          ; image of last header
 wpsw     *=*+1          ; write protect change flag
 drvst    *=*+1          ; lcc var's
-			; bits 7 6 5 4  3 2 1 0
-			;
-			;         -- timeout
-			;        ---- running
-			;       ------ stepping
-			;      -------- accelerating
-			;
-			;ie:
-			;       $00 = no drive active
-			;       $20 = running
-			;       $30 = running and timeout
-			;       $50 = stepping and running
-			;       $80 = accelerating
+                        ; bits 7 6 5 4  3 2 1 0
+                        ;
+                        ;         -- timeout
+                        ;        ---- running
+                        ;       ------ stepping
+                        ;      -------- accelerating
+                        ;
+                        ;ie:
+                        ;       $00 = no drive active
+                        ;       $20 = running
+                        ;       $30 = running and timeout
+                        ;       $50 = stepping and running
+                        ;       $80 = accelerating
 
 drvtrk   *=*+1
 cmd      *=*+1          ; temp job command
@@ -76,30 +76,30 @@ delind   *=*+1          ; index "
 lbused   *=*+1          ; last buffer used
 numsec   *=*+1          ; number of sectors logical
 fsflag   *=*+1          ; fast serial flag
-			; bits 7 6 5 4  3 2 1 0
-			;              - atn pending
-			;             --- atn mode
-			;            ----- clkin status
-			;           ------- fast serial lock
-			;         ---------- slow flag
-			;        ------------ fast serial flag
-			;       -------------- listen flag
-			;      ---------------- talk flag
-			;
-			;
+                        ; bits 7 6 5 4  3 2 1 0
+                        ;              - atn pending
+                        ;             --- atn mode
+                        ;            ----- clkin status
+                        ;           ------- fast serial lock
+                        ;         ---------- slow flag
+                        ;        ------------ fast serial flag
+                        ;       -------------- listen flag
+                        ;      ---------------- talk flag
+                        ;
+                        ;
 lsnadr   *=*+1          ; listen address
 tlkadr   *=*+1          ; talker address
 ledprint *=*+1          ; led var
-			; bits 7 6 5 4  3 2 1 0
-			;
-			;          -- blink power led
-			;        ----- activity led
-			;
+                        ; bits 7 6 5 4  3 2 1 0
+                        ;
+                        ;          -- blink power led
+                        ;        ----- activity led
+                        ;
 tempsa   *=*+1          ; temporary sa
 cmdwat   *=*+1          ; command waiting flag
 switch   *=*+1          ; burst command switch
 controller_stat         ; controller status
-	 *=*+1
+         *=*+1
 bufpnt   *=*+2          ; buffer pointer
 dkmode   *=*+1          ; burst status
 xjobrtn  *=*+1          ;
@@ -110,31 +110,31 @@ info     *=*+2          ; controller job information variable
 dirty    *=*+1          ; track cache dirty flag
 cmdtrk   *=*+1          ; controller destination track
 dkandmask
-	 *=*+1          ; burst status mask
+         *=*+1          ; burst status mask
 dkoramask
-	 *=*+1          ; burst status mask
+         *=*+1          ; burst status mask
 cache    *=*+2          ; cache pointer
 iobyte   *=*+1          ; verify / crc check
-			; bits 7 6 5 4  3 2 1 0
-			;        --- huge rel = 0
-			;        ---- crc check = 1
-			;      ------- verify = 1
-			;
+                        ; bits 7 6 5 4  3 2 1 0
+                        ;        --- huge rel = 0
+                        ;        ---- crc check = 1
+                        ;      ------- verify = 1
+                        ;
 pstartrk *=*+1          ; physical starting track
 pmaxtrk  *=*+1          ; "      " ending track
 startrk  *=*+1          ; logical starting track
 psectorsiz
-	 *=*+1          ; physical sector size
+         *=*+1          ; physical sector size
 pnumsec  *=*+1          ; physical number of sectors (side)
 pendsec  *=*+1          ; physical ending sector
 pstartsec
-	 *=*+1          ; physical starting sector
+         *=*+1          ; physical starting sector
 cachetrk
-	 *=*+1          ; current physical track cache
+         *=*+1          ; current physical track cache
 tcacheside
-	 *=*+1          ; translated current track cache side
+         *=*+1          ; translated current track cache side
 cacheside
-	 *=*+1          ; current track cache side
+         *=*+1          ; current track cache side
 setval   *=*+1          ; settling time value
 hdrjob   *=*+1          ; shifted nextjob - hdr pointer
 gap3     *=*+1          ; format gap
@@ -159,10 +159,10 @@ filtyp   *=*+mxchns     ; channel file type
 ; huge relfile stuff
 grpnum   *=*+1          ; group number
 relsw    *=*+1          ; huge relfile switch
-			; bits 7 6 5 4  3 2 1 0
-			;
-			;           -- overflow = 1
-			;          --- huge rel file = 0
+                        ; bits 7 6 5 4  3 2 1 0
+                        ;
+                        ;           -- overflow = 1
+                        ;          --- huge rel file = 0
 
 sssgrp   *=*+mxchns     ; super ss group
 ssssec   *=*+mxchns     ; super ss sector
@@ -191,7 +191,7 @@ vtalk    *=*+2
 vlisten  *=*+2
 vlcc     *=*+2
 vtrans_ts
-	 *=*+2          ; track & sector translation
+         *=*+2          ; track & sector translation
 vcmder2  *=*+2          ; DOS command error
 
 hdrs2    *=*+18         ; translated job headers
@@ -200,32 +200,32 @@ ctltimh  *=*+1          ; controller timer var
 ctltiml  *=*+1          ; *
 motoracc *=*+1          ; acceleration startup
 
-			; controller commands
+                        ; controller commands
 wdrestore
-	 *=*+1          ; $08
+         *=*+1          ; $08
 wdseek   *=*+1          ; $18
 wdstep   *=*+1          ; $28
 wdstepin
-	 *=*+1          ; $48
+         *=*+1          ; $48
 wdstepout
-	 *=*+1          ; $68
+         *=*+1          ; $68
 wdreadsector
-	 *=*+1          ; $88
+         *=*+1          ; $88
 wdwritesector
-	 *=*+1          ; $aa
+         *=*+1          ; $aa
 wdreadaddress
-	 *=*+1          ; $c8
+         *=*+1          ; $c8
 wdreadtrack
-	 *=*+1          ; $e8
+         *=*+1          ; $e8
 wdwritetrack
-	 *=*+1          ; $fa
+         *=*+1          ; $fa
 wdforceirq
-	 *=*+1          ; $d0
+         *=*+1          ; $d0
 
 dirst    *=*+1          ; starting directory sector
 savects  *=*+4          ; save area for vectors
 burst_stat
-	 *=*+1          ; burst controller status
+         *=*+1          ; burst controller status
 vernum   *=*+1          ; DOS version number
 dosver   *=*+1          ; & type
 hi       *=*+1          ; high partition counter
@@ -235,10 +235,10 @@ maxsek   *=*+1          ; "  "  max. "    "
 bufind   *=*+9          ; buffer indirects
 wpstat   *=*+1          ; write protect status
 dejavu   *=*+1          ; auto boot flag
-			; bits 7 6 5 4  3 2 1 0
-			;
-			;        ---- boot on intdrv
-			;      ------- boot on reset
+                        ; bits 7 6 5 4  3 2 1 0
+                        ;
+                        ;        ---- boot on intdrv
+                        ;      ------- boot on reset
 jhandsk  *=*+3          ; handsk jmp
 
 *=$200

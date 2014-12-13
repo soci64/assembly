@@ -14,7 +14,7 @@ new     jsr  onedrv
 n101    and  #1
         sta  drvnum
 
-;	jsr  setlds
+;       jsr  setlds
         jsr  ptch11     ; clr nodrv ***rom ds 01/21/85***
 
         lda  drvnum
@@ -39,14 +39,14 @@ n101    and  #1
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jmp  ptch27	; *** rom ds 03/15/85 ***
-;	jsr  clrbam     ; zero bam
+        jmp  ptch27     ; *** rom ds 03/15/85 ***
+;       jsr  clrbam     ; zero bam
 
 rtch27
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jmp  n110
+        jmp  n110
 
 n108    jsr  initdr     ; clear directory only
 
@@ -58,7 +58,7 @@ n108    jsr  initdr     ; clear directory only
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-n110   	jsr  ptch32	; *** rom ds 02/21/85 ***
+n110    jsr  ptch32     ; *** rom ds 02/21/85 ***
 ;       jsr  newmap     ; new bam
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -112,7 +112,7 @@ n110   	jsr  ptch32	; *** rom ds 02/21/85 ***
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jsr  initdr	; *** rom ds 02/27/85 ***
+        jsr  initdr     ; *** rom ds 02/27/85 ***
 ;       jsr  drtrd      ; read bam back
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>

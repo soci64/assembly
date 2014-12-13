@@ -2,20 +2,20 @@
 cmdzer  jmp  dskint     ; reset
 
 cmdone  lda  #180
-	sta  cur_trk
+        sta  cur_trk
 
-	lda  #0		; side zero
-	sta  wdtrk	; init to trk zero
-	sta  cmd_trk	; find zero
+        lda  #0         ; side zero
+        sta  wdtrk      ; init to trk zero
+        sta  cmd_trk    ; find zero
         jmp  seke
 
-cmdtwo  lda  dskcnt	; return status of wp
+cmdtwo  lda  dskcnt     ; return status of wp
         and  #$10
         rts
 
 cmdthr  sty  cmd_trk
-	stx  cur_trk
-	rts
+        stx  cur_trk
+        rts
 
 cmdfor  rts             ; reserved
 
@@ -25,43 +25,43 @@ cmdfor  rts             ; reserved
 ;  ^       ^      ^           ^         ^    ^
 ; track  side#  sector  sector_length  crc  crc
 
-; track 	=> cur-trk
-; sector size 	=> mfmsiz_hi
-; status  	=> mfmsiz_lo
-; sector size 	=> dkmode
+; track         => cur-trk
+; sector size   => mfmsiz_hi
+; status        => mfmsiz_lo
+; sector size   => dkmode
 
-cmdfve	jsr  cmdone	; restore
-	jsr  diskin	; is there a disk in the drive ?
-	bcs  +
+cmdfve  jsr  cmdone     ; restore
+        jsr  diskin     ; is there a disk in the drive ?
+        bcs  +
 
-	jsr  cmdfiv	; seek
-	lda  nsectk,x	; get # of sectors
-	sta  cpmsek	; set def.
-	sta  maxsek	; store max sector number....def, ok
-	lda  #1
-	sta  minsek	; let query decide otherwise....def, ok
-	rts
+        jsr  cmdfiv     ; seek
+        lda  nsectk,x   ; get # of sectors
+        sta  cpmsek     ; set def.
+        sta  maxsek     ; store max sector number....def, ok
+        lda  #1
+        sta  minsek     ; let query decide otherwise....def, ok
+        rts
 
-+	lda  #$0d	; no disk
-	sta  mfmcmd	; error
-	bne  abrsk	; abort
++       lda  #$0d       ; no disk
+        sta  mfmcmd     ; error
+        bne  abrsk      ; abort
 
 cmdfiv  lda  #0
         sta  mfmsiz_lo  ; clear sector size
         sta  mfmsiz_hi  ; *
         lda  #$c8       ; read address
-	jsr  strtwd	; start cmd
+        jsr  strtwd     ; start cmd
 
 ; store address away
 
         ldx  #0
         ldy  #6
-	#WDTEST		; chk address
+        #WDTEST         ; chk address
 mseek1  lda  wdstat
-	and  #3
-	lsr  a
+        and  #3
+        lsr  a
         bcc  mrcnf      ; no address mark found
-	beq  mseek1
+        beq  mseek1
 
         lda  wddat      ; get data
         sta  mfmhdr,x   ; data in .a
@@ -69,7 +69,7 @@ mseek1  lda  wdstat
         dey
         bne  mseek1
 
-mrcnf	jsr  waitdn	; wait for not busy
+mrcnf   jsr  waitdn     ; wait for not busy
 
 ; wd 1770 status returns
 
@@ -79,23 +79,23 @@ mrcnf	jsr  waitdn	; wait for not busy
         jsr  cvstat     ; get status
 
 mseek3  lda  mfmhdr     ; read track address
-	asl  a		; * 2
+        asl  a          ; * 2
         sta  cur_trk
 
         lda  mfmhdr+3   ; get sector size
 consek  and  #3         ; clear remaining
         tax
-	lda  sectlo,x
+        lda  sectlo,x
         sta  mfmsiz_lo  ; sector size low
         lda  secthi,x
         sta  mfmsiz_hi  ; sector size high
 
 abrsk   lda  dkmode     ; set sector size in
         and  #%10000000 ; clear all but mode bit
-	ora  mfmcmd	; set status
-	ora  seckzz,x	; shifted sector size
+        ora  mfmcmd     ; set status
+        ora  seckzz,x   ; shifted sector size
         sta  dkmode
-	rts
+        rts
 
 ; sector size low for mfm 128,256,512,1024 byte sectors
 sectlo   .byte  127,255,255,255
@@ -107,7 +107,7 @@ secthi   .byte  1,1,2,4
 seckzz   .byte  $00,$10,$20,$30
 
 ; max sector #'s for mfm 128, 256, 512, 1024 byte sectors
-nsectk	 .byte  26, 16, 9, 5
+nsectk   .byte  26, 16, 9, 5
 
 ; ok, checksum-error, sector-not-found, no-address-mark
 mfmer    .byte  1,9,2,3

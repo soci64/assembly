@@ -1,14 +1,14 @@
 
 ; Equates
-bit0	  = 1
-bit1	  = 2
-bit2	  = 4
-bit3	  = 8
-bit4	  = 16
-bit5	  = 32
-bit6	  = 64
-bit7	  = 128
-all	  = 255
+bit0      = 1
+bit1      = 2
+bit2      = 4
+bit3      = 8
+bit4      = 16
+bit5      = 32
+bit6      = 64
+bit7      = 128
+all       = 255
 
 buff0    =$0300 ; buffers
 buff1    =$0400
@@ -32,12 +32,12 @@ dyfile   =$40   ; dirty flag for rr file
 ovrflo   =$20   ; rr print overflow
 nssl     =6     ; # of side-sector links
 .comment
-systrack =40	; system track
-sysdirsec=3	; system directory sector
-sysiz    =2	; default sector size
-sysiob   =$c0	; iobyte default
-dtos     =$8f	; default top of stack
-zpvar	 =2	; zp start
+systrack =40    ; system track
+sysdirsec=3     ; system directory sector
+sysiz    =2     ; default sector size
+sysiob   =$c0   ; iobyte default
+dtos     =$8f   ; default top of stack
+zpvar    =2     ; zp start
 .endc
 ; offset into ss for dat blk ptrs
 ssioff   =4+nssl+nssl
@@ -78,62 +78,62 @@ iwsa     =18    ; internal write sa #
 ; controller jobs
 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-read_dv	 =$80	; Read into track cache buffer.
+read_dv  =$80   ; Read into track cache buffer.
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-reset_dv =$82	; Reset disk controller.
-moton_dv =$84	; Turn on spindle motor with spinup sequence.
-motoff_dv=$86	; Turn off spindle motor with spin down sequence.
-motoni_dv=$88	; Turn on spindle motor.
-motoffi_dv=$8a	; Turn off spindle motor.
-seek_dv	 =$8c	; Move head to a specific cylinder.
-format_dv=$8e	; Format one cylinder side.
+reset_dv =$82   ; Reset disk controller.
+moton_dv =$84   ; Turn on spindle motor with spinup sequence.
+motoff_dv=$86   ; Turn off spindle motor with spin down sequence.
+motoni_dv=$88   ; Turn on spindle motor.
+motoffi_dv=$8a  ; Turn off spindle motor.
+seek_dv  =$8c   ; Move head to a specific cylinder.
+format_dv=$8e   ; Format one cylinder side.
 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-wrtsd_dv =$90	; Write out track cache buffer.
+wrtsd_dv =$90   ; Write out track cache buffer.
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-diskin_dv=$92	; Determine whether there is a disk present in the drive.
+diskin_dv=$92   ; Determine whether there is a disk present in the drive.
 ledacton_dv=$94 ; Will turn on the activity led.
-		; Will turn off the activity led.
+                ; Will turn off the activity led.
 ledactoff_dv=$96
 errledon_dv=$98 ; Will enable error led blinking.
-		; Will disable error led blinking.
+                ; Will disable error led blinking.
 errledoff_dv=$9a
-side_dv=$9c	; Will select side.
-bufmove_dv=$9e	; Will move data from/to a specific area
-		; in the track cache buffer.
+side_dv=$9c     ; Will select side.
+bufmove_dv=$9e  ; Will move data from/to a specific area
+                ; in the track cache buffer.
 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-wrtver_dv=$a0	; Track cache verify write.
+wrtver_dv=$a0   ; Track cache verify write.
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-trkwrt_dv=$a2	; Will dump track cache buffer to disk.
+trkwrt_dv=$a2   ; Will dump track cache buffer to disk.
 pread_dv=$a4    ; Read sector notranslation.
-pwrt_dv=$a6	; Write sector notranslation.
-pseek_dv=$a8	; Move head to a specific logical cylinder.
+pwrt_dv=$a6     ; Write sector notranslation.
+pseek_dv=$a8    ; Move head to a specific logical cylinder.
 tread_dv=$aa    ; Read sector notrx.
-twrt_dv=$ac	; Write sector notrx.
+twrt_dv=$ac     ; Write sector notrx.
 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-seekhd_dv=$b0	; Seek any header.
+seekhd_dv=$b0   ; Seek any header.
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-tpread_dv=$b2	; Read sector notranslation, notrx.
-tpwrt_dv=$b4	; Write sector notranslation, notrx.
-detwp_dv=$b6	; Check write protect status
+tpread_dv=$b2   ; Read sector notranslation, notrx.
+tpwrt_dv=$b4    ; Write sector notranslation, notrx.
+detwp_dv=$b6    ; Check write protect status
 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-seekphd_dv=$b8	; Sector seek a particular header.
-restore_dv=$c0	; Restore head against track zero stop.
-jumpc_dv =$d0	; Execute buffer.
-exbuf_dv =$e0	; Execute buffer after motor is up to
-		; speed and on track.
+seekphd_dv=$b8  ; Sector seek a particular header.
+restore_dv=$c0  ; Restore head against track zero stop.
+jumpc_dv =$d0   ; Execute buffer.
+exbuf_dv =$e0   ; Execute buffer after motor is up to
+                ; speed and on track.
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-formatdk_dv=$f0	; Format diskette.
+formatdk_dv=$f0 ; Format diskette.
 
-precmptrk=43	; precompensation starts at track 43
+precmptrk=43    ; precompensation starts at track 43
 .endc
 mxfils   =5     ; max # filenames in string
 dirlen   =24    ; directory length used

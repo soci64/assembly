@@ -21,7 +21,7 @@ gaflgs  ldx  lindx
 ga3     sta  t1
         and  #$1f
         bit  t1
-        rts     	; n=1 no act buf/v=1 dirty buf
+        rts             ; n=1 no act buf/v=1 dirty buf
 
 getina  ldx  lindx      ; get ch's inact buf#
         lda  buf0,x
@@ -29,7 +29,7 @@ getina  ldx  lindx      ; get ch's inact buf#
 
         lda  buf1,x     ; accm =buf#
 gi10    cmp  #$ff
-        rts     	; ff=no inact buffer
+        rts             ; ff=no inact buffer
 
 putina  ldx  lindx      ; put inact buff
         ora  #$80       ; accm=buf#

@@ -21,7 +21,7 @@ addrel
         lda  #0         ; clear for calculation...
         sta  recptr     ; ...to 1st byte in record
         jsr  fndrel     ; calc ss ptrs
-addr1           	;  entry for rel record fix
+addr1                   ;  entry for rel record fix
         jsr  numfre     ; calc available...
 
         ldy  lindx      ; record span?
@@ -53,7 +53,7 @@ ar20
         jsr  cmderr     ; too many ss's
 ar25
         lda  ssind      ; calc # blocks needed...
-        sec     	; ...& check against avail.
+        sec             ; ...& check against avail.
         sbc  r1
         bcs  ar30
         sbc  #ssioff-1
@@ -67,7 +67,7 @@ ar30
         ldx  #0         ; clear accum.
         stx  t1
         stx  t2
-        tax     	; .x=# ss
+        tax             ; .x=# ss
         jsr  sscalc     ; calc # of blocks needed
 
         lda  t2
@@ -113,12 +113,12 @@ ar55
         jsr  wrtout     ; write buffer
         jsr  getlnk     ; get t&s from link
         lda  track
-        pha     	; save 'em
+        pha             ; save 'em
         lda  sector
         pha
         jsr  gethdr     ; now get hdr t&s
         lda  sector
-        pha     	; save 'em
+        pha             ; save 'em
         lda  track
         pha
         jsr  gsspnt     ; check ss ptr
@@ -134,7 +134,7 @@ ar60
         jsr  putss      ; record t&s...
         pla
         jsr  putss      ; ...in ss.
-        pla     	; get t&s from link
+        pla             ; get t&s from link
         sta  sector
         pla
         sta  track

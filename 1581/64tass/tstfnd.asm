@@ -6,7 +6,7 @@
 nxtts   jsr  gethdr
         lda  #3
         sta  temp       ; set pass count
-	lda  #1         ; find next
+        lda  #1         ; find next
         ora  wbam
         sta  wbam
 nxtds   jsr  setbam
@@ -27,8 +27,8 @@ nxtds   jsr  setbam
         ldx  dirtrk
         dex
         stx  track
-	cpx  startrk
-	bcc  nxt3
+        cpx  startrk
+        bcc  nxt3
 
         lda  #0
         sta  sector
@@ -39,13 +39,13 @@ nxterr  lda  #dskful
         jsr  cmderr
 
 nxt2    lda  track
-	cmp  startrk
-	bcc  nxt3
+        cmp  startrk
+        bcc  nxt3
 
-	dec  track
+        dec  track
         bne  nxtds
 
-nxt3	ldx  dirtrk
+nxt3    ldx  dirtrk
         inx
         stx  track
         lda  #0
@@ -56,60 +56,60 @@ nxt3	ldx  dirtrk
         beq  nxterr
 
 fndnxt  lda  sector     ; get current sec
-        clc     	; add in the incr
+        clc             ; add in the incr
         adc  secinc
         sta  sector
-	lda  numsec	; find next sec
+        lda  numsec     ; find next sec
         sta  cmd
-        cmp  sector	; is it over?
+        cmp  sector     ; is it over?
         bcs  fndn0      ; no..it's ok
 
-	sec
-	lda  sector
-	sbc  numsec
-	sta  sector
-	beq  fndn0
+        sec
+        lda  sector
+        sbc  numsec
+        sta  sector
+        beq  fndn0
 
-	dec  sector	; -1
+        dec  sector     ; -1
 
 fndn0   jsr  getsec
-        beq  fndn2	; nothing here...
+        beq  fndn2      ; nothing here...
 
 fndn1
-	jmp  wused
+        jmp  wused
 
 fndn2
         lda  #0
         sta  sector     ; start again
-	jsr  getsec
-        bne  fndn1	; sumtin here...
+        jsr  getsec
+        bne  fndn1      ; sumtin here...
 
-	jmp  derr
+        jmp  derr
 
 intts   lda  #1         ; find init opt t&s
         ora  wbam
         sta  wbam
         lda  r0
-        pha     	; save temp var
+        pha             ; save temp var
         lda  #1         ; clr r0
         sta  r0
 its1    lda  dirtrk     ; track:= dirtrk-r0
         sec
         sbc  r0
         sta  track
-	php
-	cmp  startrk	; ok
-	bcs  +		; startrk < track
+        php
+        cmp  startrk    ; ok
+        bcs  +          ; startrk < track
 
-	plp
-	jmp  its2
+        plp
+        jmp  its2
 
-+	plp
++       plp
         bcc  its2       ; if t>0
 
         beq  its2       ; then begin
 
-	jsr  setbam     ; set the bam pntr
+        jsr  setbam     ; set the bam pntr
         lda  (bmpnt),y
         bne  fndsec
 
@@ -152,12 +152,12 @@ gs10    lda  sector
         bne  gs10       ; bra
 
 gs20    lda  #0         ; nothing free
-gs30    rts     	; (z=1): free
+gs30    rts             ; (z=1): free
 
 avck    lda  #0
         sta  ftnum      ; blk counter
         ldy  bamsiz
-        dey     	; adjust it
+        dey             ; adjust it
 ac10    ldx  #8
         lda  (bmpnt),y
 ac20    asl  a          ; used ?
@@ -167,7 +167,7 @@ ac20    asl  a          ; used ?
 ac30    dex
         bne  ac20       ; do next bit
 
-        dey     	; do next byte
+        dey             ; do next byte
         bne  ac10
 
         lda  (bmpnt),y

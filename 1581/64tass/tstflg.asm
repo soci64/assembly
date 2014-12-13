@@ -35,11 +35,11 @@ tstc30  ldx  temp+2     ; not active
         cpx  #maxsa-2   ; searched all
         bcc  tstc20     ; no
 
-        rts     	; yes
+        rts             ; yes
 
 tstc40  stx  temp+2     ; save x
         and  #$3f
-        tay     	; use lindx as index
+        tay             ; use lindx as index
         lda  filtyp,y   ; right drive # ?
         and  #1
         sta  temp+1
@@ -57,5 +57,5 @@ tstc40  stx  temp+2     ; save x
         cmp  entind,x
         bne  tstc30     ; no
 
-        clc     	; set flag
+        clc             ; set flag
         rts

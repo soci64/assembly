@@ -1,5 +1,5 @@
 ; get next char from a chanl
-gbyte           	; get it thru internal chnl
+gbyte                   ; get it thru internal chnl
         jsr  fndrch
         jsr  setlds
         jsr  get
@@ -56,7 +56,7 @@ rnget2  lda  (buftab,x)
 
         lda  #rndeoi
         sta  chnrdy,y   ; this is last char
-rnget3  rts     	; send eoi with it
+rnget3  rts             ; send eoi with it
 seqget  jsr  rdbyt      ; read the next byte
 get3    ldx  lindx
         sta  chndat,x   ; store in chndat
@@ -101,7 +101,7 @@ ge30    sta  chnrdy+errchn
 
 nxtbuf  jsr  getact     ; read next buffer of a
         asl  a          ; file, follow links in the first
-        tax     	; two bytes. end of file if 1st char
+        tax             ; two bytes. end of file if 1st char
         lda  #0         ; byte=0. 2nd char =length
         sta  buftab,x
         lda  (buftab,x)
@@ -112,10 +112,10 @@ nxtbuf  jsr  getact     ; read next buffer of a
 
 nxtb1   rts
 
-drtrd   lda  #read_dv	; direct block read
+drtrd   lda  #read_dv   ; direct block read
         bne  drt
 
-drtwrt  lda  #wrtsd_dv	; direct block write
+drtwrt  lda  #wrtsd_dv  ; direct block write
 drt     sta  cmd
         lda  jobnum
         jsr  seth

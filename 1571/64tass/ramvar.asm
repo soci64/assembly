@@ -9,19 +9,19 @@ fmhdpt   =$1b
 wpsw     =$1c;*=*+1          ; write protect change flag
 lwpt     =$1e
 drvst    =$20;*=*+1          ; lcc var's
-			; bits 7 6 5 4  3 2 1 0
-			;
-			;         -- timeout
-			;        ---- running
-			;       ------ stepping
-			;      -------- accelerating
-			;
-			;ie:
-			;       $00 = no drive active
-			;       $20 = running
-			;       $30 = running and timeout
-			;       $50 = stepping and running
-			;       $80 = accelerating
+                        ; bits 7 6 5 4  3 2 1 0
+                        ;
+                        ;         -- timeout
+                        ;        ---- running
+                        ;       ------ stepping
+                        ;      -------- accelerating
+                        ;
+                        ;ie:
+                        ;       $00 = no drive active
+                        ;       $20 = running
+                        ;       $30 = running and timeout
+                        ;       $50 = stepping and running
+                        ;       $80 = accelerating
 
 drvtrk   =$22;*=*+1
 slflag   =$23
@@ -97,7 +97,7 @@ atnpnd   =$7c
 adrsed   =$7b
 prgtrk   =$7e;*=*+1          ; last prog accessed
 atnact   =$7d
-drvnum	 =$7f
+drvnum   =$7f
 track    =$80;*=*+1          ; current track
 sector   =$81;*=*+1          ; current sector
 lindx    =$82;*=*+1          ; logical index
@@ -194,7 +194,7 @@ patflg   =$28a;*=*+1          ; pattern presence flag
 image    =$28b;*=*+1          ; file stream image
 drvcnt   =$28c;*=*+1          ; number of drv searches
 drvflg   =$28d;*=*+1          ; drive search flag
-lstdrv	 =$28e
+lstdrv   =$28e
 found    =$28f;*=*+1          ; found flag in dir searches
 dirsec   =$290;*=*+1          ; directory sector
 delsec   =$291;*=*+1          ; sector of 1st avail entry

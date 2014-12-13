@@ -62,7 +62,7 @@ positn  jsr  posbuf     ; pos buffers
         jsr  setpnt     ; set ptr from fndrel
         ldx  lindx
         lda  rs,x
-        sec     	; calc the offset
+        sec             ; calc the offset
         sbc  recptr
         bcs  p2
 
@@ -87,22 +87,22 @@ posbuf  lda  dirbuf     ; position proper data
         jsr  bhere      ; is buffer in?
         beq  p20        ; br, yes!
 
-	jsr  scrub	; write and clear
-	jsr  getlnk	; get t & s link
-	lda  track	; done?
-	beq  p80
+        jsr  scrub      ; write and clear
+        jsr  getlnk     ; get t & s link
+        lda  track      ; done?
+        beq  p80
 
-	jsr  dblbuf
-	jsr  bhere	; is it in?
-	bne  p80
+        jsr  dblbuf
+        jsr  bhere      ; is it in?
+        bne  p80
 
-	jsr  getlnk	; get t & s link
-	lda  track	; done ???
-	beq  p20
+        jsr  getlnk     ; get t & s link
+        lda  track      ; done ???
+        beq  p20
 
-	jsr  dblbuf
-	jsr  rdab	; read it
-	jmp  dblbuf
+        jsr  dblbuf
+        jsr  rdab       ; read it
+        jmp  dblbuf
 
 p20     rts
 
@@ -125,14 +125,14 @@ bhere   jsr  gethdr     ; get the header
 bh10    iny
         lda  (r3),y
         cmp  sector     ; set .z
-	bne  +
+        bne  +
 
-	lda  relsw
-	and  #bit4
-	beq  +
+        lda  relsw
+        and  #bit4
+        beq  +
 
-	lda  relsw
-	and  #all-bit4
-	sta  relsw	; clear flag
-	eor  #bit4
-+	rts
+        lda  relsw
+        and  #all-bit4
+        sta  relsw      ; clear flag
+        eor  #bit4
++       rts

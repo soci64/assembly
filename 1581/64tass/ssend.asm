@@ -1,9 +1,9 @@
 ssend   jsr  hugerel
-	bne  ssend1
+        bne  ssend1
 
-	jsr  rdlg	; read last group
+        jsr  rdlg       ; read last group
 ssend1
-	jsr  ssset      ; set ss & buftbl to
+        jsr  ssset      ; set ss & buftbl to
         sta  ssnum      ; end of last record
         lda  #4
         sta  dirbuf
@@ -33,7 +33,7 @@ se30    ldy  #0         ; set ssind
 
         iny
         lda  (dirbuf),y
-        tay     	; back up to track
+        tay             ; back up to track
         dey
         sty  ssind
         tya

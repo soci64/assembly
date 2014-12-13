@@ -1,22 +1,22 @@
 
 jseak   .proc
-	lda  #90        ; search 90 headers
+        lda  #90        ; search 90 headers
         sta  tmp
 
-m1	jsr  jsync      ; find sync char
+m1      jsr  jsync      ; find sync char
 
-m2	bit  pota1	; wait for block id
-	bmi  m2
+m2      bit  pota1      ; wait for block id
+        bmi  m2
 
         lda  data2      ; clear pa1 in the gate array
         cmp  #$52       ; test if header block
-        bne  m3		; not header
+        bne  m3         ; not header
 
-        sta  stab,y   	; store 1st byte
+        sta  stab,y     ; store 1st byte
         iny
 
-m4	bit  pota1
-	bmi  m4
+m4      bit  pota1
+        bmi  m4
 
         lda  data2
         sta  stab,y     ; store gcr header off
@@ -30,12 +30,12 @@ m4	bit  pota1
         ldy  #4         ; compute checksum
         lda  #0
 
-m5	eor  header,y
+m5      eor  header,y
         dey
         bpl  m5
 
         cmp  #0         ; test if ok
-        bne  m9		; nope, checksum error in header
+        bne  m9         ; nope, checksum error in header
 
         lda  header+2
         sta  drvtrk
@@ -52,29 +52,29 @@ m5	eor  header,y
         cmp  header+1
         bne  m8
 
-	jmp  m7		; find best sector to service
+        jmp  m7         ; find best sector to service
 
-m3	dec  tmp        ; search more?
-        bne  m1		; yes
+m3      dec  tmp        ; search more?
+        bne  m1         ; yes
 
         lda  #2         ; cant find a sector
         jsr  jerrr
 
-m6	lda  header     ; sta disk id's
+m6      lda  header     ; sta disk id's
         sta  dskid      ; *
         lda  header+1
         sta  dskid+1
 
-	lda  #1         ; return ok code
+        lda  #1         ; return ok code
         .byte    skip2
 
-m8	lda  #11        ; disk id mismatch
+m8      lda  #11        ; disk id mismatch
         .byte    skip2
 
-m9	lda  #9         ; checksum error in header
+m9      lda  #9         ; checksum error in header
         jmp  jerrr
 
-m7	lda  #$7f       ; find best job
+m7      lda  #$7f       ; find best job
         sta  csect
 
         lda  header+3   ; get upcoming sector #
@@ -85,28 +85,28 @@ m7	lda  #$7f       ; find best job
 
         sbc  sectr      ; wrap around
 
-m10	sta  nexts      ; next sector
+m10     sta  nexts      ; next sector
 
         ldx  #numjob-1
         stx  jobn
 
         ldx  #$ff
 
-m12	jsr  jsetjb
+m12     jsr  jsetjb
         bpl  m11
 
         and  #drvmsk
         cmp  cdrive     ; test if same drive
-        bne  m11	; nope
+        bne  m11        ; nope
 
         ldy  #0         ; test if same track
         lda  (hdrpnt),y
         cmp  tracc
         bne  m11
 
-	lda  job
-	cmp  #execd
-	beq  m13
+        lda  job
+        cmp  #execd
+        beq  m13
 
         ldy  #1
         sec
@@ -117,21 +117,21 @@ m12	jsr  jsetjb
         clc
         adc  sectr
 
-m13	cmp  csect
+m13     cmp  csect
         bcs  m11
 
-        pha     	; save it
+        pha             ; save it
         lda  job
-        beq  m16	; must be a read
+        beq  m16        ; must be a read
 
         pla
         cmp  #wrtmin    ; +if(csect<4)return;
-        bcc  m11	; +if(csect>8)return;
+        bcc  m11        ; +if(csect>8)return;
 
         cmp  #wrtmax
         bcs  m11
 
-m15	sta  csect      ; its better
+m15     sta  csect      ; its better
         lda  jobn
         tax
         clc
@@ -140,19 +140,19 @@ m15	sta  csect      ; its better
 
         bne  m11
 
-m16	pla
+m16     pla
         cmp  #rdmax     ; if(csect>6)return;
         bcc  m15
 
-m11	dec  jobn
+m11     dec  jobn
         bpl  m12
 
-        txa     	; test if a job to do
+        txa             ; test if a job to do
         bpl  m14
 
         jmp  jend       ; no job found
 
-m14	stx  jobn
+m14     stx  jobn
         jsr  jsetjb
         lda  job
         jmp  jread
@@ -161,9 +161,9 @@ m14	stx  jobn
 jcnvbin lda  bufpnt
         pha
         lda  bufpnt+1
-        pha     	; save buffer pntr
+        pha             ; save buffer pntr
 
-        lda  #<stab	; stab offset
+        lda  #<stab     ; stab offset
         sta  bufpnt     ; point at gcr code
         lda  #>stab
         sta  bufpnt+1

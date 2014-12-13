@@ -15,7 +15,7 @@ rn10    sta  fildrv
         jsr  rdab       ; read directory sector
         jsr  watjob
         lda  entind+1
-        clc     	; set sector index
+        clc             ; set sector index
         adc  #3         ; ...+3
         jsr  setpnt
         jsr  getact

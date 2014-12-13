@@ -36,61 +36,61 @@ direrr   =$71   ;  directory error
 dskful   =$72   ;  disk full full
 cbmv2    =$73   ;  copyright cbm dos V0
 nodriv   =$74   ;  drive not ready
-fmter	 =$75   ;  format error
-cntrer	 =$76	;  controller error
-illpar	 =$77	;  illegal partition
+fmter    =$75   ;  format error
+cntrer   =$76   ;  controller error
+illpar   =$77   ;  illegal partition
 ;-error message table----------------
 ;   leading errror numbers,
 ;   text with 1st & last chars
 ;   or'ed with $80,
 ;   tokens for key words are
 ;   less than $10 (and'ed w/ $80)
-errtab  .text 0,$a0,'O',$cb    			; ok
-	.text 2,$a0,'SELECTED PARTITIO',$ce  	; selected partition
-	.text $20,$21,$22,$23,$24,$27        	; read error
-	.text $d2,'EAD',$89
-	.text $52,$83,' TOO LARG',$c5      	; fil to large
-	.text $50,$8b,6,' PRESEN',$d4       	; rec not present
-	.text $51,$cf,'VERFLOW '    		; overflow in record
-	.text 'IN',$8b
-	.text $25,$28,$8a,$89        		; write error
-	.text $26,$8a,' PROTECT O',$ce     	; wrt protect on
-	.text $29,$88,' ID',$85     		; dsk id mismatch
-	.text $30,$31,$32,$33,$34    		; syntax error
-	.text $d3,'YNTAX',$89
-	.text $60,$8a,3,$84          		; wrt fil open
-	.text $63,$83,' EXIST',$d3          	; file exist
-	.text $64,$83,' TYPE',$85   		; fil type mismatch
-	.text $65,$ce,'O BLOC',$cb          	; no block
-	.text $66,$67,$c9,'LLEGAL TRACK'    	; illegal t & sector
-	.text ' OR SECTO',$d2
-	.text $61,$83,6,$84          		; fil not open
-	.text $39,$62,$83,6,$87      		; file not found
-	.text 1,$83,'S SCRATCHE',$c4         	; files scratched
-	.text $70,$ce,'O CHANNE',$cc        	; no channel
-	.text $71,$c4,'IR',$89       		; dir error
-	.text $72,$88,' FUL',$cc    		; disk full
-	.text $73,$c3,'OPYRIGHT CBM DOS V10 158',$B1 ; dos messg
-	.text $74,$c4,'RIVE',6,' READ',$d9   	; drv not rdy
-	.text $75,$c6,'ORMAT ERRO',$d2 		; format error
-	.text $76,$c3,'ONTROLLER ERRO',$d2	; controller error
-	.text $77,$d3,'ELECTED PARTITION ILLEGA',$cc
+errtab  .text 0,$a0,'O',$cb                     ; ok
+        .text 2,$a0,'SELECTED PARTITIO',$ce     ; selected partition
+        .text $20,$21,$22,$23,$24,$27           ; read error
+        .text $d2,'EAD',$89
+        .text $52,$83,' TOO LARG',$c5           ; fil to large
+        .text $50,$8b,6,' PRESEN',$d4           ; rec not present
+        .text $51,$cf,'VERFLOW '                ; overflow in record
+        .text 'IN',$8b
+        .text $25,$28,$8a,$89                   ; write error
+        .text $26,$8a,' PROTECT O',$ce          ; wrt protect on
+        .text $29,$88,' ID',$85                 ; dsk id mismatch
+        .text $30,$31,$32,$33,$34               ; syntax error
+        .text $d3,'YNTAX',$89
+        .text $60,$8a,3,$84                     ; wrt fil open
+        .text $63,$83,' EXIST',$d3              ; file exist
+        .text $64,$83,' TYPE',$85               ; fil type mismatch
+        .text $65,$ce,'O BLOC',$cb              ; no block
+        .text $66,$67,$c9,'LLEGAL TRACK'        ; illegal t & sector
+        .text ' OR SECTO',$d2
+        .text $61,$83,6,$84                     ; fil not open
+        .text $39,$62,$83,6,$87                 ; file not found
+        .text 1,$83,'S SCRATCHE',$c4            ; files scratched
+        .text $70,$ce,'O CHANNE',$cc            ; no channel
+        .text $71,$c4,'IR',$89                  ; dir error
+        .text $72,$88,' FUL',$cc                ; disk full
+        .text $73,$c3,'OPYRIGHT CBM DOS V10 158',$B1 ; dos messg
+        .text $74,$c4,'RIVE',6,' READ',$d9      ; drv not rdy
+        .text $75,$c6,'ORMAT ERRO',$d2          ; format error
+        .text $76,$c3,'ONTROLLER ERRO',$d2      ; controller error
+        .text $77,$d3,'ELECTED PARTITION ILLEGA',$cc
         .text $79,$D3,'OFTWARE DAVID SIRACUSA. HARDWARE GREG BERLI',$ce
-	.text $7a,$c4,'EDICATED TO MY WIFE LIS',$c1
+        .text $7a,$c4,'EDICATED TO MY WIFE LIS',$c1
 ;-error words---------------
-	.text 9,$c5,'RRO',$d2        		; error
-	.text $a,$d7,'RIT',$c5       		; write
-	.text 3,$c6,'IL',$c5         		; file
-	.text 4,$cf,'PE',$ce         		; open
-	.text 5,$cd,'ISMATC',$c8     		; mismatch
-	.text 6,$ce,'O',$d4          		; not
-	.text 7,$c6,'OUN',$c4        		; found
-	.text 8,$c4,'IS',$cb         		; disk
-	.text $b,$d2,'ECOR',$c4      		; record
+        .text 9,$c5,'RRO',$d2                   ; error
+        .text $a,$d7,'RIT',$c5                  ; write
+        .text 3,$c6,'IL',$c5                    ; file
+        .text 4,$cf,'PE',$ce                    ; open
+        .text 5,$cd,'ISMATC',$c8                ; mismatch
+        .text 6,$ce,'O',$d4                     ; not
+        .text 7,$c6,'OUN',$c4                   ; found
+        .text 8,$c4,'IS',$cb                    ; disk
+        .text $b,$d2,'ECOR',$c4                 ; record
 etend    =*
 jerror
-	pha     	; controller entry..
-	stx  jobnum     ; accm=err#, x=job#
+        pha             ; controller entry..
+        stx  jobnum     ; accm=err#, x=job#
         txa
         asl  a
         tax
@@ -103,10 +103,10 @@ jerror
         beq  err1       ; errs to dos errs
 
         cmp  #$3        ; no adam
-	beq  +
+        beq  +
 
         cmp  #$e        ; check syntax error
-	beq  +
+        beq  +
 
         cmp  #$f        ; check nodrive error
         bne  err2
@@ -140,14 +140,14 @@ cmder3  jsr  clrcb      ; clear cmdbuf
         lda  #0         ; clear pointers
         sta  buftab+cbptr
         ldx  tos
-        txs     	;  purge stack
+        txs             ;  purge stack
         lda  orgsa
         and  #$f
         sta  sa
         cmp  #$f
         beq  err10
         sei
-        bit  fsflag	; listn?
+        bit  fsflag     ; listn?
         bvs  lsnerr     ; listn error
 
         bmi  tlkerr     ; talk error
@@ -173,8 +173,8 @@ tlerr   jsr  typfil
 err10   jmp  jidle
 
 hexdec  php
-	sei
-	tax     	; convert hex to bcd
+        sei
+        tax             ; convert hex to bcd
         lda  #0
         sed
 hex0    cpx  #0
@@ -186,8 +186,8 @@ hex0    cpx  #0
         jmp  hex0
 
 hex5    cld
-	plp
-bcddec  tax     	; cnvrt bcd to asci decm
+        plp
+bcddec  tax             ; cnvrt bcd to asci decm
         lsr  a          ; rtn bcd in x and
         lsr  a          ; put ascii in (temp)y
         lsr  a
@@ -215,7 +215,7 @@ errmsg  ldy  #0
         iny
         lda  errbuf
         sta  chndat+errchn
-        txa     	; error # in .x
+        txa             ; error # in .x
         jsr  ermove     ; move message
         lda  #','
         sta  (cb+2),y
@@ -237,7 +237,7 @@ errmsg  ldy  #0
         sta  chnrdy+errchn
         rts
 
-ermove  tax     	; save err#
+ermove  tax             ; save err#
         lda  r0         ; save r0,r0+1
         pha
         lda  r0+1
@@ -246,12 +246,12 @@ ermove  tax     	; save err#
         sta  r0
         lda  #>errtab
         sta  r0+1
-        txa     	; get error #
+        txa             ; get error #
         ldx  #0         ; .x=0 for indirect
 e10     cmp  (r0,x)     ; ?error # = table entry?
         beq  e50        ; yes, send message
 
-        pha     	; save error #
+        pha             ; save error #
         jsr  eadv2      ; check & advance ptr
         bcc  e30        ; more #'s to check
 
@@ -268,10 +268,10 @@ e30     lda  r0+1       ; check ptr
         cmp  r0
         bcc  e45        ; past end of table
 
-e40     pla     	; restor error #
+e40     pla             ; restor error #
         jmp  e10        ; check next entry
 
-e45     pla     	; pop error #
+e45     pla             ; pop error #
         jmp  e90        ; go quit
 
 e50     jsr  eadv1      ; # has been located
@@ -282,7 +282,7 @@ e55     jsr  e60
         bcc  e55
 
         jsr  e60        ; check for token or last word
-e90     pla     	; all finished
+e90     pla             ; all finished
         sta  r0+1       ; restore r0
         pla
         sta  r0
@@ -295,7 +295,7 @@ e60     cmp  #$20       ; (max token #)+1
         lda  #$20       ; implied leading space
         sta  (cb+2),y
         iny
-        txa     	; restore token #
+        txa             ; restore token #
         jsr  ermove     ; add token word to message
         rts
 

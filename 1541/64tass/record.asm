@@ -78,7 +78,7 @@ positn
 
         ldx  lindx
         lda  rs,x
-        sec     	; calc the offset
+        sec             ; calc the offset
         sbc  recptr
         bcs  p2
         jmp  break      ; should not be needed

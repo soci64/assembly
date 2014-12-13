@@ -107,9 +107,9 @@ f001    bit  dskcnt     ;  time nonsync area
         asl  a
         bpl  f001       ;  not yet
 ;
-        inx     	;  .x is lsb
+        inx             ;  .x is lsb
         bne  f000
-        iny     	;  .y is msb
+        iny             ;  .y is msb
         bne  f000
 ;
         lda  #tolong    ;  cant find sync
@@ -130,9 +130,9 @@ f007    bit  dskcnt     ;  test for  no sync
         asl  a
         bpl  f007
 ;
-        inx     	;  count up another 100us
+        inx             ;  count up another 100us
         bne  f006
-        iny     	;  msb
+        iny             ;  msb
         bne  f006
 ;
         lda  #tolong    ;  cant be this long
@@ -143,7 +143,7 @@ f007    bit  dskcnt     ;  test for  no sync
 ;* sync and nonsync and adjust
 ;* num accordingly
 ;
-f009    sec     	;  t1-t2
+f009    sec             ;  t1-t2
         txa
         sbc  t2
         tax
@@ -165,7 +165,7 @@ f009    sec     	;  t1-t2
         bne  f013
         iny
 ;
-f013    tya     	;  test if abs(t1-t2)<4, that is close enough
+f013    tya             ;  test if abs(t1-t2)<4, that is close enough
         bne  f014       ;  msb must be 0
 ;
         cpx  #4         ;  test lsb < 4
@@ -194,7 +194,7 @@ cnt10   lda  dskcnt     ;  test for sync
         bpl  cnt20      ;  found sync
         bvc  cnt10      ;  test if byte time
 ;
-        clv     	;  yes, count it
+        clv             ;  yes, count it
         inx
         bne  cnt10      ;  keep counting
         iny
@@ -203,7 +203,7 @@ cnt10   lda  dskcnt     ;  test for sync
         lda  #tomany    ;  tomany counts
         jmp  fmterr
 ;
-cnt20   txa     	;  #bytes=count*2
+cnt20   txa             ;  #bytes=count*2
         asl  a
         sta  tral+1
 ;

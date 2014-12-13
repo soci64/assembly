@@ -15,7 +15,7 @@ errr10
         jsr  trnoff     ;  start timeout on drive
 ;
         ldx  savsp
-        txs     	;  reset stack pointer
+        txs             ;  reset stack pointer
 ;
         jmp  top        ;  back to the top
 ;
@@ -30,7 +30,7 @@ turnon  lda  #$a0       ;  turn on drive
         ora  #$04       ;  turn motor on
         sta  dskcnt
 ;
-        lda  #60	;  delay  .4 sec
+        lda  #60        ;  delay  .4 sec
         sta  acltim
 ;
         rts

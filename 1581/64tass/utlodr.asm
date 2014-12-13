@@ -1,36 +1,36 @@
-cbmfil	.text '&COPYRIGHT CBM 86',$0D
+cbmfil  .text '&COPYRIGHT CBM 86',$0D
 lenf=*-cbmfil
 
 cbmboot
-	jsr  bootvector ; set/save vectors
-	php
-	cli
-	ldy  #lenf-1
-	sty  cmdsiz
--	lda  cbmfil,y
-	sta  cmdbuf,y	; transfer filename to cmd buffer
-	dey
-	bpl  -
+        jsr  bootvector ; set/save vectors
+        php
+        cli
+        ldy  #lenf-1
+        sty  cmdsiz
+-       lda  cbmfil,y
+        sta  cmdbuf,y   ; transfer filename to cmd buffer
+        dey
+        bpl  -
 
-	bmi  utlodr	; bra
+        bmi  utlodr     ; bra
 
 cbmbootrtn
-	ldx  tos
-	txs
-	jsr  resvectors	; restore vectors
-	sei
-	jmp  diagrtn
+        ldx  tos
+        txs
+        jsr  resvectors ; restore vectors
+        sei
+        jmp  diagrtn
 
 utlodr  jsr  autoi
-	lda  psectorsiz
-	cmp  #sysiz
-	bne  +
+        lda  psectorsiz
+        cmp  #sysiz
+        bne  +
 
         lda  #01
         sta  filtbl     ; set filename
         jsr  onedrv     ; set drv
         lda  f2cnt
-        pha     	; save file count for utility
+        pha             ; save file count for utility
         lda  #1
         sta  f2cnt
         lda  #$ff       ; init firstbyte flag
@@ -62,9 +62,9 @@ utld10  lda  #$00       ; init checksum
         beq  utld20     ; br if not
 
         lda  r2         ; sav this adr
-        pha     	; lo first
+        pha             ; lo first
         lda  r3
-        pha     	; hi next
+        pha             ; hi next
         lda  #$00       ; clear flag
         sta  r0         ; first byte flag
 utld20  jsr  gtabyt     ; fetch data byte count
@@ -96,7 +96,7 @@ utld35  dec  r4         ; update byte counter
 utld50  lda  eoiflg     ; check for eof
         bne  utld10     ; if nonzero, not done
 
-        pla     	; xfer cntrl to
+        pla             ; xfer cntrl to
         sta  r3         ; 1st byte addr.
         pla
         sta  r2
@@ -118,13 +118,13 @@ addsum  clc
         rts
 
 bootvector
-	jsr  savectors	; save vectors
-	lda  #<cbmbootrtn
-	sta  vcmder2
-	lda  #>cbmbootrtn
-	sta  vcmder2+1
-	lda  #<cbmbootrtn
-	sta  verror	; save error vectors
-	lda  #>cbmbootrtn
-	sta  verror+1
-	rts
+        jsr  savectors  ; save vectors
+        lda  #<cbmbootrtn
+        sta  vcmder2
+        lda  #>cbmbootrtn
+        sta  vcmder2+1
+        lda  #<cbmbootrtn
+        sta  verror     ; save error vectors
+        lda  #>cbmbootrtn
+        sta  verror+1
+        rts

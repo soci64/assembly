@@ -10,9 +10,9 @@ ad10    stx  f1ptr      ; ...on sector ptr byte
         jsr  setdrv
         ldx  f1ptr
         sta  filtbl,x   ; incr ptr past ":"
-        tya     	; bits rep drives
+        tya             ; bits rep drives
         sta  fildrv,x   ; bit7: default
-        inx     	; bit0: drive #
+        inx             ; bit0: drive #
         cpx  f2cnt
         bcc  ad10
 
@@ -25,7 +25,7 @@ ad10    stx  f1ptr      ; ...on sector ptr byte
 ;  y: in: default drive
 ;    out: drive number, - if default
 ;---------------------------------------
-setdrv  tax     	; x= cmdbuf index
+setdrv  tax             ; x= cmdbuf index
         ldy  #0         ; set default drive to zero
         lda  #':'
         cmp  cmdbuf+1,x ; for xxx:file
@@ -34,25 +34,25 @@ setdrv  tax     	; x= cmdbuf index
         cmp  cmdbuf,x   ; for xxx:file
         bne  sd50       ;        ^
 
-        inx     	; found ":", so...
-sd20    tya     	; drive= default
+        inx             ; found ":", so...
+sd20    tya             ; drive= default
 sd22    and  #1         ; convert to numeric
-sd24    tay     	; restore drive
-        txa     	; a=index & xxxxfile
-        rts     	;               ^
+sd24    tay             ; restore drive
+        txa             ; a=index & xxxxfile
+        rts             ;               ^
 
 sd40    lda  cmdbuf,x
-        inx     	;  xxx:file
-        inx     	;    --^
+        inx             ;  xxx:file
+        inx             ;    --^
         cmp  #'0'       ; for xx0:file
         beq  sd22       ;         ^
 
-	cmp  #'1'	; drive one?
-	bne  sd20
+        cmp  #'1'       ; drive one?
+        bne  sd20
 
-	jmp  bcerr      ; bad cmd error
+        jmp  bcerr      ; bad cmd error
 
-sd50    tya     	; for xxx,file or xx=file
+sd50    tya             ; for xxx,file or xx=file
         ora  #$80       ;         ^          ^
         and  #$81       ; drive= -default
         bne  sd24       ; finish testing

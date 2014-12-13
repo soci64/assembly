@@ -51,7 +51,7 @@ copy    jsr  lookup     ; look ip all files
         sta  f2ptr
         jsr  opirfl
         jsr  typfil
-        bcs  cop01    	; greater than or equal to relative...
+        bcs  cop01      ; greater than or equal to relative...
 
         cmp  #prgtyp
         bne  cop05
@@ -150,11 +150,11 @@ gcbyte  jsr  gbyte
 gib20   rts
 
 cyext   jsr  ssend      ; copy rel rec's
-	jsr  hugerel	; humugo?
-	bne  cyext1	; br, nope
+        jsr  hugerel    ; humugo?
+        bne  cyext1     ; br, nope
 
-	lda  grpnum	; save grpnum
-	pha
+        lda  grpnum     ; save grpnum
+        pha
 cyext1
         lda  ssind
         pha
@@ -163,16 +163,16 @@ cyext1
         lda  #iwsa
         sta  sa
         jsr  fndwch
-	jsr  adrels
-	sta  relptr
-	pla
+        jsr  adrels
+        sta  relptr
+        pla
         sta  ssnum
-	pla
-	sta  ssind
-	jsr  hugerel
-	bne  cyext2
+        pla
+        sta  ssind
+        jsr  hugerel
+        bne  cyext2
 
-	pla
-	sta  grpnum	; restore group number
+        pla
+        sta  grpnum     ; restore group number
 cyext2
-	jmp  addr1
+        jmp  addr1

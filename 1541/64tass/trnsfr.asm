@@ -1,7 +1,7 @@
-trname  pha     	; trnsfr fname fr cmd to buf
+trname  pha             ; trnsfr fname fr cmd to buf
         jsr  fndlmt     ;  a: string size
         jsr  trcmbf     ;  x: starting index in cmdbuf
-        pla     	;  y: buffer #
+        pla             ;  y: buffer #
         sec
         sbc  strsiz
         tax
@@ -17,9 +17,9 @@ tn10    sta  (dirbuf),y
 
 tn20    rts
 
-trcmbf  tya     	; trnsfr cmd buf to other buf
+trcmbf  tya             ; trnsfr cmd buf to other buf
         asl  a          ; uses current buffer ptr
-        tay     	; limit:ending index+1 in cmd buf
+        tay             ; limit:ending index+1 in cmd buf
         lda  buftab,y   ;  x: starting index in cmd buf
         sta  dirbuf     ;  y: buffer #
         lda  buftab+1,y
@@ -68,7 +68,7 @@ getnam  lda  sa         ; save variables
         lda  lindx
         pha
         jsr  gnsub
-        pla     	; restore variables
+        pla             ; restore variables
         sta  lindx
         pla
         sta  sa
@@ -83,8 +83,8 @@ gnsub   lda  #irsa
         lda  drvflg
         bne  gn050
         jsr  msgfre     ; send blocks free
-        clc     	; (c=0): end
-        rts     	; terminate
+        clc             ; (c=0): end
+        rts             ; terminate
 
 gn05    lda  drvflg     ; (drvflg=0):
         beq  gn10       ;  send file name

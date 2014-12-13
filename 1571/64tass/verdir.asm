@@ -19,15 +19,15 @@ vd10    lda  #0         ; set dir sectors..
         jsr  vmkbam
         lda  #0
         sta  wbam
-	jsr  scrbam	; wrt 'em out
+        jsr  scrbam     ; wrt 'em out
         jmp  endcmd
 
 vd15    iny
         lda  (dirbuf),y
-        pha     	; save track
+        pha             ; save track
         iny
         lda  (dirbuf),y
-        pha     	; save sector
+        pha             ; save sector
         ldy  #19        ; get ss track
         lda  (dirbuf),y ; is this relative ?
         beq  vd17       ; no
@@ -47,11 +47,11 @@ vd20    jsr  srre       ; search for more
 
 vd25    ldy  #0
         lda  (dirbuf),y
-	bmi  vd15
+        bmi  vd15
 
         jsr  deldir     ; not closed delete dir
         jmp  vd20
-vmkbam          	; mark bam w/file sectors
+vmkbam                  ; mark bam w/file sectors
         jsr  tschk
         jsr  wused
         jsr  opnird

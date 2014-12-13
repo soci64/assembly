@@ -28,8 +28,8 @@ fndrel  jsr  mulply     ; result=rn*rs+rp
         jsr  div120     ; divide by 120
         inc  relptr
         inc  relptr
-	jsr  hugerel
-	beq  fndre1	; br, big
+        jsr  hugerel
+        beq  fndre1     ; br, big
 
         lda  result     ; save quotient
         sta  ssnum
@@ -40,17 +40,17 @@ fndrel  jsr  mulply     ; result=rn*rs+rp
         sta  ssind
         rts
 fndre1
-	lda  accum+1
-	asl  a
-	clc
-	adc  #16
-	sta  ssind	; steps to figure grpnum
-	jsr  div006
-	lda  accum+1
-	sta  ssnum
-	lda  result
-	sta  grpnum
-	rts
+        lda  accum+1
+        asl  a
+        clc
+        adc  #16
+        sta  ssind      ; steps to figure grpnum
+        jsr  div006
+        lda  accum+1
+        sta  ssnum
+        lda  result
+        sta  grpnum
+        rts
 
 
 ; multiply
@@ -103,7 +103,7 @@ mul400  rts
 ;  destroys a,x
 
 div254  lda  #254       ; divide by 254
-	.byte skip2     ; skip two bytes
+        .byte skip2     ; skip two bytes
 div120  lda  #120       ; divide by 120
         .byte skip2
 div006
@@ -122,7 +122,7 @@ divid1
         lda  accum+1
         sec
         sbc  temp
-        tay     	; save result
+        tay             ; save result
         lda  accum+2
         sbc  #0
         bcc  divid2     ; br, if temp > dividend

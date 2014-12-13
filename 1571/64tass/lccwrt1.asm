@@ -2,51 +2,51 @@
 ;    write out data buffer
 
 jwright .proc
-	cmp  #$10       ;  test if write
+        cmp  #$10       ;  test if write
         beq  +
 
         jmp  jvrfy
 
-+	jsr  chkblk     ;  get block checksum
-	sta  chksum
++       jsr  chkblk     ;  get block checksum
+        sta  chksum
 
-        lda  dskcnt	;  test for write protect
+        lda  dskcnt     ;  test for write protect
         and  #$10
-        bne  +		;  not  protected
+        bne  +          ;  not  protected
 
         lda  #8         ;  write protect error
         jmp  jerrr
 
-+	jsr  bingcr     ;  convert buffer to write image
++       jsr  bingcr     ;  convert buffer to write image
 
         jsr  jsrch      ;  find header
 
         ldy  #gap1-2    ;  wait out header gap
 
--	bit  pota1
-	bmi  -
+-       bit  pota1
+        bmi  -
 
-	bit  byt_clr
+        bit  byt_clr
 
-        dey     	;  test if done yet
+        dey             ;  test if done yet
         bne  -
 
         lda  #$ff       ;  make output $ff
         sta  ddra2
 
-        lda  pcr2	;  set write mode
+        lda  pcr2       ;  set write mode
         and  #$ff-$e0   ;  0=wr
-	ora  #$c0
+        ora  #$c0
         sta  pcr2
 
         lda  #$ff       ;  write 4 gcr sync
         ldy  #numsyn
         sta  data2
 
--	bit  pota1
-	bmi  -
+-       bit  pota1
+        bmi  -
 
-	bit  byt_clr
+        bit  byt_clr
 
         dey
         bne  -
@@ -55,31 +55,31 @@ jwright .proc
 
         ldy  #256-topwrt
 
-m5	lda  ovrbuf,y   ; get a char
--	bit  pota1
-	bmi  -
+m5      lda  ovrbuf,y   ; get a char
+-       bit  pota1
+        bmi  -
 
         sta  data2      ;  stuff it
 
         iny
-        bne  m5		;  do next char
+        bne  m5         ;  do next char
 
-			;  write rest of buffer
+                        ;  write rest of buffer
 
-m7	lda  (bufpnt),y ;  now do buffer
--	bit  pota1	;  wait until ready
-	bmi  -
+m7      lda  (bufpnt),y ;  now do buffer
+-       bit  pota1      ;  wait until ready
+        bmi  -
 
         sta  data2      ;  stuff it again
 
-        iny      	;  test if done
-        bne  m7		;  do the whole thing
+        iny             ;  test if done
+        bne  m7         ;  do the whole thing
 
--	bit  pota1	;  wait for last char to write out
-	bmi  -
+-       bit  pota1      ;  wait for last char to write out
+        bmi  -
 
-        lda  pcr2	;  goto read mode
-	ora  #$e0
+        lda  pcr2       ;  goto read mode
+        ora  #$e0
         sta  pcr2
 
         lda  #0         ;  make data2 input $00
@@ -91,7 +91,7 @@ m7	lda  (bufpnt),y ;  now do buffer
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jmp  ptch62	; *** rom ds 01/21/86 ***, chk for verify
+        jmp  ptch62     ; *** rom ds 01/21/86 ***, chk for verify
 ;       lda  jobs,y
         eor  #$30
         sta  jobs,y
@@ -108,15 +108,15 @@ m7	lda  (bufpnt),y ;  now do buffer
 
 
 jwtobin .proc
-	lda  #0
-	sta  savpnt
-	sta  bufpnt     ;  lsb for overflow area
-	sta  nxtpnt
+        lda  #0
+        sta  savpnt
+        sta  bufpnt     ;  lsb for overflow area
+        sta  nxtpnt
 
         lda  bufpnt+1
         sta  nxtbf      ;  save for next buffer.
 
-        lda  #>ovrbuf	;  overflow first
+        lda  #>ovrbuf   ;  overflow first
         sta  bufpnt+1   ;  msb for overflow area
         sta  savpnt+1
 
@@ -147,7 +147,7 @@ jwtobin .proc
 
 ; do overflow first and store back into overflow buffer
 
--	jsr  jget4gb    ; do rest of overflow buffer
+-       jsr  jget4gb    ; do rest of overflow buffer
 
         ldy  bytcnt
 
@@ -169,7 +169,7 @@ jwtobin .proc
         iny
 
         sty  bytcnt
-        bne  -		;  jmp till end of overflow buffer
+        bne  -          ;  jmp till end of overflow buffer
 
 +       lda  btab+2
         sta  (bufpnt),y
@@ -181,7 +181,7 @@ jwtobin .proc
 
         sty  bytcnt
 
--	jsr  jget4gb
+-       jsr  jget4gb
 
         ldy  bytcnt
 
@@ -205,7 +205,7 @@ jwtobin .proc
         cpy  #187
         bcc  -
 
-	lda  #69		;  move buffer up
+        lda  #69                ;  move buffer up
         sta  savpnt
 
         lda  bufpnt+1
@@ -213,7 +213,7 @@ jwtobin .proc
 
         ldy  #256-topwrt-1
 
--	lda  (bufpnt),y
+-       lda  (bufpnt),y
         sta  (savpnt),y
 
         dey
@@ -226,7 +226,7 @@ jwtobin .proc
 
         ldx  #256-topwrt
 
--	lda  ovrbuf,x
+-       lda  ovrbuf,x
         sta  (bufpnt),y
 
         iny
@@ -246,46 +246,46 @@ jwtobin .proc
 
 
 jvrfy   .proc
-	cmp  #$20       ;  test if verify
+        cmp  #$20       ;  test if verify
         beq  +
 
-        bne  m7		; bra
+        bne  m7         ; bra
 
 +       jsr  chkblk     ; get block checksum
-	sta  chksum
+        sta  chksum
 
         jsr  bingcr     ; convert to verify image
 
         jsr  jdstrt
 
         ldy  #256-topwrt
-m2	lda  ovrbuf,y   ;  get char
--	bit  pota1
-	bmi  -
+m2      lda  ovrbuf,y   ;  get char
+-       bit  pota1
+        bmi  -
 
         eor  data2      ;  test if same
-        bne  m4		; verify error
+        bne  m4         ; verify error
 
         iny
-        bne  m2		;  next byte
+        bne  m2         ;  next byte
 
 
-m5	lda  (bufpnt),y ;  now do buffer
+m5      lda  (bufpnt),y ;  now do buffer
 
--	bit  pota1
-	bmi  -
+-       bit  pota1
+        bmi  -
 
         eor  data2      ;  test if same
-        bne  m4		;  error
+        bne  m4         ;  error
 
         iny
         cpy  #$fd       ;  dont test off bytes
         bne  m5
-	beq  m8		;  bra
+        beq  m8         ;  bra
 
-m7	jsr  jsrch      ;  sector seek
-m8	lda  #1
-	.byte  skip2
-m4	lda  #7         ;  verify error
+m7      jsr  jsrch      ;  sector seek
+m8      lda  #1
+        .byte  skip2
+m4      lda  #7         ;  verify error
         jmp  jerrr
         .pend

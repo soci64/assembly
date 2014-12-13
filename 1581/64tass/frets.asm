@@ -55,7 +55,7 @@ use20   lda  ndbh
         lda  #dskful
         jmp  errmsg
 
-use25	lda  #1
+use25   lda  #1
 use30   rts
 setbam  lda  nodrv
         beq  bamtrk     ; ok
@@ -73,7 +73,7 @@ bamtrk  jsr  setbp2     ; default base adr
 stbm20  asl  a          ; trk x6 offset
         sta  bmpnt      ; save x2
         asl  a          ; x4
-        clc     	; total=x6
+        clc             ; total=x6
         adc  bmpnt      ;
         adc  #bindx-6   ; bam offset -1 trk blk
         sta  bmpnt
@@ -85,10 +85,10 @@ bambit  lda  sector     ; get sector bit in bam
         lsr  a
         lsr  a
         tay
-        iny     	; adjust it
+        iny             ; adjust it
         lda  sector     ; get remainder
         and  #$07
-        tax     	; bit mask index
+        tax             ; bit mask index
         lda  (bmpnt),y
         and  bmask,x
         rts

@@ -3,35 +3,35 @@
 ; blinks the (error #)+1 in all three leds
 
 pezro   ldx  #0         ; error #1 for zero page
-	.byte skip2     ; skip next two bytes
+        .byte skip2     ; skip next two bytes
 perr    ldx  temp       ; get error #
-        txs     	; use stack as storage reg.
-pe20    tsx     	; restore error #
+        txs             ; use stack as storage reg.
+pe20    tsx             ; restore error #
 pe30    lda  #led0+led1
         ora  ledprt
         jmp  pea7a
 
 ; turn on led !!!!patch so ddrb led is output!!!!
 
-rea7d   tya     	; clear inner ctr !!!!patch return!!!!
+rea7d   tya             ; clear inner ctr !!!!patch return!!!!
 pd10    clc
 pd20    adc  #1         ; count inner ctr
         bne  pd20
-        dey     	; done ?
+        dey             ; done ?
         bne  pd10       ; no
 
         lda  ledprt
         and  #$ff-led0-led1
         sta  ledprt     ; turn off all leds
-pe40            	; wait
-        tya     	; clear inner ctr
+pe40                    ; wait
+        tya             ; clear inner ctr
 pd11    clc
 pd21    adc  #1         ; count inner ctr
         bne  pd21
-        dey     	; done ?
+        dey             ; done ?
         bne  pd11       ; no
 
-        dex     	; blinked # ?
+        dex             ; blinked # ?
         bpl  pe30       ; no - blink again
         cpx  #$fc       ; waited between counts ?
         bne  pe40       ; no
@@ -39,9 +39,9 @@ pd21    adc  #1         ; count inner ctr
 
 dskint  sei
         cld
-        ldx  #$66	; *,atnout,clk,*,*,side,fsdir,trk0
+        ldx  #$66       ; *,atnout,clk,*,*,side,fsdir,trk0
         jmp  patch5     ; *** rom ds 8/18/83 ***
-dkit10  inx		; fill
+dkit10  inx             ; fill
 
 ;*********************************
 ;
@@ -51,15 +51,15 @@ dkit10  inx		; fill
 
         ldy  #0
         ldx  #0
-pu10    txa     	; fill z-page accend pattern
+pu10    txa             ; fill z-page accend pattern
         sta  $0,x
         inx
         bne  pu10
-pu20    txa     	; check pattern by inc...
+pu20    txa             ; check pattern by inc...
         cmp  $0,x       ; ...back to orig #
         bne  pezro      ; bad bits
 pu30
-	inc  $0,x       ; bump contents
+        inc  $0,x       ; bump contents
         iny
         bne  pu30       ; not done
 
@@ -70,7 +70,7 @@ pu30
         lda  $0,x       ; check it
         bne  pezro      ; wrong
 
-        inx     	; next!
+        inx             ; next!
         bne  pu20       ; not all done
 
 
@@ -80,12 +80,12 @@ pu30
 ; exit if ok
 
 rm10    inc  temp       ; next error #
-	ldx  #127	; 128 pages
+        ldx  #127       ; 128 pages
         stx  ip+1       ; save page, start x=0
-	inx		; **** rom ds 04/22/86 ***
-	lda  #0
+        inx             ; **** rom ds 04/22/86 ***
+        lda  #0
         sta  ip         ; zero lo indirect
-	ldy  #2		; skip signature bytes
+        ldy  #2         ; skip signature bytes
         clc
 rt10    inc  ip+1       ; do it backwards
 rt20    adc  (ip),y     ; total checksum in a
@@ -96,14 +96,14 @@ rt20    adc  (ip),y     ; total checksum in a
         bne  rt10
 
         adc  #255        ; add in last carry
-	sta  ip+1
+        sta  ip+1
         bne  perr2      ; no - show error number
 
 ; **** rom ds 04/22/86 ***
 
-	nop		 ; fill
-	nop		 ; fill
-	nop		 ; fill
+        nop              ; fill
+        nop              ; fill
+        nop              ; fill
 
 ;----------------------------------
 
@@ -118,7 +118,7 @@ cr30    sta  ip+1       ; save page #
 ; exit if ok
 
 ramtst  ldx  #7         ; save page count
-ra10    tya     	; fill with adr sensitive pattern
+ra10    tya             ; fill with adr sensitive pattern
         clc
         adc  ip+1
         sta  (ip),y
@@ -130,7 +130,7 @@ ra10    tya     	; fill with adr sensitive pattern
         ldx  #7         ; restore page count
 ra30    dec  ip+1       ; check pattern backwards
 ra40    dey
-        tya     	; gen pattern again
+        tya             ; gen pattern again
         clc
         adc  ip+1
         cmp  (ip),y     ; ok ?
@@ -152,7 +152,7 @@ perr2   jmp  perr
 diagok
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jmp  ptch31	; *** rom ds 05/01/85 ***
+        jmp  ptch31     ; *** rom ds 05/01/85 ***
 ;       ldx  #topwrt
 ;       txs
 
@@ -166,7 +166,7 @@ rtch31  lda  ledprt     ; clear leds
         sta  pcr1
         lda  #%10000010 ; set,_t1,_t2,_cb1,_cb2,_sr,ca1,_ca2(wps)
         sta  ifr1
-	sta  ier1
+        sta  ier1
         lda  pb         ; compute primary addr
         and  #%01100000 ; pb5 and pb6 are unused lines
         asl  a          ; shift to lower
@@ -244,8 +244,8 @@ dskin2
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jsr  ptch72	; *** rom ds 05/20/86 ***
-	nop
+        jsr  ptch72     ; *** rom ds 05/20/86 ***
+        nop
 ;       lda  #1
 ;       sta  wpsw
 
@@ -271,7 +271,7 @@ dskin2
         lda  #>diagok
         sta  vnmi+1
 
-        lda  #6	        ; set up sector offset *** rom ds 01/22/85 ***
+        lda  #6         ; set up sector offset *** rom ds 01/22/85 ***
         sta  secinc
         lda  #5
         sta  revcnt     ; set up recovery count
@@ -302,5 +302,5 @@ seterr  lda  #$73
         lda  #%00011010 ;  atna,clkout,datout
         sta  ddrb1
 ;---------------------------------------
-    	jsr  ptch29	; *rom ds 02/01/85*
+        jsr  ptch29     ; *rom ds 02/01/85*
 ;       jsr  boot

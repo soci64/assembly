@@ -74,9 +74,9 @@ fndl10  lda  (dirbuf),y
         bne  fndl10
 
 fndl30  dec  r2
-        clc     	;  not found here
+        clc             ;  not found here
         rts
 
-fndl20  tya     	; found the end char
+fndl20  tya             ; found the end char
         sec
         rts

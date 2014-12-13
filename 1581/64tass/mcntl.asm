@@ -2,107 +2,107 @@
 ; Controller command in .a and job # in .y
 
 lcc     tsx             ; save current stk pntr
-	stx  savsp
-	lda  #bit7
-	sta  nextjob    ; set no job flag
-	ldy  #numjob    ; include bam jobs
+        stx  savsp
+        lda  #bit7
+        sta  nextjob    ; set no job flag
+        ldy  #numjob    ; include bam jobs
 lcc0    lda  jobs,y     ; find a job
-	bmi  prcmd      ; ... a real job
+        bmi  prcmd      ; ... a real job
 
-	lda  cacheoff,y
-	and  #all-bit7  ; leave offset into track cache
-	sta  cacheoff,y ; clear translation flag
+        lda  cacheoff,y
+        and  #all-bit7  ; leave offset into track cache
+        sta  cacheoff,y ; clear translation flag
 
 top     dey             ; try next one
-	bpl  lcc0       ; next if no job's now
+        bpl  lcc0       ; next if no job's now
 
-	ldy  nextjob
-	bpl  start_ctl  ; start job
+        ldy  nextjob
+        bpl  start_ctl  ; start job
 
-	jmp  end_ctl    ; do timing
+        jmp  end_ctl    ; do timing
 prcmd   sty  nextjob
-	tax             ; job index
-	tya
-	asl  a          ; x2
-	sta  hdrjob     ; shifted nextjob
-	lda  cmdindex,x ; translate for internal use
-	sta  cindex     ; save index
-	tax
-	lda  ctl_cmd_info,x
-	sta  info       ; get information and save it
-	lda  ctl_cmd_info1,x
-	sta  info+1     ; get information and save it
+        tax             ; job index
+        tya
+        asl  a          ; x2
+        sta  hdrjob     ; shifted nextjob
+        lda  cmdindex,x ; translate for internal use
+        sta  cindex     ; save index
+        tax
+        lda  ctl_cmd_info,x
+        sta  info       ; get information and save it
+        lda  ctl_cmd_info1,x
+        sta  info+1     ; get information and save it
 
-	jsr  jtrans_ts  ; translate logical track and sector to physical
+        jsr  jtrans_ts  ; translate logical track and sector to physical
 
         asl  info       ; cache operation ?
-	bcc  +
+        bcc  +
 
-	jsr  trk_in_mem ; is trk in memory ?, don't come back if it is...
+        jsr  trk_in_mem ; is trk in memory ?, don't come back if it is...
 
 +       ldy  nextjob
-	jmp  top
+        jmp  top
 
 
 start_ctl .proc
-	asl  info       ; start motor ?
-	bcc  +
+        asl  info       ; start motor ?
+        bcc  +
 
-	jsr  start_mtr  ; start motor
+        jsr  start_mtr  ; start motor
 
 +       asl  info       ; wait for motor up to speed ?
-	bcc  +
+        bcc  +
 
-	jsr  wait_mtr   ; check mtr don't come back if drv not ready
+        jsr  wait_mtr   ; check mtr don't come back if drv not ready
 
 +       asl  info       ; logical seek required ?
-	bcc  +
+        bcc  +
 
-	jsr  seek       ; seek - won't come back on an error
+        jsr  seek       ; seek - won't come back on an error
 
 +       asl  info       ; check dirty track cache flag ?
-	bcc  m4
+        bcc  m4
 
-	lda  dirty
-	bpl  m4         ; br, not dirty
+        lda  dirty
+        bpl  m4         ; br, not dirty
 
-	lda  cachetrk
-	sta  cmdtrk     ; want to go here
-	cmp  drvtrk     ; where are we?
-	bne  m5         ; br, step there first
+        lda  cachetrk
+        sta  cmdtrk     ; want to go here
+        cmp  drvtrk     ; where are we?
+        bne  m5         ; br, step there first
 
-	lda  cacheside
-	jsr  sid_select ; select side
-	jmp  wrtold_ctl ; handle dirty condition & write out old track
+        lda  cacheside
+        jsr  sid_select ; select side
+        jmp  wrtold_ctl ; handle dirty condition & write out old track
 
 m4      asl  info       ; step?
-	bcc  m6
+        bcc  m6
 
-	ldy  hdrjob
-	lda  hdrs2,y    ; get address
-	sta  cmdtrk     ; want to go here
-	cmp  drvtrk
-	beq  m6
+        ldy  hdrjob
+        lda  hdrs2,y    ; get address
+        sta  cmdtrk     ; want to go here
+        cmp  drvtrk
+        beq  m6
 
 m5      lda  drvst      ; set stepping mode
-	ora  #bit6
-	sta  drvst
-	jmp  end_ctl    ; do stepper stuff
+        ora  #bit6
+        sta  drvst
+        jmp  end_ctl    ; do stepper stuff
 
 m6      asl  info       ; select side
-	bcc  +
+        bcc  +
 
-	lda  tcacheside ; get translated side
-	jsr  sid_select ; select side
+        lda  tcacheside ; get translated side
+        jsr  sid_select ; select side
 
 +       lda  cindex     ; get index
-	asl  a          ; x2
-	tax
-	lda  ctl_cmd,x
-	sta  ip+2
-	lda  ctl_cmd+1,x
-	sta  ip+3
-	jmp  (ip+2)     ; go do the command
+        asl  a          ; x2
+        tax
+        lda  ctl_cmd,x
+        sta  ip+2
+        lda  ctl_cmd+1,x
+        sta  ip+3
+        jmp  (ip+2)     ; go do the command
         .pend
 ; Command Table Information
 
@@ -244,259 +244,259 @@ ctllen=  *-ctl_cmd
 
 cmdindex
 
-	.byte    $20    ; 0
-	.byte    $20    ; 1
-	.byte    $20    ; 2
-	.byte    $20    ; 3
-	.byte    $20    ; 4
-	.byte    $20    ; 5
-	.byte    $20    ; 6
-	.byte    $20    ; 7
-	.byte    $20    ; 8
-	.byte    $20    ; 9
-	.byte    $20    ; a
-	.byte    $20    ; b
-	.byte    $20    ; c
-	.byte    $20    ; d
-	.byte    $20    ; e
-	.byte    $20    ; f
-	.byte    $20    ; 10
-	.byte    $20    ; 11
-	.byte    $20    ; 12
-	.byte    $20    ; 13
-	.byte    $20    ; 14
-	.byte    $20    ; 15
-	.byte    $20    ; 16
-	.byte    $20    ; 17
-	.byte    $20    ; 18
-	.byte    $20    ; 19
-	.byte    $20    ; 1a
-	.byte    $20    ; 1b
-	.byte    $20    ; 1c
-	.byte    $20    ; 1d
-	.byte    $20    ; 1e
-	.byte    $20    ; 1f
-	.byte    $20    ; 20
-	.byte    $20    ; 21
-	.byte    $20    ; 22
-	.byte    $20    ; 23
-	.byte    $20    ; 24
-	.byte    $20    ; 25
-	.byte    $20    ; 26
-	.byte    $20    ; 27
-	.byte    $20    ; 28
-	.byte    $20    ; 29
-	.byte    $20    ; 2a
-	.byte    $20    ; 2b
-	.byte    $20    ; 2c
-	.byte    $20    ; 2d
-	.byte    $20    ; 2e
-	.byte    $20    ; 2f
-	.byte    $20    ; 30
-	.byte    $20    ; 31
-	.byte    $20    ; 32
-	.byte    $20    ; 33
-	.byte    $20    ; 34
-	.byte    $20    ; 35
-	.byte    $20    ; 36
-	.byte    $20    ; 37
-	.byte    $20    ; 38
-	.byte    $20    ; 39
-	.byte    $20    ; 3a
-	.byte    $20    ; 3b
-	.byte    $20    ; 3c
-	.byte    $20    ; 3d
-	.byte    $20    ; 3e
-	.byte    $20    ; 3f
-	.byte    $20    ; 40
-	.byte    $20    ; 41
-	.byte    $20    ; 42
-	.byte    $20    ; 43
-	.byte    $20    ; 44
-	.byte    $20    ; 45
-	.byte    $20    ; 46
-	.byte    $20    ; 47
-	.byte    $20    ; 48
-	.byte    $20    ; 49
-	.byte    $20    ; 4a
-	.byte    $20    ; 4b
-	.byte    $20    ; 4c
-	.byte    $20    ; 4d
-	.byte    $20    ; 4e
-	.byte    $20    ; 4f
-	.byte    $20    ; 50
-	.byte    $20    ; 51
-	.byte    $20    ; 52
-	.byte    $20    ; 53
-	.byte    $20    ; 54
-	.byte    $20    ; 55
-	.byte    $20    ; 56
-	.byte    $20    ; 57
-	.byte    $20    ; 58
-	.byte    $20    ; 59
-	.byte    $20    ; 5a
-	.byte    $20    ; 5b
-	.byte    $20    ; 5c
-	.byte    $20    ; 5d
-	.byte    $20    ; 5e
-	.byte    $20    ; 5f
-	.byte    $20    ; 60
-	.byte    $20    ; 61
-	.byte    $20    ; 62
-	.byte    $20    ; 63
-	.byte    $20    ; 64
-	.byte    $20    ; 65
-	.byte    $20    ; 66
-	.byte    $20    ; 67
-	.byte    $20    ; 68
-	.byte    $20    ; 69
-	.byte    $20    ; 6a
-	.byte    $20    ; 6b
-	.byte    $20    ; 6c
-	.byte    $20    ; 6d
-	.byte    $20    ; 6e
-	.byte    $20    ; 6f
-	.byte    $20    ; 70
-	.byte    $20    ; 71
-	.byte    $20    ; 72
-	.byte    $20    ; 73
-	.byte    $20    ; 74
-	.byte    $20    ; 75
-	.byte    $20    ; 76
-	.byte    $20    ; 77
-	.byte    $20    ; 78
-	.byte    $20    ; 79
-	.byte    $20    ; 7a
-	.byte    $20    ; 7b
-	.byte    $20    ; 7c
-	.byte    $20    ; 7d
-	.byte    $20    ; 7e
-	.byte    $20    ; 7f
-	.byte    $00    ; 80  read*
-	.byte    $20    ; 81
-	.byte    $01    ; 82  reset
-	.byte    $20    ; 83
-	.byte    $02    ; 84  moton
-	.byte    $20    ; 85
-	.byte    $03    ; 86  motoff
-	.byte    $20    ; 87
-	.byte    $04    ; 88  motoni
-	.byte    $20    ; 89
-	.byte    $05    ; 8a  motoffi
-	.byte    $20    ; 8b
-	.byte    $06    ; 8c  seek
-	.byte    $20    ; 8d
-	.byte    $07    ; 8e  format side
-	.byte    $20    ; 8f
-	.byte    $08    ; 90  write*
-	.byte    $20    ; 91
-	.byte    $09    ; 92  diskin
-	.byte    $20    ; 93
-	.byte    $0a    ; 94  ledacton
-	.byte    $20    ; 95
-	.byte    $0b    ; 96  ledactoff
-	.byte    $20    ; 97
-	.byte    $0c    ; 98  errledon
-	.byte    $20    ; 99
-	.byte    $0d    ; 9a  errledoff
-	.byte    $20    ; 9b
-	.byte    $0e    ; 9c  sidesel
-	.byte    $20    ; 9d
-	.byte    $0f    ; 9e  bufmove
-	.byte    $20    ; 9f
-	.byte    $10    ; a0  verify*
-	.byte    $20    ; a1
-	.byte    $11    ; a2  trkwrt
-	.byte    $20    ; a3
-	.byte    $12    ; a4  spread
-	.byte    $20    ; a5
-	.byte    $13    ; a6  spwrt
-	.byte    $20    ; a7
-	.byte    $14    ; a8  pseek
-	.byte    $20    ; a9
-	.byte    $1b    ; aa  read notrx
-	.byte    $20    ; ab
-	.byte    $1c    ; ac  write notrx
-	.byte    $20    ; ad
-	.byte    $20    ; ae
-	.byte    $20    ; af
-	.byte    $15    ; b0  seek*
-	.byte    $20    ; b1
-	.byte    $1d    ; b2  read notransl, notrx
-	.byte    $20    ; b3
-	.byte    $1e    ; b4  write notransl, notrx
-	.byte    $20    ; b5
-	.byte    $1f    ; b6  check write protect status
-	.byte    $20    ; b7
-	.byte    $16    ; b8  seekparticular*
-	.byte    $20    ; b9
-	.byte    $20    ; ba
-	.byte    $20    ; bb
-	.byte    $20    ; bc
-	.byte    $20    ; bd
-	.byte    $20    ; be
-	.byte    $20    ; bf
-	.byte    $17    ; c0  bump*
-	.byte    $20    ; c1
-	.byte    $20    ; c2
-	.byte    $20    ; c3
-	.byte    $20    ; c4
-	.byte    $20    ; c5
-	.byte    $20    ; c6
-	.byte    $20    ; c7
-	.byte    $20    ; c8
-	.byte    $20    ; c9
-	.byte    $20    ; ca
-	.byte    $20    ; cb
-	.byte    $20    ; cc
-	.byte    $20    ; cd
-	.byte    $20    ; ce
-	.byte    $20    ; cf
-	.byte    $18    ; d0  jumpc*
-	.byte    $20    ; d1
-	.byte    $20    ; d2
-	.byte    $20    ; d3
-	.byte    $20    ; d4
-	.byte    $20    ; d5
-	.byte    $20    ; d6
-	.byte    $20    ; d7
-	.byte    $20    ; d8
-	.byte    $20    ; d9
-	.byte    $20    ; da
-	.byte    $20    ; db
-	.byte    $20    ; dc
-	.byte    $20    ; dd
-	.byte    $20    ; de
-	.byte    $20    ; df
-	.byte    $19    ; e0  exbuf*
-	.byte    $20    ; e1
-	.byte    $20    ; e2
-	.byte    $20    ; e3
-	.byte    $20    ; e4
-	.byte    $20    ; e5
-	.byte    $20    ; e6
-	.byte    $20    ; e7
-	.byte    $20    ; e8
-	.byte    $20    ; e9
-	.byte    $20    ; ea
-	.byte    $20    ; eb
-	.byte    $20    ; ec
-	.byte    $20    ; ed
-	.byte    $20    ; ee
-	.byte    $20    ; ef
-	.byte    $1a    ; f0  format
-	.byte    $20    ; f1
-	.byte    $20    ; f2
-	.byte    $20    ; f3
-	.byte    $20    ; f4
-	.byte    $20    ; f5
-	.byte    $20    ; f6
-	.byte    $20    ; f7
-	.byte    $20    ; f8
-	.byte    $20    ; f9
-	.byte    $20    ; fa
-	.byte    $20    ; fb
-	.byte    $20    ; fc
-	.byte    $20    ; fd
-	.byte    $20    ; fe
-	.byte    $20    ; ff
+        .byte    $20    ; 0
+        .byte    $20    ; 1
+        .byte    $20    ; 2
+        .byte    $20    ; 3
+        .byte    $20    ; 4
+        .byte    $20    ; 5
+        .byte    $20    ; 6
+        .byte    $20    ; 7
+        .byte    $20    ; 8
+        .byte    $20    ; 9
+        .byte    $20    ; a
+        .byte    $20    ; b
+        .byte    $20    ; c
+        .byte    $20    ; d
+        .byte    $20    ; e
+        .byte    $20    ; f
+        .byte    $20    ; 10
+        .byte    $20    ; 11
+        .byte    $20    ; 12
+        .byte    $20    ; 13
+        .byte    $20    ; 14
+        .byte    $20    ; 15
+        .byte    $20    ; 16
+        .byte    $20    ; 17
+        .byte    $20    ; 18
+        .byte    $20    ; 19
+        .byte    $20    ; 1a
+        .byte    $20    ; 1b
+        .byte    $20    ; 1c
+        .byte    $20    ; 1d
+        .byte    $20    ; 1e
+        .byte    $20    ; 1f
+        .byte    $20    ; 20
+        .byte    $20    ; 21
+        .byte    $20    ; 22
+        .byte    $20    ; 23
+        .byte    $20    ; 24
+        .byte    $20    ; 25
+        .byte    $20    ; 26
+        .byte    $20    ; 27
+        .byte    $20    ; 28
+        .byte    $20    ; 29
+        .byte    $20    ; 2a
+        .byte    $20    ; 2b
+        .byte    $20    ; 2c
+        .byte    $20    ; 2d
+        .byte    $20    ; 2e
+        .byte    $20    ; 2f
+        .byte    $20    ; 30
+        .byte    $20    ; 31
+        .byte    $20    ; 32
+        .byte    $20    ; 33
+        .byte    $20    ; 34
+        .byte    $20    ; 35
+        .byte    $20    ; 36
+        .byte    $20    ; 37
+        .byte    $20    ; 38
+        .byte    $20    ; 39
+        .byte    $20    ; 3a
+        .byte    $20    ; 3b
+        .byte    $20    ; 3c
+        .byte    $20    ; 3d
+        .byte    $20    ; 3e
+        .byte    $20    ; 3f
+        .byte    $20    ; 40
+        .byte    $20    ; 41
+        .byte    $20    ; 42
+        .byte    $20    ; 43
+        .byte    $20    ; 44
+        .byte    $20    ; 45
+        .byte    $20    ; 46
+        .byte    $20    ; 47
+        .byte    $20    ; 48
+        .byte    $20    ; 49
+        .byte    $20    ; 4a
+        .byte    $20    ; 4b
+        .byte    $20    ; 4c
+        .byte    $20    ; 4d
+        .byte    $20    ; 4e
+        .byte    $20    ; 4f
+        .byte    $20    ; 50
+        .byte    $20    ; 51
+        .byte    $20    ; 52
+        .byte    $20    ; 53
+        .byte    $20    ; 54
+        .byte    $20    ; 55
+        .byte    $20    ; 56
+        .byte    $20    ; 57
+        .byte    $20    ; 58
+        .byte    $20    ; 59
+        .byte    $20    ; 5a
+        .byte    $20    ; 5b
+        .byte    $20    ; 5c
+        .byte    $20    ; 5d
+        .byte    $20    ; 5e
+        .byte    $20    ; 5f
+        .byte    $20    ; 60
+        .byte    $20    ; 61
+        .byte    $20    ; 62
+        .byte    $20    ; 63
+        .byte    $20    ; 64
+        .byte    $20    ; 65
+        .byte    $20    ; 66
+        .byte    $20    ; 67
+        .byte    $20    ; 68
+        .byte    $20    ; 69
+        .byte    $20    ; 6a
+        .byte    $20    ; 6b
+        .byte    $20    ; 6c
+        .byte    $20    ; 6d
+        .byte    $20    ; 6e
+        .byte    $20    ; 6f
+        .byte    $20    ; 70
+        .byte    $20    ; 71
+        .byte    $20    ; 72
+        .byte    $20    ; 73
+        .byte    $20    ; 74
+        .byte    $20    ; 75
+        .byte    $20    ; 76
+        .byte    $20    ; 77
+        .byte    $20    ; 78
+        .byte    $20    ; 79
+        .byte    $20    ; 7a
+        .byte    $20    ; 7b
+        .byte    $20    ; 7c
+        .byte    $20    ; 7d
+        .byte    $20    ; 7e
+        .byte    $20    ; 7f
+        .byte    $00    ; 80  read*
+        .byte    $20    ; 81
+        .byte    $01    ; 82  reset
+        .byte    $20    ; 83
+        .byte    $02    ; 84  moton
+        .byte    $20    ; 85
+        .byte    $03    ; 86  motoff
+        .byte    $20    ; 87
+        .byte    $04    ; 88  motoni
+        .byte    $20    ; 89
+        .byte    $05    ; 8a  motoffi
+        .byte    $20    ; 8b
+        .byte    $06    ; 8c  seek
+        .byte    $20    ; 8d
+        .byte    $07    ; 8e  format side
+        .byte    $20    ; 8f
+        .byte    $08    ; 90  write*
+        .byte    $20    ; 91
+        .byte    $09    ; 92  diskin
+        .byte    $20    ; 93
+        .byte    $0a    ; 94  ledacton
+        .byte    $20    ; 95
+        .byte    $0b    ; 96  ledactoff
+        .byte    $20    ; 97
+        .byte    $0c    ; 98  errledon
+        .byte    $20    ; 99
+        .byte    $0d    ; 9a  errledoff
+        .byte    $20    ; 9b
+        .byte    $0e    ; 9c  sidesel
+        .byte    $20    ; 9d
+        .byte    $0f    ; 9e  bufmove
+        .byte    $20    ; 9f
+        .byte    $10    ; a0  verify*
+        .byte    $20    ; a1
+        .byte    $11    ; a2  trkwrt
+        .byte    $20    ; a3
+        .byte    $12    ; a4  spread
+        .byte    $20    ; a5
+        .byte    $13    ; a6  spwrt
+        .byte    $20    ; a7
+        .byte    $14    ; a8  pseek
+        .byte    $20    ; a9
+        .byte    $1b    ; aa  read notrx
+        .byte    $20    ; ab
+        .byte    $1c    ; ac  write notrx
+        .byte    $20    ; ad
+        .byte    $20    ; ae
+        .byte    $20    ; af
+        .byte    $15    ; b0  seek*
+        .byte    $20    ; b1
+        .byte    $1d    ; b2  read notransl, notrx
+        .byte    $20    ; b3
+        .byte    $1e    ; b4  write notransl, notrx
+        .byte    $20    ; b5
+        .byte    $1f    ; b6  check write protect status
+        .byte    $20    ; b7
+        .byte    $16    ; b8  seekparticular*
+        .byte    $20    ; b9
+        .byte    $20    ; ba
+        .byte    $20    ; bb
+        .byte    $20    ; bc
+        .byte    $20    ; bd
+        .byte    $20    ; be
+        .byte    $20    ; bf
+        .byte    $17    ; c0  bump*
+        .byte    $20    ; c1
+        .byte    $20    ; c2
+        .byte    $20    ; c3
+        .byte    $20    ; c4
+        .byte    $20    ; c5
+        .byte    $20    ; c6
+        .byte    $20    ; c7
+        .byte    $20    ; c8
+        .byte    $20    ; c9
+        .byte    $20    ; ca
+        .byte    $20    ; cb
+        .byte    $20    ; cc
+        .byte    $20    ; cd
+        .byte    $20    ; ce
+        .byte    $20    ; cf
+        .byte    $18    ; d0  jumpc*
+        .byte    $20    ; d1
+        .byte    $20    ; d2
+        .byte    $20    ; d3
+        .byte    $20    ; d4
+        .byte    $20    ; d5
+        .byte    $20    ; d6
+        .byte    $20    ; d7
+        .byte    $20    ; d8
+        .byte    $20    ; d9
+        .byte    $20    ; da
+        .byte    $20    ; db
+        .byte    $20    ; dc
+        .byte    $20    ; dd
+        .byte    $20    ; de
+        .byte    $20    ; df
+        .byte    $19    ; e0  exbuf*
+        .byte    $20    ; e1
+        .byte    $20    ; e2
+        .byte    $20    ; e3
+        .byte    $20    ; e4
+        .byte    $20    ; e5
+        .byte    $20    ; e6
+        .byte    $20    ; e7
+        .byte    $20    ; e8
+        .byte    $20    ; e9
+        .byte    $20    ; ea
+        .byte    $20    ; eb
+        .byte    $20    ; ec
+        .byte    $20    ; ed
+        .byte    $20    ; ee
+        .byte    $20    ; ef
+        .byte    $1a    ; f0  format
+        .byte    $20    ; f1
+        .byte    $20    ; f2
+        .byte    $20    ; f3
+        .byte    $20    ; f4
+        .byte    $20    ; f5
+        .byte    $20    ; f6
+        .byte    $20    ; f7
+        .byte    $20    ; f8
+        .byte    $20    ; f9
+        .byte    $20    ; fa
+        .byte    $20    ; fb
+        .byte    $20    ; fc
+        .byte    $20    ; fd
+        .byte    $20    ; fe
+        .byte    $20    ; ff

@@ -4,32 +4,32 @@ user    ldy  cmdbuf+1
         cpy  #'0'
         bne  us10       ; 0 resets pntr
 
-	lda  cmdsiz     ; check command size
-	cmp  #3
-	bcc  usrint
+        lda  cmdsiz     ; check command size
+        cmp  #3
+        bcc  usrint
 
-	sei
-	lda  cmdbuf+2	; get command
-	sta  switch	; save info
-	and  #$1f
-	tax		; command info
-	asl  a
-	tay
-	lda  cmdtbb,y
-	sta  ip
-	lda  cmdtbb+1,y
-	sta  ip+1
+        sei
+        lda  cmdbuf+2   ; get command
+        sta  switch     ; save info
+        and  #$1f
+        tax             ; command info
+        asl  a
+        tay
+        lda  cmdtbb,y
+        sta  ip
+        lda  cmdtbb+1,y
+        sta  ip+1
 
-	jsr  setlds	; set leds
+        jsr  setlds     ; set leds
 
-	lda  fsflag 	; clear clock bit
-	and  #all-clkin
-	sta  fsflag
-	jsr  burst_doit
-	jmp  endcmd
+        lda  fsflag     ; clear clock bit
+        and  #all-clkin
+        sta  fsflag
+        jsr  burst_doit
+        jmp  endcmd
 
 burst_doit
-	jmp  (ip)
+        jmp  (ip)
 
 usrint
         lda  #<ublock   ; set default block add
@@ -41,7 +41,7 @@ us10
         jsr  usrexc     ; execute code by table
         jmp  endcmd
 usrexc
-        dey     	; entry is (((index-1)and$f)*2)
+        dey             ; entry is (((index-1)and$f)*2)
         tya
         and  #$f
         asl  a
@@ -57,7 +57,7 @@ usrexc
 opnblk  lda  sa         ; sa is destroyed by this patch
         pha
         jsr  autoi      ; init disk for proper channel assignment
-        pla     	; restore sa
+        pla             ; restore sa
         sta  sa
         ldx  cmdsiz
         dex
@@ -120,8 +120,8 @@ ob30    ldx  sa
 
 block   ldy  #0         ; block commands
         ldx  #0
-	lda  #'-'       ; separates cmd from subcmd
-	jsr  parse      ; locate sub-cmd
+        lda  #'-'       ; separates cmd from subcmd
+        jsr  parse      ; locate sub-cmd
         bne  blk40
 
 blk10   lda  #badcmd
@@ -177,7 +177,7 @@ bp10    iny
         cpy  cmdsiz
         bcc  bp05
 
-        rts     	; that's all
+        rts             ; that's all
 
 bp20    jsr  aschex
         inc  f1cnt
@@ -215,7 +215,7 @@ ah10    lda  cmdbuf,y   ; test for dec #
         bcc  ah10       ; still in string
 
 ah20    sty  f2ptr      ; convert digits to...
-        clc     	; ...binary by dec table
+        clc             ; ...binary by dec table
         lda  #0
 ah30    inx
         cpx  #3
@@ -240,13 +240,13 @@ ah40    pha
         sta  filsec,x
         rts
 dectab  .byte 1,10,100  ; decimal table
-blkfre  jsr  autoi	; init if neccessary
-	jsr  blktst     ; block-free
+blkfre  jsr  autoi      ; init if neccessary
+        jsr  blktst     ; block-free
         jsr  frets
         jmp  endsav
 
-blkalc  jsr  autoi	; init if neccessary
-	jsr  blktst
+blkalc  jsr  autoi      ; init if neccessary
+        jsr  blktst
         lda  sector
         pha
         jsr  getsec
@@ -258,7 +258,7 @@ blkalc  jsr  autoi	; init if neccessary
 
         jsr  wused
         jmp  endsav
-ba15    pla     	; pop stack
+ba15    pla             ; pop stack
 ba20    lda  #0
         sta  sector
         inc  track
@@ -303,7 +303,7 @@ blkrd   jsr  blkrd3
 xublkrd jsr  xbkotst
         jsr  drtrd
         jsr  blkrd4
-	jmp  ublkrd1
+        jmp  ublkrd1
 
 ublkrd  jsr  blkpar
         jsr  blkrd3
@@ -398,40 +398,40 @@ blktst  ldx  f1ptr      ; test legal block and
         jsr  tschk
         jmp  setlds     ; (rts)
 
-xbkotst	jsr  buftst     ; test parms
-	ldx  f1ptr      ; set track and sector
+xbkotst jsr  buftst     ; test parms
+        ldx  f1ptr      ; set track and sector
         lda  filsec+2,x
         sta  sector
         lda  filsec+1,x
         sta  track
         jsr  setlds
-	lda  #bit6
-	sta  jobrtn
-	rts
+        lda  #bit6
+        sta  jobrtn
+        rts
 
 allocbuf
-	ora  bufuse
-	sta  bufuse
-	rts
+        ora  bufuse
+        sta  bufuse
+        rts
 
 
 bctab    .text  'AFRWEP',$d2,$d7,'?','*'
 nbcmds   =*-bctab
 bcjmp
-	.word blkalc    ; block-allocate
-	.word blkfre    ; block-free
-	.word blkrd     ; block-read
-	.word blkwt     ; block-write
-	.word blkexc    ; block-execute
-	.word blkptr    ; block-pointer
-	.word xublkrd  	; user read no tschk
-	.word xublkwt   ; user write no tschk
-	.word blkme
-	.word blkwif
+        .word blkalc    ; block-allocate
+        .word blkfre    ; block-free
+        .word blkrd     ; block-read
+        .word blkwt     ; block-write
+        .word blkexc    ; block-execute
+        .word blkptr    ; block-pointer
+        .word xublkrd   ; user read no tschk
+        .word xublkwt   ; user write no tschk
+        .word blkme
+        .word blkwif
 
 
-blkme	lda  #$79
-	jmp  errts0
+blkme   lda  #$79
+        jmp  errts0
 
-blkwif	lda  #$7a
-	jmp  errts0
+blkwif  lda  #$7a
+        jmp  errts0

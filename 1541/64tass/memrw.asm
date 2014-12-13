@@ -51,7 +51,7 @@ m30
 memerr  lda  #badcmd    ; bad command
         jmp  cmderr
 
-memwrt          	; write
+memwrt                  ; write
 m10     lda  cmdbuf+6,y
         sta  (temp),y   ; transfer from cmdbuf
         iny

@@ -9,7 +9,7 @@ ds08    lda  #$66       ;  min block size 282*5/4 -256=85
         ldy  #0
         tya
 ;
-ds10    clc     	;  min*#sectors
+ds10    clc             ;  min*#sectors
         adc  dtrck
         bcc  ds14
 ;
@@ -88,7 +88,7 @@ mak10   lda  hbid       ;  hbid cs s t id id 0f 0f
         sta  buff0,y
         iny
 ;
-        iny     	;  skip checksum
+        iny             ;  skip checksum
 ;
         lda  sect       ;  store sector #
         sta  buff0,y
@@ -127,7 +127,7 @@ mak10   lda  hbid       ;  hbid cs s t id id 0f 0f
         cmp  sectr
         bcc  mak10      ;  more to do
 ;
-        tya     	;  save block size
+        tya             ;  save block size
         pha
 ;
 ;
@@ -135,7 +135,7 @@ mak10   lda  hbid       ;  hbid cs s t id id 0f 0f
 ;
 ;   create data block of zero
 ;
-        inx     	;  .x=0
+        inx             ;  .x=0
         txa
 ;
 crtdat  sta  buff2,x
@@ -150,9 +150,9 @@ crtdat  sta  buff2,x
 ;
         jsr  fbtog      ;  convert to gcr with no bid char
 ;
-        pla     	;   restore block size
-        tay     	;  move buffer up 79 bytes
-        dey     	;  for i=n-1 to 0:mem+i+69|:=mem+i|:next
+        pla             ;   restore block size
+        tay             ;  move buffer up 79 bytes
+        dey             ;  for i=n-1 to 0:mem+i+69|:=mem+i|:next
         jsr  movup      ;  move buf0 up 69 bytes
 ;
         jsr  movovr     ;  move ovrbuf up to buffer
@@ -274,11 +274,11 @@ wgp2    bvc  *
         dex
         bne  wgp2
 ;
-; 	ldx #20 	; write erase trail gap
+;       ldx #20         ; write erase trail gap
 ;wgp3   bvc *
-;   	clv
-; 	dex
-; 	bne wgp3
+;       clv
+;       dex
+;       bne wgp3
 ;
         lda  hdrpnt     ;  advance header pointer
         clc

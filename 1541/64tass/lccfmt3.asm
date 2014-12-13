@@ -34,7 +34,7 @@ cmpr15  bvc  *          ;  get header byte
         dex
         bne  cmpr15     ;  test all bytes
 ;
-        clc     	;  update headr pointer
+        clc             ;  update headr pointer
         lda  bufpnt
         adc  #10
         sta  bufpnt

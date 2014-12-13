@@ -30,7 +30,7 @@ wrt10   jsr  bingcr     ;  convert buffer to write image
 wrt20   bvc  *
         clv
 ;
-        dex     	;  test if done yet
+        dex             ;  test if done yet
         bne  wrt20
 ;
         lda  #$ff       ;  make output $ff
@@ -104,7 +104,7 @@ chkb10  eor  (bufpnt),y
         iny
         bne  chkb10
 ;
-        rts     	;  return checksum in .a
+        rts             ;  return checksum in .a
 ;
 ;
 ;

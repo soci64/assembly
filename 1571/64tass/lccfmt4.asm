@@ -23,7 +23,7 @@ syc10   bvc  *
         dex
         bne  syc10
 ;
-        rts     	;  leave write on
+        rts             ;  leave write on
 ;
 ;
 ;

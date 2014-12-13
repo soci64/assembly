@@ -34,11 +34,11 @@ or10    pla
 
 or20    ldx  lindx
         sta  ss,x
-	pha
-	jsr  hugerel
-	beq  or21
+        pha
+        jsr  hugerel
+        beq  or21
 
-	pla
+        pla
         ldy  trkss      ; set ss track
         sty  track
         ldy  secss      ; set ss sector
@@ -46,15 +46,15 @@ or20    ldx  lindx
         jsr  seth       ; set ss header
         jsr  rdss       ; read it in
         jsr  watjob
-	jmp  orow	; continue
+        jmp  orow       ; continue
 or21
-	pla
-	lda  trkss
-	sta  ssstrk,x
-	lda  secss
-	sta  ssssec,x
-	lda  #all
-	sta  sssgrp,x	; no group is resident, ok...
+        pla
+        lda  trkss
+        sta  ssstrk,x
+        lda  secss
+        sta  ssssec,x
+        lda  #all
+        sta  sssgrp,x   ; no group is resident, ok...
 
 orow    ldx  lindx
         lda  #2
@@ -159,10 +159,10 @@ ow20    ldx  lindx
         jsr  putss
         jsr  wrtss      ; write it out
         jsr  watjob
-	jsr  hugerel
-	bne  ow21
+        jsr  hugerel
+        bne  ow21
 
-	jsr  owbrel
+        jsr  owbrel
 ow21
         lda  #2
         jsr  setpnt
@@ -178,37 +178,37 @@ ow21
         jsr  mapout
         jmp  orow
 owbrel
-	ldx  lindx
-	lda  ss,x	; get ss buffer #
-	jsr  clrbuf	; clean 'em out
-	jsr  setssp	; set ss pointer
-	lda  trkss
-	jsr  putss	; set track link
-	lda  secss
-	jsr  putss	; set sector link
-	lda  #all-1
-	jsr  putss	; set sss id
-	lda  trkss
-	jsr  putss	; set ss track
-	lda  secss
-	jsr  putss	; set ss sector
-	jsr  nxtts	; get next track and sector
-	ldx  lindx
-	lda  track
-	sta  ssstrk,x	; save sss track
-	sta  trkss
-	lda  sector
-	sta  ssssec,x	; save sss sector
-	sta  secss
-	lda  #all
-	sta  sssgrp,x	; no resident ss
-	jsr  wrtsss	; write the sss
-	jmp  gethdr
+        ldx  lindx
+        lda  ss,x       ; get ss buffer #
+        jsr  clrbuf     ; clean 'em out
+        jsr  setssp     ; set ss pointer
+        lda  trkss
+        jsr  putss      ; set track link
+        lda  secss
+        jsr  putss      ; set sector link
+        lda  #all-1
+        jsr  putss      ; set sss id
+        lda  trkss
+        jsr  putss      ; set ss track
+        lda  secss
+        jsr  putss      ; set ss sector
+        jsr  nxtts      ; get next track and sector
+        ldx  lindx
+        lda  track
+        sta  ssstrk,x   ; save sss track
+        sta  trkss
+        lda  sector
+        sta  ssssec,x   ; save sss sector
+        sta  secss
+        lda  #all
+        sta  sssgrp,x   ; no resident ss
+        jsr  wrtsss     ; write the sss
+        jmp  gethdr
 ;
 ; put a byte into the ss
 ;
 putss
-	pha
+        pha
         ldx  lindx
         lda  ss,x
         jmp  putb1

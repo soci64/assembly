@@ -15,15 +15,15 @@ vd10    lda  #0         ; set dir sectors..
         lda  dirtrk
         sta  track
         jsr  vmkbam
-	jsr  mapout	; wrt 'em out
+        jsr  mapout     ; wrt 'em out
         jmp  endcmd
 
 vd15    iny
         lda  (dirbuf),y
-        pha     	; save track
+        pha             ; save track
         iny
         lda  (dirbuf),y
-        pha     	; save sector
+        pha             ; save sector
         ldy  #19        ; get ss track
         lda  (dirbuf),y ; is this relative ?
         beq  vd17       ; no
@@ -45,17 +45,17 @@ vd25    ldy  #0
         lda  (dirbuf),y
         bpl  vd28
 
-	and  #7		; par. file?
-	cmp  #5
-	bne  vd15
+        and  #7         ; par. file?
+        cmp  #5
+        bne  vd15
 
-vd26	jsr  setparts	; set partition t&s
-	jsr  allocpart	; allocate t&s
-	jmp  vd20
+vd26    jsr  setparts   ; set partition t&s
+        jsr  allocpart  ; allocate t&s
+        jmp  vd20
 
 vd28    jsr  deldir     ; not closed delete dir
         jmp  vd20
-vmkbam          	; mark bam w/file sectors
+vmkbam                  ; mark bam w/file sectors
         jsr  tschk
         jsr  wused
         jsr  opnird
@@ -76,63 +76,63 @@ mrk1    jsr  wused
 
 
 calcpar .proc
-	lda  lo
-	bne  m1
+        lda  lo
+        bne  m1
 
-	lda  hi
-	beq  m2
+        lda  hi
+        beq  m2
 
-	dec  hi
-m1	dec  lo
-	inc  sector	; next please
-	lda  numsec
-	cmp  sector
-	bne  m2
+        dec  hi
+m1      dec  lo
+        inc  sector     ; next please
+        lda  numsec
+        cmp  sector
+        bne  m2
 
-	lda  #0
-	sta  sector	; start over
-	lda  track
-	cmp  dirtrk	; can not overrun system track
-	beq  m3
+        lda  #0
+        sta  sector     ; start over
+        lda  track
+        cmp  dirtrk     ; can not overrun system track
+        beq  m3
 
-	inc  track	; next
+        inc  track      ; next
 
-	sec
-	.byte skip1
-m2	clc
-	lda  hi
-	ora  lo
-	rts		; .z=1 done...
+        sec
+        .byte skip1
+m2      clc
+        lda  hi
+        ora  lo
+        rts             ; .z=1 done...
 
-m3	lda  #systs	; illegal partition track & sector error
-	jmp  cmder2
-	.pend
+m3      lda  #systs     ; illegal partition track & sector error
+        jmp  cmder2
+        .pend
 
 
 setparts
 
-	ldy  #1
-	lda  (dirbuf),y
-	sta  track	; starting track
-	iny
-	lda  (dirbuf),y
-	sta  sector	; starting sector
-	ldy  #$1C
-	lda  (dirbuf),y
-	sta  lo		; blks used
-	iny
-	lda  (dirbuf),y
-	sta  hi
-	rts
+        ldy  #1
+        lda  (dirbuf),y
+        sta  track      ; starting track
+        iny
+        lda  (dirbuf),y
+        sta  sector     ; starting sector
+        ldy  #$1C
+        lda  (dirbuf),y
+        sta  lo         ; blks used
+        iny
+        lda  (dirbuf),y
+        sta  hi
+        rts
 
 
 
 
 allocpart
 
-	jsr  tschk	; check t&s
-	jsr  wused	; allocate it
-	jsr  calcpar
-	bne  allocpart
+        jsr  tschk      ; check t&s
+        jsr  wused      ; allocate it
+        jsr  calcpar
+        bne  allocpart
 
-	rts
+        rts

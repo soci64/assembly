@@ -10,9 +10,9 @@ rdrel   lda  #lrf
         inc  buftab,x
         bne  rd20
 
-	lda  relsw
-	ora  #bit4
-	sta  relsw	; set overflow flag
+        lda  relsw
+        ora  #bit4
+        sta  relsw      ; set overflow flag
         jsr  nrbuf
 rd15    jsr  getpre
 rd20    lda  (buftab,x)

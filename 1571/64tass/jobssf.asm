@@ -26,7 +26,7 @@ setjob
         bcs  tserr      ; track too large
 
         tax
-        pla     	; check for write
+        pla             ; check for write
         pha
         and  #$f0
         cmp  #write
@@ -46,7 +46,7 @@ sjb3
         bne  vnerr      ; not same vernum #
 
 sjb4
-        txa     	; restore track #
+        txa             ; restore track #
         jsr  maxsec
         cmp  cmd
         beq  tserr
@@ -120,7 +120,7 @@ doit2   lda  cmd
 
 watjob  jsr  tstjob
         bcs  watjob
-        pha     	; clr jobrtn flag
+        pha             ; clr jobrtn flag
         lda  #0
         sta  jobrtn
         pla
@@ -148,15 +148,15 @@ tj10    bit  jobrtn
         bmi  ok
         jmp  quit2
 
-ok      clc     	; c=0 finished ok or quit
+ok      clc             ; c=0 finished ok or quit
         rts
 
-notyet  sec     	; c=1 not yet
+notyet  sec             ; c=1 not yet
         rts
 
 
 recov
-        tya     	; save .y
+        tya             ; save .y
         pha
         lda  drvnum     ; save drive #
         pha
@@ -176,7 +176,7 @@ rec01
 
         lda  lstjob,x   ; original job
         and  #$f0       ; mask job code
-        pha     	; save it
+        pha             ; save it
         cmp  #write
         bne  rec0       ; not a write
 
@@ -199,7 +199,7 @@ rec1
 
         lda  offset,y
 
-        jsr  ptch12	; set micro-stepping flag *rom-05ds 01/21/85*
+        jsr  ptch12     ; set micro-stepping flag *rom-05ds 01/21/85*
 ;       jsr  hedoff
 
         inc  eptr       ; bump table ptr
@@ -213,7 +213,7 @@ rec1
 rec3
         lda  toff
 
-        jsr  ptch13	; clr micro-stepping flag *rom-05ds 01/21/85*
+        jsr  ptch13     ; clr micro-stepping flag *rom-05ds 01/21/85*
 ;       jsr  hedoff
 
         lda  jobs,x
@@ -247,9 +247,9 @@ rec7
 rec8
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jsr  stbctl	; strobe the controller
-			; ***rom ds 01/22/85***
-	nop
+        jsr  stbctl     ; strobe the controller
+                        ; ***rom ds 01/22/85***
+        nop
 ;       lda  jobs,x
 ;       bmi  rec8       ; wait
 
@@ -259,7 +259,7 @@ rec8
         cmp  #2
         bcs  quit       ; it clearly ain't gonna work
 rec9
-        pla     	; check original job for write
+        pla             ; check original job for write
         cmp  #write
         bne  rec95      ; original job worked
 
@@ -272,12 +272,12 @@ rec95
         pla
         sta  drvnum     ; restore drive #
         pla
-        tay     	; restore .y
+        tay             ; restore .y
         lda  jobs,x
-        clc     	; ok!
+        clc             ; ok!
         rts
 
-hedoff          	; .a=offset
+hedoff                  ; .a=offset
         cmp  #0
         beq  hof3       ; no offset
         bmi  hof2       ; steps are inward
@@ -298,8 +298,8 @@ hof3
         rts
 
 movhed
-        pha     	; save .a
-        tya     	; put phase in .a
+        pha             ; save .a
+        tya             ; put phase in .a
         ldy  drvnum
         sta  phase,y
 mh10
@@ -308,11 +308,11 @@ mh10
 
         lda  #0
         sta  phase,y    ; clear it out
-        pla     	; restore
+        pla             ; restore
         rts
 
 
-dorec           	; do last job recovery
+dorec                   ; do last job recovery
         lda  revcnt     ; re-try job revcnt...
         and  #$3f       ; ...# of times
         tay
@@ -323,8 +323,8 @@ dorec1
         lda  lstjob,x   ; set last job
         sta  jobs,x
 dorec2
-	jsr  stbctl	; strobe the controller *rom-05ds 01/22/85*
-	nop
+        jsr  stbctl     ; strobe the controller *rom-05ds 01/22/85*
+        nop
 ;       lda  jobs,x     ; wait
 ;       bmi  dorec2
 
@@ -339,7 +339,7 @@ dorec3
         ora  ledprt
         sta  ledprt
         pla
-        rts     	; finished
+        rts             ; finished
 
 ; set header of active buffer of the
 ; current lindx to track,sector,id

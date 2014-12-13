@@ -15,26 +15,26 @@ idle
         lda  #0
         sta  cmdwat
 
-	nop		; *** rom ds -06 *** / fill
-	nop		; *** rom ds -06 *** / fill
+        nop             ; *** rom ds -06 *** / fill
+        nop             ; *** rom ds -06 *** / fill
 ;       sta  nmiflg     ; clear debounce
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jmp  ptch19	; *rom ds 01/23/85*
-;	jsr  parsxq     ; parse and xeq command
+        jmp  ptch19     ; *rom ds 01/23/85*
+;       jsr  parsxq     ; parse and xeq command
 
-rtch19			; return
+rtch19                  ; return
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-idl1    cli     	; test for drive running or openfile
+idl1    cli             ; test for drive running or openfile
         lda  atnpnd
         beq  idl01
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	jmp  ptch30	; *rom ds 02/04/85*
+        jmp  ptch30     ; *rom ds 02/04/85*
 ;       jmp  atnsrv     ; service atn irq
 
 ;<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -53,7 +53,7 @@ idl2    ldx  temp+3     ; look thru lintab
 
         and  #$3f
         sta  lindx
-	jsr  getact
+        jsr  getact
         tax
         lda  lstjob,x   ; determine which drv it is on
         and  #1
@@ -67,7 +67,7 @@ idl4    lda  jobs,y     ; for jobs still running
         and  #1
         tax
         inc  temp,x     ; set flag indicating drive
-idl5    dey     	; is active
+idl5    dey             ; is active
         bpl  idl4
         sei
 
@@ -86,10 +86,10 @@ idl5    dey     	; is active
         lda  wpsw
         beq  idl6
 
-	jsr  cldchn
+        jsr  cldchn
 
 idl6
-        pla     	; turn on led if drive flag
+        pla             ; turn on led if drive flag
         ora  #led0      ;  if not 0
         pha
 idl7

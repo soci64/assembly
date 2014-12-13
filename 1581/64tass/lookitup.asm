@@ -3,12 +3,12 @@
 optsch  lda  #0         ; determine optimal search
         sta  temp       ; init drive mask
         sta  drvflg
-	sta  drvcnt
-	jsr  autoi      ; check drv for autoinit
-        beq  os70	; drive is active
+        sta  drvcnt
+        jsr  autoi      ; check drv for autoinit
+        beq  os70       ; drive is active
 
-	lda  #nodriv
-	jsr  cmderr
+        lda  #nodriv
+        jsr  cmderr
 
 os70    jmp  setlds
 lookup  jsr  optsch     ; lookup all files in
@@ -20,7 +20,7 @@ lk05    lda  #0         ; stream and fill tbls w/info
 lk10    dec  drvcnt
         bpl  lk05       ; /++loop++
 
-	rts     	; no more drive searches
+        rts             ; no more drive searches
 
 lk20    jsr  search     ; find valid fn
         beq  lk30       ; end of search
@@ -94,7 +94,7 @@ compar  ldx  #$ff
         jsr  cmpchk
         beq  cp10
 
-cp02    rts     	; all are found
+cp02    rts             ; all are found
 cp05    jsr  cc10
         bne  cp02
 
@@ -136,7 +136,7 @@ cp33    cpx  limit
         cmp  #'*'
         bne  cp30       ; keep checking
 
-	jmp  cp99	; star
+        jmp  cp99       ; star
 
 cp34    cpy  #19
         bcs  cp40       ; end of filename
@@ -196,7 +196,7 @@ cmpchk  lda  #$ff
 cc10    dec  f2ptr
         bpl  cc15
 
-        rts     	; table exhausted
+        rts             ; table exhausted
 
 cc15    ldx  f2ptr
         lda  pattyp,x
@@ -208,32 +208,32 @@ cc15    ldx  f2ptr
 cc20    lda  #0
         sta  found
         rts
-cp99	stx  tmp+3
-	ldx  limit	; get top end
-	dex
-	cpx  tmp+3
-	beq  cc04
+cp99    stx  tmp+3
+        ldx  limit      ; get top end
+        dex
+        cpx  tmp+3
+        beq  cc04
 
-	ldy  #19
--	dey
-	lda  (dirbuf),y
-	cmp  #$a0	; shifted space
-	beq  -
+        ldy  #19
+-       dey
+        lda  (dirbuf),y
+        cmp  #$a0       ; shifted space
+        beq  -
 
--	lda  cmdbuf,x	; get char
-	cmp  (dirbuf),y
-	beq  +
+-       lda  cmdbuf,x   ; get char
+        cmp  (dirbuf),y
+        beq  +
 
-	cmp  #'?'
-	bne  cc05	; not the same
+        cmp  #'?'
+        bne  cc05       ; not the same
 
-+	dey
-	dex
-	cpx  tmp+3	; done yet?
-	bne  -
++       dey
+        dex
+        cpx  tmp+3      ; done yet?
+        bne  -
 
-cc04	jmp  cp40	; equal
-cc05	jmp  cp05	; not equal
+cc04    jmp  cp40       ; equal
+cc05    jmp  cp05       ; not equal
 
 ;search directory
 ;  returns with valid entry w/ delind=0
@@ -247,14 +247,14 @@ srchst  ldy  #0         ; init deleted sector
         sty  entfnd
         lda  dirtrk     ; start search at beginning
         sta  track
-        lda  dirst	; /1st dir blk
+        lda  dirst      ; /1st dir blk
         sta  sector
         sta  lstbuf
         jsr  opnird     ; open internal read chnl
 sr10    lda  lstbuf     ; last buffer if 0
         bne  sr15
 
-        rts     	; (z=1)
+        rts             ; (z=1)
 
 sr15    lda  #7
         sta  filcnt
@@ -277,7 +277,7 @@ sr20    jsr  getpnt
         ldx  delind     ; bit1: want deleted entry
         sta  delind
         beq  search     ; need valid entry
-        rts     	; (z=0)
+        rts             ; (z=0)
 
 sr30    ldx  #1
         cpx  delind     ; ?looking for deleted?
@@ -309,7 +309,7 @@ sr50    lda  dirbuf     ; found valid entry
         jsr  curblk     ; get sector
         lda  sector
         sta  dirsec
-        rts     	; (z=0)
+        rts             ; (z=0)
 
 ;  check drive for active diskette
 ;  init if needed
@@ -318,12 +318,12 @@ sr50    lda  dirbuf     ; found valid entry
 autoi   lda  autofg
         bne  auto2      ; auto-init is disabled
 
-	lda  #1
+        lda  #1
         bit  wpsw       ; test & clear wpsw
         beq  auto2      ; no change in diskette
 
-	jsr  psetdef	; clear to default values
-	jsr  setdef	; set root directory
+        jsr  psetdef    ; clear to default values
+        jsr  setdef     ; set root directory
         lda  #bit7
         sta  jobrtn     ; set error return code
         jsr  itrial     ; init-seek test
@@ -346,10 +346,10 @@ auto1   tya
         sta  jobrtn     ; set error return code
         jsr  initdr     ; init that drive
 auto2
-	bit  dkoramask
-	bpl  +
+        bit  dkoramask
+        bpl  +
 
-	lda  #$ff
-	sta  nodrv
+        lda  #$ff
+        sta  nodrv
 +       lda  nodrv      ; return no-drive condn
-	rts
+        rts

@@ -88,7 +88,7 @@ nxtr35
 ;********************************
 ;*
 ;*
-nrbuf           	; read trk,sec link
+nrbuf                   ; read trk,sec link
         jsr  setdrn
         jsr  rdlnk
 
@@ -113,7 +113,7 @@ nrbu50  jsr  dblbuf     ; toggle act buf
         jsr  rdab       ; read in needed buffer
         jsr  watjob     ; wait till done
 
-nrbu70          	; read trk,sec link
+nrbu70                  ; read trk,sec link
         jsr  rdlnk      ; to do a read ahead
 
         lda  track      ; test if last buffer

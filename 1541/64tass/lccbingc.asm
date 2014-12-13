@@ -138,21 +138,21 @@ bing35  lda  btab+3
 ;
 ;
 bgtab   .byte    $0a
-	.byte    $0b
-	.byte    $12
-	.byte    $13
-	.byte    $0e
-	.byte    $0f
-	.byte    $16
-	.byte    $17
-	.byte    $09
-	.byte    $19
-	.byte    $1a
-	.byte    $1b
-	.byte    $0d
-	.byte    $1d
-	.byte    $1e
-	.byte    $15
+        .byte    $0b
+        .byte    $12
+        .byte    $13
+        .byte    $0e
+        .byte    $0f
+        .byte    $16
+        .byte    $17
+        .byte    $09
+        .byte    $19
+        .byte    $1a
+        .byte    $1b
+        .byte    $0d
+        .byte    $1d
+        .byte    $1e
+        .byte    $15
 ;
 ;
 ;

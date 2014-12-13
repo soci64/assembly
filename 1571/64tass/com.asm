@@ -22,11 +22,11 @@
 ;*      S  E      R  R     I    A   A  L      *
 ;*  SSSSS  EEEEE  R   R  IIIII. A   A  LLLLL  *
 ;*                                            *
-;*  DDDD   IIIII  SSSSS  K    K		      *
-;*  D   D    I    S      K   K  	      *
-;*  D   D    I    SSSSS  KKK		      *
-;*  D   D    I        S  K   K  	      *
-;*  DDDD   IIIII  SSSSS  K    K  	      *
+;*  DDDD   IIIII  SSSSS  K    K               *
+;*  D   D    I    S      K   K                *
+;*  D   D    I    SSSSS  KKK                  *
+;*  D   D    I        S  K   K                *
+;*  DDDD   IIIII  SSSSS  K    K               *
 ;*                                            *
 ;*                                            *
 ;**********************************************
@@ -37,7 +37,7 @@
 ;*   COPYRIGHT (C) 1986 BY                    *
 ;*   COMMODORE BUSINESS MACHINES (CBM)        *
 ;*                                            *
-;*   					DS    *
+;*                                      DS    *
 ;*                                            *
 ;**********************************************
 ;

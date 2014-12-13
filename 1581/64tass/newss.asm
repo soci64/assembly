@@ -12,10 +12,10 @@ newss   jsr  nxtts      ; get t&s based on hdr
         tay
         pla
         tax
-	jsr  hugerel
-	bne  newss1
+        jsr  hugerel
+        bne  newss1
 
-	jmp  newss3
+        jmp  newss3
 newss1
         lda  #ssioff    ; # of chars
         jsr  b0tob0     ; transfer at buf(0)
@@ -72,35 +72,35 @@ ns20    ldx  lindx
         iny
         lda  sector
         sta  (dirbuf),y
-	jsr  hugerel
-	bne  ns50
+        jsr  hugerel
+        bne  ns50
 
-	lda  r0
-	cmp  #all
-	bne  ns50
+        lda  r0
+        cmp  #all
+        bne  ns50
 
-	lda  sector
-	pha
-	lda  track
-	pha
-	jsr  wrtout	; write old ss
-	jsr  watjob
-	jsr  dblbuf
-	jsr  rdsssa	; read sss
-	inc  r5
-	lda  r5		; next group number
-	asl  a
-	clc
-	adc  #3		; index into sss
-	jsr  setssp	; point to it
-	pla
-	jsr  putss	; set the track
-	pla
-	jsr  putss	; set the sector
-	jsr  wrtsss	; write out the sss
-	lda  r5
-	pha
-	jmp  rdss1d	; now read the ss back in
+        lda  sector
+        pha
+        lda  track
+        pha
+        jsr  wrtout     ; write old ss
+        jsr  watjob
+        jsr  dblbuf
+        jsr  rdsssa     ; read sss
+        inc  r5
+        lda  r5         ; next group number
+        asl  a
+        clc
+        adc  #3         ; index into sss
+        jsr  setssp     ; point to it
+        pla
+        jsr  putss      ; set the track
+        pla
+        jsr  putss      ; set the sector
+        jsr  wrtsss     ; write out the sss
+        lda  r5
+        pha
+        jmp  rdss1d     ; now read the ss back in
 
 ns40    jsr  getact
         ldx  lindx
@@ -123,26 +123,26 @@ ns50    dec  r4
 
         jmp  dblbuf     ; reset active buffer
 newss3
-	lda  r0
-	cmp  #nssl-1
-	bcs  newss4
+        lda  r0
+        cmp  #nssl-1
+        bcs  newss4
 
-	jmp  newss1
+        jmp  newss1
 newss4
-	lda  #all
-	sta  r0
-	lda  #0
-	jsr  setpnt
-	ldy  #2
-	sta  (dirbuf),y	; ss 0
-	ldx  lindx
-	lda  rs,x
-	iny
-	sta  (dirbuf),y	; record size
-	iny
-	beq  newss5
+        lda  #all
+        sta  r0
+        lda  #0
+        jsr  setpnt
+        ldy  #2
+        sta  (dirbuf),y ; ss 0
+        ldx  lindx
+        lda  rs,x
+        iny
+        sta  (dirbuf),y ; record size
+        iny
+        beq  newss5
 
-	jmp  newss2
+        jmp  newss2
 newss5
-	jmp  newss1
+        jmp  newss1
 

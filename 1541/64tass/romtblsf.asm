@@ -12,31 +12,31 @@ cmdtbl   .text  'VIDMBUP&CRSN'
 ncmds    =*-cmdtbl
 ;  jump table low
 cjumpl   .byte    <verdir,<intdrv,<duplct
-	 .byte    <mem,<block,<user
-	 .byte    <record
-	 .byte    <utlodr
-	 .byte    <dskcpy
-	 .byte    <rename,<scrtch,<new
+         .byte    <mem,<block,<user
+         .byte    <record
+         .byte    <utlodr
+         .byte    <dskcpy
+         .byte    <rename,<scrtch,<new
 *=cjumpl+ncmds
 ;  jump table high
 cjumph   .byte    >verdir,>intdrv,>duplct
-	 .byte    >mem,>block,>user
- 	 .byte    >record
- 	 .byte    >utlodr
- 	 .byte    >dskcpy
-	 .byte    >rename,>scrtch,>new
+         .byte    >mem,>block,>user
+         .byte    >record
+         .byte    >utlodr
+         .byte    >dskcpy
+         .byte    >rename,>scrtch,>new
 *=cjumph+ncmds
 val=0           ; validate (verify) cmd #
 
 ; structure images for cmds
 pcmd     =9
-	.byte    %01010001      ;  dskcpy
-struct   =*-pcmd        	;  cmds not parsed
-	.byte    %11011101      ;  rename
-	.byte    %00011100      ;  scratch
-	.byte    %10011110      ;  new
-ldcmd    =*-struct      	;  load cmd image
-	.byte    %00011100      ;  load
+        .byte    %01010001      ;  dskcpy
+struct   =*-pcmd                ;  cmds not parsed
+        .byte    %11011101      ;  rename
+        .byte    %00011100      ;  scratch
+        .byte    %10011110      ;  new
+ldcmd    =*-struct              ;  load cmd image
+        .byte    %00011100      ;  load
 ;            --- ---
 ;            pgdrpgdr
 ;            fs1 fs2
@@ -64,19 +64,19 @@ er1      .byte  $7f
 er2      .byte  $bf
 er3      .byte  $ff
 ;
-numsec          		; (4) sectors/track
-	 .byte    17,18,19,21
+numsec                          ; (4) sectors/track
+         .byte    17,18,19,21
 vernum   .byte  fm4040          ; format type
-nzones   .byte  4       	; # of zones
+nzones   .byte  4               ; # of zones
 
-; maxtrk          		; maximum track #  +1
-trknum          		; zone boundaries track numbers
-	 .byte    36,31,25,18
-offset          		; for recovery
-	 .byte    1,$ff,$ff,1,0
+; maxtrk                        ; maximum track #  +1
+trknum                          ; zone boundaries track numbers
+         .byte    36,31,25,18
+offset                          ; for recovery
+         .byte    1,$ff,$ff,1,0
 ;
 bufind
-	 .byte    $03,$04,$05,$06,$07,$07
+         .byte    $03,$04,$05,$06,$07,$07
 ;
 
 ;.end

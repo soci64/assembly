@@ -19,7 +19,7 @@ open
         lda  prgtrk
         beq  op0415     ; no last prog, init 0
 
-op02            	; load last program
+op02                    ; load last program
         sta  track
         lda  prgdrv
         sta  drvnum
@@ -73,7 +73,7 @@ op049
         beq  op10
 op05    lda  #badsyn    ; something amiss
         jmp  cmderr
-op10    dey     	; back up to ":"
+op10    dey             ; back up to ":"
         beq  op20       ; 1st char is ":"
         dey
 op20    sty  filtbl     ; save filename ptr
@@ -233,7 +233,7 @@ op110   lda  pattyp
         beq  op120
 op115   lda  #mistyp    ; type mismatch
         jmp  cmderr
-op120           	; everything is ok!
+op120                   ; everything is ok!
         ldy  #0
         sty  f2ptr
         ldx  mode
@@ -375,13 +375,13 @@ loadir
         dex
         beq  ld02
 
-ld01    dex     	; load by name
+ld01    dex             ; load by name
         bne  ld03
         lda  cmdbuf+1
         jsr  tst0v1
         bmi  ld03
 
-ld02            	; load dir with a star
+ld02                    ; load dir with a star
         sta  fildrv
         inc  f1cnt
         inc  f2cnt

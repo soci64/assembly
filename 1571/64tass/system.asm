@@ -1,4 +1,4 @@
-killp           	; kill protection
+killp                   ; kill protection
 ; pha
 ; lda #1
 ; sta cflg2 ;tell contoller

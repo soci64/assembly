@@ -32,7 +32,7 @@ get4gb  ldy  gcrpnt
         asl  a
         sta  gtab+1
 
-        iny       	;  next byte
+        iny             ;  next byte
         bne  xx05       ;  test for next buffer
         lda  nxtbf
         sta  bufpnt+1
@@ -59,7 +59,7 @@ xx05    lda  (bufpnt),y
         asl  a
         sta  gtab+3
 
-        iny     		;  next
+        iny                     ;  next
 
         lda  (bufpnt),y
         and  #mask4x
@@ -75,7 +75,7 @@ xx05    lda  (bufpnt),y
         asl  a
         sta  gtab+4
 
-        iny     		;  next byte
+        iny                     ;  next byte
 
         lda  (bufpnt),y
         and  #mask5x
@@ -149,73 +149,73 @@ xx06    lda  (bufpnt),y
 
         rts
 
-gcrhi   .byte  	$ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $80
-	.byte   $00
-	.byte   $10
-	.byte   $ff    ; error
-	.byte   $c0
-	.byte   $40
-	.byte   $50
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $20
-	.byte   $30
-	.byte   $ff    ; error
-	.byte   $f0
-	.byte   $60
-	.byte   $70
-	.byte   $ff    ; error
-	.byte   $90
-	.byte   $a0
-	.byte   $b0
-	.byte   $ff    ; error
-	.byte   $d0
-	.byte   $e0
-	.byte   $ff    ; error
+gcrhi   .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $80
+        .byte   $00
+        .byte   $10
+        .byte   $ff    ; error
+        .byte   $c0
+        .byte   $40
+        .byte   $50
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $20
+        .byte   $30
+        .byte   $ff    ; error
+        .byte   $f0
+        .byte   $60
+        .byte   $70
+        .byte   $ff    ; error
+        .byte   $90
+        .byte   $a0
+        .byte   $b0
+        .byte   $ff    ; error
+        .byte   $d0
+        .byte   $e0
+        .byte   $ff    ; error
 ;
 ;
 ;
 gcrlo   .byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   8
-	.byte   $00
-	.byte   1
-	.byte   $ff    ; error
-	.byte   $c
-	.byte   4
-	.byte   5
-	.byte   $ff    ; error
-	.byte   $ff    ; error
-	.byte   2
-	.byte   3
-	.byte   $ff    ; error
-	.byte   $f
-	.byte   6
-	.byte   7
-	.byte   $ff    ; error
-	.byte   9
-	.byte   $a
-	.byte   $b
-	.byte   $ff    ; error
-	.byte   $d
-	.byte   $e
-	.byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   8
+        .byte   $00
+        .byte   1
+        .byte   $ff    ; error
+        .byte   $c
+        .byte   4
+        .byte   5
+        .byte   $ff    ; error
+        .byte   $ff    ; error
+        .byte   2
+        .byte   3
+        .byte   $ff    ; error
+        .byte   $f
+        .byte   6
+        .byte   7
+        .byte   $ff    ; error
+        .byte   9
+        .byte   $a
+        .byte   $b
+        .byte   $ff    ; error
+        .byte   $d
+        .byte   $e
+        .byte   $ff    ; error
 ;
 ;
 gcrbin  lda  #0         ;  setup pointers

@@ -1,4 +1,4 @@
-b0tob0  pha     	; buff to buff transfr
+b0tob0  pha             ; buff to buff transfr
         lda  #0
         sta  temp
         sta  temp+2
@@ -16,7 +16,7 @@ b02     lda  (temp),y
 
         rts
 
-clrbuf  tay     	; clr given buffer
+clrbuf  tay             ; clr given buffer
         lda  bufind,y   ; accm =buff
         sta  temp+1
         lda  #0
@@ -42,7 +42,7 @@ ssdir   sta  dirbuf     ; set dirbuf w/current
         sta  dirbuf+1
         rts
 
-setssp  pha     	; set dirbuf and buftbl with
+setssp  pha             ; set dirbuf and buftbl with
         jsr  ssdir      ; current ss pntr. acm=low byte
         pha
         txa
@@ -66,15 +66,15 @@ sspos   jsr  sstest     ; set ss/buftbl to
 
 ssp10   jsr  ssend      ; not in range,set end
         bit  er1
-        rts     	; v=1
+        rts             ; v=1
 
 ssp20   lda  ssind      ; ok, set ptr w/ index
         jsr  setssp
         bit  er0
-        rts     	; v=0
+        rts             ; v=0
 
 ibrd    sta  jobnum     ; indir block rd/wr.
-        lda  #read_dv	; accm= buf#, x=lindx
+        lda  #read_dv   ; accm= buf#, x=lindx
         bne  ibop       ; dirbuf)y pnts to t&s for r/w
 
         sta  jobnum
@@ -103,7 +103,7 @@ sscalc  dex
         lsr  a
         jsr  addt12
         lda  t4         ; add (# ss blocks needed)
-addt12  clc     	; add .a to t1,t2
+addt12  clc             ; add .a to t1,t2
         adc  t1
         sta  t1
         bcc  addrts
@@ -114,39 +114,39 @@ addrts  rts
 ; calc # of side sectors needed
 ;
 ssscal
-	jsr  zerres
-	jsr  zeracc
-	ldy  r3
+        jsr  zerres
+        jsr  zeracc
+        ldy  r3
 sssca1
-	dey
-	bmi  sssca2
+        dey
+        bmi  sssca2
 
-	ldx  #>726
-	lda  #<726
-	jsr  addlit
-	jmp  sssca1
+        ldx  #>726
+        lda  #<726
+        jsr  addlit
+        jmp  sssca1
 sssca2
-	ldy  t4
+        ldy  t4
 sssca3
-	dey
-	bmi  sssca4
+        dey
+        bmi  sssca4
 
-	ldx  #0
-	lda  #nssp+1
-	jsr  addlit
-	jmp  sssca3
+        ldx  #0
+        lda  #nssp+1
+        jsr  addlit
+        jmp  sssca3
 sssca4
-	lda  t3
-	lsr  a
-	ldx  #0
-	jmp  addlit
+        lda  t3
+        lsr  a
+        ldx  #0
+        jmp  addlit
 zeracc
-	ldx  #0
-	stx  accum+1
-	stx  accum+2
-	stx  accum+3
-	rts
+        ldx  #0
+        stx  accum+1
+        stx  accum+2
+        stx  accum+3
+        rts
 addlit
-	stx  accum+2
-	sta  accum+1
-	jmp  addres
+        stx  accum+2
+        sta  accum+1
+        jmp  addres
