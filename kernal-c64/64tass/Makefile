@@ -2,7 +2,7 @@
 SRC = C64-Lee.asm C64-bas.asm C64-ker.asm C64-var.asm
 TARGET = 901226-01.bin 901227-01.bin 901227-02.bin 901227-03.bin
 AFLAGS = -b
-AS = ./64tass
+AS = 64tass
 
 all: $(TARGET)
 
