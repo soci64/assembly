@@ -1,0 +1,66 @@
+lines:
+0xxxxxxx - misc
+10xxxxxx - code
+11xxxxxx - label, code
+xx111111 - length in bytes
+
+0x00 - end
+0x01 - .offs
+0x02 - .text [length byte] [string bytes]
+0x03 - .byte [stuffz]
+0x05 - .word [stuffz]
+0x30 - label and it's number
+0x80 - comment
+
+0 - invalid
+1 - 
+2 - ($FF,X)
+3 - A
+4 - $FF
+5 - $FF,X
+6 - $FF,Y
+7 - $FF
+8 - #
+9 - $FF
+10 - ($FF),Y
+11 - ($FF)
+13 - ,X
+14 - ,Y
+15 - $FF
+
+stuffz - 00000000 end
+	 01xxxxxx junk, including this character
+         10xxxxxx comment
+	 11xxxxxx junk
+	 xx111111 length of comment or junk
+	 x011xxxx label here
+	 xxxxxxxx .command
+         
+         001xxxxx constants
+	 00xxx00x hex const
+	 00xxx01x dec const
+	 00xxx100 bin const
+	 00xxx101 *
+         00xxx110 txt const
+         00xxx111 macro parameter
+	 00xxxxx0 byte
+	 00xxxxx1 word
+	 00xx1xxx end of expression
+	 00x1xxxx it's a label
+	 00xxx111 111xxxxx which label area
+	 00xxxxxx xxx11111 which label
+	 000xxxxx operators
+	 00x1xxxx end of expression
+	 00xx0000 +
+	 00xx0001 -
+	 00xx0010 *
+	 00xx0011 /
+	 00xx0100 >
+	 00xx0101 <
+	 00xx0110 !
+	 00xx0111 &
+	 00xx1000 .
+	 00xx1001 :
+	 00xx1010 (
+	 00xx1011 )
+	 00xx11xx undefined operator
